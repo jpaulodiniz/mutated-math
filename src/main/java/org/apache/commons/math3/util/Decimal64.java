@@ -19,6 +19,8 @@ package org.apache.commons.math3.util;
 import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.exception.DimensionMismatchException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class wraps a {@code double} value in an object. It is similar to the
@@ -27,13 +29,19 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
  *
  * @since 3.1
  */
-public class Decimal64 extends Number
-                       implements RealFieldElement<Decimal64>, Comparable<Decimal64> {
+public class Decimal64 extends Number implements RealFieldElement<Decimal64>, Comparable<Decimal64> {
 
-    /** The constant value of {@code 0d} as a {@code Decimal64}. */
+    @Conditional
+    public static boolean _mut49675 = false, _mut49676 = false, _mut49677 = false, _mut49678 = false, _mut49679 = false, _mut49680 = false, _mut49681 = false, _mut49682 = false, _mut49683 = false, _mut49684 = false, _mut49685 = false, _mut49686 = false, _mut49687 = false, _mut49688 = false, _mut49689 = false, _mut49690 = false, _mut49691 = false, _mut49692 = false, _mut49693 = false, _mut49694 = false, _mut49695 = false, _mut49696 = false, _mut49697 = false, _mut49698 = false, _mut49699 = false, _mut49700 = false, _mut49701 = false, _mut49702 = false, _mut49703 = false, _mut49704 = false, _mut49705 = false, _mut49706 = false, _mut49707 = false, _mut49708 = false, _mut49709 = false, _mut49710 = false, _mut49711 = false, _mut49712 = false, _mut49713 = false, _mut49714 = false, _mut49715 = false, _mut49716 = false, _mut49717 = false, _mut49718 = false, _mut49719 = false, _mut49720 = false, _mut49721 = false, _mut49722 = false, _mut49723 = false, _mut49724 = false, _mut49725 = false, _mut49726 = false, _mut49727 = false, _mut49728 = false, _mut49729 = false, _mut49730 = false, _mut49731 = false, _mut49732 = false, _mut49733 = false, _mut49734 = false, _mut49735 = false, _mut49736 = false, _mut49737 = false, _mut49738 = false, _mut49739 = false, _mut49740 = false, _mut49741 = false, _mut49742 = false, _mut49743 = false, _mut49744 = false, _mut49745 = false, _mut49746 = false, _mut49747 = false, _mut49748 = false, _mut49749 = false, _mut49750 = false, _mut49751 = false, _mut49752 = false;
+
+    /**
+     * The constant value of {@code 0d} as a {@code Decimal64}.
+     */
     public static final Decimal64 ZERO;
 
-    /** The constant value of {@code 1d} as a {@code Decimal64}. */
+    /**
+     * The constant value of {@code 1d} as a {@code Decimal64}.
+     */
     public static final Decimal64 ONE;
 
     /**
@@ -48,10 +56,13 @@ public class Decimal64 extends Number
      */
     public static final Decimal64 POSITIVE_INFINITY;
 
-    /** The constant value of {@link Double#NaN} as a {@code Decimal64}. */
+    /**
+     * The constant value of {@link Double#NaN} as a {@code Decimal64}.
+     */
     public static final Decimal64 NAN;
 
-    /** */
+    /**
+     */
     private static final long serialVersionUID = 20120227L;
 
     static {
@@ -62,7 +73,9 @@ public class Decimal64 extends Number
         NAN = new Decimal64(Double.NaN);
     }
 
-    /** The primitive {@code double} value of this object. */
+    /**
+     * The primitive {@code double} value of this object.
+     */
     private final double value;
 
     /**
@@ -74,11 +87,9 @@ public class Decimal64 extends Number
         this.value = x;
     }
 
-    /*
-     * Methods from the FieldElement interface.
+    /**
+     * {@inheritDoc}
      */
-
-    /** {@inheritDoc} */
     public Field<Decimal64> getField() {
         return Decimal64Field.getInstance();
     }
@@ -91,7 +102,8 @@ public class Decimal64 extends Number
      * + a.doubleValue()))}.
      */
     public Decimal64 add(final Decimal64 a) {
-        return new Decimal64(this.value + a.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.add_93");
+        return new Decimal64(AOR_plus(this.value, a.value, "org.apache.commons.math3.util.Decimal64.add_93", _mut49675, _mut49676, _mut49677, _mut49678));
     }
 
     /**
@@ -102,7 +114,8 @@ public class Decimal64 extends Number
      * - a.doubleValue()))}.
      */
     public Decimal64 subtract(final Decimal64 a) {
-        return new Decimal64(this.value - a.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.subtract_104");
+        return new Decimal64(AOR_minus(this.value, a.value, "org.apache.commons.math3.util.Decimal64.subtract_104", _mut49679, _mut49680, _mut49681, _mut49682));
     }
 
     /**
@@ -123,7 +136,8 @@ public class Decimal64 extends Number
      * * a.doubleValue()))}.
      */
     public Decimal64 multiply(final Decimal64 a) {
-        return new Decimal64(this.value * a.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.multiply_125");
+        return new Decimal64(AOR_multiply(this.value, a.value, "org.apache.commons.math3.util.Decimal64.multiply_125", _mut49683, _mut49684, _mut49685, _mut49686));
     }
 
     /**
@@ -133,7 +147,8 @@ public class Decimal64 extends Number
      * {@code this.multiply(n).equals(new Decimal64(n * this.doubleValue()))}.
      */
     public Decimal64 multiply(final int n) {
-        return new Decimal64(n * this.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.multiply_135");
+        return new Decimal64(AOR_multiply(n, this.value, "org.apache.commons.math3.util.Decimal64.multiply_135", _mut49687, _mut49688, _mut49689, _mut49690));
     }
 
     /**
@@ -142,10 +157,10 @@ public class Decimal64 extends Number
      * The current implementation strictly enforces
      * {@code this.divide(a).equals(new Decimal64(this.doubleValue()
      * / a.doubleValue()))}.
-     *
      */
     public Decimal64 divide(final Decimal64 a) {
-        return new Decimal64(this.value / a.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.divide_147");
+        return new Decimal64(AOR_divide(this.value, a.value, "org.apache.commons.math3.util.Decimal64.divide_147", _mut49691, _mut49692, _mut49693, _mut49694));
     }
 
     /**
@@ -156,12 +171,9 @@ public class Decimal64 extends Number
      * / this.doubleValue()))}.
      */
     public Decimal64 reciprocal() {
-        return new Decimal64(1.0 / this.value);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.reciprocal_158");
+        return new Decimal64(AOR_divide(1.0, this.value, "org.apache.commons.math3.util.Decimal64.reciprocal_158", _mut49695, _mut49696, _mut49697, _mut49698));
     }
-
-    /*
-     * Methods from the Number abstract class
-     */
 
     /**
      * {@inheritDoc}
@@ -213,15 +225,13 @@ public class Decimal64 extends Number
         return (float) value;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double doubleValue() {
         return value;
     }
-
-    /*
-     * Methods from the Comparable interface.
-     */
 
     /**
      * {@inheritDoc}
@@ -236,17 +246,15 @@ public class Decimal64 extends Number
         return Double.compare(this.value, o.value);
     }
 
-    /*
-     * Methods from the Object abstract class.
+    /**
+     * {@inheritDoc}
      */
-
-    /** {@inheritDoc} */
     @Override
     public boolean equals(final Object obj) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.equals_244");
         if (obj instanceof Decimal64) {
             final Decimal64 that = (Decimal64) obj;
-            return Double.doubleToLongBits(this.value) == Double
-                    .doubleToLongBits(that.value);
+            return ROR_equals(Double.doubleToLongBits(this.value), Double.doubleToLongBits(that.value), "org.apache.commons.math3.util.Decimal64.equals_244", _mut49699, _mut49700, _mut49701, _mut49702, _mut49703);
         }
         return false;
     }
@@ -278,10 +286,6 @@ public class Decimal64 extends Number
         return Double.toString(value);
     }
 
-    /*
-     * Methods inspired by the Double class.
-     */
-
     /**
      * Returns {@code true} if {@code this} double precision number is infinite
      * ({@link Double#POSITIVE_INFINITY} or {@link Double#NEGATIVE_INFINITY}).
@@ -302,200 +306,233 @@ public class Decimal64 extends Number
         return Double.isNaN(value);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public double getReal() {
         return value;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 add(final double a) {
-        return new Decimal64(value + a);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.add_315");
+        return new Decimal64(AOR_plus(value, a, "org.apache.commons.math3.util.Decimal64.add_315", _mut49704, _mut49705, _mut49706, _mut49707));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 subtract(final double a) {
-        return new Decimal64(value - a);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.subtract_322");
+        return new Decimal64(AOR_minus(value, a, "org.apache.commons.math3.util.Decimal64.subtract_322", _mut49708, _mut49709, _mut49710, _mut49711));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 multiply(final double a) {
-        return new Decimal64(value * a);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.multiply_329");
+        return new Decimal64(AOR_multiply(value, a, "org.apache.commons.math3.util.Decimal64.multiply_329", _mut49712, _mut49713, _mut49714, _mut49715));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 divide(final double a) {
-        return new Decimal64(value / a);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.divide_336");
+        return new Decimal64(AOR_divide(value, a, "org.apache.commons.math3.util.Decimal64.divide_336", _mut49716, _mut49717, _mut49718, _mut49719));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 remainder(final double a) {
         return new Decimal64(FastMath.IEEEremainder(value, a));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 remainder(final Decimal64 a) {
         return new Decimal64(FastMath.IEEEremainder(value, a.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 abs() {
         return new Decimal64(FastMath.abs(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 ceil() {
         return new Decimal64(FastMath.ceil(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 floor() {
         return new Decimal64(FastMath.floor(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 rint() {
         return new Decimal64(FastMath.rint(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public long round() {
         return FastMath.round(value);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 signum() {
         return new Decimal64(FastMath.signum(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 copySign(final Decimal64 sign) {
         return new Decimal64(FastMath.copySign(value, sign.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 copySign(final double sign) {
         return new Decimal64(FastMath.copySign(value, sign));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 scalb(final int n) {
         return new Decimal64(FastMath.scalb(value, n));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 hypot(final Decimal64 y) {
         return new Decimal64(FastMath.hypot(value, y.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 sqrt() {
         return new Decimal64(FastMath.sqrt(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 cbrt() {
         return new Decimal64(FastMath.cbrt(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 rootN(final int n) {
-        if (value < 0) {
-            return new Decimal64(-FastMath.pow(-value, 1.0 / n));
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.rootN_441");
+        if (ROR_less(value, 0, "org.apache.commons.math3.util.Decimal64.rootN_441", _mut49720, _mut49721, _mut49722, _mut49723, _mut49724)) {
+            return new Decimal64(-FastMath.pow(-value, AOR_divide(1.0, n, "org.apache.commons.math3.util.Decimal64.rootN_441", _mut49729, _mut49730, _mut49731, _mut49732)));
         } else {
-            return new Decimal64(FastMath.pow(value, 1.0 / n));
+            return new Decimal64(FastMath.pow(value, AOR_divide(1.0, n, "org.apache.commons.math3.util.Decimal64.rootN_441", _mut49725, _mut49726, _mut49727, _mut49728)));
         }
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 pow(final double p) {
         return new Decimal64(FastMath.pow(value, p));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 pow(final int n) {
         return new Decimal64(FastMath.pow(value, n));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 pow(final Decimal64 e) {
         return new Decimal64(FastMath.pow(value, e.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 exp() {
         return new Decimal64(FastMath.exp(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 expm1() {
         return new Decimal64(FastMath.expm1(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 log() {
         return new Decimal64(FastMath.log(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 log1p() {
         return new Decimal64(FastMath.log1p(value));
     }
 
-    /** Base 10 logarithm.
+    /**
+     * Base 10 logarithm.
      * @return base 10 logarithm of the instance
      * @since 3.2
      */
@@ -503,193 +540,191 @@ public class Decimal64 extends Number
         return new Decimal64(FastMath.log10(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 cos() {
         return new Decimal64(FastMath.cos(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 sin() {
         return new Decimal64(FastMath.sin(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 tan() {
         return new Decimal64(FastMath.tan(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 acos() {
         return new Decimal64(FastMath.acos(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 asin() {
         return new Decimal64(FastMath.asin(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 atan() {
         return new Decimal64(FastMath.atan(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 atan2(final Decimal64 x) {
         return new Decimal64(FastMath.atan2(value, x.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 cosh() {
         return new Decimal64(FastMath.cosh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 sinh() {
         return new Decimal64(FastMath.sinh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 tanh() {
         return new Decimal64(FastMath.tanh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 acosh() {
         return new Decimal64(FastMath.acosh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 asinh() {
         return new Decimal64(FastMath.asinh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
     public Decimal64 atanh() {
         return new Decimal64(FastMath.atanh(value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final Decimal64[] a, final Decimal64[] b)
-        throws DimensionMismatchException {
-        if (a.length != b.length) {
+    public Decimal64 linearCombination(final Decimal64[] a, final Decimal64[] b) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.linearCombination_600");
+        if (ROR_not_equals(a.length, b.length, "org.apache.commons.math3.util.Decimal64.linearCombination_600", _mut49733, _mut49734, _mut49735, _mut49736, _mut49737)) {
             throw new DimensionMismatchException(a.length, b.length);
         }
         final double[] aDouble = new double[a.length];
         final double[] bDouble = new double[b.length];
-        for (int i = 0; i < a.length; ++i) {
+        for (int i = 0; ROR_less(i, a.length, "org.apache.commons.math3.util.Decimal64.linearCombination_600", _mut49738, _mut49739, _mut49740, _mut49741, _mut49742); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.linearCombination_600");
             aDouble[i] = a[i].value;
             bDouble[i] = b[i].value;
         }
         return new Decimal64(MathArrays.linearCombination(aDouble, bDouble));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final double[] a, final Decimal64[] b)
-        throws DimensionMismatchException {
-        if (a.length != b.length) {
+    public Decimal64 linearCombination(final double[] a, final Decimal64[] b) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.linearCombination_617");
+        if (ROR_not_equals(a.length, b.length, "org.apache.commons.math3.util.Decimal64.linearCombination_617", _mut49743, _mut49744, _mut49745, _mut49746, _mut49747)) {
             throw new DimensionMismatchException(a.length, b.length);
         }
         final double[] bDouble = new double[b.length];
-        for (int i = 0; i < a.length; ++i) {
+        for (int i = 0; ROR_less(i, a.length, "org.apache.commons.math3.util.Decimal64.linearCombination_617", _mut49748, _mut49749, _mut49750, _mut49751, _mut49752); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Decimal64.linearCombination_617");
             bDouble[i] = b[i].value;
         }
         return new Decimal64(MathArrays.linearCombination(a, bDouble));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1,
-                                       final Decimal64 a2, final Decimal64 b2) {
-        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value,
-                                                          a2.value, b2.value));
+    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1, final Decimal64 a2, final Decimal64 b2) {
+        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value, a2.value, b2.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final double a1, final Decimal64 b1,
-                                       final double a2, final Decimal64 b2) {
-        return new Decimal64(MathArrays.linearCombination(a1, b1.value,
-                                                          a2, b2.value));
+    public Decimal64 linearCombination(final double a1, final Decimal64 b1, final double a2, final Decimal64 b2) {
+        return new Decimal64(MathArrays.linearCombination(a1, b1.value, a2, b2.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1,
-                                       final Decimal64 a2, final Decimal64 b2,
-                                       final Decimal64 a3, final Decimal64 b3) {
-        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value,
-                                                          a2.value, b2.value,
-                                                          a3.value, b3.value));
+    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1, final Decimal64 a2, final Decimal64 b2, final Decimal64 a3, final Decimal64 b3) {
+        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value, a2.value, b2.value, a3.value, b3.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final double a1, final Decimal64 b1,
-                                       final double a2, final Decimal64 b2,
-                                       final double a3, final Decimal64 b3) {
-        return new Decimal64(MathArrays.linearCombination(a1, b1.value,
-                                                          a2, b2.value,
-                                                          a3, b3.value));
+    public Decimal64 linearCombination(final double a1, final Decimal64 b1, final double a2, final Decimal64 b2, final double a3, final Decimal64 b3) {
+        return new Decimal64(MathArrays.linearCombination(a1, b1.value, a2, b2.value, a3, b3.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1,
-                                       final Decimal64 a2, final Decimal64 b2,
-                                       final Decimal64 a3, final Decimal64 b3,
-                                       final Decimal64 a4, final Decimal64 b4) {
-        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value,
-                                                          a2.value, b2.value,
-                                                          a3.value, b3.value,
-                                                          a4.value, b4.value));
+    public Decimal64 linearCombination(final Decimal64 a1, final Decimal64 b1, final Decimal64 a2, final Decimal64 b2, final Decimal64 a3, final Decimal64 b3, final Decimal64 a4, final Decimal64 b4) {
+        return new Decimal64(MathArrays.linearCombination(a1.value, b1.value, a2.value, b2.value, a3.value, b3.value, a4.value, b4.value));
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.2
      */
-    public Decimal64 linearCombination(final double a1, final Decimal64 b1,
-                                       final double a2, final Decimal64 b2,
-                                       final double a3, final Decimal64 b3,
-                                       final double a4, final Decimal64 b4) {
-        return new Decimal64(MathArrays.linearCombination(a1, b1.value,
-                                                          a2, b2.value,
-                                                          a3, b3.value,
-                                                          a4, b4.value));
+    public Decimal64 linearCombination(final double a1, final Decimal64 b1, final double a2, final Decimal64 b2, final double a3, final Decimal64 b3, final double a4, final Decimal64 b4) {
+        return new Decimal64(MathArrays.linearCombination(a1, b1.value, a2, b2.value, a3, b3.value, a4, b4.value));
     }
-
 }

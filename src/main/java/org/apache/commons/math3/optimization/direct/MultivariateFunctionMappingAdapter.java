@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.direct;
 
 import org.apache.commons.math3.analysis.MultivariateFunction;
@@ -25,66 +24,27 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
-
-/**
- * <p>Adapter for mapping bounded {@link MultivariateFunction} to unbounded ones.</p>
- *
- * <p>
- * This adapter can be used to wrap functions subject to simple bounds on
- * parameters so they can be used by optimizers that do <em>not</em> directly
- * support simple bounds.
- * </p>
- * <p>
- * The principle is that the user function that will be wrapped will see its
- * parameters bounded as required, i.e when its {@code value} method is called
- * with argument array {@code point}, the elements array will fulfill requirement
- * {@code lower[i] <= point[i] <= upper[i]} for all i. Some of the components
- * may be unbounded or bounded only on one side if the corresponding bound is
- * set to an infinite value. The optimizer will not manage the user function by
- * itself, but it will handle this adapter and it is this adapter that will take
- * care the bounds are fulfilled. The adapter {@link #value(double[])} method will
- * be called by the optimizer with unbound parameters, and the adapter will map
- * the unbounded value to the bounded range using appropriate functions like
- * {@link Sigmoid} for double bounded elements for example.
- * </p>
- * <p>
- * As the optimizer sees only unbounded parameters, it should be noted that the
- * start point or simplex expected by the optimizer should be unbounded, so the
- * user is responsible for converting his bounded point to unbounded by calling
- * {@link #boundedToUnbounded(double[])} before providing them to the optimizer.
- * For the same reason, the point returned by the {@link
- * org.apache.commons.math3.optimization.BaseMultivariateOptimizer#optimize(int,
- * MultivariateFunction, org.apache.commons.math3.optimization.GoalType, double[])}
- * method is unbounded. So to convert this point to bounded, users must call
- * {@link #unboundedToBounded(double[])} by themselves!</p>
- * <p>
- * This adapter is only a poor man solution to simple bounds optimization constraints
- * that can be used with simple optimizers like {@link SimplexOptimizer} with {@link
- * NelderMeadSimplex} or {@link MultiDirectionalSimplex}. A better solution is to use
- * an optimizer that directly supports simple bounds like {@link CMAESOptimizer} or
- * {@link BOBYQAOptimizer}. One caveat of this poor man solution is that behavior near
- * the bounds may be numerically unstable as bounds are mapped from infinite values.
- * Another caveat is that convergence values are evaluated by the optimizer with respect
- * to unbounded variables, so there will be scales differences when converted to bounded
- * variables.
- * </p>
- *
- * @see MultivariateFunctionPenaltyAdapter
- *
- * @deprecated As of 3.1 (to be removed in 4.0).
- * @since 3.0
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 @Deprecated
 public class MultivariateFunctionMappingAdapter implements MultivariateFunction {
 
-    /** Underlying bounded function. */
+    @Conditional
+    public static boolean _mut74613 = false, _mut74614 = false, _mut74615 = false, _mut74616 = false, _mut74617 = false, _mut74618 = false, _mut74619 = false, _mut74620 = false, _mut74621 = false, _mut74622 = false, _mut74623 = false, _mut74624 = false, _mut74625 = false, _mut74626 = false, _mut74627 = false, _mut74628 = false, _mut74629 = false, _mut74630 = false, _mut74631 = false, _mut74632 = false, _mut74633 = false, _mut74634 = false, _mut74635 = false, _mut74636 = false, _mut74637 = false, _mut74638 = false, _mut74639 = false, _mut74640 = false, _mut74641 = false, _mut74642 = false, _mut74643 = false, _mut74644 = false, _mut74645 = false, _mut74646 = false, _mut74647 = false, _mut74648 = false, _mut74649 = false, _mut74650 = false, _mut74651 = false, _mut74652 = false, _mut74653 = false, _mut74654 = false, _mut74655 = false, _mut74656 = false, _mut74657 = false, _mut74658 = false;
+
+    /**
+     * Underlying bounded function.
+     */
     private final MultivariateFunction bounded;
 
-    /** Mapping functions. */
+    /**
+     * Mapping functions.
+     */
     private final Mapper[] mappers;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param bounded bounded function
      * @param lower lower bounds for each element of the input parameters array
      * (some elements may be set to {@code Double.NEGATIVE_INFINITY} for
@@ -95,25 +55,25 @@ public class MultivariateFunctionMappingAdapter implements MultivariateFunction 
      * @exception DimensionMismatchException if lower and upper bounds are not
      * consistent, either according to dimension or to values
      */
-    public MultivariateFunctionMappingAdapter(final MultivariateFunction bounded,
-                                                  final double[] lower, final double[] upper) {
-
+    public MultivariateFunctionMappingAdapter(final MultivariateFunction bounded, final double[] lower, final double[] upper) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98");
         // safety checks
         MathUtils.checkNotNull(lower);
         MathUtils.checkNotNull(upper);
-        if (lower.length != upper.length) {
+        if (ROR_not_equals(lower.length, upper.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98", _mut74613, _mut74614, _mut74615, _mut74616, _mut74617)) {
             throw new DimensionMismatchException(lower.length, upper.length);
         }
-        for (int i = 0; i < lower.length; ++i) {
+        for (int i = 0; ROR_less(i, lower.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98", _mut74623, _mut74624, _mut74625, _mut74626, _mut74627); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98");
             // note the following test is written in such a way it also fails for NaN
-            if (!(upper[i] >= lower[i])) {
+            if (!(ROR_greater_equals(upper[i], lower[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98", _mut74618, _mut74619, _mut74620, _mut74621, _mut74622))) {
                 throw new NumberIsTooSmallException(upper[i], lower[i], true);
             }
         }
-
         this.bounded = bounded;
         this.mappers = new Mapper[lower.length];
-        for (int i = 0; i < mappers.length; ++i) {
+        for (int i = 0; ROR_less(i, mappers.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98", _mut74628, _mut74629, _mut74630, _mut74631, _mut74632); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.MultivariateFunctionMappingAdapter_98");
             if (Double.isInfinite(lower[i])) {
                 if (Double.isInfinite(upper[i])) {
                     // element is unbounded, no transformation is needed
@@ -132,42 +92,42 @@ public class MultivariateFunctionMappingAdapter implements MultivariateFunction 
                 }
             }
         }
-
     }
 
-    /** Map an array from unbounded to bounded.
+    /**
+     * Map an array from unbounded to bounded.
      * @param point unbounded value
      * @return bounded value
      */
     public double[] unboundedToBounded(double[] point) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_142");
         // map unbounded input point to bounded point
         final double[] mapped = new double[mappers.length];
-        for (int i = 0; i < mappers.length; ++i) {
+        for (int i = 0; ROR_less(i, mappers.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_142", _mut74633, _mut74634, _mut74635, _mut74636, _mut74637); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_142");
             mapped[i] = mappers[i].unboundedToBounded(point[i]);
         }
-
         return mapped;
-
     }
 
-    /** Map an array from bounded to unbounded.
+    /**
+     * Map an array from bounded to unbounded.
      * @param point bounded value
      * @return unbounded value
      */
     public double[] boundedToUnbounded(double[] point) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_158");
         // map bounded input point to unbounded point
         final double[] mapped = new double[mappers.length];
-        for (int i = 0; i < mappers.length; ++i) {
+        for (int i = 0; ROR_less(i, mappers.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_158", _mut74638, _mut74639, _mut74640, _mut74641, _mut74642); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_158");
             mapped[i] = mappers[i].boundedToUnbounded(point[i]);
         }
-
         return mapped;
-
     }
 
-    /** Compute the underlying function value from an unbounded point.
+    /**
+     * Compute the underlying function value from an unbounded point.
      * <p>
      * This method simply bounds the unbounded point using the mappings
      * set up at construction and calls the underlying function using
@@ -181,121 +141,159 @@ public class MultivariateFunctionMappingAdapter implements MultivariateFunction 
         return bounded.value(unboundedToBounded(point));
     }
 
-    /** Mapping interface. */
+    /**
+     * Mapping interface.
+     */
     private interface Mapper {
 
-        /** Map a value from unbounded to bounded.
+        /**
+         * Map a value from unbounded to bounded.
          * @param y unbounded value
          * @return bounded value
          */
         double unboundedToBounded(double y);
 
-        /** Map a value from bounded to unbounded.
+        /**
+         * Map a value from bounded to unbounded.
          * @param x bounded value
          * @return unbounded value
          */
         double boundedToUnbounded(double x);
-
     }
 
-    /** Local class for no bounds mapping. */
+    /**
+     * Local class for no bounds mapping.
+     */
     private static class NoBoundsMapper implements Mapper {
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          */
         NoBoundsMapper() {
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double unboundedToBounded(final double y) {
             return y;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double boundedToUnbounded(final double x) {
             return x;
         }
-
     }
 
-    /** Local class for lower bounds mapping. */
+    /**
+     * Local class for lower bounds mapping.
+     */
     private static class LowerBoundMapper implements Mapper {
 
-        /** Low bound. */
+        /**
+         * Low bound.
+         */
         private final double lower;
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          * @param lower lower bound
          */
         LowerBoundMapper(final double lower) {
             this.lower = lower;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double unboundedToBounded(final double y) {
-            return lower + FastMath.exp(y);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_235");
+            return AOR_plus(lower, FastMath.exp(y), "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_235", _mut74643, _mut74644, _mut74645, _mut74646);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double boundedToUnbounded(final double x) {
-            return FastMath.log(x - lower);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_240");
+            return FastMath.log(AOR_minus(x, lower, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_240", _mut74647, _mut74648, _mut74649, _mut74650));
         }
-
     }
 
-    /** Local class for upper bounds mapping. */
+    /**
+     * Local class for upper bounds mapping.
+     */
     private static class UpperBoundMapper implements Mapper {
 
-        /** Upper bound. */
+        /**
+         * Upper bound.
+         */
         private final double upper;
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          * @param upper upper bound
          */
         UpperBoundMapper(final double upper) {
             this.upper = upper;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double unboundedToBounded(final double y) {
-            return upper - FastMath.exp(-y);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_260");
+            return AOR_minus(upper, FastMath.exp(-y), "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.unboundedToBounded_260", _mut74651, _mut74652, _mut74653, _mut74654);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double boundedToUnbounded(final double x) {
-            return -FastMath.log(upper - x);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_265");
+            return -FastMath.log(AOR_minus(upper, x, "org.apache.commons.math3.optimization.direct.MultivariateFunctionMappingAdapter.boundedToUnbounded_265", _mut74655, _mut74656, _mut74657, _mut74658));
         }
-
     }
 
-    /** Local class for lower and bounds mapping. */
+    /**
+     * Local class for lower and bounds mapping.
+     */
     private static class LowerUpperBoundMapper implements Mapper {
 
-        /** Function from unbounded to bounded. */
+        /**
+         * Function from unbounded to bounded.
+         */
         private final UnivariateFunction boundingFunction;
 
-        /** Function from bounded to unbounded. */
+        /**
+         * Function from bounded to unbounded.
+         */
         private final UnivariateFunction unboundingFunction;
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          * @param lower lower bound
          * @param upper upper bound
          */
         LowerUpperBoundMapper(final double lower, final double upper) {
-            boundingFunction   = new Sigmoid(lower, upper);
+            boundingFunction = new Sigmoid(lower, upper);
             unboundingFunction = new Logit(lower, upper);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double unboundedToBounded(final double y) {
             return boundingFunction.value(y);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public double boundedToUnbounded(final double x) {
             return unboundingFunction.value(x);
         }
-
     }
-
 }

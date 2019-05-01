@@ -19,6 +19,8 @@ package org.apache.commons.math3.optim.univariate;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.optim.AbstractConvergenceChecker;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Simple implementation of the
@@ -37,8 +39,11 @@ import org.apache.commons.math3.optim.AbstractConvergenceChecker;
  *
  * @since 3.1
  */
-public class SimpleUnivariateValueChecker
-    extends AbstractConvergenceChecker<UnivariatePointValuePair> {
+public class SimpleUnivariateValueChecker extends AbstractConvergenceChecker<UnivariatePointValuePair> {
+
+    @Conditional
+    public static boolean _mut58804 = false, _mut58805 = false, _mut58806 = false, _mut58807 = false, _mut58808 = false, _mut58809 = false, _mut58810 = false, _mut58811 = false, _mut58812 = false, _mut58813 = false, _mut58814 = false, _mut58815 = false, _mut58816 = false, _mut58817 = false, _mut58818 = false, _mut58819 = false, _mut58820 = false, _mut58821 = false, _mut58822 = false, _mut58823 = false, _mut58824 = false, _mut58825 = false, _mut58826 = false, _mut58827 = false, _mut58828 = false, _mut58829 = false, _mut58830 = false, _mut58831 = false, _mut58832 = false, _mut58833 = false, _mut58834 = false, _mut58835 = false, _mut58836 = false, _mut58837 = false, _mut58838 = false;
+
     /**
      * If {@link #maxIterationCount} is set to this value, the number of
      * iterations will never cause
@@ -46,6 +51,7 @@ public class SimpleUnivariateValueChecker
      * to return {@code true}.
      */
     private static final int ITERATION_CHECK_DISABLED = -1;
+
     /**
      * Number of iterations after which the
      * {@link #converged(int,UnivariatePointValuePair,UnivariatePointValuePair)}
@@ -53,7 +59,8 @@ public class SimpleUnivariateValueChecker
      */
     private final int maxIterationCount;
 
-    /** Build an instance with specified thresholds.
+    /**
+     * Build an instance with specified thresholds.
      *
      * In order to perform only relative checks, the absolute tolerance
      * must be set to a negative value. In order to perform only absolute
@@ -62,8 +69,7 @@ public class SimpleUnivariateValueChecker
      * @param relativeThreshold relative tolerance threshold
      * @param absoluteThreshold absolute tolerance threshold
      */
-    public SimpleUnivariateValueChecker(final double relativeThreshold,
-                                        final double absoluteThreshold) {
+    public SimpleUnivariateValueChecker(final double relativeThreshold, final double absoluteThreshold) {
         super(relativeThreshold, absoluteThreshold);
         maxIterationCount = ITERATION_CHECK_DISABLED;
     }
@@ -82,12 +88,10 @@ public class SimpleUnivariateValueChecker
      *
      * @since 3.1
      */
-    public SimpleUnivariateValueChecker(final double relativeThreshold,
-                                        final double absoluteThreshold,
-                                        final int maxIter) {
+    public SimpleUnivariateValueChecker(final double relativeThreshold, final double absoluteThreshold, final int maxIter) {
         super(relativeThreshold, absoluteThreshold);
-
-        if (maxIter <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.SimpleUnivariateValueChecker_85");
+        if (ROR_less_equals(maxIter, 0, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.SimpleUnivariateValueChecker_85", _mut58804, _mut58805, _mut58806, _mut58807, _mut58808)) {
             throw new NotStrictlyPositiveException(maxIter);
         }
         maxIterationCount = maxIter;
@@ -110,18 +114,15 @@ public class SimpleUnivariateValueChecker
      * @return {@code true} if the algorithm has converged.
      */
     @Override
-    public boolean converged(final int iteration,
-                             final UnivariatePointValuePair previous,
-                             final UnivariatePointValuePair current) {
-        if (maxIterationCount != ITERATION_CHECK_DISABLED && iteration >= maxIterationCount) {
+    public boolean converged(final int iteration, final UnivariatePointValuePair previous, final UnivariatePointValuePair current) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112");
+        if ((_mut58819 ? (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58809, _mut58810, _mut58811, _mut58812, _mut58813) || ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58814, _mut58815, _mut58816, _mut58817, _mut58818)) : (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58809, _mut58810, _mut58811, _mut58812, _mut58813) && ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58814, _mut58815, _mut58816, _mut58817, _mut58818)))) {
             return true;
         }
-
         final double p = previous.getValue();
         final double c = current.getValue();
-        final double difference = FastMath.abs(p - c);
+        final double difference = FastMath.abs(AOR_minus(p, c, "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58820, _mut58821, _mut58822, _mut58823));
         final double size = FastMath.max(FastMath.abs(p), FastMath.abs(c));
-        return difference <= size * getRelativeThreshold() ||
-            difference <= getAbsoluteThreshold();
+        return (_mut58838 ? (ROR_less_equals(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58824, _mut58825, _mut58826, _mut58827), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58828, _mut58829, _mut58830, _mut58831, _mut58832) && ROR_less_equals(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58833, _mut58834, _mut58835, _mut58836, _mut58837)) : (ROR_less_equals(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58824, _mut58825, _mut58826, _mut58827), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58828, _mut58829, _mut58830, _mut58831, _mut58832) || ROR_less_equals(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optim.univariate.SimpleUnivariateValueChecker.converged_112", _mut58833, _mut58834, _mut58835, _mut58836, _mut58837)));
     }
 }

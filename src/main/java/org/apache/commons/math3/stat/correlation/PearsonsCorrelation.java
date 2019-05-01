@@ -25,6 +25,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.BlockRealMatrix;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes Pearson's product-moment correlation coefficients for pairs of arrays
@@ -50,10 +52,17 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class PearsonsCorrelation {
 
-    /** correlation matrix */
+    @Conditional
+    public static boolean _mut11068 = false, _mut11069 = false, _mut11070 = false, _mut11071 = false, _mut11072 = false, _mut11073 = false, _mut11074 = false, _mut11075 = false, _mut11076 = false, _mut11077 = false, _mut11078 = false, _mut11079 = false, _mut11080 = false, _mut11081 = false, _mut11082 = false, _mut11083 = false, _mut11084 = false, _mut11085 = false, _mut11086 = false, _mut11087 = false, _mut11088 = false, _mut11089 = false, _mut11090 = false, _mut11091 = false, _mut11092 = false, _mut11093 = false, _mut11094 = false, _mut11095 = false, _mut11096 = false, _mut11097 = false, _mut11098 = false, _mut11099 = false, _mut11100 = false, _mut11101 = false, _mut11102 = false, _mut11103 = false, _mut11104 = false, _mut11105 = false, _mut11106 = false, _mut11107 = false, _mut11108 = false, _mut11109 = false, _mut11110 = false, _mut11111 = false, _mut11112 = false, _mut11113 = false, _mut11114 = false, _mut11115 = false, _mut11116 = false, _mut11117 = false, _mut11118 = false, _mut11119 = false, _mut11120 = false, _mut11121 = false, _mut11122 = false, _mut11123 = false, _mut11124 = false, _mut11125 = false, _mut11126 = false, _mut11127 = false, _mut11128 = false, _mut11129 = false, _mut11130 = false, _mut11131 = false, _mut11132 = false, _mut11133 = false, _mut11134 = false, _mut11135 = false, _mut11136 = false, _mut11137 = false, _mut11138 = false, _mut11139 = false, _mut11140 = false, _mut11141 = false, _mut11142 = false, _mut11143 = false, _mut11144 = false, _mut11145 = false, _mut11146 = false, _mut11147 = false, _mut11148 = false, _mut11149 = false, _mut11150 = false, _mut11151 = false, _mut11152 = false, _mut11153 = false, _mut11154 = false, _mut11155 = false, _mut11156 = false, _mut11157 = false, _mut11158 = false, _mut11159 = false, _mut11160 = false, _mut11161 = false, _mut11162 = false, _mut11163 = false, _mut11164 = false, _mut11165 = false, _mut11166 = false, _mut11167 = false, _mut11168 = false, _mut11169 = false, _mut11170 = false, _mut11171 = false, _mut11172 = false, _mut11173 = false, _mut11174 = false, _mut11175 = false, _mut11176 = false, _mut11177 = false, _mut11178 = false, _mut11179 = false, _mut11180 = false, _mut11181 = false, _mut11182 = false, _mut11183 = false, _mut11184 = false, _mut11185 = false, _mut11186 = false, _mut11187 = false, _mut11188 = false, _mut11189 = false, _mut11190 = false;
+
+    /**
+     * correlation matrix
+     */
     private final RealMatrix correlationMatrix;
 
-    /** number of observations */
+    /**
+     * number of observations
+     */
     private final int nObs;
 
     /**
@@ -160,12 +169,15 @@ public class PearsonsCorrelation {
      * @throws NullPointerException if this instance was created with no data
      */
     public RealMatrix getCorrelationStandardErrors() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162");
         int nVars = correlationMatrix.getColumnDimension();
         double[][] out = new double[nVars][nVars];
-        for (int i = 0; i < nVars; i++) {
-            for (int j = 0; j < nVars; j++) {
+        for (int i = 0; ROR_less(i, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11089, _mut11090, _mut11091, _mut11092, _mut11093); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162");
+            for (int j = 0; ROR_less(j, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11084, _mut11085, _mut11086, _mut11087, _mut11088); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162");
                 double r = correlationMatrix.getEntry(i, j);
-                out[i][j] = FastMath.sqrt((1 - r * r) /(nObs - 2));
+                out[i][j] = FastMath.sqrt(AOR_divide((AOR_minus(1, AOR_multiply(r, r, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11068, _mut11069, _mut11070, _mut11071), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11072, _mut11073, _mut11074, _mut11075)), (AOR_minus(nObs, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11076, _mut11077, _mut11078, _mut11079)), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationStandardErrors_162", _mut11080, _mut11081, _mut11082, _mut11083));
             }
         }
         return new BlockRealMatrix(out);
@@ -192,23 +204,25 @@ public class PearsonsCorrelation {
      * @throws NullPointerException if this instance was created with no data
      */
     public RealMatrix getCorrelationPValues() {
-        TDistribution tDistribution = new TDistribution(nObs - 2);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194");
+        TDistribution tDistribution = new TDistribution(AOR_minus(nObs, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11094, _mut11095, _mut11096, _mut11097));
         int nVars = correlationMatrix.getColumnDimension();
         double[][] out = new double[nVars][nVars];
-        for (int i = 0; i < nVars; i++) {
-            for (int j = 0; j < nVars; j++) {
-                if (i == j) {
+        for (int i = 0; ROR_less(i, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11132, _mut11133, _mut11134, _mut11135, _mut11136); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194");
+            for (int j = 0; ROR_less(j, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11127, _mut11128, _mut11129, _mut11130, _mut11131); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194");
+                if (ROR_equals(i, j, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11098, _mut11099, _mut11100, _mut11101, _mut11102)) {
                     out[i][j] = 0d;
                 } else {
                     double r = correlationMatrix.getEntry(i, j);
-                    double t = FastMath.abs(r * FastMath.sqrt((nObs - 2)/(1 - r * r)));
-                    out[i][j] = 2 * tDistribution.cumulativeProbability(-t);
+                    double t = FastMath.abs(AOR_multiply(r, FastMath.sqrt(AOR_divide((AOR_minus(nObs, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11103, _mut11104, _mut11105, _mut11106)), (AOR_minus(1, AOR_multiply(r, r, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11107, _mut11108, _mut11109, _mut11110), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11111, _mut11112, _mut11113, _mut11114)), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11115, _mut11116, _mut11117, _mut11118)), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11119, _mut11120, _mut11121, _mut11122));
+                    out[i][j] = AOR_multiply(2, tDistribution.cumulativeProbability(-t), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.getCorrelationPValues_194", _mut11123, _mut11124, _mut11125, _mut11126);
                 }
             }
         }
         return new BlockRealMatrix(out);
     }
-
 
     /**
      * Computes the correlation matrix for the columns of the
@@ -224,14 +238,17 @@ public class PearsonsCorrelation {
      * @see #correlation(double[], double[])
      */
     public RealMatrix computeCorrelationMatrix(RealMatrix matrix) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.computeCorrelationMatrix_226");
         checkSufficientData(matrix);
         int nVars = matrix.getColumnDimension();
         RealMatrix outMatrix = new BlockRealMatrix(nVars, nVars);
-        for (int i = 0; i < nVars; i++) {
-            for (int j = 0; j < i; j++) {
-              double corr = correlation(matrix.getColumn(i), matrix.getColumn(j));
-              outMatrix.setEntry(i, j, corr);
-              outMatrix.setEntry(j, i, corr);
+        for (int i = 0; ROR_less(i, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.computeCorrelationMatrix_226", _mut11142, _mut11143, _mut11144, _mut11145, _mut11146); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.computeCorrelationMatrix_226");
+            for (int j = 0; ROR_less(j, i, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.computeCorrelationMatrix_226", _mut11137, _mut11138, _mut11139, _mut11140, _mut11141); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.computeCorrelationMatrix_226");
+                double corr = correlation(matrix.getColumn(i), matrix.getColumn(j));
+                outMatrix.setEntry(i, j, corr);
+                outMatrix.setEntry(j, i, corr);
             }
             outMatrix.setEntry(i, i, 1d);
         }
@@ -253,7 +270,7 @@ public class PearsonsCorrelation {
      * @see #correlation(double[], double[])
      */
     public RealMatrix computeCorrelationMatrix(double[][] data) {
-       return computeCorrelationMatrix(new BlockRealMatrix(data));
+        return computeCorrelationMatrix(new BlockRealMatrix(data));
     }
 
     /**
@@ -271,14 +288,15 @@ public class PearsonsCorrelation {
      * @throws MathIllegalArgumentException if there is insufficient data
      */
     public double correlation(final double[] xArray, final double[] yArray) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.correlation_273");
         SimpleRegression regression = new SimpleRegression();
-        if (xArray.length != yArray.length) {
+        if (ROR_not_equals(xArray.length, yArray.length, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.correlation_273", _mut11147, _mut11148, _mut11149, _mut11150, _mut11151)) {
             throw new DimensionMismatchException(xArray.length, yArray.length);
-        } else if (xArray.length < 2) {
-            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_DIMENSION,
-                                                   xArray.length, 2);
+        } else if (ROR_less(xArray.length, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.correlation_273", _mut11152, _mut11153, _mut11154, _mut11155, _mut11156)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_DIMENSION, xArray.length, 2);
         } else {
-            for(int i=0; i<xArray.length; i++) {
+            for (int i = 0; ROR_less(i, xArray.length, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.correlation_273", _mut11157, _mut11158, _mut11159, _mut11160, _mut11161); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.correlation_273");
                 regression.addData(xArray[i], yArray[i]);
             }
             return regression.getR();
@@ -297,14 +315,16 @@ public class PearsonsCorrelation {
      * @return correlation matrix
      */
     public RealMatrix covarianceToCorrelation(RealMatrix covarianceMatrix) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299");
         int nVars = covarianceMatrix.getColumnDimension();
         RealMatrix outMatrix = new BlockRealMatrix(nVars, nVars);
-        for (int i = 0; i < nVars; i++) {
+        for (int i = 0; ROR_less(i, nVars, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299", _mut11175, _mut11176, _mut11177, _mut11178, _mut11179); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299");
             double sigma = FastMath.sqrt(covarianceMatrix.getEntry(i, i));
             outMatrix.setEntry(i, i, 1d);
-            for (int j = 0; j < i; j++) {
-                double entry = covarianceMatrix.getEntry(i, j) /
-                       (sigma * FastMath.sqrt(covarianceMatrix.getEntry(j, j)));
+            for (int j = 0; ROR_less(j, i, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299", _mut11170, _mut11171, _mut11172, _mut11173, _mut11174); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299");
+                double entry = AOR_divide(covarianceMatrix.getEntry(i, j), (AOR_multiply(sigma, FastMath.sqrt(covarianceMatrix.getEntry(j, j)), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299", _mut11162, _mut11163, _mut11164, _mut11165)), "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.covarianceToCorrelation_299", _mut11166, _mut11167, _mut11168, _mut11169);
                 outMatrix.setEntry(i, j, entry);
                 outMatrix.setEntry(j, i, entry);
             }
@@ -320,11 +340,11 @@ public class PearsonsCorrelation {
      * @throws MathIllegalArgumentException if there is insufficient data
      */
     private void checkSufficientData(final RealMatrix matrix) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.PearsonsCorrelation.checkSufficientData_322");
         int nRows = matrix.getRowDimension();
         int nCols = matrix.getColumnDimension();
-        if (nRows < 2 || nCols < 2) {
-            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_ROWS_AND_COLUMNS,
-                                                   nRows, nCols);
+        if ((_mut11190 ? (ROR_less(nRows, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.checkSufficientData_322", _mut11180, _mut11181, _mut11182, _mut11183, _mut11184) && ROR_less(nCols, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.checkSufficientData_322", _mut11185, _mut11186, _mut11187, _mut11188, _mut11189)) : (ROR_less(nRows, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.checkSufficientData_322", _mut11180, _mut11181, _mut11182, _mut11183, _mut11184) || ROR_less(nCols, 2, "org.apache.commons.math3.stat.correlation.PearsonsCorrelation.checkSufficientData_322", _mut11185, _mut11186, _mut11187, _mut11188, _mut11189)))) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_ROWS_AND_COLUMNS, nRows, nCols);
         }
     }
 }

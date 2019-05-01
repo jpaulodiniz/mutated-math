@@ -14,12 +14,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.linear;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
 import org.apache.commons.math3.exception.MathUnsupportedOperationException;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NotPositiveException;
@@ -33,6 +31,8 @@ import org.apache.commons.math3.analysis.function.Divide;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Class defining a real-valued vector with basic algebraic operations.
@@ -57,6 +57,10 @@ import org.apache.commons.math3.util.FastMath;
  * @since 2.1
  */
 public abstract class RealVector {
+
+    @Conditional
+    public static boolean _mut33457 = false, _mut33458 = false, _mut33459 = false, _mut33460 = false, _mut33461 = false, _mut33462 = false, _mut33463 = false, _mut33464 = false, _mut33465 = false, _mut33466 = false, _mut33467 = false, _mut33468 = false, _mut33469 = false, _mut33470 = false, _mut33471 = false, _mut33472 = false, _mut33473 = false, _mut33474 = false, _mut33475 = false, _mut33476 = false, _mut33477 = false, _mut33478 = false, _mut33479 = false, _mut33480 = false, _mut33481 = false, _mut33482 = false, _mut33483 = false, _mut33484 = false, _mut33485 = false, _mut33486 = false, _mut33487 = false, _mut33488 = false, _mut33489 = false, _mut33490 = false, _mut33491 = false, _mut33492 = false, _mut33493 = false, _mut33494 = false, _mut33495 = false, _mut33496 = false, _mut33497 = false, _mut33498 = false, _mut33499 = false, _mut33500 = false, _mut33501 = false, _mut33502 = false, _mut33503 = false, _mut33504 = false, _mut33505 = false, _mut33506 = false, _mut33507 = false, _mut33508 = false, _mut33509 = false, _mut33510 = false, _mut33511 = false, _mut33512 = false, _mut33513 = false, _mut33514 = false, _mut33515 = false, _mut33516 = false, _mut33517 = false, _mut33518 = false, _mut33519 = false, _mut33520 = false, _mut33521 = false, _mut33522 = false, _mut33523 = false, _mut33524 = false, _mut33525 = false, _mut33526 = false, _mut33527 = false, _mut33528 = false, _mut33529 = false, _mut33530 = false, _mut33531 = false, _mut33532 = false, _mut33533 = false, _mut33534 = false, _mut33535 = false, _mut33536 = false, _mut33537 = false, _mut33538 = false, _mut33539 = false, _mut33540 = false, _mut33541 = false, _mut33542 = false, _mut33543 = false, _mut33544 = false, _mut33545 = false, _mut33546 = false, _mut33547 = false, _mut33548 = false, _mut33549 = false, _mut33550 = false, _mut33551 = false, _mut33552 = false, _mut33553 = false, _mut33554 = false, _mut33555 = false, _mut33556 = false, _mut33557 = false, _mut33558 = false, _mut33559 = false, _mut33560 = false, _mut33561 = false, _mut33562 = false, _mut33563 = false, _mut33564 = false, _mut33565 = false, _mut33566 = false, _mut33567 = false, _mut33568 = false, _mut33569 = false, _mut33570 = false, _mut33571 = false, _mut33572 = false, _mut33573 = false, _mut33574 = false, _mut33575 = false, _mut33576 = false, _mut33577 = false, _mut33578 = false, _mut33579 = false, _mut33580 = false, _mut33581 = false, _mut33582 = false, _mut33583 = false, _mut33584 = false, _mut33585 = false, _mut33586 = false, _mut33587 = false, _mut33588 = false, _mut33589 = false, _mut33590 = false, _mut33591 = false, _mut33592 = false, _mut33593 = false, _mut33594 = false, _mut33595 = false, _mut33596 = false, _mut33597 = false, _mut33598 = false, _mut33599 = false, _mut33600 = false, _mut33601 = false, _mut33602 = false, _mut33603 = false, _mut33604 = false, _mut33605 = false, _mut33606 = false, _mut33607 = false, _mut33608 = false, _mut33609 = false, _mut33610 = false, _mut33611 = false, _mut33612 = false, _mut33613 = false, _mut33614 = false, _mut33615 = false, _mut33616 = false, _mut33617 = false, _mut33618 = false, _mut33619 = false, _mut33620 = false, _mut33621 = false, _mut33622 = false, _mut33623 = false, _mut33624 = false, _mut33625 = false, _mut33626 = false, _mut33627 = false, _mut33628 = false, _mut33629 = false, _mut33630 = false, _mut33631 = false, _mut33632 = false, _mut33633 = false, _mut33634 = false, _mut33635 = false, _mut33636 = false, _mut33637 = false, _mut33638 = false, _mut33639 = false, _mut33640 = false, _mut33641 = false, _mut33642 = false, _mut33643 = false, _mut33644 = false, _mut33645 = false, _mut33646 = false, _mut33647 = false, _mut33648 = false, _mut33649 = false, _mut33650 = false, _mut33651 = false, _mut33652 = false, _mut33653 = false, _mut33654 = false, _mut33655 = false, _mut33656 = false, _mut33657 = false, _mut33658 = false, _mut33659 = false, _mut33660 = false, _mut33661 = false, _mut33662 = false, _mut33663 = false, _mut33664 = false, _mut33665 = false, _mut33666 = false, _mut33667 = false, _mut33668 = false, _mut33669 = false, _mut33670 = false, _mut33671 = false, _mut33672 = false, _mut33673 = false, _mut33674 = false, _mut33675 = false, _mut33676 = false, _mut33677 = false, _mut33678 = false, _mut33679 = false, _mut33680 = false, _mut33681 = false, _mut33682 = false, _mut33683 = false, _mut33684 = false, _mut33685 = false, _mut33686 = false, _mut33687 = false, _mut33688 = false, _mut33689 = false, _mut33690 = false, _mut33691 = false, _mut33692 = false, _mut33693 = false, _mut33694 = false, _mut33695 = false, _mut33696 = false, _mut33697 = false, _mut33698 = false, _mut33699 = false, _mut33700 = false, _mut33701 = false, _mut33702 = false, _mut33703 = false, _mut33704 = false, _mut33705 = false, _mut33706 = false, _mut33707 = false, _mut33708 = false, _mut33709 = false, _mut33710 = false, _mut33711 = false, _mut33712 = false, _mut33713 = false, _mut33714 = false, _mut33715 = false, _mut33716 = false, _mut33717 = false, _mut33718 = false, _mut33719 = false, _mut33720 = false, _mut33721 = false, _mut33722 = false, _mut33723 = false, _mut33724 = false, _mut33725 = false;
+
     /**
      * Returns the size of the vector.
      *
@@ -82,8 +86,7 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the index is not valid.
      * @see #getEntry(int)
      */
-    public abstract void setEntry(int index, double value)
-        throws OutOfRangeException;
+    public abstract void setEntry(int index, double value) throws OutOfRangeException;
 
     /**
      * Change an entry at the specified index.
@@ -93,9 +96,9 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the index is not valid.
      * @since 3.0
      */
-    public void addToEntry(int index, double increment)
-        throws OutOfRangeException {
-        setEntry(index, getEntry(index) + increment);
+    public void addToEntry(int index, double increment) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.addToEntry_96");
+        setEntry(index, AOR_plus(getEntry(index), increment, "org.apache.commons.math3.linear.RealVector.addToEntry_96", _mut33457, _mut33458, _mut33459, _mut33460));
     }
 
     /**
@@ -123,8 +126,7 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the index is not valid.
      * @throws NotPositiveException if the number of elements is not positive.
      */
-    public abstract RealVector getSubVector(int index, int n)
-        throws NotPositiveException, OutOfRangeException;
+    public abstract RealVector getSubVector(int index, int n) throws NotPositiveException, OutOfRangeException;
 
     /**
      * Set a sequence of consecutive elements.
@@ -133,8 +135,7 @@ public abstract class RealVector {
      * @param v vector containing the values to set.
      * @throws OutOfRangeException if the index is not valid.
      */
-    public abstract void setSubVector(int index, RealVector v)
-        throws OutOfRangeException;
+    public abstract void setSubVector(int index, RealVector v) throws OutOfRangeException;
 
     /**
      * Check whether any coordinate of this vector is {@code NaN}.
@@ -159,8 +160,7 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if the vectors do not
      * have the same dimension.
      */
-    protected void checkVectorDimensions(RealVector v)
-        throws DimensionMismatchException {
+    protected void checkVectorDimensions(RealVector v) throws DimensionMismatchException {
         checkVectorDimensions(v.getDimension());
     }
 
@@ -171,10 +171,10 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if the dimension is
      * inconsistent with the vector size.
      */
-    protected void checkVectorDimensions(int n)
-        throws DimensionMismatchException {
+    protected void checkVectorDimensions(int n) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.checkVectorDimensions_174");
         int d = getDimension();
-        if (d != n) {
+        if (ROR_not_equals(d, n, "org.apache.commons.math3.linear.RealVector.checkVectorDimensions_174", _mut33461, _mut33462, _mut33463, _mut33464, _mut33465)) {
             throw new DimensionMismatchException(d, n);
         }
     }
@@ -186,10 +186,9 @@ public abstract class RealVector {
      * @exception OutOfRangeException if {@code index} is not valid.
      */
     protected void checkIndex(final int index) throws OutOfRangeException {
-        if (index < 0 ||
-            index >= getDimension()) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX,
-                                          index, 0, getDimension() - 1);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.checkIndex_188");
+        if ((_mut33476 ? (ROR_less(index, 0, "org.apache.commons.math3.linear.RealVector.checkIndex_188", _mut33466, _mut33467, _mut33468, _mut33469, _mut33470) && ROR_greater_equals(index, getDimension(), "org.apache.commons.math3.linear.RealVector.checkIndex_188", _mut33471, _mut33472, _mut33473, _mut33474, _mut33475)) : (ROR_less(index, 0, "org.apache.commons.math3.linear.RealVector.checkIndex_188", _mut33466, _mut33467, _mut33468, _mut33469, _mut33470) || ROR_greater_equals(index, getDimension(), "org.apache.commons.math3.linear.RealVector.checkIndex_188", _mut33471, _mut33472, _mut33473, _mut33474, _mut33475)))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, index, 0, AOR_minus(getDimension(), 1, "org.apache.commons.math3.linear.RealVector.checkIndex_188", _mut33477, _mut33478, _mut33479, _mut33480));
         }
     }
 
@@ -202,21 +201,18 @@ public abstract class RealVector {
      * @throws NumberIsTooSmallException if {@code end < start}
      * @since 3.1
      */
-    protected void checkIndices(final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    protected void checkIndices(final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.checkIndices_205");
         final int dim = getDimension();
-        if ((start < 0) || (start >= dim)) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX, start, 0,
-                                          dim - 1);
+        if ((_mut33491 ? ((ROR_less(start, 0, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33481, _mut33482, _mut33483, _mut33484, _mut33485)) && (ROR_greater_equals(start, dim, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33486, _mut33487, _mut33488, _mut33489, _mut33490))) : ((ROR_less(start, 0, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33481, _mut33482, _mut33483, _mut33484, _mut33485)) || (ROR_greater_equals(start, dim, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33486, _mut33487, _mut33488, _mut33489, _mut33490))))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, start, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33492, _mut33493, _mut33494, _mut33495));
         }
-        if ((end < 0) || (end >= dim)) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX, end, 0,
-                                          dim - 1);
+        if ((_mut33506 ? ((ROR_less(end, 0, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33496, _mut33497, _mut33498, _mut33499, _mut33500)) && (ROR_greater_equals(end, dim, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33501, _mut33502, _mut33503, _mut33504, _mut33505))) : ((ROR_less(end, 0, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33496, _mut33497, _mut33498, _mut33499, _mut33500)) || (ROR_greater_equals(end, dim, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33501, _mut33502, _mut33503, _mut33504, _mut33505))))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, end, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33507, _mut33508, _mut33509, _mut33510));
         }
-        if (end < start) {
+        if (ROR_less(end, start, "org.apache.commons.math3.linear.RealVector.checkIndices_205", _mut33511, _mut33512, _mut33513, _mut33514, _mut33515)) {
             // TODO Use more specific error message
-            throw new NumberIsTooSmallException(LocalizedFormats.INITIAL_ROW_AFTER_FINAL_ROW,
-                                                end, start, false);
+            throw new NumberIsTooSmallException(LocalizedFormats.INITIAL_ROW_AFTER_FINAL_ROW, end, start, false);
         }
     }
 
@@ -230,13 +226,15 @@ public abstract class RealVector {
      * {@code this} vector.
      */
     public RealVector add(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.add_232");
         checkVectorDimensions(v);
         RealVector result = v.copy();
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.add_232");
             final Entry e = it.next();
             final int index = e.getIndex();
-            result.setEntry(index, e.getValue() + result.getEntry(index));
+            result.setEntry(index, AOR_plus(e.getValue(), result.getEntry(index), "org.apache.commons.math3.linear.RealVector.add_232", _mut33516, _mut33517, _mut33518, _mut33519));
         }
         return result;
     }
@@ -251,13 +249,15 @@ public abstract class RealVector {
      * {@code this} vector.
      */
     public RealVector subtract(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.subtract_253");
         checkVectorDimensions(v);
         RealVector result = v.mapMultiply(-1d);
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.subtract_253");
             final Entry e = it.next();
             final int index = e.getIndex();
-            result.setEntry(index, e.getValue() + result.getEntry(index));
+            result.setEntry(index, AOR_plus(e.getValue(), result.getEntry(index), "org.apache.commons.math3.linear.RealVector.subtract_253", _mut33520, _mut33521, _mut33522, _mut33523));
         }
         return result;
     }
@@ -281,7 +281,8 @@ public abstract class RealVector {
      * @return {@code this}.
      */
     public RealVector mapAddToSelf(double d) {
-        if (d != 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.mapAddToSelf_283");
+        if (ROR_not_equals(d, 0, "org.apache.commons.math3.linear.RealVector.mapAddToSelf_283", _mut33524, _mut33525, _mut33526, _mut33527, _mut33528)) {
             return mapToSelf(FunctionUtils.fix2ndArgument(new Add(), d));
         }
         return this;
@@ -303,11 +304,13 @@ public abstract class RealVector {
      * {@code this} vector.
      */
     public double dotProduct(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.dotProduct_305");
         checkVectorDimensions(v);
         double d = 0;
         final int n = getDimension();
-        for (int i = 0; i < n; i++) {
-            d += getEntry(i) * v.getEntry(i);
+        for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.RealVector.dotProduct_305", _mut33533, _mut33534, _mut33535, _mut33536, _mut33537); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.dotProduct_305");
+            d += AOR_multiply(getEntry(i), v.getEntry(i), "org.apache.commons.math3.linear.RealVector.dotProduct_305", _mut33529, _mut33530, _mut33531, _mut33532);
         }
         return d;
     }
@@ -323,16 +326,14 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if the dimensions of {@code this} and
      * {@code v} do not match
      */
-    public double cosine(RealVector v) throws DimensionMismatchException,
-        MathArithmeticException {
+    public double cosine(RealVector v) throws DimensionMismatchException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.cosine_326");
         final double norm = getNorm();
         final double vNorm = v.getNorm();
-
-        if (norm == 0 ||
-            vNorm == 0) {
+        if ((_mut33548 ? (ROR_equals(norm, 0, "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33538, _mut33539, _mut33540, _mut33541, _mut33542) && ROR_equals(vNorm, 0, "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33543, _mut33544, _mut33545, _mut33546, _mut33547)) : (ROR_equals(norm, 0, "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33538, _mut33539, _mut33540, _mut33541, _mut33542) || ROR_equals(vNorm, 0, "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33543, _mut33544, _mut33545, _mut33546, _mut33547)))) {
             throw new MathArithmeticException(LocalizedFormats.ZERO_NORM);
         }
-        return dotProduct(v) / (norm * vNorm);
+        return AOR_divide(dotProduct(v), (AOR_multiply(norm, vNorm, "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33549, _mut33550, _mut33551, _mut33552)), "org.apache.commons.math3.linear.RealVector.cosine_326", _mut33553, _mut33554, _mut33555, _mut33556);
     }
 
     /**
@@ -343,8 +344,7 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this} vector.
      */
-    public abstract RealVector ebeDivide(RealVector v)
-        throws DimensionMismatchException;
+    public abstract RealVector ebeDivide(RealVector v) throws DimensionMismatchException;
 
     /**
      * Element-by-element multiplication.
@@ -354,8 +354,7 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this} vector.
      */
-    public abstract RealVector ebeMultiply(RealVector v)
-        throws DimensionMismatchException;
+    public abstract RealVector ebeMultiply(RealVector v) throws DimensionMismatchException;
 
     /**
      * Distance between two vectors.
@@ -372,13 +371,15 @@ public abstract class RealVector {
      * @see #getNorm()
      */
     public double getDistance(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getDistance_374");
         checkVectorDimensions(v);
         double d = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getDistance_374");
             final Entry e = it.next();
-            final double diff = e.getValue() - v.getEntry(e.getIndex());
-            d += diff * diff;
+            final double diff = AOR_minus(e.getValue(), v.getEntry(e.getIndex()), "org.apache.commons.math3.linear.RealVector.getDistance_374", _mut33557, _mut33558, _mut33559, _mut33560);
+            d += AOR_multiply(diff, diff, "org.apache.commons.math3.linear.RealVector.getDistance_374", _mut33561, _mut33562, _mut33563, _mut33564);
         }
         return FastMath.sqrt(d);
     }
@@ -394,12 +395,14 @@ public abstract class RealVector {
      * @see #getDistance(RealVector)
      */
     public double getNorm() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getNorm_396");
         double sum = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getNorm_396");
             final Entry e = it.next();
             final double value = e.getValue();
-            sum += value * value;
+            sum += AOR_multiply(value, value, "org.apache.commons.math3.linear.RealVector.getNorm_396", _mut33565, _mut33566, _mut33567, _mut33568);
         }
         return FastMath.sqrt(sum);
     }
@@ -418,6 +421,7 @@ public abstract class RealVector {
         double norm = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getL1Norm_417");
             final Entry e = it.next();
             norm += FastMath.abs(e.getValue());
         }
@@ -438,6 +442,7 @@ public abstract class RealVector {
         double norm = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getLInfNorm_437");
             final Entry e = it.next();
             norm = FastMath.max(norm, FastMath.abs(e.getValue()));
         }
@@ -455,14 +460,15 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this} vector.
      */
-    public double getL1Distance(RealVector v)
-        throws DimensionMismatchException {
+    public double getL1Distance(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getL1Distance_458");
         checkVectorDimensions(v);
         double d = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getL1Distance_458");
             final Entry e = it.next();
-            d += FastMath.abs(e.getValue() - v.getEntry(e.getIndex()));
+            d += FastMath.abs(AOR_minus(e.getValue(), v.getEntry(e.getIndex()), "org.apache.commons.math3.linear.RealVector.getL1Distance_458", _mut33569, _mut33570, _mut33571, _mut33572));
         }
         return d;
     }
@@ -481,14 +487,15 @@ public abstract class RealVector {
      * @see #getL1Distance(RealVector)
      * @see #getLInfNorm()
      */
-    public double getLInfDistance(RealVector v)
-        throws DimensionMismatchException {
+    public double getLInfDistance(RealVector v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getLInfDistance_484");
         checkVectorDimensions(v);
         double d = 0;
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getLInfDistance_484");
             final Entry e = it.next();
-            d = FastMath.max(FastMath.abs(e.getValue() - v.getEntry(e.getIndex())), d);
+            d = FastMath.max(FastMath.abs(AOR_minus(e.getValue(), v.getEntry(e.getIndex()), "org.apache.commons.math3.linear.RealVector.getLInfDistance_484", _mut33573, _mut33574, _mut33575, _mut33576)), d);
         }
         return d;
     }
@@ -500,12 +507,14 @@ public abstract class RealVector {
      * or all entries are {@code NaN}.
      */
     public int getMinIndex() {
-        int minIndex    = -1;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMinIndex_502");
+        int minIndex = -1;
         double minValue = Double.POSITIVE_INFINITY;
         Iterator<Entry> iterator = iterator();
         while (iterator.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMinIndex_502");
             final Entry entry = iterator.next();
-            if (entry.getValue() <= minValue) {
+            if (ROR_less_equals(entry.getValue(), minValue, "org.apache.commons.math3.linear.RealVector.getMinIndex_502", _mut33577, _mut33578, _mut33579, _mut33580, _mut33581)) {
                 minIndex = entry.getIndex();
                 minValue = entry.getValue();
             }
@@ -520,8 +529,9 @@ public abstract class RealVector {
      * entries are {@code NaN}.
      */
     public double getMinValue() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMinValue_522");
         final int minIndex = getMinIndex();
-        return minIndex < 0 ? Double.NaN : getEntry(minIndex);
+        return ROR_less(minIndex, 0, "org.apache.commons.math3.linear.RealVector.getMinValue_522", _mut33582, _mut33583, _mut33584, _mut33585, _mut33586) ? Double.NaN : getEntry(minIndex);
     }
 
     /**
@@ -531,12 +541,14 @@ public abstract class RealVector {
      * or all entries are {@code NaN}
      */
     public int getMaxIndex() {
-        int maxIndex    = -1;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMaxIndex_533");
+        int maxIndex = -1;
         double maxValue = Double.NEGATIVE_INFINITY;
         Iterator<Entry> iterator = iterator();
         while (iterator.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMaxIndex_533");
             final Entry entry = iterator.next();
-            if (entry.getValue() >= maxValue) {
+            if (ROR_greater_equals(entry.getValue(), maxValue, "org.apache.commons.math3.linear.RealVector.getMaxIndex_533", _mut33587, _mut33588, _mut33589, _mut33590, _mut33591)) {
                 maxIndex = entry.getIndex();
                 maxValue = entry.getValue();
             }
@@ -551,10 +563,10 @@ public abstract class RealVector {
      * entries are {@code NaN}.
      */
     public double getMaxValue() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.getMaxValue_553");
         final int maxIndex = getMaxIndex();
-        return maxIndex < 0 ? Double.NaN : getEntry(maxIndex);
+        return ROR_less(maxIndex, 0, "org.apache.commons.math3.linear.RealVector.getMaxValue_553", _mut33592, _mut33593, _mut33594, _mut33595, _mut33596) ? Double.NaN : getEntry(maxIndex);
     }
-
 
     /**
      * Multiply each entry by the argument. Returns a new vector.
@@ -574,7 +586,7 @@ public abstract class RealVector {
      * @param d Multiplication factor.
      * @return {@code this}.
      */
-    public RealVector mapMultiplyToSelf(double d){
+    public RealVector mapMultiplyToSelf(double d) {
         return mapToSelf(FunctionUtils.fix2ndArgument(new Multiply(), d));
     }
 
@@ -596,7 +608,7 @@ public abstract class RealVector {
      * @param d Value to be subtracted.
      * @return {@code this}.
      */
-    public RealVector mapSubtractToSelf(double d){
+    public RealVector mapSubtractToSelf(double d) {
         return mapAddToSelf(-d);
     }
 
@@ -618,7 +630,7 @@ public abstract class RealVector {
      * @param d Value to divide by.
      * @return {@code this}.
      */
-    public RealVector mapDivideToSelf(double d){
+    public RealVector mapDivideToSelf(double d) {
         return mapToSelf(FunctionUtils.fix2ndArgument(new Divide(), d));
     }
 
@@ -629,17 +641,20 @@ public abstract class RealVector {
      * @return the matrix outer product between this instance and {@code v}.
      */
     public RealMatrix outerProduct(RealVector v) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.outerProduct_631");
         final int m = this.getDimension();
         final int n = v.getDimension();
         final RealMatrix product;
-        if (v instanceof SparseRealVector || this instanceof SparseRealVector) {
+        if ((_mut33597 ? (v instanceof SparseRealVector && this instanceof SparseRealVector) : (v instanceof SparseRealVector || this instanceof SparseRealVector))) {
             product = new OpenMapRealMatrix(m, n);
         } else {
             product = new Array2DRowRealMatrix(m, n);
         }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                product.setEntry(i, j, this.getEntry(i) * v.getEntry(j));
+        for (int i = 0; ROR_less(i, m, "org.apache.commons.math3.linear.RealVector.outerProduct_631", _mut33607, _mut33608, _mut33609, _mut33610, _mut33611); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.outerProduct_631");
+            for (int j = 0; ROR_less(j, n, "org.apache.commons.math3.linear.RealVector.outerProduct_631", _mut33602, _mut33603, _mut33604, _mut33605, _mut33606); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.outerProduct_631");
+                product.setEntry(i, j, AOR_multiply(this.getEntry(i), v.getEntry(j), "org.apache.commons.math3.linear.RealVector.outerProduct_631", _mut33598, _mut33599, _mut33600, _mut33601));
             }
         }
         return product;
@@ -655,13 +670,13 @@ public abstract class RealVector {
      * @throws MathArithmeticException if {@code this} or {@code v} is the null
      * vector
      */
-    public RealVector projection(final RealVector v)
-        throws DimensionMismatchException, MathArithmeticException {
+    public RealVector projection(final RealVector v) throws DimensionMismatchException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.projection_658");
         final double norm2 = v.dotProduct(v);
-        if (norm2 == 0.0) {
+        if (ROR_equals(norm2, 0.0, "org.apache.commons.math3.linear.RealVector.projection_658", _mut33612, _mut33613, _mut33614, _mut33615, _mut33616)) {
             throw new MathArithmeticException(LocalizedFormats.ZERO_NORM);
         }
-        return v.mapMultiply(dotProduct(v) / v.dotProduct(v));
+        return v.mapMultiply(AOR_divide(dotProduct(v), v.dotProduct(v), "org.apache.commons.math3.linear.RealVector.projection_658", _mut33617, _mut33618, _mut33619, _mut33620));
     }
 
     /**
@@ -672,6 +687,7 @@ public abstract class RealVector {
     public void set(double value) {
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.set_672");
             final Entry e = it.next();
             e.setValue(value);
         }
@@ -685,9 +701,11 @@ public abstract class RealVector {
      * @return an array containing a copy of the vector elements.
      */
     public double[] toArray() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.toArray_687");
         int dim = getDimension();
         double[] values = new double[dim];
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.RealVector.toArray_687", _mut33621, _mut33622, _mut33623, _mut33624, _mut33625); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.toArray_687");
             values[i] = getEntry(i);
         }
         return values;
@@ -701,8 +719,9 @@ public abstract class RealVector {
      * @throws MathArithmeticException if the norm is zero.
      */
     public RealVector unitVector() throws MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.unitVector_703");
         final double norm = getNorm();
-        if (norm == 0) {
+        if (ROR_equals(norm, 0, "org.apache.commons.math3.linear.RealVector.unitVector_703", _mut33626, _mut33627, _mut33628, _mut33629, _mut33630)) {
             throw new MathArithmeticException(LocalizedFormats.ZERO_NORM);
         }
         return mapDivide(norm);
@@ -715,8 +734,9 @@ public abstract class RealVector {
      * @throws MathArithmeticException if the norm is zero.
      */
     public void unitize() throws MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.unitize_717");
         final double norm = getNorm();
-        if (norm == 0) {
+        if (ROR_equals(norm, 0, "org.apache.commons.math3.linear.RealVector.unitize_717", _mut33631, _mut33632, _mut33633, _mut33634, _mut33635)) {
             throw new MathArithmeticException(LocalizedFormats.ZERO_NORM);
         }
         mapDivideToSelf(getNorm());
@@ -749,23 +769,34 @@ public abstract class RealVector {
      * @return a dense iterator.
      */
     public Iterator<Entry> iterator() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.remove_781");
         final int dim = getDimension();
         return new Iterator<Entry>() {
 
-            /** Current index. */
+            /**
+             * Current index.
+             */
             private int i = 0;
 
-            /** Current entry. */
+            /**
+             * Current entry.
+             */
             private Entry e = new Entry();
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public boolean hasNext() {
-                return i < dim;
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.hasNext_762");
+                return ROR_less(i, dim, "org.apache.commons.math3.linear.RealVector.hasNext_762", _mut33636, _mut33637, _mut33638, _mut33639, _mut33640);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public Entry next() {
-                if (i < dim) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.next_767");
+                if (ROR_less(i, dim, "org.apache.commons.math3.linear.RealVector.next_767", _mut33641, _mut33642, _mut33643, _mut33644, _mut33645)) {
                     e.setIndex(i++);
                     return e;
                 } else {
@@ -814,6 +845,7 @@ public abstract class RealVector {
     public RealVector mapToSelf(UnivariateFunction function) {
         Iterator<Entry> it = iterator();
         while (it.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.mapToSelf_814");
             final Entry e = it.next();
             e.setValue(function.value(e.getValue()));
         }
@@ -833,8 +865,7 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if {@code y} is not the same size as
      * {@code this} vector.
      */
-    public RealVector combine(double a, double b, RealVector y)
-        throws DimensionMismatchException {
+    public RealVector combine(double a, double b, RealVector y) throws DimensionMismatchException {
         return copy().combineToSelf(a, b, y);
     }
 
@@ -850,13 +881,14 @@ public abstract class RealVector {
      * @throws DimensionMismatchException if {@code y} is not the same size as
      * {@code this} vector.
      */
-    public RealVector combineToSelf(double a, double b, RealVector y)
-        throws DimensionMismatchException {
+    public RealVector combineToSelf(double a, double b, RealVector y) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.combineToSelf_853");
         checkVectorDimensions(y);
-        for (int i = 0; i < getDimension(); i++) {
+        for (int i = 0; ROR_less(i, getDimension(), "org.apache.commons.math3.linear.RealVector.combineToSelf_853", _mut33658, _mut33659, _mut33660, _mut33661, _mut33662); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.combineToSelf_853");
             final double xi = getEntry(i);
             final double yi = y.getEntry(i);
-            setEntry(i, a * xi + b * yi);
+            setEntry(i, AOR_plus(AOR_multiply(a, xi, "org.apache.commons.math3.linear.RealVector.combineToSelf_853", _mut33646, _mut33647, _mut33648, _mut33649), AOR_multiply(b, yi, "org.apache.commons.math3.linear.RealVector.combineToSelf_853", _mut33650, _mut33651, _mut33652, _mut33653), "org.apache.commons.math3.linear.RealVector.combineToSelf_853", _mut33654, _mut33655, _mut33656, _mut33657));
         }
         return this;
     }
@@ -872,9 +904,11 @@ public abstract class RealVector {
      * @since 3.1
      */
     public double walkInDefaultOrder(final RealVectorPreservingVisitor visitor) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_874");
         final int dim = getDimension();
-        visitor.start(dim, 0, dim - 1);
-        for (int i = 0; i < dim; i++) {
+        visitor.start(dim, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_874", _mut33663, _mut33664, _mut33665, _mut33666));
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_874", _mut33667, _mut33668, _mut33669, _mut33670, _mut33671); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_874");
             visitor.visit(i, getEntry(i));
         }
         return visitor.end();
@@ -893,12 +927,12 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.1
      */
-    public double walkInDefaultOrder(final RealVectorPreservingVisitor visitor,
-                                     final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public double walkInDefaultOrder(final RealVectorPreservingVisitor visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_896");
         checkIndices(start, end);
         visitor.start(getDimension(), start, end);
-        for (int i = start; i <= end; i++) {
+        for (int i = start; ROR_less_equals(i, end, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_896", _mut33672, _mut33673, _mut33674, _mut33675, _mut33676); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_896");
             visitor.visit(i, getEntry(i));
         }
         return visitor.end();
@@ -935,9 +969,7 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.1
      */
-    public double walkInOptimizedOrder(final RealVectorPreservingVisitor visitor,
-                                       final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public double walkInOptimizedOrder(final RealVectorPreservingVisitor visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
         return walkInDefaultOrder(visitor, start, end);
     }
 
@@ -952,9 +984,11 @@ public abstract class RealVector {
      * @since 3.1
      */
     public double walkInDefaultOrder(final RealVectorChangingVisitor visitor) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_954");
         final int dim = getDimension();
-        visitor.start(dim, 0, dim - 1);
-        for (int i = 0; i < dim; i++) {
+        visitor.start(dim, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_954", _mut33677, _mut33678, _mut33679, _mut33680));
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_954", _mut33681, _mut33682, _mut33683, _mut33684, _mut33685); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_954");
             setEntry(i, visitor.visit(i, getEntry(i)));
         }
         return visitor.end();
@@ -973,12 +1007,12 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.1
      */
-    public double walkInDefaultOrder(final RealVectorChangingVisitor visitor,
-                              final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public double walkInDefaultOrder(final RealVectorChangingVisitor visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_976");
         checkIndices(start, end);
         visitor.start(getDimension(), start, end);
-        for (int i = start; i <= end; i++) {
+        for (int i = start; ROR_less_equals(i, end, "org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_976", _mut33686, _mut33687, _mut33688, _mut33689, _mut33690); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.walkInDefaultOrder_976");
             setEntry(i, visitor.visit(i, getEntry(i)));
         }
         return visitor.end();
@@ -1015,18 +1049,23 @@ public abstract class RealVector {
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.1
      */
-    public double walkInOptimizedOrder(final RealVectorChangingVisitor visitor,
-                                       final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public double walkInOptimizedOrder(final RealVectorChangingVisitor visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
         return walkInDefaultOrder(visitor, start, end);
     }
 
-    /** An entry in the vector. */
+    /**
+     * An entry in the vector.
+     */
     protected class Entry {
-        /** Index of this entry. */
+
+        /**
+         * Index of this entry.
+         */
         private int index;
 
-        /** Simple constructor. */
+        /**
+         * Simple constructor.
+         */
         public Entry() {
             setIndex(0);
         }
@@ -1091,8 +1130,7 @@ public abstract class RealVector {
      * overridden.
      */
     @Override
-    public boolean equals(Object other)
-        throws MathUnsupportedOperationException {
+    public boolean equals(Object other) throws MathUnsupportedOperationException {
         throw new MathUnsupportedOperationException();
     }
 
@@ -1121,22 +1159,33 @@ public abstract class RealVector {
      * operations which preserve the default value are to be done on the entries,
      * and the fraction of non-default values is small (i.e. someone took a
      * SparseVector, and passed it into the copy-constructor of ArrayRealVector)
-
      */
     protected class SparseEntryIterator implements Iterator<Entry> {
-        /** Dimension of the vector. */
+
+        /**
+         * Dimension of the vector.
+         */
         private final int dim;
-        /** Last entry returned by {@link #next()}. */
+
+        /**
+         * Last entry returned by {@link #next()}.
+         */
         private Entry current;
-        /** Next entry for {@link #next()} to return. */
+
+        /**
+         * Next entry for {@link #next()} to return.
+         */
         private Entry next;
 
-        /** Simple constructor. */
+        /**
+         * Simple constructor.
+         */
         protected SparseEntryIterator() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.SparseEntryIterator_1135");
             dim = getDimension();
             current = new Entry();
             next = new Entry();
-            if (next.getValue() == 0) {
+            if (ROR_equals(next.getValue(), 0, "org.apache.commons.math3.linear.RealVector.SparseEntryIterator_1135", _mut33691, _mut33692, _mut33693, _mut33694, _mut33695)) {
                 advance(next);
             }
         }
@@ -1147,26 +1196,34 @@ public abstract class RealVector {
          * @param e entry to advance.
          */
         protected void advance(Entry e) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.advance_1149");
             if (e == null) {
                 return;
             }
             do {
-                e.setIndex(e.getIndex() + 1);
-            } while (e.getIndex() < dim && e.getValue() == 0);
-            if (e.getIndex() >= dim) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.advance_1149");
+                e.setIndex(AOR_plus(e.getIndex(), 1, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33696, _mut33697, _mut33698, _mut33699));
+            } while ((_mut33710 ? (ROR_less(e.getIndex(), dim, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33700, _mut33701, _mut33702, _mut33703, _mut33704) || ROR_equals(e.getValue(), 0, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33705, _mut33706, _mut33707, _mut33708, _mut33709)) : (ROR_less(e.getIndex(), dim, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33700, _mut33701, _mut33702, _mut33703, _mut33704) && ROR_equals(e.getValue(), 0, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33705, _mut33706, _mut33707, _mut33708, _mut33709))));
+            if (ROR_greater_equals(e.getIndex(), dim, "org.apache.commons.math3.linear.RealVector.advance_1149", _mut33711, _mut33712, _mut33713, _mut33714, _mut33715)) {
                 e.setIndex(-1);
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public boolean hasNext() {
-            return next.getIndex() >= 0;
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.hasNext_1162");
+            return ROR_greater_equals(next.getIndex(), 0, "org.apache.commons.math3.linear.RealVector.hasNext_1162", _mut33716, _mut33717, _mut33718, _mut33719, _mut33720);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public Entry next() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVector.next_1167");
             int index = next.getIndex();
-            if (index < 0) {
+            if (ROR_less(index, 0, "org.apache.commons.math3.linear.RealVector.next_1167", _mut33721, _mut33722, _mut33723, _mut33724, _mut33725)) {
                 throw new NoSuchElementException();
             }
             current.setIndex(index);
@@ -1213,37 +1270,48 @@ public abstract class RealVector {
          * that {@link UnmodifiableVector} is <em>not</em> immutable.
          */
         return new RealVector() {
+
             /**
              * {@inheritDoc}
              *
              * @throws MathUnsupportedOperationException in all circumstances.
              */
             @Override
-            public RealVector mapToSelf(UnivariateFunction function)
-                throws MathUnsupportedOperationException {
+            public RealVector mapToSelf(UnivariateFunction function) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector map(UnivariateFunction function) {
                 return v.map(function);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Iterator<Entry> iterator() {
                 final Iterator<Entry> i = v.iterator();
                 return new Iterator<Entry>() {
-                    /** The current entry. */
+
+                    /**
+                     * The current entry.
+                     */
                     private final UnmodifiableEntry e = new UnmodifiableEntry();
 
-                    /** {@inheritDoc} */
+                    /**
+                     * {@inheritDoc}
+                     */
                     public boolean hasNext() {
                         return i.hasNext();
                     }
 
-                    /** {@inheritDoc} */
+                    /**
+                     * {@inheritDoc}
+                     */
                     public Entry next() {
                         e.setIndex(i.next().getIndex());
                         return e;
@@ -1261,21 +1329,29 @@ public abstract class RealVector {
                 };
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public Iterator<Entry> sparseIterator() {
                 final Iterator<Entry> i = v.sparseIterator();
-
                 return new Iterator<Entry>() {
-                    /** The current entry. */
+
+                    /**
+                     * The current entry.
+                     */
                     private final UnmodifiableEntry e = new UnmodifiableEntry();
 
-                    /** {@inheritDoc} */
+                    /**
+                     * {@inheritDoc}
+                     */
                     public boolean hasNext() {
                         return i.hasNext();
                     }
 
-                    /** {@inheritDoc} */
+                    /**
+                     * {@inheritDoc}
+                     */
                     public Entry next() {
                         e.setIndex(i.next().getIndex());
                         return e;
@@ -1287,34 +1363,39 @@ public abstract class RealVector {
                      * @throws MathUnsupportedOperationException in all
                      * circumstances.
                      */
-                    public void remove()
-                        throws MathUnsupportedOperationException {
+                    public void remove() throws MathUnsupportedOperationException {
                         throw new MathUnsupportedOperationException();
                     }
                 };
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector copy() {
                 return v.copy();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector add(RealVector w)
-                throws DimensionMismatchException {
+            public RealVector add(RealVector w) throws DimensionMismatchException {
                 return v.add(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector subtract(RealVector w)
-                throws DimensionMismatchException {
+            public RealVector subtract(RealVector w) throws DimensionMismatchException {
                 return v.subtract(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector mapAdd(double d) {
                 return v.mapAdd(d);
@@ -1327,12 +1408,13 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public RealVector mapAddToSelf(double d)
-                throws MathUnsupportedOperationException {
+            public RealVector mapAddToSelf(double d) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector mapSubtract(double d) {
                 return v.mapSubtract(d);
@@ -1345,12 +1427,13 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public RealVector mapSubtractToSelf(double d)
-                throws MathUnsupportedOperationException {
+            public RealVector mapSubtractToSelf(double d) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector mapMultiply(double d) {
                 return v.mapMultiply(d);
@@ -1363,12 +1446,13 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public RealVector mapMultiplyToSelf(double d)
-                throws MathUnsupportedOperationException {
+            public RealVector mapMultiplyToSelf(double d) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector mapDivide(double d) {
                 return v.mapDivide(d);
@@ -1381,79 +1465,93 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public RealVector mapDivideToSelf(double d)
-                throws MathUnsupportedOperationException {
+            public RealVector mapDivideToSelf(double d) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector ebeMultiply(RealVector w)
-                throws DimensionMismatchException {
+            public RealVector ebeMultiply(RealVector w) throws DimensionMismatchException {
                 return v.ebeMultiply(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector ebeDivide(RealVector w)
-                throws DimensionMismatchException {
+            public RealVector ebeDivide(RealVector w) throws DimensionMismatchException {
                 return v.ebeDivide(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public double dotProduct(RealVector w)
-                throws DimensionMismatchException {
+            public double dotProduct(RealVector w) throws DimensionMismatchException {
                 return v.dotProduct(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public double cosine(RealVector w)
-                throws DimensionMismatchException, MathArithmeticException {
+            public double cosine(RealVector w) throws DimensionMismatchException, MathArithmeticException {
                 return v.cosine(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public double getNorm() {
                 return v.getNorm();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public double getL1Norm() {
                 return v.getL1Norm();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public double getLInfNorm() {
                 return v.getLInfNorm();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public double getDistance(RealVector w)
-                throws DimensionMismatchException {
+            public double getDistance(RealVector w) throws DimensionMismatchException {
                 return v.getDistance(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public double getL1Distance(RealVector w)
-                throws DimensionMismatchException {
+            public double getL1Distance(RealVector w) throws DimensionMismatchException {
                 return v.getL1Distance(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public double getLInfDistance(RealVector w)
-                throws DimensionMismatchException {
+            public double getLInfDistance(RealVector w) throws DimensionMismatchException {
                 return v.getLInfDistance(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector unitVector() throws MathArithmeticException {
                 return v.unitVector();
@@ -1470,13 +1568,17 @@ public abstract class RealVector {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealMatrix outerProduct(RealVector w) {
                 return v.outerProduct(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public double getEntry(int index) throws OutOfRangeException {
                 return v.getEntry(index);
@@ -1489,8 +1591,7 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public void setEntry(int index, double value)
-                throws MathUnsupportedOperationException {
+            public void setEntry(int index, double value) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
@@ -1501,33 +1602,39 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public void addToEntry(int index, double value)
-                throws MathUnsupportedOperationException {
+            public void addToEntry(int index, double value) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getDimension() {
                 return v.getDimension();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector append(RealVector w) {
                 return v.append(w);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector append(double d) {
                 return v.append(d);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector getSubVector(int index, int n)
-                throws OutOfRangeException, NotPositiveException {
+            public RealVector getSubVector(int index, int n) throws OutOfRangeException, NotPositiveException {
                 return v.getSubVector(index, n);
             }
 
@@ -1538,8 +1645,7 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public void setSubVector(int index, RealVector w)
-                throws MathUnsupportedOperationException {
+            public void setSubVector(int index, RealVector w) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
@@ -1550,33 +1656,39 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public void set(double value)
-                throws MathUnsupportedOperationException {
+            public void set(double value) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public double[] toArray() {
                 return v.toArray();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean isNaN() {
                 return v.isNaN();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public boolean isInfinite() {
                 return v.isInfinite();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
-            public RealVector combine(double a, double b, RealVector y)
-                throws DimensionMismatchException {
+            public RealVector combine(double a, double b, RealVector y) throws DimensionMismatchException {
                 return v.combine(a, b, y);
             }
 
@@ -1587,14 +1699,18 @@ public abstract class RealVector {
              * circumstances.
              */
             @Override
-            public RealVector combineToSelf(double a, double b, RealVector y)
-                throws MathUnsupportedOperationException {
+            public RealVector combineToSelf(double a, double b, RealVector y) throws MathUnsupportedOperationException {
                 throw new MathUnsupportedOperationException();
             }
 
-            /** An entry in the vector. */
+            /**
+             * An entry in the vector.
+             */
             class UnmodifiableEntry extends Entry {
-                /** {@inheritDoc} */
+
+                /**
+                 * {@inheritDoc}
+                 */
                 @Override
                 public double getValue() {
                     return v.getEntry(getIndex());
@@ -1607,8 +1723,7 @@ public abstract class RealVector {
                  * circumstances.
                  */
                 @Override
-                public void setValue(double value)
-                    throws MathUnsupportedOperationException {
+                public void setValue(double value) throws MathUnsupportedOperationException {
                     throw new MathUnsupportedOperationException();
                 }
             }

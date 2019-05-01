@@ -18,7 +18,6 @@ package org.apache.commons.math3.linear;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.FieldElement;
 import org.apache.commons.math3.exception.DimensionMismatchException;
@@ -32,6 +31,8 @@ import org.apache.commons.math3.exception.ZeroException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.MathArrays;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements the {@link FieldVector} interface with a {@link FieldElement} array.
@@ -39,13 +40,23 @@ import org.apache.commons.math3.util.MathUtils;
  * @since 2.0
  */
 public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<T>, Serializable {
-    /** Serializable version identifier. */
+
+    @Conditional
+    public static boolean _mut32827 = false, _mut32828 = false, _mut32829 = false, _mut32830 = false, _mut32831 = false, _mut32832 = false, _mut32833 = false, _mut32834 = false, _mut32835 = false, _mut32836 = false, _mut32837 = false, _mut32838 = false, _mut32839 = false, _mut32840 = false, _mut32841 = false, _mut32842 = false, _mut32843 = false, _mut32844 = false, _mut32845 = false, _mut32846 = false, _mut32847 = false, _mut32848 = false, _mut32849 = false, _mut32850 = false, _mut32851 = false, _mut32852 = false, _mut32853 = false, _mut32854 = false, _mut32855 = false, _mut32856 = false, _mut32857 = false, _mut32858 = false, _mut32859 = false, _mut32860 = false, _mut32861 = false, _mut32862 = false, _mut32863 = false, _mut32864 = false, _mut32865 = false, _mut32866 = false, _mut32867 = false, _mut32868 = false, _mut32869 = false, _mut32870 = false, _mut32871 = false, _mut32872 = false, _mut32873 = false, _mut32874 = false, _mut32875 = false, _mut32876 = false, _mut32877 = false, _mut32878 = false, _mut32879 = false, _mut32880 = false, _mut32881 = false, _mut32882 = false, _mut32883 = false, _mut32884 = false, _mut32885 = false, _mut32886 = false, _mut32887 = false, _mut32888 = false, _mut32889 = false, _mut32890 = false, _mut32891 = false, _mut32892 = false, _mut32893 = false, _mut32894 = false, _mut32895 = false, _mut32896 = false, _mut32897 = false, _mut32898 = false, _mut32899 = false, _mut32900 = false, _mut32901 = false, _mut32902 = false, _mut32903 = false, _mut32904 = false, _mut32905 = false, _mut32906 = false, _mut32907 = false, _mut32908 = false, _mut32909 = false, _mut32910 = false, _mut32911 = false, _mut32912 = false, _mut32913 = false, _mut32914 = false, _mut32915 = false, _mut32916 = false, _mut32917 = false, _mut32918 = false, _mut32919 = false, _mut32920 = false, _mut32921 = false, _mut32922 = false, _mut32923 = false, _mut32924 = false, _mut32925 = false, _mut32926 = false, _mut32927 = false, _mut32928 = false, _mut32929 = false, _mut32930 = false, _mut32931 = false, _mut32932 = false, _mut32933 = false, _mut32934 = false, _mut32935 = false, _mut32936 = false, _mut32937 = false, _mut32938 = false, _mut32939 = false, _mut32940 = false, _mut32941 = false, _mut32942 = false, _mut32943 = false, _mut32944 = false, _mut32945 = false, _mut32946 = false, _mut32947 = false, _mut32948 = false, _mut32949 = false, _mut32950 = false, _mut32951 = false, _mut32952 = false, _mut32953 = false, _mut32954 = false, _mut32955 = false, _mut32956 = false, _mut32957 = false, _mut32958 = false, _mut32959 = false, _mut32960 = false, _mut32961 = false, _mut32962 = false, _mut32963 = false, _mut32964 = false, _mut32965 = false, _mut32966 = false, _mut32967 = false, _mut32968 = false, _mut32969 = false, _mut32970 = false, _mut32971 = false, _mut32972 = false, _mut32973 = false, _mut32974 = false, _mut32975 = false, _mut32976 = false, _mut32977 = false, _mut32978 = false, _mut32979 = false, _mut32980 = false, _mut32981 = false, _mut32982 = false, _mut32983 = false, _mut32984 = false, _mut32985 = false, _mut32986 = false, _mut32987 = false, _mut32988 = false, _mut32989 = false, _mut32990 = false, _mut32991 = false, _mut32992 = false, _mut32993 = false, _mut32994 = false, _mut32995 = false, _mut32996 = false, _mut32997 = false, _mut32998 = false, _mut32999 = false, _mut33000 = false, _mut33001 = false, _mut33002 = false, _mut33003 = false, _mut33004 = false, _mut33005 = false, _mut33006 = false, _mut33007 = false, _mut33008 = false, _mut33009 = false, _mut33010 = false, _mut33011 = false, _mut33012 = false, _mut33013 = false, _mut33014 = false, _mut33015 = false, _mut33016 = false, _mut33017 = false, _mut33018 = false, _mut33019 = false, _mut33020 = false, _mut33021 = false, _mut33022 = false, _mut33023 = false, _mut33024 = false, _mut33025 = false, _mut33026 = false, _mut33027 = false, _mut33028 = false, _mut33029 = false, _mut33030 = false, _mut33031 = false, _mut33032 = false, _mut33033 = false, _mut33034 = false, _mut33035 = false, _mut33036 = false, _mut33037 = false, _mut33038 = false, _mut33039 = false, _mut33040 = false, _mut33041 = false, _mut33042 = false, _mut33043 = false, _mut33044 = false, _mut33045 = false, _mut33046 = false, _mut33047 = false, _mut33048 = false, _mut33049 = false, _mut33050 = false, _mut33051 = false, _mut33052 = false, _mut33053 = false, _mut33054 = false, _mut33055 = false, _mut33056 = false, _mut33057 = false, _mut33058 = false, _mut33059 = false, _mut33060 = false, _mut33061 = false, _mut33062 = false, _mut33063 = false, _mut33064 = false, _mut33065 = false, _mut33066 = false, _mut33067 = false, _mut33068 = false, _mut33069 = false, _mut33070 = false, _mut33071 = false, _mut33072 = false, _mut33073 = false, _mut33074 = false, _mut33075 = false, _mut33076 = false, _mut33077 = false, _mut33078 = false, _mut33079 = false, _mut33080 = false, _mut33081 = false, _mut33082 = false, _mut33083 = false, _mut33084 = false, _mut33085 = false, _mut33086 = false, _mut33087 = false, _mut33088 = false, _mut33089 = false, _mut33090 = false, _mut33091 = false, _mut33092 = false, _mut33093 = false, _mut33094 = false, _mut33095 = false, _mut33096 = false, _mut33097 = false, _mut33098 = false, _mut33099 = false, _mut33100 = false, _mut33101 = false, _mut33102 = false, _mut33103 = false, _mut33104 = false, _mut33105 = false, _mut33106 = false, _mut33107 = false, _mut33108 = false, _mut33109 = false, _mut33110 = false, _mut33111 = false, _mut33112 = false, _mut33113 = false, _mut33114 = false, _mut33115 = false, _mut33116 = false, _mut33117 = false, _mut33118 = false, _mut33119 = false, _mut33120 = false, _mut33121 = false, _mut33122 = false, _mut33123 = false, _mut33124 = false, _mut33125 = false, _mut33126 = false, _mut33127 = false, _mut33128 = false, _mut33129 = false, _mut33130 = false, _mut33131 = false, _mut33132 = false, _mut33133 = false, _mut33134 = false, _mut33135 = false, _mut33136 = false, _mut33137 = false, _mut33138 = false, _mut33139 = false, _mut33140 = false, _mut33141 = false, _mut33142 = false, _mut33143 = false, _mut33144 = false, _mut33145 = false, _mut33146 = false, _mut33147 = false, _mut33148 = false, _mut33149 = false, _mut33150 = false, _mut33151 = false, _mut33152 = false, _mut33153 = false, _mut33154 = false, _mut33155 = false, _mut33156 = false, _mut33157 = false, _mut33158 = false, _mut33159 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 7648186910365927050L;
 
-    /** Entries of the vector. */
+    /**
+     * Entries of the vector.
+     */
     private T[] data;
 
-    /** Field to which the elements belong. */
+    /**
+     * Field to which the elements belong.
+     */
     private final Field<T> field;
 
     /**
@@ -70,7 +81,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      */
     public ArrayFieldVector(Field<T> field, int size) {
         this.field = field;
-        this.data  = MathArrays.buildArray(field, size);
+        this.data = MathArrays.buildArray(field, size);
     }
 
     /**
@@ -96,8 +107,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws ZeroException if {@code d} is empty.
      * @see #ArrayFieldVector(Field, FieldElement[])
      */
-    public ArrayFieldVector(T[] d)
-            throws NullArgumentException, ZeroException {
+    public ArrayFieldVector(T[] d) throws NullArgumentException, ZeroException {
         MathUtils.checkNotNull(d);
         try {
             field = d[0].getField();
@@ -115,8 +125,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws NullArgumentException if {@code d} is {@code null}.
      * @see #ArrayFieldVector(FieldElement[])
      */
-    public ArrayFieldVector(Field<T> field, T[] d)
-            throws NullArgumentException {
+    public ArrayFieldVector(Field<T> field, T[] d) throws NullArgumentException {
         MathUtils.checkNotNull(d);
         this.field = field;
         data = d.clone();
@@ -143,10 +152,10 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @see #ArrayFieldVector(FieldElement[])
      * @see #ArrayFieldVector(Field, FieldElement[], boolean)
      */
-    public ArrayFieldVector(T[] d, boolean copyArray)
-            throws NullArgumentException, ZeroException {
+    public ArrayFieldVector(T[] d, boolean copyArray) throws NullArgumentException, ZeroException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_146");
         MathUtils.checkNotNull(d);
-        if (d.length == 0) {
+        if (ROR_equals(d.length, 0, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_146", _mut32827, _mut32828, _mut32829, _mut32830, _mut32831)) {
             throw new ZeroException(LocalizedFormats.VECTOR_MUST_HAVE_AT_LEAST_ONE_ELEMENT);
         }
         field = d[0].getField();
@@ -168,11 +177,10 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws NullArgumentException if {@code d} is {@code null}.
      * @see #ArrayFieldVector(FieldElement[], boolean)
      */
-    public ArrayFieldVector(Field<T> field, T[] d, boolean copyArray)
-            throws NullArgumentException {
+    public ArrayFieldVector(Field<T> field, T[] d, boolean copyArray) throws NullArgumentException {
         MathUtils.checkNotNull(d);
         this.field = field;
-        data = copyArray ? d.clone() :  d;
+        data = copyArray ? d.clone() : d;
     }
 
     /**
@@ -185,11 +193,11 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws NumberIsTooLargeException if the size of {@code d} is less
      * than {@code pos + size}.
      */
-    public ArrayFieldVector(T[] d, int pos, int size)
-            throws NullArgumentException, NumberIsTooLargeException {
+    public ArrayFieldVector(T[] d, int pos, int size) throws NullArgumentException, NumberIsTooLargeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_188");
         MathUtils.checkNotNull(d);
-        if (d.length < pos + size) {
-            throw new NumberIsTooLargeException(pos + size, d.length, true);
+        if (ROR_less(d.length, AOR_plus(pos, size, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_188", _mut32832, _mut32833, _mut32834, _mut32835), "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_188", _mut32836, _mut32837, _mut32838, _mut32839, _mut32840)) {
+            throw new NumberIsTooLargeException(AOR_plus(pos, size, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_188", _mut32841, _mut32842, _mut32843, _mut32844), d.length, true);
         }
         field = d[0].getField();
         data = MathArrays.buildArray(field, size);
@@ -207,11 +215,11 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws NumberIsTooLargeException if the size of {@code d} is less
      * than {@code pos + size}.
      */
-    public ArrayFieldVector(Field<T> field, T[] d, int pos, int size)
-            throws NullArgumentException, NumberIsTooLargeException {
+    public ArrayFieldVector(Field<T> field, T[] d, int pos, int size) throws NullArgumentException, NumberIsTooLargeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_210");
         MathUtils.checkNotNull(d);
-        if (d.length < pos + size) {
-            throw new NumberIsTooLargeException(pos + size, d.length, true);
+        if (ROR_less(d.length, AOR_plus(pos, size, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_210", _mut32845, _mut32846, _mut32847, _mut32848), "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_210", _mut32849, _mut32850, _mut32851, _mut32852, _mut32853)) {
+            throw new NumberIsTooLargeException(AOR_plus(pos, size, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_210", _mut32854, _mut32855, _mut32856, _mut32857), d.length, true);
         }
         this.field = field;
         data = MathArrays.buildArray(field, size);
@@ -224,12 +232,13 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @param v Vector to copy.
      * @throws NullArgumentException if {@code v} is {@code null}.
      */
-    public ArrayFieldVector(FieldVector<T> v)
-            throws NullArgumentException {
+    public ArrayFieldVector(FieldVector<T> v) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_227");
         MathUtils.checkNotNull(v);
         field = v.getField();
         data = MathArrays.buildArray(field, v.getDimension());
-        for (int i = 0; i < data.length; ++i) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_227", _mut32858, _mut32859, _mut32860, _mut32861, _mut32862); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_227");
             data[i] = v.getEntry(i);
         }
     }
@@ -240,8 +249,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @param v Vector to copy.
      * @throws NullArgumentException if {@code v} is {@code null}.
      */
-    public ArrayFieldVector(ArrayFieldVector<T> v)
-            throws NullArgumentException {
+    public ArrayFieldVector(ArrayFieldVector<T> v) throws NullArgumentException {
         MathUtils.checkNotNull(v);
         field = v.getField();
         data = v.data.clone();
@@ -255,8 +263,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * a shallow copy
      * @throws NullArgumentException if {@code v} is {@code null}.
      */
-    public ArrayFieldVector(ArrayFieldVector<T> v, boolean deep)
-            throws NullArgumentException {
+    public ArrayFieldVector(ArrayFieldVector<T> v, boolean deep) throws NullArgumentException {
         MathUtils.checkNotNull(v);
         field = v.getField();
         data = deep ? v.data.clone() : v.data;
@@ -272,8 +279,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @deprecated as of 3.2, replaced by {@link #ArrayFieldVector(FieldVector, FieldVector)}
      */
     @Deprecated
-    public ArrayFieldVector(ArrayFieldVector<T> v1, ArrayFieldVector<T> v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(ArrayFieldVector<T> v1, ArrayFieldVector<T> v2) throws NullArgumentException {
         this((FieldVector<T>) v1, (FieldVector<T>) v2);
     }
 
@@ -286,16 +292,14 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * {@code null}.
      * @since 3.2
      */
-    public ArrayFieldVector(FieldVector<T> v1, FieldVector<T> v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(FieldVector<T> v1, FieldVector<T> v2) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_289");
         MathUtils.checkNotNull(v1);
         MathUtils.checkNotNull(v2);
         field = v1.getField();
-        final T[] v1Data =
-                (v1 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v1).data : v1.toArray();
-        final T[] v2Data =
-                (v2 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v2).data : v2.toArray();
-        data = MathArrays.buildArray(field, v1Data.length + v2Data.length);
+        final T[] v1Data = (v1 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v1).data : v1.toArray();
+        final T[] v2Data = (v2 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v2).data : v2.toArray();
+        data = MathArrays.buildArray(field, AOR_plus(v1Data.length, v2Data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_289", _mut32863, _mut32864, _mut32865, _mut32866));
         System.arraycopy(v1Data, 0, data, 0, v1Data.length);
         System.arraycopy(v2Data, 0, data, v1Data.length, v2Data.length);
     }
@@ -310,8 +314,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @deprecated as of 3.2, replaced by {@link #ArrayFieldVector(FieldVector, FieldElement[])}
      */
     @Deprecated
-    public ArrayFieldVector(ArrayFieldVector<T> v1, T[] v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(ArrayFieldVector<T> v1, T[] v2) throws NullArgumentException {
         this((FieldVector<T>) v1, v2);
     }
 
@@ -324,14 +327,13 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * {@code null}.
      * @since 3.2
      */
-    public ArrayFieldVector(FieldVector<T> v1, T[] v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(FieldVector<T> v1, T[] v2) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_327");
         MathUtils.checkNotNull(v1);
         MathUtils.checkNotNull(v2);
         field = v1.getField();
-        final T[] v1Data =
-                (v1 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v1).data : v1.toArray();
-        data = MathArrays.buildArray(field, v1Data.length + v2.length);
+        final T[] v1Data = (v1 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v1).data : v1.toArray();
+        data = MathArrays.buildArray(field, AOR_plus(v1Data.length, v2.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_327", _mut32867, _mut32868, _mut32869, _mut32870));
         System.arraycopy(v1Data, 0, data, 0, v1Data.length);
         System.arraycopy(v2, 0, data, v1Data.length, v2.length);
     }
@@ -346,8 +348,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @deprecated as of 3.2, replaced by {@link #ArrayFieldVector(FieldElement[], FieldVector)}
      */
     @Deprecated
-    public ArrayFieldVector(T[] v1, ArrayFieldVector<T> v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(T[] v1, ArrayFieldVector<T> v2) throws NullArgumentException {
         this(v1, (FieldVector<T>) v2);
     }
 
@@ -360,14 +361,13 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * {@code null}.
      * @since 3.2
      */
-    public ArrayFieldVector(T[] v1, FieldVector<T> v2)
-            throws NullArgumentException {
+    public ArrayFieldVector(T[] v1, FieldVector<T> v2) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_363");
         MathUtils.checkNotNull(v1);
         MathUtils.checkNotNull(v2);
         field = v2.getField();
-        final T[] v2Data =
-                (v2 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v2).data : v2.toArray();
-        data = MathArrays.buildArray(field, v1.length + v2Data.length);
+        final T[] v2Data = (v2 instanceof ArrayFieldVector) ? ((ArrayFieldVector<T>) v2).data : v2.toArray();
+        data = MathArrays.buildArray(field, AOR_plus(v1.length, v2Data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_363", _mut32871, _mut32872, _mut32873, _mut32874));
         System.arraycopy(v1, 0, data, 0, v1.length);
         System.arraycopy(v2Data, 0, data, v1.length, v2Data.length);
     }
@@ -387,14 +387,14 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws ZeroException if both arrays are empty.
      * @see #ArrayFieldVector(Field, FieldElement[], FieldElement[])
      */
-    public ArrayFieldVector(T[] v1, T[] v2)
-            throws NullArgumentException, ZeroException {
+    public ArrayFieldVector(T[] v1, T[] v2) throws NullArgumentException, ZeroException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_390");
         MathUtils.checkNotNull(v1);
         MathUtils.checkNotNull(v2);
-        if (v1.length + v2.length == 0) {
+        if (ROR_equals(AOR_plus(v1.length, v2.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_390", _mut32875, _mut32876, _mut32877, _mut32878), 0, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_390", _mut32879, _mut32880, _mut32881, _mut32882, _mut32883)) {
             throw new ZeroException(LocalizedFormats.VECTOR_MUST_HAVE_AT_LEAST_ONE_ELEMENT);
         }
-        data = MathArrays.buildArray(v1[0].getField(), v1.length + v2.length);
+        data = MathArrays.buildArray(v1[0].getField(), AOR_plus(v1.length, v2.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_390", _mut32884, _mut32885, _mut32886, _mut32887));
         System.arraycopy(v1, 0, data, 0, v1.length);
         System.arraycopy(v2, 0, data, v1.length, v2.length);
         field = data[0].getField();
@@ -411,38 +411,45 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws ZeroException if both arrays are empty.
      * @see #ArrayFieldVector(FieldElement[], FieldElement[])
      */
-    public ArrayFieldVector(Field<T> field, T[] v1, T[] v2)
-            throws NullArgumentException, ZeroException {
+    public ArrayFieldVector(Field<T> field, T[] v1, T[] v2) throws NullArgumentException, ZeroException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_414");
         MathUtils.checkNotNull(v1);
         MathUtils.checkNotNull(v2);
-        if (v1.length + v2.length == 0) {
+        if (ROR_equals(AOR_plus(v1.length, v2.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_414", _mut32888, _mut32889, _mut32890, _mut32891), 0, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_414", _mut32892, _mut32893, _mut32894, _mut32895, _mut32896)) {
             throw new ZeroException(LocalizedFormats.VECTOR_MUST_HAVE_AT_LEAST_ONE_ELEMENT);
         }
-        data = MathArrays.buildArray(field, v1.length + v2.length);
+        data = MathArrays.buildArray(field, AOR_plus(v1.length, v2.length, "org.apache.commons.math3.linear.ArrayFieldVector.ArrayFieldVector_414", _mut32897, _mut32898, _mut32899, _mut32900));
         System.arraycopy(v1, 0, data, 0, v1.length);
         System.arraycopy(v2, 0, data, v1.length, v2.length);
         this.field = field;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Field<T> getField() {
         return field;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> copy() {
         return new ArrayFieldVector<T>(this, true);
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> add(FieldVector<T> v)
-        throws DimensionMismatchException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> add(FieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.add_438");
         try {
             return add((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             checkVectorDimensions(v);
             T[] out = MathArrays.buildArray(field, data.length);
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.add_438", _mut32901, _mut32902, _mut32903, _mut32904, _mut32905); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.add_438");
                 out[i] = data[i].add(v.getEntry(i));
             }
             return new ArrayFieldVector<T>(field, out, false);
@@ -456,25 +463,29 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this}
      */
-    public ArrayFieldVector<T> add(ArrayFieldVector<T> v)
-        throws DimensionMismatchException {
+    public ArrayFieldVector<T> add(ArrayFieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.add_459");
         checkVectorDimensions(v.data.length);
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.add_459", _mut32906, _mut32907, _mut32908, _mut32909, _mut32910); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.add_459");
             out[i] = data[i].add(v.data[i]);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> subtract(FieldVector<T> v)
-        throws DimensionMismatchException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> subtract(FieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.subtract_470");
         try {
             return subtract((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             checkVectorDimensions(v);
             T[] out = MathArrays.buildArray(field, data.length);
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.subtract_470", _mut32911, _mut32912, _mut32913, _mut32914, _mut32915); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.subtract_470");
                 out[i] = data[i].subtract(v.getEntry(i));
             }
             return new ArrayFieldVector<T>(field, out, false);
@@ -488,93 +499,128 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this}
      */
-    public ArrayFieldVector<T> subtract(ArrayFieldVector<T> v)
-        throws DimensionMismatchException {
+    public ArrayFieldVector<T> subtract(ArrayFieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.subtract_491");
         checkVectorDimensions(v.data.length);
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.subtract_491", _mut32916, _mut32917, _mut32918, _mut32919, _mut32920); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.subtract_491");
             out[i] = data[i].subtract(v.data[i]);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapAdd(T d) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapAdd_502");
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapAdd_502", _mut32921, _mut32922, _mut32923, _mut32924, _mut32925); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapAdd_502");
             out[i] = data[i].add(d);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapAddToSelf(T d) throws NullArgumentException {
-        for (int i = 0; i < data.length; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapAddToSelf_511");
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapAddToSelf_511", _mut32926, _mut32927, _mut32928, _mut32929, _mut32930); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapAddToSelf_511");
             data[i] = data[i].add(d);
         }
         return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapSubtract(T d) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapSubtract_519");
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapSubtract_519", _mut32931, _mut32932, _mut32933, _mut32934, _mut32935); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapSubtract_519");
             out[i] = data[i].subtract(d);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapSubtractToSelf(T d) throws NullArgumentException {
-        for (int i = 0; i < data.length; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapSubtractToSelf_528");
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapSubtractToSelf_528", _mut32936, _mut32937, _mut32938, _mut32939, _mut32940); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapSubtractToSelf_528");
             data[i] = data[i].subtract(d);
         }
         return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapMultiply(T d) throws NullArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapMultiply_536");
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapMultiply_536", _mut32941, _mut32942, _mut32943, _mut32944, _mut32945); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapMultiply_536");
             out[i] = data[i].multiply(d);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapMultiplyToSelf(T d) throws NullArgumentException {
-        for (int i = 0; i < data.length; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapMultiplyToSelf_545");
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapMultiplyToSelf_545", _mut32946, _mut32947, _mut32948, _mut32949, _mut32950); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapMultiplyToSelf_545");
             data[i] = data[i].multiply(d);
         }
         return this;
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> mapDivide(T d)
-        throws NullArgumentException, MathArithmeticException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> mapDivide(T d) throws NullArgumentException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapDivide_553");
         MathUtils.checkNotNull(d);
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapDivide_553", _mut32951, _mut32952, _mut32953, _mut32954, _mut32955); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapDivide_553");
             out[i] = data[i].divide(d);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> mapDivideToSelf(T d)
-        throws NullArgumentException, MathArithmeticException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> mapDivideToSelf(T d) throws NullArgumentException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapDivideToSelf_564");
         MathUtils.checkNotNull(d);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapDivideToSelf_564", _mut32956, _mut32957, _mut32958, _mut32959, _mut32960); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapDivideToSelf_564");
             data[i] = data[i].divide(d);
         }
         return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapInv() throws MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapInv_574");
         T[] out = MathArrays.buildArray(field, data.length);
         final T one = field.getOne();
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapInv_574", _mut32961, _mut32962, _mut32963, _mut32964, _mut32965); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapInv_574");
             try {
                 out[i] = one.divide(data[i]);
             } catch (final MathArithmeticException e) {
@@ -584,10 +630,14 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> mapInvToSelf() throws MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapInvToSelf_588");
         final T one = field.getOne();
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.mapInvToSelf_588", _mut32966, _mut32967, _mut32968, _mut32969, _mut32970); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.mapInvToSelf_588");
             try {
                 data[i] = one.divide(data[i]);
             } catch (final MathArithmeticException e) {
@@ -597,15 +647,18 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         return this;
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> ebeMultiply(FieldVector<T> v)
-        throws DimensionMismatchException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> ebeMultiply(FieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_601");
         try {
             return ebeMultiply((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             checkVectorDimensions(v);
             T[] out = MathArrays.buildArray(field, data.length);
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_601", _mut32971, _mut32972, _mut32973, _mut32974, _mut32975); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_601");
                 out[i] = data[i].multiply(v.getEntry(i));
             }
             return new ArrayFieldVector<T>(field, out, false);
@@ -619,25 +672,29 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this}
      */
-    public ArrayFieldVector<T> ebeMultiply(ArrayFieldVector<T> v)
-        throws DimensionMismatchException {
+    public ArrayFieldVector<T> ebeMultiply(ArrayFieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_622");
         checkVectorDimensions(v.data.length);
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_622", _mut32976, _mut32977, _mut32978, _mut32979, _mut32980); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeMultiply_622");
             out[i] = data[i].multiply(v.data[i]);
         }
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> ebeDivide(FieldVector<T> v)
-        throws DimensionMismatchException, MathArithmeticException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> ebeDivide(FieldVector<T> v) throws DimensionMismatchException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_633");
         try {
             return ebeDivide((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             checkVectorDimensions(v);
             T[] out = MathArrays.buildArray(field, data.length);
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_633", _mut32981, _mut32982, _mut32983, _mut32984, _mut32985); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_633");
                 try {
                     out[i] = data[i].divide(v.getEntry(i));
                 } catch (final MathArithmeticException e) {
@@ -656,11 +713,12 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * {@code this}
      * @throws MathArithmeticException if one entry of {@code v} is zero.
      */
-    public ArrayFieldVector<T> ebeDivide(ArrayFieldVector<T> v)
-        throws DimensionMismatchException, MathArithmeticException {
+    public ArrayFieldVector<T> ebeDivide(ArrayFieldVector<T> v) throws DimensionMismatchException, MathArithmeticException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_659");
         checkVectorDimensions(v.data.length);
         T[] out = MathArrays.buildArray(field, data.length);
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_659", _mut32986, _mut32987, _mut32988, _mut32989, _mut32990); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.ebeDivide_659");
             try {
                 out[i] = data[i].divide(v.data[i]);
             } catch (final MathArithmeticException e) {
@@ -670,7 +728,9 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getData() {
         return data.clone();
     }
@@ -684,15 +744,18 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         return data;
     }
 
-    /** {@inheritDoc} */
-    public T dotProduct(FieldVector<T> v)
-        throws DimensionMismatchException {
+    /**
+     * {@inheritDoc}
+     */
+    public T dotProduct(FieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_688");
         try {
             return dotProduct((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             checkVectorDimensions(v);
             T dot = field.getZero();
-            for (int i = 0; i < data.length; i++) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_688", _mut32991, _mut32992, _mut32993, _mut32994, _mut32995); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_688");
                 dot = dot.add(data[i].multiply(v.getEntry(i)));
             }
             return dot;
@@ -706,44 +769,51 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this}
      */
-    public T dotProduct(ArrayFieldVector<T> v)
-        throws DimensionMismatchException {
+    public T dotProduct(ArrayFieldVector<T> v) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_709");
         checkVectorDimensions(v.data.length);
         T dot = field.getZero();
-        for (int i = 0; i < data.length; i++) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_709", _mut32996, _mut32997, _mut32998, _mut32999, _mut33000); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.dotProduct_709");
             dot = dot.add(data[i].multiply(v.data[i]));
         }
         return dot;
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> projection(FieldVector<T> v)
-        throws DimensionMismatchException, MathArithmeticException {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> projection(FieldVector<T> v) throws DimensionMismatchException, MathArithmeticException {
         return v.mapMultiply(dotProduct(v).divide(v.dotProduct(v)));
     }
 
-    /** Find the orthogonal projection of this vector onto another vector.
+    /**
+     * Find the orthogonal projection of this vector onto another vector.
      * @param v vector onto which {@code this} must be projected
      * @return projection of {@code this} onto {@code v}
      * @throws DimensionMismatchException if {@code v} is not the same size as
      * {@code this}
      * @throws MathArithmeticException if {@code v} is the null vector.
      */
-    public ArrayFieldVector<T> projection(ArrayFieldVector<T> v)
-        throws DimensionMismatchException, MathArithmeticException {
+    public ArrayFieldVector<T> projection(ArrayFieldVector<T> v) throws DimensionMismatchException, MathArithmeticException {
         return (ArrayFieldVector<T>) v.mapMultiply(dotProduct(v).divide(v.dotProduct(v)));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldMatrix<T> outerProduct(FieldVector<T> v) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_738");
         try {
             return outerProduct((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
             final int m = data.length;
             final int n = v.getDimension();
             final FieldMatrix<T> out = new Array2DRowFieldMatrix<T>(field, m, n);
-            for (int i = 0; i < m; i++) {
-                for (int j = 0; j < n; j++) {
+            for (int i = 0; ROR_less(i, m, "org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_738", _mut33006, _mut33007, _mut33008, _mut33009, _mut33010); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_738");
+                for (int j = 0; ROR_less(j, n, "org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_738", _mut33001, _mut33002, _mut33003, _mut33004, _mut33005); j++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_738");
                     out.setEntry(i, j, data[i].multiply(v.getEntry(j)));
                 }
             }
@@ -757,33 +827,42 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @return the matrix outer product between instance and v
      */
     public FieldMatrix<T> outerProduct(ArrayFieldVector<T> v) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_759");
         final int m = data.length;
         final int n = v.data.length;
         final FieldMatrix<T> out = new Array2DRowFieldMatrix<T>(field, m, n);
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
+        for (int i = 0; ROR_less(i, m, "org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_759", _mut33016, _mut33017, _mut33018, _mut33019, _mut33020); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_759");
+            for (int j = 0; ROR_less(j, n, "org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_759", _mut33011, _mut33012, _mut33013, _mut33014, _mut33015); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.outerProduct_759");
                 out.setEntry(i, j, data[i].multiply(v.data[j]));
             }
         }
         return out;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T getEntry(int index) {
         return data[index];
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getDimension() {
         return data.length;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> append(FieldVector<T> v) {
         try {
             return append((ArrayFieldVector<T>) v);
         } catch (ClassCastException cce) {
-            return new ArrayFieldVector<T>(this,new ArrayFieldVector<T>(v));
+            return new ArrayFieldVector<T>(this, new ArrayFieldVector<T>(v));
         }
     }
 
@@ -796,18 +875,23 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         return new ArrayFieldVector<T>(this, v);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldVector<T> append(T in) {
-        final T[] out = MathArrays.buildArray(field, data.length + 1);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.append_800");
+        final T[] out = MathArrays.buildArray(field, AOR_plus(data.length, 1, "org.apache.commons.math3.linear.ArrayFieldVector.append_800", _mut33021, _mut33022, _mut33023, _mut33024));
         System.arraycopy(data, 0, out, 0, data.length);
         out[data.length] = in;
         return new ArrayFieldVector<T>(field, out, false);
     }
 
-    /** {@inheritDoc} */
-    public FieldVector<T> getSubVector(int index, int n)
-        throws OutOfRangeException, NotPositiveException {
-        if (n < 0) {
+    /**
+     * {@inheritDoc}
+     */
+    public FieldVector<T> getSubVector(int index, int n) throws OutOfRangeException, NotPositiveException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.getSubVector_808");
+        if (ROR_less(n, 0, "org.apache.commons.math3.linear.ArrayFieldVector.getSubVector_808", _mut33025, _mut33026, _mut33027, _mut33028, _mut33029)) {
             throw new NotPositiveException(LocalizedFormats.NUMBER_OF_ELEMENTS_SHOULD_BE_POSITIVE, n);
         }
         ArrayFieldVector<T> out = new ArrayFieldVector<T>(field, n);
@@ -815,12 +899,14 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
             System.arraycopy(data, index, out.data, 0, n);
         } catch (IndexOutOfBoundsException e) {
             checkIndex(index);
-            checkIndex(index + n - 1);
+            checkIndex(AOR_minus(AOR_plus(index, n, "org.apache.commons.math3.linear.ArrayFieldVector.getSubVector_808", _mut33030, _mut33031, _mut33032, _mut33033), 1, "org.apache.commons.math3.linear.ArrayFieldVector.getSubVector_808", _mut33034, _mut33035, _mut33036, _mut33037));
         }
         return out;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setEntry(int index, T value) {
         try {
             data[index] = value;
@@ -829,19 +915,23 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setSubVector(int index, FieldVector<T> v) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833");
         try {
             try {
                 set(index, (ArrayFieldVector<T>) v);
             } catch (ClassCastException cce) {
-                for (int i = index; i < index + v.getDimension(); ++i) {
-                    data[i] = v.getEntry(i-index);
+                for (int i = index; ROR_less(i, AOR_plus(index, v.getDimension(), "org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833", _mut33050, _mut33051, _mut33052, _mut33053), "org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833", _mut33054, _mut33055, _mut33056, _mut33057, _mut33058); ++i) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833");
+                    data[i] = v.getEntry(AOR_minus(i, index, "org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833", _mut33046, _mut33047, _mut33048, _mut33049));
                 }
             }
         } catch (IndexOutOfBoundsException e) {
             checkIndex(index);
-            checkIndex(index + v.getDimension() - 1);
+            checkIndex(AOR_minus(AOR_plus(index, v.getDimension(), "org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833", _mut33038, _mut33039, _mut33040, _mut33041), 1, "org.apache.commons.math3.linear.ArrayFieldVector.setSubVector_833", _mut33042, _mut33043, _mut33044, _mut33045));
         }
     }
 
@@ -853,21 +943,26 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws OutOfRangeException if the index is invalid.
      */
     public void set(int index, ArrayFieldVector<T> v) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.set_855");
         try {
             System.arraycopy(v.data, 0, data, index, v.data.length);
         } catch (IndexOutOfBoundsException e) {
             checkIndex(index);
-            checkIndex(index + v.data.length - 1);
+            checkIndex(AOR_minus(AOR_plus(index, v.data.length, "org.apache.commons.math3.linear.ArrayFieldVector.set_855", _mut33059, _mut33060, _mut33061, _mut33062), 1, "org.apache.commons.math3.linear.ArrayFieldVector.set_855", _mut33063, _mut33064, _mut33065, _mut33066));
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void set(T value) {
         Arrays.fill(data, value);
     }
 
-    /** {@inheritDoc} */
-    public T[] toArray(){
+    /**
+     * {@inheritDoc}
+     */
+    public T[] toArray() {
         return data.clone();
     }
 
@@ -877,8 +972,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @exception DimensionMismatchException if the vectors do not
      * have the same dimensions
      */
-    protected void checkVectorDimensions(FieldVector<T> v)
-        throws DimensionMismatchException {
+    protected void checkVectorDimensions(FieldVector<T> v) throws DimensionMismatchException {
         checkVectorDimensions(v.getDimension());
     }
 
@@ -889,9 +983,9 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws DimensionMismatchException if the dimension is not equal to the
      * size of {@code this} vector.
      */
-    protected void checkVectorDimensions(int n)
-        throws DimensionMismatchException {
-        if (data.length != n) {
+    protected void checkVectorDimensions(int n) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.checkVectorDimensions_892");
+        if (ROR_not_equals(data.length, n, "org.apache.commons.math3.linear.ArrayFieldVector.checkVectorDimensions_892", _mut33067, _mut33068, _mut33069, _mut33070, _mut33071)) {
             throw new DimensionMismatchException(data.length, n);
         }
     }
@@ -907,9 +1001,11 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @since 3.3
      */
     public T walkInDefaultOrder(final FieldVectorPreservingVisitor<T> visitor) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_909");
         final int dim = getDimension();
-        visitor.start(dim, 0, dim - 1);
-        for (int i = 0; i < dim; i++) {
+        visitor.start(dim, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_909", _mut33072, _mut33073, _mut33074, _mut33075));
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_909", _mut33076, _mut33077, _mut33078, _mut33079, _mut33080); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_909");
             visitor.visit(i, getEntry(i));
         }
         return visitor.end();
@@ -928,12 +1024,12 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.3
      */
-    public T walkInDefaultOrder(final FieldVectorPreservingVisitor<T> visitor,
-                                final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public T walkInDefaultOrder(final FieldVectorPreservingVisitor<T> visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_931");
         checkIndices(start, end);
         visitor.start(getDimension(), start, end);
-        for (int i = start; i <= end; i++) {
+        for (int i = start; ROR_less_equals(i, end, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_931", _mut33081, _mut33082, _mut33083, _mut33084, _mut33085); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_931");
             visitor.visit(i, getEntry(i));
         }
         return visitor.end();
@@ -970,9 +1066,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.3
      */
-    public T walkInOptimizedOrder(final FieldVectorPreservingVisitor<T> visitor,
-                                  final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public T walkInOptimizedOrder(final FieldVectorPreservingVisitor<T> visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
         return walkInDefaultOrder(visitor, start, end);
     }
 
@@ -987,9 +1081,11 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @since 3.3
      */
     public T walkInDefaultOrder(final FieldVectorChangingVisitor<T> visitor) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_989");
         final int dim = getDimension();
-        visitor.start(dim, 0, dim - 1);
-        for (int i = 0; i < dim; i++) {
+        visitor.start(dim, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_989", _mut33086, _mut33087, _mut33088, _mut33089));
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_989", _mut33090, _mut33091, _mut33092, _mut33093, _mut33094); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_989");
             setEntry(i, visitor.visit(i, getEntry(i)));
         }
         return visitor.end();
@@ -1008,12 +1104,12 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.3
      */
-    public T walkInDefaultOrder(final FieldVectorChangingVisitor<T> visitor,
-                                final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public T walkInDefaultOrder(final FieldVectorChangingVisitor<T> visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_1011");
         checkIndices(start, end);
         visitor.start(getDimension(), start, end);
-        for (int i = start; i <= end; i++) {
+        for (int i = start; ROR_less_equals(i, end, "org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_1011", _mut33095, _mut33096, _mut33097, _mut33098, _mut33099); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.walkInDefaultOrder_1011");
             setEntry(i, visitor.visit(i, getEntry(i)));
         }
         return visitor.end();
@@ -1050,9 +1146,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws OutOfRangeException if the indices are not valid.
      * @since 3.3
      */
-    public T walkInOptimizedOrder(final FieldVectorChangingVisitor<T> visitor,
-                                  final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    public T walkInOptimizedOrder(final FieldVectorChangingVisitor<T> visitor, final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
         return walkInDefaultOrder(visitor, start, end);
     }
 
@@ -1065,21 +1159,22 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      */
     @Override
     public boolean equals(Object other) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.equals_1066");
         if (this == other) {
             return true;
         }
         if (other == null) {
             return false;
         }
-
         try {
-            @SuppressWarnings("unchecked") // May fail, but we ignore ClassCastException
-                FieldVector<T> rhs = (FieldVector<T>) other;
-            if (data.length != rhs.getDimension()) {
+            // May fail, but we ignore ClassCastException
+            @SuppressWarnings("unchecked")
+            FieldVector<T> rhs = (FieldVector<T>) other;
+            if (ROR_not_equals(data.length, rhs.getDimension(), "org.apache.commons.math3.linear.ArrayFieldVector.equals_1066", _mut33100, _mut33101, _mut33102, _mut33103, _mut33104)) {
                 return false;
             }
-
-            for (int i = 0; i < data.length; ++i) {
+            for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.ArrayFieldVector.equals_1066", _mut33105, _mut33106, _mut33107, _mut33108, _mut33109); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.equals_1066");
                 if (!data[i].equals(rhs.getEntry(i))) {
                     return false;
                 }
@@ -1100,6 +1195,7 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
     public int hashCode() {
         int h = 3542;
         for (final T a : data) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.hashCode_1099");
             h ^= a.hashCode();
         }
         return h;
@@ -1112,9 +1208,9 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @exception OutOfRangeException if the index is not valid.
      */
     private void checkIndex(final int index) throws OutOfRangeException {
-        if (index < 0 || index >= getDimension()) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX,
-                                          index, 0, getDimension() - 1);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114");
+        if ((_mut33120 ? (ROR_less(index, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114", _mut33110, _mut33111, _mut33112, _mut33113, _mut33114) && ROR_greater_equals(index, getDimension(), "org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114", _mut33115, _mut33116, _mut33117, _mut33118, _mut33119)) : (ROR_less(index, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114", _mut33110, _mut33111, _mut33112, _mut33113, _mut33114) || ROR_greater_equals(index, getDimension(), "org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114", _mut33115, _mut33116, _mut33117, _mut33118, _mut33119)))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, index, 0, AOR_minus(getDimension(), 1, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndex_1114", _mut33121, _mut33122, _mut33123, _mut33124));
         }
     }
 
@@ -1127,21 +1223,17 @@ public class ArrayFieldVector<T extends FieldElement<T>> implements FieldVector<
      * @throws NumberIsTooSmallException if {@code end < start}
      * @since 3.3
      */
-    private void checkIndices(final int start, final int end)
-        throws NumberIsTooSmallException, OutOfRangeException {
+    private void checkIndices(final int start, final int end) throws NumberIsTooSmallException, OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130");
         final int dim = getDimension();
-        if ((start < 0) || (start >= dim)) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX, start, 0,
-                                          dim - 1);
+        if ((_mut33135 ? ((ROR_less(start, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33125, _mut33126, _mut33127, _mut33128, _mut33129)) && (ROR_greater_equals(start, dim, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33130, _mut33131, _mut33132, _mut33133, _mut33134))) : ((ROR_less(start, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33125, _mut33126, _mut33127, _mut33128, _mut33129)) || (ROR_greater_equals(start, dim, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33130, _mut33131, _mut33132, _mut33133, _mut33134))))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, start, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33136, _mut33137, _mut33138, _mut33139));
         }
-        if ((end < 0) || (end >= dim)) {
-            throw new OutOfRangeException(LocalizedFormats.INDEX, end, 0,
-                                          dim - 1);
+        if ((_mut33150 ? ((ROR_less(end, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33140, _mut33141, _mut33142, _mut33143, _mut33144)) && (ROR_greater_equals(end, dim, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33145, _mut33146, _mut33147, _mut33148, _mut33149))) : ((ROR_less(end, 0, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33140, _mut33141, _mut33142, _mut33143, _mut33144)) || (ROR_greater_equals(end, dim, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33145, _mut33146, _mut33147, _mut33148, _mut33149))))) {
+            throw new OutOfRangeException(LocalizedFormats.INDEX, end, 0, AOR_minus(dim, 1, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33151, _mut33152, _mut33153, _mut33154));
         }
-        if (end < start) {
-            throw new NumberIsTooSmallException(LocalizedFormats.INITIAL_ROW_AFTER_FINAL_ROW,
-                                                end, start, false);
+        if (ROR_less(end, start, "org.apache.commons.math3.linear.ArrayFieldVector.checkIndices_1130", _mut33155, _mut33156, _mut33157, _mut33158, _mut33159)) {
+            throw new NumberIsTooSmallException(LocalizedFormats.INITIAL_ROW_AFTER_FINAL_ROW, end, start, false);
         }
     }
-
 }

@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.util.IterationManager;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -47,8 +49,10 @@ import org.apache.commons.math3.util.MathUtils;
  *
  * @since 3.0
  */
-public abstract class PreconditionedIterativeLinearSolver
-    extends IterativeLinearSolver {
+public abstract class PreconditionedIterativeLinearSolver extends IterativeLinearSolver {
+
+    @Conditional
+    public static boolean _mut26552 = false, _mut26553 = false, _mut26554 = false, _mut26555 = false, _mut26556 = false, _mut26557 = false, _mut26558 = false, _mut26559 = false, _mut26560 = false, _mut26561 = false;
 
     /**
      * Creates a new instance of this class, with default iteration manager.
@@ -65,8 +69,7 @@ public abstract class PreconditionedIterativeLinearSolver
      * @param manager the custom iteration manager
      * @throws NullArgumentException if {@code manager} is {@code null}
      */
-    public PreconditionedIterativeLinearSolver(final IterationManager manager)
-        throws NullArgumentException {
+    public PreconditionedIterativeLinearSolver(final IterationManager manager) throws NullArgumentException {
         super(manager);
     }
 
@@ -89,31 +92,27 @@ public abstract class PreconditionedIterativeLinearSolver
      * {@link org.apache.commons.math3.util.Incrementor.MaxCountExceededCallback callback}
      * has been set at construction of the {@link IterationManager}
      */
-    public RealVector solve(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b, final RealVector x0)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x0) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
         MathUtils.checkNotNull(x0);
         return solveInPlace(a, m, b, x0.copy());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public RealVector solve(final RealLinearOperator a, final RealVector b)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealVector b) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         x.set(0.);
         return solveInPlace(a, null, b, x);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public RealVector solve(final RealLinearOperator a, final RealVector b,
-                            final RealVector x0)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealVector b, final RealVector x0) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
         MathUtils.checkNotNull(x0);
         return solveInPlace(a, null, b, x0.copy());
     }
@@ -135,19 +134,15 @@ public abstract class PreconditionedIterativeLinearSolver
      * @throws DimensionMismatchException if {@code m}, {@code b} or
      * {@code x0} have dimensions inconsistent with {@code a}
      */
-    protected static void checkParameters(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b, final RealVector x0)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException {
+    protected static void checkParameters(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x0) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.PreconditionedIterativeLinearSolver.checkParameters_138");
         checkParameters(a, b, x0);
         if (m != null) {
-            if (m.getColumnDimension() != m.getRowDimension()) {
-                throw new NonSquareOperatorException(m.getColumnDimension(),
-                                                     m.getRowDimension());
+            if (ROR_not_equals(m.getColumnDimension(), m.getRowDimension(), "org.apache.commons.math3.linear.PreconditionedIterativeLinearSolver.checkParameters_138", _mut26552, _mut26553, _mut26554, _mut26555, _mut26556)) {
+                throw new NonSquareOperatorException(m.getColumnDimension(), m.getRowDimension());
             }
-            if (m.getRowDimension() != a.getRowDimension()) {
-                throw new DimensionMismatchException(m.getRowDimension(),
-                                                     a.getRowDimension());
+            if (ROR_not_equals(m.getRowDimension(), a.getRowDimension(), "org.apache.commons.math3.linear.PreconditionedIterativeLinearSolver.checkParameters_138", _mut26557, _mut26558, _mut26559, _mut26560, _mut26561)) {
+                throw new DimensionMismatchException(m.getRowDimension(), a.getRowDimension());
             }
         }
     }
@@ -170,9 +165,7 @@ public abstract class PreconditionedIterativeLinearSolver
      * {@link org.apache.commons.math3.util.Incrementor.MaxCountExceededCallback callback}
      * has been set at construction of the {@link IterationManager}
      */
-    public RealVector solve(RealLinearOperator a, RealLinearOperator m,
-        RealVector b) throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException {
+    public RealVector solve(RealLinearOperator a, RealLinearOperator m, RealVector b) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         return solveInPlace(a, m, b, x);
@@ -198,17 +191,13 @@ public abstract class PreconditionedIterativeLinearSolver
      * {@link org.apache.commons.math3.util.Incrementor.MaxCountExceededCallback callback}
      * has been set at construction of the {@link IterationManager}
      */
-    public abstract RealVector solveInPlace(RealLinearOperator a,
-        RealLinearOperator m, RealVector b, RealVector x0) throws
-        NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException;
+    public abstract RealVector solveInPlace(RealLinearOperator a, RealLinearOperator m, RealVector b, RealVector x0) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException;
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public RealVector solveInPlace(final RealLinearOperator a,
-        final RealVector b, final RealVector x0) throws
-        NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException {
+    public RealVector solveInPlace(final RealLinearOperator a, final RealVector b, final RealVector x0) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
         return solveInPlace(a, null, b, x0);
     }
 }

@@ -14,67 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.ode.sampling.StepInterpolator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements a step interpolator for the classical fourth
- * order Runge-Kutta integrator.
- *
- * <p>This interpolator allows to compute dense output inside the last
- * step computed. The interpolation equation is consistent with the
- * integration scheme :
- * <ul>
- *   <li>Using reference point at step start:<br>
- *   y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub>)
- *                    + &theta; (h/6) [  (6 - 9 &theta; + 4 &theta;<sup>2</sup>) y'<sub>1</sub>
- *                                     + (    6 &theta; - 4 &theta;<sup>2</sup>) (y'<sub>2</sub> + y'<sub>3</sub>)
- *                                     + (   -3 &theta; + 4 &theta;<sup>2</sup>) y'<sub>4</sub>
- *                                    ]
- *   </li>
- *   <li>Using reference point at step end:<br>
- *   y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub> + h)
- *                    + (1 - &theta;) (h/6) [ (-4 &theta;^2 + 5 &theta; - 1) y'<sub>1</sub>
- *                                          +(4 &theta;^2 - 2 &theta; - 2) (y'<sub>2</sub> + y'<sub>3</sub>)
- *                                          -(4 &theta;^2 +   &theta; + 1) y'<sub>4</sub>
- *                                        ]
- *   </li>
- * </ul>
- * </p>
- *
- * where &theta; belongs to [0 ; 1] and where y'<sub>1</sub> to y'<sub>4</sub> are the four
- * evaluations of the derivatives already computed during the
- * step.</p>
- *
- * @see ClassicalRungeKuttaIntegrator
- * @since 1.2
- */
+class ClassicalRungeKuttaStepInterpolator extends RungeKuttaStepInterpolator {
 
-class ClassicalRungeKuttaStepInterpolator
-    extends RungeKuttaStepInterpolator {
+    @Conditional
+    public static boolean _mut12973 = false, _mut12974 = false, _mut12975 = false, _mut12976 = false, _mut12977 = false, _mut12978 = false, _mut12979 = false, _mut12980 = false, _mut12981 = false, _mut12982 = false, _mut12983 = false, _mut12984 = false, _mut12985 = false, _mut12986 = false, _mut12987 = false, _mut12988 = false, _mut12989 = false, _mut12990 = false, _mut12991 = false, _mut12992 = false, _mut12993 = false, _mut12994 = false, _mut12995 = false, _mut12996 = false, _mut12997 = false, _mut12998 = false, _mut12999 = false, _mut13000 = false, _mut13001 = false, _mut13002 = false, _mut13003 = false, _mut13004 = false, _mut13005 = false, _mut13006 = false, _mut13007 = false, _mut13008 = false, _mut13009 = false, _mut13010 = false, _mut13011 = false, _mut13012 = false, _mut13013 = false, _mut13014 = false, _mut13015 = false, _mut13016 = false, _mut13017 = false, _mut13018 = false, _mut13019 = false, _mut13020 = false, _mut13021 = false, _mut13022 = false, _mut13023 = false, _mut13024 = false, _mut13025 = false, _mut13026 = false, _mut13027 = false, _mut13028 = false, _mut13029 = false, _mut13030 = false, _mut13031 = false, _mut13032 = false, _mut13033 = false, _mut13034 = false, _mut13035 = false, _mut13036 = false, _mut13037 = false, _mut13038 = false, _mut13039 = false, _mut13040 = false, _mut13041 = false, _mut13042 = false, _mut13043 = false, _mut13044 = false, _mut13045 = false, _mut13046 = false, _mut13047 = false, _mut13048 = false, _mut13049 = false, _mut13050 = false, _mut13051 = false, _mut13052 = false, _mut13053 = false, _mut13054 = false, _mut13055 = false, _mut13056 = false, _mut13057 = false, _mut13058 = false, _mut13059 = false, _mut13060 = false, _mut13061 = false, _mut13062 = false, _mut13063 = false, _mut13064 = false, _mut13065 = false, _mut13066 = false, _mut13067 = false, _mut13068 = false, _mut13069 = false, _mut13070 = false, _mut13071 = false, _mut13072 = false, _mut13073 = false, _mut13074 = false, _mut13075 = false, _mut13076 = false, _mut13077 = false, _mut13078 = false, _mut13079 = false, _mut13080 = false, _mut13081 = false, _mut13082 = false, _mut13083 = false, _mut13084 = false, _mut13085 = false, _mut13086 = false, _mut13087 = false, _mut13088 = false, _mut13089 = false, _mut13090 = false, _mut13091 = false, _mut13092 = false, _mut13093 = false, _mut13094 = false, _mut13095 = false, _mut13096 = false, _mut13097 = false, _mut13098 = false, _mut13099 = false, _mut13100 = false, _mut13101 = false, _mut13102 = false, _mut13103 = false, _mut13104 = false, _mut13105 = false, _mut13106 = false, _mut13107 = false, _mut13108 = false, _mut13109 = false, _mut13110 = false, _mut13111 = false, _mut13112 = false, _mut13113 = false, _mut13114 = false, _mut13115 = false, _mut13116 = false, _mut13117 = false, _mut13118 = false, _mut13119 = false, _mut13120 = false, _mut13121 = false, _mut13122 = false, _mut13123 = false, _mut13124 = false, _mut13125 = false, _mut13126 = false, _mut13127 = false, _mut13128 = false, _mut13129 = false, _mut13130 = false, _mut13131 = false, _mut13132 = false, _mut13133 = false, _mut13134 = false, _mut13135 = false, _mut13136 = false, _mut13137 = false, _mut13138 = false, _mut13139 = false, _mut13140 = false, _mut13141 = false, _mut13142 = false, _mut13143 = false, _mut13144 = false, _mut13145 = false, _mut13146 = false, _mut13147 = false, _mut13148 = false, _mut13149 = false, _mut13150 = false, _mut13151 = false, _mut13152 = false, _mut13153 = false, _mut13154 = false, _mut13155 = false, _mut13156 = false, _mut13157 = false, _mut13158 = false, _mut13159 = false, _mut13160 = false, _mut13161 = false, _mut13162 = false, _mut13163 = false, _mut13164 = false, _mut13165 = false, _mut13166 = false, _mut13167 = false, _mut13168 = false, _mut13169 = false, _mut13170 = false, _mut13171 = false, _mut13172 = false, _mut13173 = false, _mut13174 = false, _mut13175 = false, _mut13176 = false, _mut13177 = false, _mut13178 = false, _mut13179 = false, _mut13180 = false, _mut13181 = false, _mut13182 = false, _mut13183 = false, _mut13184 = false, _mut13185 = false, _mut13186 = false, _mut13187 = false, _mut13188 = false, _mut13189 = false, _mut13190 = false, _mut13191 = false, _mut13192 = false, _mut13193 = false, _mut13194 = false, _mut13195 = false, _mut13196 = false, _mut13197 = false, _mut13198 = false, _mut13199 = false, _mut13200 = false, _mut13201 = false, _mut13202 = false, _mut13203 = false, _mut13204 = false, _mut13205 = false, _mut13206 = false, _mut13207 = false, _mut13208 = false, _mut13209 = false, _mut13210 = false, _mut13211 = false, _mut13212 = false, _mut13213 = false, _mut13214 = false, _mut13215 = false, _mut13216 = false, _mut13217 = false, _mut13218 = false, _mut13219 = false, _mut13220 = false, _mut13221 = false, _mut13222 = false, _mut13223 = false, _mut13224 = false;
 
-    /** Serializable version identifier. */
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 20111120L;
 
-    /** Simple constructor.
-     * This constructor builds an instance that is not usable yet, the
-     * {@link RungeKuttaStepInterpolator#reinitialize} method should be
-     * called before using the instance in order to initialize the
-     * internal arrays. This constructor is used only in order to delay
-     * the initialization in some cases. The {@link RungeKuttaIntegrator}
-     * class uses the prototyping design pattern to create the step
-     * interpolators by cloning an uninitialized model and latter initializing
-     * the copy.
-     */
-    // CHECKSTYLE: stop RedundantModifier
     // the public modifier here is needed for serialization
     public ClassicalRungeKuttaStepInterpolator() {
     }
-    // CHECKSTYLE: resume RedundantModifier
 
-    /** Copy constructor.
+    /**
+     * Copy constructor.
      * @param interpolator interpolator to copy from. The copy is a deep
      * copy: its arrays are separated from the original arrays of the
      * instance
@@ -83,54 +44,53 @@ class ClassicalRungeKuttaStepInterpolator
         super(interpolator);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected StepInterpolator doCopy() {
         return new ClassicalRungeKuttaStepInterpolator(this);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected void computeInterpolatedStateAndDerivatives(final double theta,
-                                            final double oneMinusThetaH) {
-
-        final double oneMinusTheta  = 1 - theta;
-        final double oneMinus2Theta = 1 - 2 * theta;
-        final double coeffDot1     = oneMinusTheta * oneMinus2Theta;
-        final double coeffDot23    = 2 * theta * oneMinusTheta;
-        final double coeffDot4     = -theta * oneMinus2Theta;
-        if ((previousState != null) && (theta <= 0.5)) {
-            final double fourTheta2     = 4 * theta * theta;
-            final double s             = theta * h / 6.0;
-            final double coeff1        = s * ( 6 - 9 * theta + fourTheta2);
-            final double coeff23       = s * ( 6 * theta - fourTheta2);
-            final double coeff4        = s * (-3 * theta + fourTheta2);
-            for (int i = 0; i < interpolatedState.length; ++i) {
-                final double yDot1  = yDotK[0][i];
-                final double yDot23 = yDotK[1][i] + yDotK[2][i];
-                final double yDot4  = yDotK[3][i];
-                interpolatedState[i] =
-                        previousState[i] + coeff1  * yDot1 + coeff23 * yDot23 + coeff4  * yDot4;
-                interpolatedDerivatives[i] =
-                        coeffDot1 * yDot1 + coeffDot23 * yDot23 + coeffDot4 * yDot4;
+    protected void computeInterpolatedStateAndDerivatives(final double theta, final double oneMinusThetaH) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93");
+        final double oneMinusTheta = AOR_minus(1, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12973, _mut12974, _mut12975, _mut12976);
+        final double oneMinus2Theta = AOR_minus(1, AOR_multiply(2, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12977, _mut12978, _mut12979, _mut12980), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12981, _mut12982, _mut12983, _mut12984);
+        final double coeffDot1 = AOR_multiply(oneMinusTheta, oneMinus2Theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12985, _mut12986, _mut12987, _mut12988);
+        final double coeffDot23 = AOR_multiply(AOR_multiply(2, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12989, _mut12990, _mut12991, _mut12992), oneMinusTheta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12993, _mut12994, _mut12995, _mut12996);
+        final double coeffDot4 = AOR_multiply(-theta, oneMinus2Theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut12997, _mut12998, _mut12999, _mut13000);
+        if ((_mut13006 ? ((previousState != null) || (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13001, _mut13002, _mut13003, _mut13004, _mut13005))) : ((previousState != null) && (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13001, _mut13002, _mut13003, _mut13004, _mut13005))))) {
+            final double fourTheta2 = AOR_multiply(AOR_multiply(4, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13116, _mut13117, _mut13118, _mut13119), theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13120, _mut13121, _mut13122, _mut13123);
+            final double s = AOR_divide(AOR_multiply(theta, h, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13124, _mut13125, _mut13126, _mut13127), 6.0, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13128, _mut13129, _mut13130, _mut13131);
+            final double coeff1 = AOR_multiply(s, (AOR_plus(AOR_minus(6, AOR_multiply(9, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13132, _mut13133, _mut13134, _mut13135), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13136, _mut13137, _mut13138, _mut13139), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13140, _mut13141, _mut13142, _mut13143)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13144, _mut13145, _mut13146, _mut13147);
+            final double coeff23 = AOR_multiply(s, (AOR_minus(AOR_multiply(6, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13148, _mut13149, _mut13150, _mut13151), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13152, _mut13153, _mut13154, _mut13155)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13156, _mut13157, _mut13158, _mut13159);
+            final double coeff4 = AOR_multiply(s, (AOR_plus(AOR_multiply(-3, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13160, _mut13161, _mut13162, _mut13163), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13164, _mut13165, _mut13166, _mut13167)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13168, _mut13169, _mut13170, _mut13171);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13220, _mut13221, _mut13222, _mut13223, _mut13224); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93");
+                final double yDot1 = yDotK[0][i];
+                final double yDot23 = AOR_plus(yDotK[1][i], yDotK[2][i], "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13172, _mut13173, _mut13174, _mut13175);
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_plus(AOR_plus(AOR_plus(previousState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13176, _mut13177, _mut13178, _mut13179), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13180, _mut13181, _mut13182, _mut13183), AOR_multiply(coeff23, yDot23, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13184, _mut13185, _mut13186, _mut13187), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13188, _mut13189, _mut13190, _mut13191), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13192, _mut13193, _mut13194, _mut13195), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13196, _mut13197, _mut13198, _mut13199);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13200, _mut13201, _mut13202, _mut13203), AOR_multiply(coeffDot23, yDot23, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13204, _mut13205, _mut13206, _mut13207), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13208, _mut13209, _mut13210, _mut13211), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13212, _mut13213, _mut13214, _mut13215), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13216, _mut13217, _mut13218, _mut13219);
             }
         } else {
-            final double fourTheta      = 4 * theta;
-            final double s             = oneMinusThetaH / 6.0;
-            final double coeff1        = s * ((-fourTheta + 5) * theta - 1);
-            final double coeff23       = s * (( fourTheta - 2) * theta - 2);
-            final double coeff4        = s * ((-fourTheta - 1) * theta - 1);
-            for (int i = 0; i < interpolatedState.length; ++i) {
-                final double yDot1  = yDotK[0][i];
-                final double yDot23 = yDotK[1][i] + yDotK[2][i];
-                final double yDot4  = yDotK[3][i];
-                interpolatedState[i] =
-                        currentState[i] + coeff1  * yDot1 + coeff23 * yDot23 + coeff4  * yDot4;
-                interpolatedDerivatives[i] =
-                        coeffDot1 * yDot1 + coeffDot23 * yDot23 + coeffDot4 * yDot4;
+            final double fourTheta = AOR_multiply(4, theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13007, _mut13008, _mut13009, _mut13010);
+            final double s = AOR_divide(oneMinusThetaH, 6.0, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13011, _mut13012, _mut13013, _mut13014);
+            final double coeff1 = AOR_multiply(s, (AOR_minus(AOR_multiply((AOR_plus(-fourTheta, 5, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13015, _mut13016, _mut13017, _mut13018)), theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13019, _mut13020, _mut13021, _mut13022), 1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13023, _mut13024, _mut13025, _mut13026)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13027, _mut13028, _mut13029, _mut13030);
+            final double coeff23 = AOR_multiply(s, (AOR_minus(AOR_multiply((AOR_minus(fourTheta, 2, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13031, _mut13032, _mut13033, _mut13034)), theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13035, _mut13036, _mut13037, _mut13038), 2, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13039, _mut13040, _mut13041, _mut13042)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13043, _mut13044, _mut13045, _mut13046);
+            final double coeff4 = AOR_multiply(s, (AOR_minus(AOR_multiply((AOR_minus(-fourTheta, 1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13047, _mut13048, _mut13049, _mut13050)), theta, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13051, _mut13052, _mut13053, _mut13054), 1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13055, _mut13056, _mut13057, _mut13058)), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13059, _mut13060, _mut13061, _mut13062);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13111, _mut13112, _mut13113, _mut13114, _mut13115); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93");
+                final double yDot1 = yDotK[0][i];
+                final double yDot23 = AOR_plus(yDotK[1][i], yDotK[2][i], "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13063, _mut13064, _mut13065, _mut13066);
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_plus(AOR_plus(AOR_plus(currentState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13067, _mut13068, _mut13069, _mut13070), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13071, _mut13072, _mut13073, _mut13074), AOR_multiply(coeff23, yDot23, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13075, _mut13076, _mut13077, _mut13078), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13079, _mut13080, _mut13081, _mut13082), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13083, _mut13084, _mut13085, _mut13086), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13087, _mut13088, _mut13089, _mut13090);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13091, _mut13092, _mut13093, _mut13094), AOR_multiply(coeffDot23, yDot23, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13095, _mut13096, _mut13097, _mut13098), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13099, _mut13100, _mut13101, _mut13102), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13103, _mut13104, _mut13105, _mut13106), "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaStepInterpolator.computeInterpolatedStateAndDerivatives_93", _mut13107, _mut13108, _mut13109, _mut13110);
             }
         }
-
     }
-
 }

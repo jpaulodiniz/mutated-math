@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.direct;
 
 import java.util.Comparator;
-
 import org.apache.commons.math3.analysis.MultivariateFunction;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.optimization.GoalType;
@@ -27,6 +25,8 @@ import org.apache.commons.math3.optimization.PointValuePair;
 import org.apache.commons.math3.optimization.SimpleValueChecker;
 import org.apache.commons.math3.optimization.MultivariateOptimizer;
 import org.apache.commons.math3.optimization.OptimizationData;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements simplex-based direct search optimization.
@@ -84,12 +84,17 @@ import org.apache.commons.math3.optimization.OptimizationData;
  * @deprecated As of 3.1 (to be removed in 4.0).
  * @since 3.0
  */
-@SuppressWarnings("boxing") // deprecated anyway
+// deprecated anyway
+@SuppressWarnings("boxing")
 @Deprecated
-public class SimplexOptimizer
-    extends BaseAbstractMultivariateOptimizer<MultivariateFunction>
-    implements MultivariateOptimizer {
-    /** Simplex. */
+public class SimplexOptimizer extends BaseAbstractMultivariateOptimizer<MultivariateFunction> implements MultivariateOptimizer {
+
+    @Conditional
+    public static boolean _mut75094 = false, _mut75095 = false, _mut75096 = false, _mut75097 = false, _mut75098 = false, _mut75099 = false, _mut75100 = false, _mut75101 = false, _mut75102 = false, _mut75103 = false, _mut75104 = false;
+
+    /**
+     * Simplex.
+     */
     private AbstractSimplex simplex;
 
     /**
@@ -145,13 +150,9 @@ public class SimplexOptimizer
      * function.
      */
     @Override
-    protected PointValuePair optimizeInternal(int maxEval, MultivariateFunction f,
-                                              GoalType goalType,
-                                              OptimizationData... optData) {
+    protected PointValuePair optimizeInternal(int maxEval, MultivariateFunction f, GoalType goalType, OptimizationData... optData) {
         // Scan "optData" for the input specific to this optimizer.
         parseOptimizationData(optData);
-
-        // The parent's method will retrieve the common parameters from
         // "optData" and call "doOptimize".
         return super.optimizeInternal(maxEval, f, goalType, optData);
     }
@@ -166,9 +167,9 @@ public class SimplexOptimizer
      * </ul>
      */
     private void parseOptimizationData(OptimizationData... optData) {
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.SimplexOptimizer.parseOptimizationData_168");
             if (data instanceof AbstractSimplex) {
                 simplex = (AbstractSimplex) data;
                 continue;
@@ -176,56 +177,57 @@ public class SimplexOptimizer
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PointValuePair doOptimize() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.SimplexOptimizer.compare_200");
         if (simplex == null) {
             throw new NullArgumentException();
         }
-
-        // Indirect call to "computeObjectiveValue" in order to update the
         // evaluations counter.
-        final MultivariateFunction evalFunc
-            = new MultivariateFunction() {
-                /** {@inheritDoc} */
-                public double value(double[] point) {
-                    return computeObjectiveValue(point);
-                }
-            };
+        final MultivariateFunction evalFunc = new MultivariateFunction() {
 
+            /**
+             * {@inheritDoc}
+             */
+            public double value(double[] point) {
+                return computeObjectiveValue(point);
+            }
+        };
         final boolean isMinim = getGoalType() == GoalType.MINIMIZE;
-        final Comparator<PointValuePair> comparator
-            = new Comparator<PointValuePair>() {
-            /** {@inheritDoc} */
-            public int compare(final PointValuePair o1,
-                               final PointValuePair o2) {
+        final Comparator<PointValuePair> comparator = new Comparator<PointValuePair>() {
+
+            /**
+             * {@inheritDoc}
+             */
+            public int compare(final PointValuePair o1, final PointValuePair o2) {
                 final double v1 = o1.getValue();
                 final double v2 = o2.getValue();
                 return isMinim ? Double.compare(v1, v2) : Double.compare(v2, v1);
             }
         };
-
         // Initialize search.
         simplex.build(getStartPoint());
         simplex.evaluate(evalFunc, comparator);
-
         PointValuePair[] previous = null;
         int iteration = 0;
         final ConvergenceChecker<PointValuePair> checker = getConvergenceChecker();
         while (true) {
-            if (iteration > 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.SimplexOptimizer.compare_200");
+            if (ROR_greater(iteration, 0, "org.apache.commons.math3.optimization.direct.SimplexOptimizer.compare_200", _mut75094, _mut75095, _mut75096, _mut75097, _mut75098)) {
                 boolean converged = true;
-                for (int i = 0; i < simplex.getSize(); i++) {
+                for (int i = 0; ROR_less(i, simplex.getSize(), "org.apache.commons.math3.optimization.direct.SimplexOptimizer.compare_200", _mut75100, _mut75101, _mut75102, _mut75103, _mut75104); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.SimplexOptimizer.compare_200");
                     PointValuePair prev = previous[i];
-                    converged = converged &&
-                        checker.converged(iteration, prev, simplex.getPoint(i));
+                    converged = (_mut75099 ? (converged || checker.converged(iteration, prev, simplex.getPoint(i))) : (converged && checker.converged(iteration, prev, simplex.getPoint(i))));
                 }
                 if (converged) {
                     // We have found an optimum.
                     return simplex.getPoint(0);
                 }
             }
-
             // We still need to search.
             previous = simplex.getPoints();
             simplex.iterate(evalFunc, comparator);

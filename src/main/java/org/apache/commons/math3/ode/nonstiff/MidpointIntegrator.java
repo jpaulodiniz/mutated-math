@@ -14,56 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
-
-/**
- * This class implements a second order Runge-Kutta integrator for
- * Ordinary Differential Equations.
- *
- * <p>This method is an explicit Runge-Kutta method, its Butcher-array
- * is the following one :
- * <pre>
- *    0  |  0    0
- *   1/2 | 1/2   0
- *       |----------
- *       |  0    1
- * </pre>
- * </p>
- *
- * @see EulerIntegrator
- * @see ClassicalRungeKuttaIntegrator
- * @see GillIntegrator
- * @see ThreeEighthesIntegrator
- * @see LutherIntegrator
- *
- * @since 1.2
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 public class MidpointIntegrator extends RungeKuttaIntegrator {
 
-  /** Time steps Butcher array. */
-  private static final double[] STATIC_C = {
-    1.0 / 2.0
-  };
+    @Conditional
+    public static boolean _mut19200 = false, _mut19201 = false, _mut19202 = false, _mut19203 = false, _mut19204 = false, _mut19205 = false, _mut19206 = false, _mut19207 = false;
 
-  /** Internal weights Butcher array. */
-  private static final double[][] STATIC_A = {
-    { 1.0 / 2.0 }
-  };
+    /**
+     * Time steps Butcher array.
+     */
+    private static final double[] STATIC_C = { AOR_divide(1.0, 2.0, "org.apache.commons.math3.ode.nonstiff.MidpointIntegrator.end_401", _mut19200, _mut19201, _mut19202, _mut19203) };
 
-  /** Propagation weights Butcher array. */
-  private static final double[] STATIC_B = {
-    0.0, 1.0
-  };
+    /**
+     * Internal weights Butcher array.
+     */
+    private static final double[][] STATIC_A = { { AOR_divide(1.0, 2.0, "org.apache.commons.math3.ode.nonstiff.MidpointIntegrator.end_401", _mut19204, _mut19205, _mut19206, _mut19207) } };
 
-  /** Simple constructor.
-   * Build a midpoint integrator with the given step.
-   * @param step integration step
-   */
-  public MidpointIntegrator(final double step) {
-    super("midpoint", STATIC_C, STATIC_A, STATIC_B, new MidpointStepInterpolator(), step);
-  }
+    /**
+     * Propagation weights Butcher array.
+     */
+    private static final double[] STATIC_B = { 0.0, 1.0 };
 
+    /**
+     * Simple constructor.
+     * Build a midpoint integrator with the given step.
+     * @param step integration step
+     */
+    public MidpointIntegrator(final double step) {
+        super("midpoint", STATIC_C, STATIC_A, STATIC_B, new MidpointStepInterpolator(), step);
+    }
 }

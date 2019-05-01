@@ -23,6 +23,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.BlockRealMatrix;
 import org.apache.commons.math3.stat.descriptive.moment.Mean;
 import org.apache.commons.math3.stat.descriptive.moment.Variance;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes covariances for pairs of arrays or columns of a matrix.
@@ -45,13 +47,17 @@ import org.apache.commons.math3.stat.descriptive.moment.Variance;
  */
 public class Covariance {
 
-    /** covariance matrix */
+    @Conditional
+    public static boolean _mut10951 = false, _mut10952 = false, _mut10953 = false, _mut10954 = false, _mut10955 = false, _mut10956 = false, _mut10957 = false, _mut10958 = false, _mut10959 = false, _mut10960 = false, _mut10961 = false, _mut10962 = false, _mut10963 = false, _mut10964 = false, _mut10965 = false, _mut10966 = false, _mut10967 = false, _mut10968 = false, _mut10969 = false, _mut10970 = false, _mut10971 = false, _mut10972 = false, _mut10973 = false, _mut10974 = false, _mut10975 = false, _mut10976 = false, _mut10977 = false, _mut10978 = false, _mut10979 = false, _mut10980 = false, _mut10981 = false, _mut10982 = false, _mut10983 = false, _mut10984 = false, _mut10985 = false, _mut10986 = false, _mut10987 = false, _mut10988 = false, _mut10989 = false, _mut10990 = false, _mut10991 = false, _mut10992 = false, _mut10993 = false, _mut10994 = false, _mut10995 = false, _mut10996 = false, _mut10997 = false, _mut10998 = false, _mut10999 = false, _mut11000 = false, _mut11001 = false, _mut11002 = false, _mut11003 = false, _mut11004 = false, _mut11005 = false, _mut11006 = false, _mut11007 = false, _mut11008 = false, _mut11009 = false, _mut11010 = false, _mut11011 = false, _mut11012 = false, _mut11013 = false, _mut11014 = false, _mut11015 = false, _mut11016 = false, _mut11017 = false, _mut11018 = false, _mut11019 = false, _mut11020 = false, _mut11021 = false, _mut11022 = false;
+
+    /**
+     * covariance matrix
+     */
     private final RealMatrix covarianceMatrix;
 
     /**
-     * Create an empty covariance matrix.
+     * Number of observations (length of covariate vectors)
      */
-    /** Number of observations (length of covariate vectors) */
     private final int n;
 
     /**
@@ -80,8 +86,7 @@ public class Covariance {
      * @throws NotStrictlyPositiveException if the input data array is not
      * rectangular with at least one row and one column.
      */
-    public Covariance(double[][] data, boolean biasCorrected)
-    throws MathIllegalArgumentException, NotStrictlyPositiveException {
+    public Covariance(double[][] data, boolean biasCorrected) throws MathIllegalArgumentException, NotStrictlyPositiveException {
         this(new BlockRealMatrix(data), biasCorrected);
     }
 
@@ -98,8 +103,7 @@ public class Covariance {
      * @throws NotStrictlyPositiveException if the input data array is not
      * rectangular with at least one row and one column.
      */
-    public Covariance(double[][] data)
-    throws MathIllegalArgumentException, NotStrictlyPositiveException {
+    public Covariance(double[][] data) throws MathIllegalArgumentException, NotStrictlyPositiveException {
         this(data, true);
     }
 
@@ -117,11 +121,10 @@ public class Covariance {
      * @throws MathIllegalArgumentException if the input matrix does not have
      * at least two rows and one column
      */
-    public Covariance(RealMatrix matrix, boolean biasCorrected)
-    throws MathIllegalArgumentException {
-       checkSufficientData(matrix);
-       n = matrix.getRowDimension();
-       covarianceMatrix = computeCovarianceMatrix(matrix, biasCorrected);
+    public Covariance(RealMatrix matrix, boolean biasCorrected) throws MathIllegalArgumentException {
+        checkSufficientData(matrix);
+        n = matrix.getRowDimension();
+        covarianceMatrix = computeCovarianceMatrix(matrix, biasCorrected);
     }
 
     /**
@@ -164,16 +167,18 @@ public class Covariance {
      * @return covariance matrix
      * @throws MathIllegalArgumentException if the matrix does not contain sufficient data
      */
-    protected RealMatrix computeCovarianceMatrix(RealMatrix matrix, boolean biasCorrected)
-    throws MathIllegalArgumentException {
+    protected RealMatrix computeCovarianceMatrix(RealMatrix matrix, boolean biasCorrected) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.computeCovarianceMatrix_167");
         int dimension = matrix.getColumnDimension();
         Variance variance = new Variance(biasCorrected);
         RealMatrix outMatrix = new BlockRealMatrix(dimension, dimension);
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < i; j++) {
-              double cov = covariance(matrix.getColumn(i), matrix.getColumn(j), biasCorrected);
-              outMatrix.setEntry(i, j, cov);
-              outMatrix.setEntry(j, i, cov);
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.stat.correlation.Covariance.computeCovarianceMatrix_167", _mut10956, _mut10957, _mut10958, _mut10959, _mut10960); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.computeCovarianceMatrix_167");
+            for (int j = 0; ROR_less(j, i, "org.apache.commons.math3.stat.correlation.Covariance.computeCovarianceMatrix_167", _mut10951, _mut10952, _mut10953, _mut10954, _mut10955); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.computeCovarianceMatrix_167");
+                double cov = covariance(matrix.getColumn(i), matrix.getColumn(j), biasCorrected);
+                outMatrix.setEntry(i, j, cov);
+                outMatrix.setEntry(j, i, cov);
             }
             outMatrix.setEntry(i, i, variance.evaluate(matrix.getColumn(i)));
         }
@@ -188,8 +193,7 @@ public class Covariance {
      * @throws MathIllegalArgumentException if matrix does not contain sufficient data
      * @see #Covariance
      */
-    protected RealMatrix computeCovarianceMatrix(RealMatrix matrix)
-    throws MathIllegalArgumentException {
+    protected RealMatrix computeCovarianceMatrix(RealMatrix matrix) throws MathIllegalArgumentException {
         return computeCovarianceMatrix(matrix, true);
     }
 
@@ -204,8 +208,7 @@ public class Covariance {
      * @throws NotStrictlyPositiveException if the input data array is not
      * rectangular with at least one row and one column.
      */
-    protected RealMatrix computeCovarianceMatrix(double[][] data, boolean biasCorrected)
-    throws MathIllegalArgumentException, NotStrictlyPositiveException {
+    protected RealMatrix computeCovarianceMatrix(double[][] data, boolean biasCorrected) throws MathIllegalArgumentException, NotStrictlyPositiveException {
         return computeCovarianceMatrix(new BlockRealMatrix(data), biasCorrected);
     }
 
@@ -219,8 +222,7 @@ public class Covariance {
      * rectangular with at least one row and one column.
      * @see #Covariance
      */
-    protected RealMatrix computeCovarianceMatrix(double[][] data)
-    throws MathIllegalArgumentException, NotStrictlyPositiveException {
+    protected RealMatrix computeCovarianceMatrix(double[][] data) throws MathIllegalArgumentException, NotStrictlyPositiveException {
         return computeCovarianceMatrix(data, true);
     }
 
@@ -236,27 +238,26 @@ public class Covariance {
      * @throws  MathIllegalArgumentException if the arrays lengths do not match or
      * there is insufficient data
      */
-    public double covariance(final double[] xArray, final double[] yArray, boolean biasCorrected)
-        throws MathIllegalArgumentException {
+    public double covariance(final double[] xArray, final double[] yArray, boolean biasCorrected) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.covariance_239");
         Mean mean = new Mean();
         double result = 0d;
         int length = xArray.length;
-        if (length != yArray.length) {
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.DIMENSIONS_MISMATCH_SIMPLE, length, yArray.length);
-        } else if (length < 2) {
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.INSUFFICIENT_OBSERVED_POINTS_IN_SAMPLE, length, 2);
+        if (ROR_not_equals(length, yArray.length, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10961, _mut10962, _mut10963, _mut10964, _mut10965)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.DIMENSIONS_MISMATCH_SIMPLE, length, yArray.length);
+        } else if (ROR_less(length, 2, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10966, _mut10967, _mut10968, _mut10969, _mut10970)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_OBSERVED_POINTS_IN_SAMPLE, length, 2);
         } else {
             double xMean = mean.evaluate(xArray);
             double yMean = mean.evaluate(yArray);
-            for (int i = 0; i < length; i++) {
-                double xDev = xArray[i] - xMean;
-                double yDev = yArray[i] - yMean;
-                result += (xDev * yDev - result) / (i + 1);
+            for (int i = 0; ROR_less(i, length, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10995, _mut10996, _mut10997, _mut10998, _mut10999); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.covariance_239");
+                double xDev = AOR_minus(xArray[i], xMean, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10971, _mut10972, _mut10973, _mut10974);
+                double yDev = AOR_minus(yArray[i], yMean, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10975, _mut10976, _mut10977, _mut10978);
+                result += AOR_divide((AOR_minus(AOR_multiply(xDev, yDev, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10979, _mut10980, _mut10981, _mut10982), result, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10983, _mut10984, _mut10985, _mut10986)), (AOR_plus(i, 1, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10987, _mut10988, _mut10989, _mut10990)), "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut10991, _mut10992, _mut10993, _mut10994);
             }
         }
-        return biasCorrected ? result * ((double) length / (double)(length - 1)) : result;
+        return biasCorrected ? AOR_multiply(result, (AOR_divide((double) length, (double) (AOR_minus(length, 1, "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut11000, _mut11001, _mut11002, _mut11003)), "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut11004, _mut11005, _mut11006, _mut11007)), "org.apache.commons.math3.stat.correlation.Covariance.covariance_239", _mut11008, _mut11009, _mut11010, _mut11011) : result;
     }
 
     /**
@@ -271,8 +272,7 @@ public class Covariance {
      * @throws  MathIllegalArgumentException if the arrays lengths do not match or
      * there is insufficient data
      */
-    public double covariance(final double[] xArray, final double[] yArray)
-        throws MathIllegalArgumentException {
+    public double covariance(final double[] xArray, final double[] yArray) throws MathIllegalArgumentException {
         return covariance(xArray, yArray, true);
     }
 
@@ -284,12 +284,11 @@ public class Covariance {
      * to compute covariance
      */
     private void checkSufficientData(final RealMatrix matrix) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.Covariance.checkSufficientData_286");
         int nRows = matrix.getRowDimension();
         int nCols = matrix.getColumnDimension();
-        if (nRows < 2 || nCols < 1) {
-            throw new MathIllegalArgumentException(
-                    LocalizedFormats.INSUFFICIENT_ROWS_AND_COLUMNS,
-                    nRows, nCols);
+        if ((_mut11022 ? (ROR_less(nRows, 2, "org.apache.commons.math3.stat.correlation.Covariance.checkSufficientData_286", _mut11012, _mut11013, _mut11014, _mut11015, _mut11016) && ROR_less(nCols, 1, "org.apache.commons.math3.stat.correlation.Covariance.checkSufficientData_286", _mut11017, _mut11018, _mut11019, _mut11020, _mut11021)) : (ROR_less(nRows, 2, "org.apache.commons.math3.stat.correlation.Covariance.checkSufficientData_286", _mut11012, _mut11013, _mut11014, _mut11015, _mut11016) || ROR_less(nCols, 1, "org.apache.commons.math3.stat.correlation.Covariance.checkSufficientData_286", _mut11017, _mut11018, _mut11019, _mut11020, _mut11021)))) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_ROWS_AND_COLUMNS, nRows, nCols);
         }
     }
 }

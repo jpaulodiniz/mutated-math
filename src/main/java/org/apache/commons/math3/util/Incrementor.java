@@ -18,6 +18,8 @@ package org.apache.commons.math3.util;
 
 import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.exception.NullArgumentException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Utility that increments a counter until a maximum is reached, at
@@ -32,14 +34,20 @@ import org.apache.commons.math3.exception.NullArgumentException;
  */
 @Deprecated
 public class Incrementor {
+
+    @Conditional
+    public static boolean _mut40399 = false, _mut40400 = false, _mut40401 = false, _mut40402 = false, _mut40403 = false, _mut40404 = false, _mut40405 = false, _mut40406 = false, _mut40407 = false, _mut40408 = false, _mut40409 = false, _mut40410 = false, _mut40411 = false, _mut40412 = false, _mut40413 = false;
+
     /**
      * Upper limit for the counter.
      */
     private int maximalCount;
+
     /**
      * Current count.
      */
     private int count = 0;
+
     /**
      * Function called at counter exhaustion.
      */
@@ -60,13 +68,15 @@ public class Incrementor {
      * @param max Maximal count.
      */
     public Incrementor(int max) {
-        this(max,
-             new MaxCountExceededCallback() {
-                 /** {@inheritDoc} */
-                 public void trigger(int max) throws MaxCountExceededException {
-                     throw new MaxCountExceededException(max);
-                 }
-             });
+        this(max, new MaxCountExceededCallback() {
+
+            /**
+             * {@inheritDoc}
+             */
+            public void trigger(int max) throws MaxCountExceededException {
+                throw new MaxCountExceededException(max);
+            }
+        });
     }
 
     /**
@@ -77,9 +87,8 @@ public class Incrementor {
      * @param cb Function to be called when the maximal count has been reached.
      * @throws NullArgumentException if {@code cb} is {@code null}
      */
-    public Incrementor(int max, MaxCountExceededCallback cb)
-        throws NullArgumentException {
-        if (cb == null){
+    public Incrementor(int max, MaxCountExceededCallback cb) throws NullArgumentException {
+        if (cb == null) {
             throw new NullArgumentException();
         }
         maximalCount = max;
@@ -123,7 +132,8 @@ public class Incrementor {
      * {@code true} otherwise.
      */
     public boolean canIncrement() {
-        return count < maximalCount;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Incrementor.canIncrement_125");
+        return ROR_less(count, maximalCount, "org.apache.commons.math3.util.Incrementor.canIncrement_125", _mut40399, _mut40400, _mut40401, _mut40402, _mut40403);
     }
 
     /**
@@ -134,7 +144,9 @@ public class Incrementor {
      * @throws MaxCountExceededException at counter exhaustion.
      */
     public void incrementCount(int value) throws MaxCountExceededException {
-        for (int i = 0; i < value; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Incrementor.incrementCount_136");
+        for (int i = 0; ROR_less(i, value, "org.apache.commons.math3.util.Incrementor.incrementCount_136", _mut40404, _mut40405, _mut40406, _mut40407, _mut40408); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Incrementor.incrementCount_136");
             incrementCount();
         }
     }
@@ -153,7 +165,8 @@ public class Incrementor {
      * construction.
      */
     public void incrementCount() throws MaxCountExceededException {
-        if (++count > maximalCount) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Incrementor.incrementCount_155");
+        if (ROR_greater(++count, maximalCount, "org.apache.commons.math3.util.Incrementor.incrementCount_155", _mut40409, _mut40410, _mut40411, _mut40412, _mut40413)) {
             maxCountCallback.trigger(maximalCount);
         }
     }
@@ -170,6 +183,7 @@ public class Incrementor {
      * The {@link #trigger(int) trigger} method should usually throw an exception.
      */
     public interface MaxCountExceededCallback {
+
         /**
          * Function called when the maximal count has been reached.
          *
@@ -179,7 +193,8 @@ public class Incrementor {
         void trigger(int maximalCount) throws MaxCountExceededException;
     }
 
-    /** Create an instance that delegates everything to a {@link IntegerSequence.Incrementor}.
+    /**
+     * Create an instance that delegates everything to a {@link IntegerSequence.Incrementor}.
      * <p>
      * This factory method is intended only as a temporary hack for internal use in
      * Apache Commons Math 3.X series, when {@code Incrementor} is required in
@@ -201,7 +216,9 @@ public class Incrementor {
     public static Incrementor wrap(final IntegerSequence.Incrementor incrementor) {
         return new Incrementor() {
 
-            /** Underlying incrementor. */
+            /**
+             * Underlying incrementor.
+             */
             private IntegerSequence.Incrementor delegate;
 
             {
@@ -211,28 +228,32 @@ public class Incrementor {
                 super.incrementCount(delegate.getCount());
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void setMaximalCount(int max) {
                 super.setMaximalCount(max);
                 delegate = delegate.withMaximalCount(max);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void resetCount() {
                 super.resetCount();
                 delegate = delegate.withStart(0);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public void incrementCount() {
                 super.incrementCount();
                 delegate.increment();
             }
-
         };
     }
-
 }

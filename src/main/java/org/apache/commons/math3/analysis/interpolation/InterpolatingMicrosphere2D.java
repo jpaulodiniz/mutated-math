@@ -18,6 +18,8 @@ package org.apache.commons.math3.analysis.interpolation;
 
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Utility class for the {@link MicrosphereProjectionInterpolator} algorithm.
@@ -28,7 +30,13 @@ import org.apache.commons.math3.util.MathUtils;
  * @since 3.6
  */
 public class InterpolatingMicrosphere2D extends InterpolatingMicrosphere {
-    /** Space dimension. */
+
+    @Conditional
+    public static boolean _mut94293 = false, _mut94294 = false, _mut94295 = false, _mut94296 = false, _mut94297 = false, _mut94298 = false, _mut94299 = false, _mut94300 = false, _mut94301 = false, _mut94302 = false, _mut94303 = false, _mut94304 = false, _mut94305 = false;
+
+    /**
+     * Space dimension.
+     */
     private static final int DIMENSION = 2;
 
     /**
@@ -50,19 +58,14 @@ public class InterpolatingMicrosphere2D extends InterpolatingMicrosphere {
      * @throws org.apache.commons.math3.exception.OutOfRangeException if
      * {@code maxDarkFraction} does not belong to the interval {@code [0, 1]}.
      */
-    public InterpolatingMicrosphere2D(int size,
-                                      double maxDarkFraction,
-                                      double darkThreshold,
-                                      double background) {
+    public InterpolatingMicrosphere2D(int size, double maxDarkFraction, double darkThreshold, double background) {
         super(DIMENSION, size, maxDarkFraction, darkThreshold, background);
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.interpolation.InterpolatingMicrosphere2D.InterpolatingMicrosphere2D_53");
         // Generate the microsphere normals.
-        for (int i = 0; i < size; i++) {
-            final double angle = i * MathUtils.TWO_PI / size;
-
-            add(new double[] { FastMath.cos(angle),
-                               FastMath.sin(angle) },
-                false);
+        for (int i = 0; ROR_less(i, size, "org.apache.commons.math3.analysis.interpolation.InterpolatingMicrosphere2D.InterpolatingMicrosphere2D_53", _mut94301, _mut94302, _mut94303, _mut94304, _mut94305); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.interpolation.InterpolatingMicrosphere2D.InterpolatingMicrosphere2D_53");
+            final double angle = AOR_divide(AOR_multiply(i, MathUtils.TWO_PI, "org.apache.commons.math3.analysis.interpolation.InterpolatingMicrosphere2D.InterpolatingMicrosphere2D_53", _mut94293, _mut94294, _mut94295, _mut94296), size, "org.apache.commons.math3.analysis.interpolation.InterpolatingMicrosphere2D.InterpolatingMicrosphere2D_53", _mut94297, _mut94298, _mut94299, _mut94300);
+            add(new double[] { FastMath.cos(angle), FastMath.sin(angle) }, false);
         }
     }
 

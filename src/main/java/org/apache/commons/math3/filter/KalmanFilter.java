@@ -28,6 +28,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.SingularMatrixException;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implementation of a Kalman filter to estimate the state <i>x<sub>k</sub></i>
@@ -80,23 +82,53 @@ import org.apache.commons.math3.util.MathUtils;
  * @since 3.0
  */
 public class KalmanFilter {
-    /** The process model used by this filter instance. */
+
+    @Conditional
+    public static boolean _mut70352 = false, _mut70353 = false, _mut70354 = false, _mut70355 = false, _mut70356 = false, _mut70357 = false, _mut70358 = false, _mut70359 = false, _mut70360 = false, _mut70361 = false, _mut70362 = false, _mut70363 = false, _mut70364 = false, _mut70365 = false, _mut70366 = false, _mut70367 = false, _mut70368 = false, _mut70369 = false, _mut70370 = false, _mut70371 = false, _mut70372 = false, _mut70373 = false, _mut70374 = false, _mut70375 = false, _mut70376 = false, _mut70377 = false, _mut70378 = false, _mut70379 = false, _mut70380 = false, _mut70381 = false, _mut70382 = false, _mut70383 = false, _mut70384 = false, _mut70385 = false, _mut70386 = false, _mut70387 = false, _mut70388 = false, _mut70389 = false, _mut70390 = false, _mut70391 = false, _mut70392 = false, _mut70393 = false, _mut70394 = false, _mut70395 = false;
+
+    /**
+     * The process model used by this filter instance.
+     */
     private final ProcessModel processModel;
-    /** The measurement model used by this filter instance. */
+
+    /**
+     * The measurement model used by this filter instance.
+     */
     private final MeasurementModel measurementModel;
-    /** The transition matrix, equivalent to A. */
+
+    /**
+     * The transition matrix, equivalent to A.
+     */
     private RealMatrix transitionMatrix;
-    /** The transposed transition matrix. */
+
+    /**
+     * The transposed transition matrix.
+     */
     private RealMatrix transitionMatrixT;
-    /** The control matrix, equivalent to B. */
+
+    /**
+     * The control matrix, equivalent to B.
+     */
     private RealMatrix controlMatrix;
-    /** The measurement matrix, equivalent to H. */
+
+    /**
+     * The measurement matrix, equivalent to H.
+     */
     private RealMatrix measurementMatrix;
-    /** The transposed measurement matrix. */
+
+    /**
+     * The transposed measurement matrix.
+     */
     private RealMatrix measurementMatrixT;
-    /** The internal state estimation vector, equivalent to x hat. */
+
+    /**
+     * The internal state estimation vector, equivalent to x hat.
+     */
     private RealVector stateEstimation;
-    /** The error covariance matrix, equivalent to P. */
+
+    /**
+     * The error covariance matrix, equivalent to P.
+     */
     private RealMatrix errorCovariance;
 
     /**
@@ -116,98 +148,61 @@ public class KalmanFilter {
      * @throws MatrixDimensionMismatchException
      *             if the matrix dimensions do not fit together
      */
-    public KalmanFilter(final ProcessModel process, final MeasurementModel measurement)
-            throws NullArgumentException, NonSquareMatrixException, DimensionMismatchException,
-                   MatrixDimensionMismatchException {
-
+    public KalmanFilter(final ProcessModel process, final MeasurementModel measurement) throws NullArgumentException, NonSquareMatrixException, DimensionMismatchException, MatrixDimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119");
         MathUtils.checkNotNull(process);
         MathUtils.checkNotNull(measurement);
-
         this.processModel = process;
         this.measurementModel = measurement;
-
         transitionMatrix = processModel.getStateTransitionMatrix();
         MathUtils.checkNotNull(transitionMatrix);
         transitionMatrixT = transitionMatrix.transpose();
-
         // create an empty matrix if no control matrix was given
         if (processModel.getControlMatrix() == null) {
             controlMatrix = new Array2DRowRealMatrix();
         } else {
             controlMatrix = processModel.getControlMatrix();
         }
-
         measurementMatrix = measurementModel.getMeasurementMatrix();
         MathUtils.checkNotNull(measurementMatrix);
         measurementMatrixT = measurementMatrix.transpose();
-
-        // check that the process and measurement noise matrices are not null
-        // they will be directly accessed from the model as they may change
         // over time
         RealMatrix processNoise = processModel.getProcessNoise();
         MathUtils.checkNotNull(processNoise);
         RealMatrix measNoise = measurementModel.getMeasurementNoise();
         MathUtils.checkNotNull(measNoise);
-
-        // set the initial state estimate to a zero vector if it is not
         // available from the process model
         if (processModel.getInitialStateEstimate() == null) {
             stateEstimation = new ArrayRealVector(transitionMatrix.getColumnDimension());
         } else {
             stateEstimation = processModel.getInitialStateEstimate();
         }
-
-        if (transitionMatrix.getColumnDimension() != stateEstimation.getDimension()) {
-            throw new DimensionMismatchException(transitionMatrix.getColumnDimension(),
-                                                 stateEstimation.getDimension());
+        if (ROR_not_equals(transitionMatrix.getColumnDimension(), stateEstimation.getDimension(), "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70352, _mut70353, _mut70354, _mut70355, _mut70356)) {
+            throw new DimensionMismatchException(transitionMatrix.getColumnDimension(), stateEstimation.getDimension());
         }
-
-        // initialize the error covariance to the process noise if it is not
         // available from the process model
         if (processModel.getInitialErrorCovariance() == null) {
             errorCovariance = processNoise.copy();
         } else {
             errorCovariance = processModel.getInitialErrorCovariance();
         }
-
-        // sanity checks, the control matrix B may be null
-
         // A must be a square matrix
         if (!transitionMatrix.isSquare()) {
-            throw new NonSquareMatrixException(
-                    transitionMatrix.getRowDimension(),
-                    transitionMatrix.getColumnDimension());
+            throw new NonSquareMatrixException(transitionMatrix.getRowDimension(), transitionMatrix.getColumnDimension());
         }
-
-        // row dimension of B must be equal to A
         // if no control matrix is available, the row and column dimension will be 0
-        if (controlMatrix != null &&
-            controlMatrix.getRowDimension() > 0 &&
-            controlMatrix.getColumnDimension() > 0 &&
-            controlMatrix.getRowDimension() != transitionMatrix.getRowDimension()) {
-            throw new MatrixDimensionMismatchException(controlMatrix.getRowDimension(),
-                                                       controlMatrix.getColumnDimension(),
-                                                       transitionMatrix.getRowDimension(),
-                                                       controlMatrix.getColumnDimension());
+        if ((_mut70374 ? ((_mut70368 ? ((_mut70362 ? (controlMatrix != null || ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361)) : (controlMatrix != null && ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361))) || ROR_greater(controlMatrix.getColumnDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70363, _mut70364, _mut70365, _mut70366, _mut70367)) : ((_mut70362 ? (controlMatrix != null || ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361)) : (controlMatrix != null && ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361))) && ROR_greater(controlMatrix.getColumnDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70363, _mut70364, _mut70365, _mut70366, _mut70367))) || ROR_not_equals(controlMatrix.getRowDimension(), transitionMatrix.getRowDimension(), "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70369, _mut70370, _mut70371, _mut70372, _mut70373)) : ((_mut70368 ? ((_mut70362 ? (controlMatrix != null || ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361)) : (controlMatrix != null && ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361))) || ROR_greater(controlMatrix.getColumnDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70363, _mut70364, _mut70365, _mut70366, _mut70367)) : ((_mut70362 ? (controlMatrix != null || ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361)) : (controlMatrix != null && ROR_greater(controlMatrix.getRowDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70357, _mut70358, _mut70359, _mut70360, _mut70361))) && ROR_greater(controlMatrix.getColumnDimension(), 0, "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70363, _mut70364, _mut70365, _mut70366, _mut70367))) && ROR_not_equals(controlMatrix.getRowDimension(), transitionMatrix.getRowDimension(), "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70369, _mut70370, _mut70371, _mut70372, _mut70373)))) {
+            throw new MatrixDimensionMismatchException(controlMatrix.getRowDimension(), controlMatrix.getColumnDimension(), transitionMatrix.getRowDimension(), controlMatrix.getColumnDimension());
         }
-
         // Q must be equal to A
         MatrixUtils.checkAdditionCompatible(transitionMatrix, processNoise);
-
         // column dimension of H must be equal to row dimension of A
-        if (measurementMatrix.getColumnDimension() != transitionMatrix.getRowDimension()) {
-            throw new MatrixDimensionMismatchException(measurementMatrix.getRowDimension(),
-                                                       measurementMatrix.getColumnDimension(),
-                                                       measurementMatrix.getRowDimension(),
-                                                       transitionMatrix.getRowDimension());
+        if (ROR_not_equals(measurementMatrix.getColumnDimension(), transitionMatrix.getRowDimension(), "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70375, _mut70376, _mut70377, _mut70378, _mut70379)) {
+            throw new MatrixDimensionMismatchException(measurementMatrix.getRowDimension(), measurementMatrix.getColumnDimension(), measurementMatrix.getRowDimension(), transitionMatrix.getRowDimension());
         }
-
         // row dimension of R must be equal to row dimension of H
-        if (measNoise.getRowDimension() != measurementMatrix.getRowDimension()) {
-            throw new MatrixDimensionMismatchException(measNoise.getRowDimension(),
-                                                       measNoise.getColumnDimension(),
-                                                       measurementMatrix.getRowDimension(),
-                                                       measNoise.getColumnDimension());
+        if (ROR_not_equals(measNoise.getRowDimension(), measurementMatrix.getRowDimension(), "org.apache.commons.math3.filter.KalmanFilter.KalmanFilter_119", _mut70380, _mut70381, _mut70382, _mut70383, _mut70384)) {
+            throw new MatrixDimensionMismatchException(measNoise.getRowDimension(), measNoise.getColumnDimension(), measurementMatrix.getRowDimension(), measNoise.getColumnDimension());
         }
     }
 
@@ -293,27 +288,19 @@ public class KalmanFilter {
      *             if the dimension of the control vector does not match
      */
     public void predict(final RealVector u) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.filter.KalmanFilter.predict_295");
         // sanity checks
-        if (u != null &&
-            u.getDimension() != controlMatrix.getColumnDimension()) {
-            throw new DimensionMismatchException(u.getDimension(),
-                                                 controlMatrix.getColumnDimension());
+        if ((_mut70390 ? (u != null || ROR_not_equals(u.getDimension(), controlMatrix.getColumnDimension(), "org.apache.commons.math3.filter.KalmanFilter.predict_295", _mut70385, _mut70386, _mut70387, _mut70388, _mut70389)) : (u != null && ROR_not_equals(u.getDimension(), controlMatrix.getColumnDimension(), "org.apache.commons.math3.filter.KalmanFilter.predict_295", _mut70385, _mut70386, _mut70387, _mut70388, _mut70389)))) {
+            throw new DimensionMismatchException(u.getDimension(), controlMatrix.getColumnDimension());
         }
-
-        // project the state estimation ahead (a priori state)
         // xHat(k)- = A * xHat(k-1) + B * u(k-1)
         stateEstimation = transitionMatrix.operate(stateEstimation);
-
         // add control input if it is available
         if (u != null) {
             stateEstimation = stateEstimation.add(controlMatrix.operate(u));
         }
-
-        // project the error covariance ahead
         // P(k)- = A * P(k-1) * A' + Q
-        errorCovariance = transitionMatrix.multiply(errorCovariance)
-                .multiply(transitionMatrixT)
-                .add(processModel.getProcessNoise());
+        errorCovariance = transitionMatrix.multiply(errorCovariance).multiply(transitionMatrixT).add(processModel.getProcessNoise());
     }
 
     /**
@@ -328,8 +315,7 @@ public class KalmanFilter {
      * @throws SingularMatrixException
      *             if the covariance matrix could not be inverted
      */
-    public void correct(final double[] z)
-            throws NullArgumentException, DimensionMismatchException, SingularMatrixException {
+    public void correct(final double[] z) throws NullArgumentException, DimensionMismatchException, SingularMatrixException {
         correct(new ArrayRealVector(z, false));
     }
 
@@ -345,42 +331,21 @@ public class KalmanFilter {
      * @throws SingularMatrixException
      *             if the covariance matrix could not be inverted
      */
-    public void correct(final RealVector z)
-            throws NullArgumentException, DimensionMismatchException, SingularMatrixException {
-
+    public void correct(final RealVector z) throws NullArgumentException, DimensionMismatchException, SingularMatrixException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.filter.KalmanFilter.correct_348");
         // sanity checks
         MathUtils.checkNotNull(z);
-        if (z.getDimension() != measurementMatrix.getRowDimension()) {
-            throw new DimensionMismatchException(z.getDimension(),
-                                                 measurementMatrix.getRowDimension());
+        if (ROR_not_equals(z.getDimension(), measurementMatrix.getRowDimension(), "org.apache.commons.math3.filter.KalmanFilter.correct_348", _mut70391, _mut70392, _mut70393, _mut70394, _mut70395)) {
+            throw new DimensionMismatchException(z.getDimension(), measurementMatrix.getRowDimension());
         }
-
         // S = H * P(k) * H' + R
-        RealMatrix s = measurementMatrix.multiply(errorCovariance)
-            .multiply(measurementMatrixT)
-            .add(measurementModel.getMeasurementNoise());
-
+        RealMatrix s = measurementMatrix.multiply(errorCovariance).multiply(measurementMatrixT).add(measurementModel.getMeasurementNoise());
         // Inn = z(k) - H * xHat(k)-
         RealVector innovation = z.subtract(measurementMatrix.operate(stateEstimation));
-
-        // calculate gain matrix
-        // K(k) = P(k)- * H' * (H * P(k)- * H' + R)^-1
-        // K(k) = P(k)- * H' * S^-1
-
-        // instead of calculating the inverse of S we can rearrange the formula,
-        // and then solve the linear equation A x X = B with A = S', X = K' and B = (H * P)'
-
-        // K(k) * S = P(k)- * H'
         // S' * K(k)' = H * P(k)-'
-        RealMatrix kalmanGain = new CholeskyDecomposition(s).getSolver()
-                .solve(measurementMatrix.multiply(errorCovariance.transpose()))
-                .transpose();
-
-        // update estimate with measurement z(k)
+        RealMatrix kalmanGain = new CholeskyDecomposition(s).getSolver().solve(measurementMatrix.multiply(errorCovariance.transpose())).transpose();
         // xHat(k) = xHat(k)- + K * Inn
         stateEstimation = stateEstimation.add(kalmanGain.operate(innovation));
-
-        // update covariance of prediction error
         // P(k) = (I - K * H) * P(k)-
         RealMatrix identity = MatrixUtils.createRealIdentityMatrix(kalmanGain.getRowDimension());
         errorCovariance = identity.subtract(kalmanGain.multiply(measurementMatrix)).multiply(errorCovariance);

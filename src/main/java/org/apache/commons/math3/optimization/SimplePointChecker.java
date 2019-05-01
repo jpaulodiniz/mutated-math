@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization;
 
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Pair;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Simple implementation of the {@link ConvergenceChecker} interface using
@@ -41,14 +42,18 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
  * @since 3.0
  */
 @Deprecated
-public class SimplePointChecker<PAIR extends Pair<double[], ? extends Object>>
-    extends AbstractConvergenceChecker<PAIR> {
+public class SimplePointChecker<PAIR extends Pair<double[], ? extends Object>> extends AbstractConvergenceChecker<PAIR> {
+
+    @Conditional
+    public static boolean _mut72000 = false, _mut72001 = false, _mut72002 = false, _mut72003 = false, _mut72004 = false, _mut72005 = false, _mut72006 = false, _mut72007 = false, _mut72008 = false, _mut72009 = false, _mut72010 = false, _mut72011 = false, _mut72012 = false, _mut72013 = false, _mut72014 = false, _mut72015 = false, _mut72016 = false, _mut72017 = false, _mut72018 = false, _mut72019 = false, _mut72020 = false, _mut72021 = false, _mut72022 = false, _mut72023 = false, _mut72024 = false, _mut72025 = false, _mut72026 = false, _mut72027 = false, _mut72028 = false, _mut72029 = false, _mut72030 = false, _mut72031 = false, _mut72032 = false, _mut72033 = false, _mut72034 = false, _mut72035 = false, _mut72036 = false, _mut72037 = false, _mut72038 = false, _mut72039 = false;
+
     /**
      * If {@link #maxIterationCount} is set to this value, the number of
      * iterations will never cause {@link #converged(int, Pair, Pair)}
      * to return {@code true}.
      */
     private static final int ITERATION_CHECK_DISABLED = -1;
+
     /**
      * Number of iterations after which the
      * {@link #converged(int, Pair, Pair)} method
@@ -74,8 +79,7 @@ public class SimplePointChecker<PAIR extends Pair<double[], ? extends Object>>
      * @param relativeThreshold relative tolerance threshold
      * @param absoluteThreshold absolute tolerance threshold
      */
-    public SimplePointChecker(final double relativeThreshold,
-                              final double absoluteThreshold) {
+    public SimplePointChecker(final double relativeThreshold, final double absoluteThreshold) {
         super(relativeThreshold, absoluteThreshold);
         maxIterationCount = ITERATION_CHECK_DISABLED;
     }
@@ -93,12 +97,10 @@ public class SimplePointChecker<PAIR extends Pair<double[], ? extends Object>>
      *
      * @since 3.1
      */
-    public SimplePointChecker(final double relativeThreshold,
-                              final double absoluteThreshold,
-                              final int maxIter) {
+    public SimplePointChecker(final double relativeThreshold, final double absoluteThreshold, final int maxIter) {
         super(relativeThreshold, absoluteThreshold);
-
-        if (maxIter <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimplePointChecker.SimplePointChecker_96");
+        if (ROR_less_equals(maxIter, 0, "org.apache.commons.math3.optimization.SimplePointChecker.SimplePointChecker_96", _mut72000, _mut72001, _mut72002, _mut72003, _mut72004)) {
             throw new NotStrictlyPositiveException(maxIter);
         }
         maxIterationCount = maxIter;
@@ -121,22 +123,20 @@ public class SimplePointChecker<PAIR extends Pair<double[], ? extends Object>>
      * @return {@code true} if the arguments satify the convergence criterion.
      */
     @Override
-    public boolean converged(final int iteration,
-                             final PAIR previous,
-                             final PAIR current) {
-        if (maxIterationCount != ITERATION_CHECK_DISABLED && iteration >= maxIterationCount) {
+    public boolean converged(final int iteration, final PAIR previous, final PAIR current) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimplePointChecker.converged_123");
+        if ((_mut72015 ? (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72005, _mut72006, _mut72007, _mut72008, _mut72009) || ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72010, _mut72011, _mut72012, _mut72013, _mut72014)) : (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72005, _mut72006, _mut72007, _mut72008, _mut72009) && ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72010, _mut72011, _mut72012, _mut72013, _mut72014)))) {
             return true;
         }
-
         final double[] p = previous.getKey();
         final double[] c = current.getKey();
-        for (int i = 0; i < p.length; ++i) {
+        for (int i = 0; ROR_less(i, p.length, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72035, _mut72036, _mut72037, _mut72038, _mut72039); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimplePointChecker.converged_123");
             final double pi = p[i];
             final double ci = c[i];
-            final double difference = FastMath.abs(pi - ci);
+            final double difference = FastMath.abs(AOR_minus(pi, ci, "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72016, _mut72017, _mut72018, _mut72019));
             final double size = FastMath.max(FastMath.abs(pi), FastMath.abs(ci));
-            if (difference > size * getRelativeThreshold() &&
-                difference > getAbsoluteThreshold()) {
+            if ((_mut72034 ? (ROR_greater(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72020, _mut72021, _mut72022, _mut72023), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72024, _mut72025, _mut72026, _mut72027, _mut72028) || ROR_greater(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72029, _mut72030, _mut72031, _mut72032, _mut72033)) : (ROR_greater(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72020, _mut72021, _mut72022, _mut72023), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72024, _mut72025, _mut72026, _mut72027, _mut72028) && ROR_greater(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optimization.SimplePointChecker.converged_123", _mut72029, _mut72030, _mut72031, _mut72032, _mut72033)))) {
                 return false;
             }
         }

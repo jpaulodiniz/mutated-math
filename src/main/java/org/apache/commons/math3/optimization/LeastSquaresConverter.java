@@ -14,73 +14,55 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization;
 
 import org.apache.commons.math3.analysis.MultivariateFunction;
 import org.apache.commons.math3.analysis.MultivariateVectorFunction;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.linear.RealMatrix;
-
-/** This class converts {@link MultivariateVectorFunction vectorial
- * objective functions} to {@link MultivariateFunction scalar objective functions}
- * when the goal is to minimize them.
- * <p>
- * This class is mostly used when the vectorial objective function represents
- * a theoretical result computed from a point set applied to a model and
- * the models point must be adjusted to fit the theoretical result to some
- * reference observations. The observations may be obtained for example from
- * physical measurements whether the model is built from theoretical
- * considerations.
- * </p>
- * <p>
- * This class computes a possibly weighted squared sum of the residuals, which is
- * a scalar value. The residuals are the difference between the theoretical model
- * (i.e. the output of the vectorial objective function) and the observations. The
- * class implements the {@link MultivariateFunction} interface and can therefore be
- * minimized by any optimizer supporting scalar objectives functions.This is one way
- * to perform a least square estimation. There are other ways to do this without using
- * this converter, as some optimization algorithms directly support vectorial objective
- * functions.
- * </p>
- * <p>
- * This class support combination of residuals with or without weights and correlations.
- * </p>
-  *
- * @see MultivariateFunction
- * @see MultivariateVectorFunction
- * @deprecated As of 3.1 (to be removed in 4.0).
- * @since 2.0
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 @Deprecated
 public class LeastSquaresConverter implements MultivariateFunction {
 
-    /** Underlying vectorial function. */
+    @Conditional
+    public static boolean _mut72045 = false, _mut72046 = false, _mut72047 = false, _mut72048 = false, _mut72049 = false, _mut72050 = false, _mut72051 = false, _mut72052 = false, _mut72053 = false, _mut72054 = false, _mut72055 = false, _mut72056 = false, _mut72057 = false, _mut72058 = false, _mut72059 = false, _mut72060 = false, _mut72061 = false, _mut72062 = false, _mut72063 = false, _mut72064 = false, _mut72065 = false, _mut72066 = false, _mut72067 = false, _mut72068 = false, _mut72069 = false, _mut72070 = false, _mut72071 = false, _mut72072 = false, _mut72073 = false, _mut72074 = false, _mut72075 = false, _mut72076 = false, _mut72077 = false, _mut72078 = false, _mut72079 = false, _mut72080 = false, _mut72081 = false, _mut72082 = false, _mut72083 = false, _mut72084 = false, _mut72085 = false;
+
+    /**
+     * Underlying vectorial function.
+     */
     private final MultivariateVectorFunction function;
 
-    /** Observations to be compared to objective function to compute residuals. */
+    /**
+     * Observations to be compared to objective function to compute residuals.
+     */
     private final double[] observations;
 
-    /** Optional weights for the residuals. */
+    /**
+     * Optional weights for the residuals.
+     */
     private final double[] weights;
 
-    /** Optional scaling matrix (weight and correlations) for the residuals. */
+    /**
+     * Optional scaling matrix (weight and correlations) for the residuals.
+     */
     private final RealMatrix scale;
 
-    /** Build a simple converter for uncorrelated residuals with the same weight.
+    /**
+     * Build a simple converter for uncorrelated residuals with the same weight.
      * @param function vectorial residuals function to wrap
      * @param observations observations to be compared to objective function to compute residuals
      */
-    public LeastSquaresConverter(final MultivariateVectorFunction function,
-                                 final double[] observations) {
-        this.function     = function;
+    public LeastSquaresConverter(final MultivariateVectorFunction function, final double[] observations) {
+        this.function = function;
         this.observations = observations.clone();
-        this.weights      = null;
-        this.scale        = null;
+        this.weights = null;
+        this.scale = null;
     }
 
-    /** Build a simple converter for uncorrelated residuals with the specific weights.
+    /**
+     * Build a simple converter for uncorrelated residuals with the specific weights.
      * <p>
      * The scalar objective function value is computed as:
      * <pre>
@@ -108,18 +90,19 @@ public class LeastSquaresConverter implements MultivariateFunction {
      * vector dimensions do not match (objective function dimension is checked only when
      * the {@link #value(double[])} method is called)
      */
-    public LeastSquaresConverter(final MultivariateVectorFunction function,
-                                 final double[] observations, final double[] weights) {
-        if (observations.length != weights.length) {
+    public LeastSquaresConverter(final MultivariateVectorFunction function, final double[] observations, final double[] weights) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.LeastSquaresConverter_111");
+        if (ROR_not_equals(observations.length, weights.length, "org.apache.commons.math3.optimization.LeastSquaresConverter.LeastSquaresConverter_111", _mut72045, _mut72046, _mut72047, _mut72048, _mut72049)) {
             throw new DimensionMismatchException(observations.length, weights.length);
         }
-        this.function     = function;
+        this.function = function;
         this.observations = observations.clone();
-        this.weights      = weights.clone();
-        this.scale        = null;
+        this.weights = weights.clone();
+        this.scale = null;
     }
 
-    /** Build a simple converter for correlated residuals with the specific weights.
+    /**
+     * Build a simple converter for correlated residuals with the specific weights.
      * <p>
      * The scalar objective function value is computed as:
      * <pre>
@@ -138,45 +121,50 @@ public class LeastSquaresConverter implements MultivariateFunction {
      * matrix dimensions do not match (objective function dimension is checked only when
      * the {@link #value(double[])} method is called)
      */
-    public LeastSquaresConverter(final MultivariateVectorFunction function,
-                                 final double[] observations, final RealMatrix scale) {
-        if (observations.length != scale.getColumnDimension()) {
+    public LeastSquaresConverter(final MultivariateVectorFunction function, final double[] observations, final RealMatrix scale) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.LeastSquaresConverter_141");
+        if (ROR_not_equals(observations.length, scale.getColumnDimension(), "org.apache.commons.math3.optimization.LeastSquaresConverter.LeastSquaresConverter_141", _mut72050, _mut72051, _mut72052, _mut72053, _mut72054)) {
             throw new DimensionMismatchException(observations.length, scale.getColumnDimension());
         }
-        this.function     = function;
+        this.function = function;
         this.observations = observations.clone();
-        this.weights      = null;
-        this.scale        = scale.copy();
+        this.weights = null;
+        this.scale = scale.copy();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double value(final double[] point) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.value_153");
         // compute residuals
         final double[] residuals = function.value(point);
-        if (residuals.length != observations.length) {
+        if (ROR_not_equals(residuals.length, observations.length, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72055, _mut72056, _mut72057, _mut72058, _mut72059)) {
             throw new DimensionMismatchException(residuals.length, observations.length);
         }
-        for (int i = 0; i < residuals.length; ++i) {
+        for (int i = 0; ROR_less(i, residuals.length, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72060, _mut72061, _mut72062, _mut72063, _mut72064); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.value_153");
             residuals[i] -= observations[i];
         }
-
         // compute sum of squares
         double sumSquares = 0;
         if (weights != null) {
-            for (int i = 0; i < residuals.length; ++i) {
+            for (int i = 0; ROR_less(i, residuals.length, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72081, _mut72082, _mut72083, _mut72084, _mut72085); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.value_153");
                 final double ri = residuals[i];
-                sumSquares +=  weights[i] * ri * ri;
+                sumSquares += AOR_multiply(AOR_multiply(weights[i], ri, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72073, _mut72074, _mut72075, _mut72076), ri, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72077, _mut72078, _mut72079, _mut72080);
             }
         } else if (scale != null) {
             for (final double yi : scale.operate(residuals)) {
-                sumSquares += yi * yi;
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.value_153");
+                sumSquares += AOR_multiply(yi, yi, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72069, _mut72070, _mut72071, _mut72072);
             }
         } else {
             for (final double ri : residuals) {
-                sumSquares += ri * ri;
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.LeastSquaresConverter.value_153");
+                sumSquares += AOR_multiply(ri, ri, "org.apache.commons.math3.optimization.LeastSquaresConverter.value_153", _mut72065, _mut72066, _mut72067, _mut72068);
             }
         }
-
         return sumSquares;
     }
 }

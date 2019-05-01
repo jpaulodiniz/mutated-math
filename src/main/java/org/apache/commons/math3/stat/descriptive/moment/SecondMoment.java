@@ -17,9 +17,10 @@
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes a statistic related to the Second Central Moment.  Specifically,
@@ -44,14 +45,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class SecondMoment extends FirstMoment implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut2757 = false, _mut2758 = false, _mut2759 = false, _mut2760 = false, _mut2761 = false, _mut2762 = false, _mut2763 = false, _mut2764 = false, _mut2765 = false, _mut2766 = false, _mut2767 = false, _mut2768 = false, _mut2769 = false, _mut2770 = false, _mut2771 = false, _mut2772 = false, _mut2773 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 3942403127395076445L;
 
-    /** second moment of values that have been added */
+    /**
+     * second moment of values that have been added
+     */
     protected double m2;
 
     /**
@@ -69,8 +76,7 @@ public class SecondMoment extends FirstMoment implements Serializable {
      * @param original the {@code SecondMoment} instance to copy
      * @throws NullArgumentException if original is null
      */
-    public SecondMoment(SecondMoment original)
-    throws NullArgumentException {
+    public SecondMoment(SecondMoment original) throws NullArgumentException {
         super(original);
         this.m2 = original.m2;
     }
@@ -80,11 +86,12 @@ public class SecondMoment extends FirstMoment implements Serializable {
      */
     @Override
     public void increment(final double d) {
-        if (n < 1) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.SecondMoment.increment_81");
+        if (ROR_less(n, 1, "org.apache.commons.math3.stat.descriptive.moment.SecondMoment.increment_81", _mut2757, _mut2758, _mut2759, _mut2760, _mut2761)) {
             m1 = m2 = 0.0;
         }
         super.increment(d);
-        m2 += ((double) n - 1) * dev * nDev;
+        m2 += AOR_multiply(AOR_multiply((AOR_minus((double) n, 1, "org.apache.commons.math3.stat.descriptive.moment.SecondMoment.increment_81", _mut2762, _mut2763, _mut2764, _mut2765)), dev, "org.apache.commons.math3.stat.descriptive.moment.SecondMoment.increment_81", _mut2766, _mut2767, _mut2768, _mut2769), nDev, "org.apache.commons.math3.stat.descriptive.moment.SecondMoment.increment_81", _mut2770, _mut2771, _mut2772, _mut2773);
     }
 
     /**
@@ -123,12 +130,10 @@ public class SecondMoment extends FirstMoment implements Serializable {
      * @param dest SecondMoment to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(SecondMoment source, SecondMoment dest)
-        throws NullArgumentException {
+    public static void copy(SecondMoment source, SecondMoment dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         FirstMoment.copy(source, dest);
         dest.m2 = source.m2;
     }
-
 }

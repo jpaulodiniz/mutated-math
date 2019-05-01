@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.neuralnet.twod.util;
 
 import org.apache.commons.math3.ml.neuralnet.MapUtils;
@@ -23,6 +22,8 @@ import org.apache.commons.math3.ml.neuralnet.Network;
 import org.apache.commons.math3.ml.neuralnet.twod.NeuronSquareMesh2D;
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.apache.commons.math3.util.Pair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes the topographic error histogram.
@@ -31,9 +32,18 @@ import org.apache.commons.math3.util.Pair;
  * @since 3.6
  */
 public class TopographicErrorHistogram implements MapDataVisualization {
-    /** Distance. */
+
+    @Conditional
+    public static boolean _mut103106 = false, _mut103107 = false, _mut103108 = false, _mut103109 = false, _mut103110 = false, _mut103111 = false, _mut103112 = false, _mut103113 = false, _mut103114 = false, _mut103115 = false;
+
+    /**
+     * Distance.
+     */
     private final DistanceMeasure distance;
-    /** Whether to compute relative bin counts. */
+
+    /**
+     * Whether to compute relative bin counts.
+     */
     private final boolean relativeCount;
 
     /**
@@ -42,50 +52,46 @@ public class TopographicErrorHistogram implements MapDataVisualization {
      * number of samples mapped to the neuron represented by that bin.
      * @param distance Distance.
      */
-    public TopographicErrorHistogram(boolean relativeCount,
-                                     DistanceMeasure distance) {
+    public TopographicErrorHistogram(boolean relativeCount, DistanceMeasure distance) {
         this.relativeCount = relativeCount;
         this.distance = distance;
     }
 
-    /** {@inheritDoc} */
-    public double[][] computeImage(NeuronSquareMesh2D map,
-                                   Iterable<double[]> data) {
+    /**
+     * {@inheritDoc}
+     */
+    public double[][] computeImage(NeuronSquareMesh2D map, Iterable<double[]> data) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52");
         final int nR = map.getNumberOfRows();
         final int nC = map.getNumberOfColumns();
-
         final Network net = map.getNetwork();
         final LocationFinder finder = new LocationFinder(map);
-
         // Hit bins.
         final int[][] hit = new int[nR][nC];
         // Error bins.
         final double[][] error = new double[nR][nC];
-
         for (double[] sample : data) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52");
             final Pair<Neuron, Neuron> p = MapUtils.findBestAndSecondBest(sample, map, distance);
             final Neuron best = p.getFirst();
-
             final LocationFinder.Location loc = finder.getLocation(best);
             final int row = loc.getRow();
             final int col = loc.getColumn();
             hit[row][col] += 1;
-
             if (!net.getNeighbours(best).contains(p.getSecond())) {
-                // Increment count if first and second best matching units
                 // are not neighbours.
                 error[row][col] += 1;
             }
         }
-
         if (relativeCount) {
-            for (int r = 0; r < nR; r++) {
-                for (int c = 0; c < nC; c++) {
+            for (int r = 0; ROR_less(r, nR, "org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52", _mut103111, _mut103112, _mut103113, _mut103114, _mut103115); r++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52");
+                for (int c = 0; ROR_less(c, nC, "org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52", _mut103106, _mut103107, _mut103108, _mut103109, _mut103110); c++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.twod.util.TopographicErrorHistogram.computeImage_52");
                     error[r][c] /= hit[r][c];
                 }
             }
         }
-
         return error;
     }
 }

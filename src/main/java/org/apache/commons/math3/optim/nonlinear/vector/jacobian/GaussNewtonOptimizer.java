@@ -30,6 +30,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.SingularMatrixException;
 import org.apache.commons.math3.optim.ConvergenceChecker;
 import org.apache.commons.math3.optim.PointVectorValuePair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Gauss-Newton least-squares solver.
@@ -53,7 +55,13 @@ import org.apache.commons.math3.optim.PointVectorValuePair;
  */
 @Deprecated
 public class GaussNewtonOptimizer extends AbstractLeastSquaresOptimizer {
-    /** Indicator for using LU decomposition. */
+
+    @Conditional
+    public static boolean _mut65726 = false, _mut65727 = false, _mut65728 = false, _mut65729 = false, _mut65730 = false, _mut65731 = false, _mut65732 = false, _mut65733 = false, _mut65734 = false, _mut65735 = false, _mut65736 = false, _mut65737 = false, _mut65738 = false, _mut65739 = false, _mut65740 = false, _mut65741 = false, _mut65742 = false, _mut65743 = false, _mut65744 = false, _mut65745 = false, _mut65746 = false, _mut65747 = false, _mut65748 = false, _mut65749 = false, _mut65750 = false, _mut65751 = false, _mut65752 = false, _mut65753 = false, _mut65754 = false, _mut65755 = false, _mut65756 = false, _mut65757 = false, _mut65758 = false, _mut65759 = false, _mut65760 = false, _mut65761 = false, _mut65762 = false, _mut65763 = false, _mut65764 = false, _mut65765 = false, _mut65766 = false, _mut65767 = false, _mut65768 = false, _mut65769 = false, _mut65770 = false, _mut65771 = false, _mut65772 = false;
+
+    /**
+     * Indicator for using LU decomposition.
+     */
     private final boolean useLU;
 
     /**
@@ -72,43 +80,40 @@ public class GaussNewtonOptimizer extends AbstractLeastSquaresOptimizer {
      * decomposition.
      * @param checker Convergence checker.
      */
-    public GaussNewtonOptimizer(final boolean useLU,
-                                ConvergenceChecker<PointVectorValuePair> checker) {
+    public GaussNewtonOptimizer(final boolean useLU, ConvergenceChecker<PointVectorValuePair> checker) {
         super(checker);
         this.useLU = useLU;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public PointVectorValuePair doOptimize() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
         checkParameters();
-
-        final ConvergenceChecker<PointVectorValuePair> checker
-            = getConvergenceChecker();
-
+        final ConvergenceChecker<PointVectorValuePair> checker = getConvergenceChecker();
         // Computation will be useless without a checker (see "for-loop").
         if (checker == null) {
             throw new NullArgumentException();
         }
-
         final double[] targetValues = getTarget();
-        final int nR = targetValues.length; // Number of observed data.
-
+        // Number of observed data.
+        final int nR = targetValues.length;
         final RealMatrix weightMatrix = getWeight();
         // Diagonal of the weight matrix.
         final double[] residualsWeights = new double[nR];
-        for (int i = 0; i < nR; i++) {
+        for (int i = 0; ROR_less(i, nR, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65726, _mut65727, _mut65728, _mut65729, _mut65730); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
             residualsWeights[i] = weightMatrix.getEntry(i, i);
         }
-
         final double[] currentPoint = getStartPoint();
         final int nC = currentPoint.length;
-
         // iterate until convergence is reached
         PointVectorValuePair current = null;
-        for (boolean converged = false; !converged;) {
+        for (boolean converged = false; !converged; ) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
             incrementIterationCount();
-
             // evaluate the objective function and its jacobian
             PointVectorValuePair previous = current;
             // Value of the objective function at "currentPoint".
@@ -116,32 +121,31 @@ public class GaussNewtonOptimizer extends AbstractLeastSquaresOptimizer {
             final double[] currentResiduals = computeResiduals(currentObjective);
             final RealMatrix weightedJacobian = computeWeightedJacobian(currentPoint);
             current = new PointVectorValuePair(currentPoint, currentObjective);
-
             // build the linear problem
-            final double[]   b = new double[nC];
+            final double[] b = new double[nC];
             final double[][] a = new double[nC][nC];
-            for (int i = 0; i < nR; ++i) {
-
-                final double[] grad   = weightedJacobian.getRow(i);
-                final double weight   = residualsWeights[i];
+            for (int i = 0; ROR_less(i, nR, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65762, _mut65763, _mut65764, _mut65765, _mut65766); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
+                final double[] grad = weightedJacobian.getRow(i);
+                final double weight = residualsWeights[i];
                 final double residual = currentResiduals[i];
-
                 // compute the normal equation
-                final double wr = weight * residual;
-                for (int j = 0; j < nC; ++j) {
-                    b[j] += wr * grad[j];
+                final double wr = AOR_multiply(weight, residual, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65731, _mut65732, _mut65733, _mut65734);
+                for (int j = 0; ROR_less(j, nC, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65739, _mut65740, _mut65741, _mut65742, _mut65743); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
+                    b[j] += AOR_multiply(wr, grad[j], "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65735, _mut65736, _mut65737, _mut65738);
                 }
-
                 // build the contribution matrix for measurement i
-                for (int k = 0; k < nC; ++k) {
+                for (int k = 0; ROR_less(k, nC, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65757, _mut65758, _mut65759, _mut65760, _mut65761); ++k) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
                     double[] ak = a[k];
-                    double wgk = weight * grad[k];
-                    for (int l = 0; l < nC; ++l) {
-                        ak[l] += wgk * grad[l];
+                    double wgk = AOR_multiply(weight, grad[k], "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65744, _mut65745, _mut65746, _mut65747);
+                    for (int l = 0; ROR_less(l, nC, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65752, _mut65753, _mut65754, _mut65755, _mut65756); ++l) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
+                        ak[l] += AOR_multiply(wgk, grad[l], "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65748, _mut65749, _mut65750, _mut65751);
                     }
                 }
             }
-
             // Check convergence.
             if (previous != null) {
                 converged = checker.converged(getIterations(), previous, current);
@@ -150,16 +154,14 @@ public class GaussNewtonOptimizer extends AbstractLeastSquaresOptimizer {
                     return current;
                 }
             }
-
             try {
                 // solve the linearized least squares problem
                 RealMatrix mA = new BlockRealMatrix(a);
-                DecompositionSolver solver = useLU ?
-                        new LUDecomposition(mA).getSolver() :
-                        new QRDecomposition(mA).getSolver();
+                DecompositionSolver solver = useLU ? new LUDecomposition(mA).getSolver() : new QRDecomposition(mA).getSolver();
                 final double[] dX = solver.solve(new ArrayRealVector(b, false)).toArray();
                 // update the estimated parameters
-                for (int i = 0; i < nC; ++i) {
+                for (int i = 0; ROR_less(i, nC, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82", _mut65767, _mut65768, _mut65769, _mut65770, _mut65771); ++i) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.doOptimize_82");
                     currentPoint[i] += dX[i];
                 }
             } catch (SingularMatrixException e) {
@@ -175,8 +177,8 @@ public class GaussNewtonOptimizer extends AbstractLeastSquaresOptimizer {
      * {@link #optimize(OptimizationData[]) optimize} method.
      */
     private void checkParameters() {
-        if (getLowerBound() != null ||
-            getUpperBound() != null) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.GaussNewtonOptimizer.checkParameters_177");
+        if ((_mut65772 ? (getLowerBound() != null && getUpperBound() != null) : (getLowerBound() != null || getUpperBound() != null))) {
             throw new MathUnsupportedOperationException(LocalizedFormats.CONSTRAINT);
         }
     }

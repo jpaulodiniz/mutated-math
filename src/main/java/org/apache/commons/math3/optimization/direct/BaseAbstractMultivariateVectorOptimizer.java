@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.direct;
 
 import org.apache.commons.math3.util.Incrementor;
@@ -32,6 +31,8 @@ import org.apache.commons.math3.optimization.ConvergenceChecker;
 import org.apache.commons.math3.optimization.PointVectorValuePair;
 import org.apache.commons.math3.optimization.SimpleVectorValueChecker;
 import org.apache.commons.math3.linear.RealMatrix;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for implementing optimizers for multivariate scalar functions.
@@ -44,24 +45,46 @@ import org.apache.commons.math3.linear.RealMatrix;
  * @since 3.0
  */
 @Deprecated
-public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends MultivariateVectorFunction>
-    implements BaseMultivariateVectorOptimizer<FUNC> {
-    /** Evaluations counter. */
+public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends MultivariateVectorFunction> implements BaseMultivariateVectorOptimizer<FUNC> {
+
+    @Conditional
+    public static boolean _mut74598 = false, _mut74599 = false, _mut74600 = false, _mut74601 = false, _mut74602 = false, _mut74603 = false, _mut74604 = false, _mut74605 = false, _mut74606 = false, _mut74607 = false, _mut74608 = false, _mut74609 = false, _mut74610 = false, _mut74611 = false, _mut74612 = false;
+
+    /**
+     * Evaluations counter.
+     */
     protected final Incrementor evaluations = new Incrementor();
-    /** Convergence checker. */
+
+    /**
+     * Convergence checker.
+     */
     private ConvergenceChecker<PointVectorValuePair> checker;
-    /** Target value for the objective functions at optimum. */
+
+    /**
+     * Target value for the objective functions at optimum.
+     */
     private double[] target;
-    /** Weight matrix. */
+
+    /**
+     * Weight matrix.
+     */
     private RealMatrix weightMatrix;
-    /** Weight for the least squares cost computation.
+
+    /**
+     * Weight for the least squares cost computation.
      * @deprecated
      */
     @Deprecated
     private double[] weight;
-    /** Initial guess. */
+
+    /**
+     * Initial guess.
+     */
     private double[] start;
-    /** Objective function. */
+
+    /**
+     * Objective function.
+     */
     private FUNC function;
 
     /**
@@ -73,6 +96,7 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
     protected BaseAbstractMultivariateVectorOptimizer() {
         this(new SimpleVectorValueChecker());
     }
+
     /**
      * @param checker Convergence checker.
      */
@@ -80,17 +104,23 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
         this.checker = checker;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxEvaluations() {
         return evaluations.getMaximalCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getEvaluations() {
         return evaluations.getCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public ConvergenceChecker<PointVectorValuePair> getConvergenceChecker() {
         return checker;
     }
@@ -112,15 +142,15 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
         return function.value(point);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      *
      * @deprecated As of 3.1. Please use
      * {@link #optimize(int,MultivariateVectorFunction,OptimizationData[])}
      * instead.
      */
     @Deprecated
-    public PointVectorValuePair optimize(int maxEval, FUNC f, double[] t, double[] w,
-                                         double[] startPoint) {
+    public PointVectorValuePair optimize(int maxEval, FUNC f, double[] t, double[] w, double[] startPoint) {
         return optimizeInternal(maxEval, f, t, w, startPoint);
     }
 
@@ -144,11 +174,7 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      *
      * @since 3.1
      */
-    protected PointVectorValuePair optimize(int maxEval,
-                                            FUNC f,
-                                            OptimizationData... optData)
-        throws TooManyEvaluationsException,
-               DimensionMismatchException {
+    protected PointVectorValuePair optimize(int maxEval, FUNC f, OptimizationData... optData) throws TooManyEvaluationsException, DimensionMismatchException {
         return optimizeInternal(maxEval, f, optData);
     }
 
@@ -176,9 +202,8 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      * instead.
      */
     @Deprecated
-    protected PointVectorValuePair optimizeInternal(final int maxEval, final FUNC f,
-                                                    final double[] t, final double[] w,
-                                                    final double[] startPoint) {
+    protected PointVectorValuePair optimizeInternal(final int maxEval, final FUNC f, final double[] t, final double[] w, final double[] startPoint) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.optimizeInternal_178");
         // Checks.
         if (f == null) {
             throw new NullArgumentException();
@@ -192,14 +217,10 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
         if (startPoint == null) {
             throw new NullArgumentException();
         }
-        if (t.length != w.length) {
+        if (ROR_not_equals(t.length, w.length, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.optimizeInternal_178", _mut74598, _mut74599, _mut74600, _mut74601, _mut74602)) {
             throw new DimensionMismatchException(t.length, w.length);
         }
-
-        return optimizeInternal(maxEval, f,
-                                new Target(t),
-                                new Weight(w),
-                                new InitialGuess(startPoint));
+        return optimizeInternal(maxEval, f, new Target(t), new Weight(w), new InitialGuess(startPoint));
     }
 
     /**
@@ -222,11 +243,7 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      *
      * @since 3.1
      */
-    protected PointVectorValuePair optimizeInternal(int maxEval,
-                                                    FUNC f,
-                                                    OptimizationData... optData)
-        throws TooManyEvaluationsException,
-               DimensionMismatchException {
+    protected PointVectorValuePair optimizeInternal(int maxEval, FUNC f, OptimizationData... optData) throws TooManyEvaluationsException, DimensionMismatchException {
         // Set internal state.
         evaluations.setMaximalCount(maxEval);
         evaluations.resetCount();
@@ -259,6 +276,7 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
     public RealMatrix getWeight() {
         return weightMatrix.copy();
     }
+
     /**
      * Gets the observed values to be matched by the objective vector
      * function.
@@ -297,6 +315,7 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
     protected double[] getTargetRef() {
         return target;
     }
+
     /**
      * @return a reference to the {@link #weight array}.
      * @deprecated As of 3.1.
@@ -317,10 +336,12 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      * @since 3.1
      */
     protected void setUp() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.setUp_319");
         // XXX Temporary code until the new internal data is used everywhere.
         final int dim = target.length;
         weight = new double[dim];
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.setUp_319", _mut74603, _mut74604, _mut74605, _mut74606, _mut74607); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.setUp_319");
             weight[i] = weightMatrix.getEntry(i, i);
         }
     }
@@ -337,9 +358,9 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      * </ul>
      */
     private void parseOptimizationData(OptimizationData... optData) {
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.parseOptimizationData_339");
             if (data instanceof Target) {
                 target = ((Target) data).getTarget();
                 continue;
@@ -362,9 +383,9 @@ public abstract class BaseAbstractMultivariateVectorOptimizer<FUNC extends Multi
      * {@link #weightMatrix} have inconsistent dimensions.
      */
     private void checkParameters() {
-        if (target.length != weightMatrix.getColumnDimension()) {
-            throw new DimensionMismatchException(target.length,
-                                                 weightMatrix.getColumnDimension());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.checkParameters_364");
+        if (ROR_not_equals(target.length, weightMatrix.getColumnDimension(), "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateVectorOptimizer.checkParameters_364", _mut74608, _mut74609, _mut74610, _mut74611, _mut74612)) {
+            throw new DimensionMismatchException(target.length, weightMatrix.getColumnDimension());
         }
     }
 }

@@ -17,7 +17,6 @@
 package org.apache.commons.math3.stat.descriptive;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
@@ -33,6 +32,8 @@ import org.apache.commons.math3.stat.descriptive.summary.SumOfSquares;
 import org.apache.commons.math3.util.MathUtils;
 import org.apache.commons.math3.util.Precision;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -59,61 +60,102 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class SummaryStatistics implements StatisticalSummary, Serializable {
 
-    /** Serialization UID */
+    @Conditional
+    public static boolean _mut4610 = false, _mut4611 = false, _mut4612 = false, _mut4613 = false, _mut4614 = false, _mut4615 = false, _mut4616 = false, _mut4617 = false, _mut4618 = false, _mut4619 = false, _mut4620 = false, _mut4621 = false, _mut4622 = false, _mut4623 = false, _mut4624 = false, _mut4625 = false, _mut4626 = false, _mut4627 = false, _mut4628 = false, _mut4629 = false, _mut4630 = false, _mut4631 = false, _mut4632 = false, _mut4633 = false, _mut4634 = false, _mut4635 = false, _mut4636 = false, _mut4637 = false, _mut4638 = false, _mut4639 = false, _mut4640 = false, _mut4641 = false, _mut4642 = false, _mut4643 = false, _mut4644 = false, _mut4645 = false, _mut4646 = false, _mut4647 = false, _mut4648 = false, _mut4649 = false, _mut4650 = false, _mut4651 = false, _mut4652 = false, _mut4653 = false, _mut4654 = false, _mut4655 = false, _mut4656 = false, _mut4657 = false, _mut4658 = false, _mut4659 = false, _mut4660 = false, _mut4661 = false, _mut4662 = false, _mut4663 = false, _mut4664 = false, _mut4665 = false, _mut4666 = false, _mut4667 = false, _mut4668 = false, _mut4669 = false, _mut4670 = false, _mut4671 = false, _mut4672 = false, _mut4673 = false, _mut4674 = false, _mut4675 = false, _mut4676 = false, _mut4677 = false, _mut4678 = false, _mut4679 = false, _mut4680 = false, _mut4681 = false, _mut4682 = false, _mut4683 = false, _mut4684 = false, _mut4685 = false, _mut4686 = false, _mut4687 = false, _mut4688 = false, _mut4689 = false, _mut4690 = false, _mut4691 = false, _mut4692 = false, _mut4693 = false, _mut4694 = false, _mut4695 = false, _mut4696 = false, _mut4697 = false, _mut4698 = false, _mut4699 = false, _mut4700 = false, _mut4701 = false, _mut4702 = false, _mut4703 = false, _mut4704 = false, _mut4705 = false, _mut4706 = false, _mut4707 = false, _mut4708 = false;
+
+    /**
+     * Serialization UID
+     */
     private static final long serialVersionUID = -2021321786743555871L;
 
-    /** count of values that have been added */
+    /**
+     * count of values that have been added
+     */
     private long n = 0;
 
-    /** SecondMoment is used to compute the mean and variance */
+    /**
+     * SecondMoment is used to compute the mean and variance
+     */
     private SecondMoment secondMoment = new SecondMoment();
 
-    /** sum of values that have been added */
+    /**
+     * sum of values that have been added
+     */
     private Sum sum = new Sum();
 
-    /** sum of the square of each value that has been added */
+    /**
+     * sum of the square of each value that has been added
+     */
     private SumOfSquares sumsq = new SumOfSquares();
 
-    /** min of values that have been added */
+    /**
+     * min of values that have been added
+     */
     private Min min = new Min();
 
-    /** max of values that have been added */
+    /**
+     * max of values that have been added
+     */
     private Max max = new Max();
 
-    /** sumLog of values that have been added */
+    /**
+     * sumLog of values that have been added
+     */
     private SumOfLogs sumLog = new SumOfLogs();
 
-    /** geoMean of values that have been added */
+    /**
+     * geoMean of values that have been added
+     */
     private GeometricMean geoMean = new GeometricMean(sumLog);
 
-    /** mean of values that have been added */
+    /**
+     * mean of values that have been added
+     */
     private Mean mean = new Mean(secondMoment);
 
-    /** variance of values that have been added */
+    /**
+     * variance of values that have been added
+     */
     private Variance variance = new Variance(secondMoment);
 
-    /** Sum statistic implementation - can be reset by setter. */
+    /**
+     * Sum statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic sumImpl = sum;
 
-    /** Sum of squares statistic implementation - can be reset by setter. */
+    /**
+     * Sum of squares statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic sumsqImpl = sumsq;
 
-    /** Minimum statistic implementation - can be reset by setter. */
+    /**
+     * Minimum statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic minImpl = min;
 
-    /** Maximum statistic implementation - can be reset by setter. */
+    /**
+     * Maximum statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic maxImpl = max;
 
-    /** Sum of log statistic implementation - can be reset by setter. */
+    /**
+     * Sum of log statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic sumLogImpl = sumLog;
 
-    /** Geometric mean statistic implementation - can be reset by setter. */
+    /**
+     * Geometric mean statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic geoMeanImpl = geoMean;
 
-    /** Mean statistic implementation - can be reset by setter. */
+    /**
+     * Mean statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic meanImpl = mean;
 
-    /** Variance statistic implementation - can be reset by setter. */
+    /**
+     * Variance statistic implementation - can be reset by setter.
+     */
     private StorelessUnivariateStatistic varianceImpl = variance;
 
     /**
@@ -138,8 +180,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @return Current values of statistics
      */
     public StatisticalSummary getSummary() {
-        return new StatisticalSummaryValues(getMean(), getVariance(), getN(),
-                getMax(), getMin(), getSum());
+        return new StatisticalSummaryValues(getMean(), getVariance(), getN(), getMax(), getMin(), getSum());
     }
 
     /**
@@ -153,7 +194,6 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
         maxImpl.increment(value);
         sumLogImpl.increment(value);
         secondMoment.increment(value);
-        // If mean, variance or geomean have been overridden,
         // need to increment these
         if (meanImpl != mean) {
             meanImpl.increment(value);
@@ -213,9 +253,10 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @return the standard deviation
      */
     public double getStandardDeviation() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.SummaryStatistics.getStandardDeviation_215");
         double stdDev = Double.NaN;
-        if (getN() > 0) {
-            if (getN() > 1) {
+        if (ROR_greater(getN(), 0, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.getStandardDeviation_215", _mut4610, _mut4611, _mut4612, _mut4613, _mut4614)) {
+            if (ROR_greater(getN(), 1, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.getStandardDeviation_215", _mut4615, _mut4616, _mut4617, _mut4618, _mut4619)) {
                 stdDev = FastMath.sqrt(getVariance());
             } else {
                 stdDev = 0.0;
@@ -232,8 +273,9 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * have been added.
      */
     public double getQuadraticMean() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.SummaryStatistics.getQuadraticMean_234");
         final long size = getN();
-        return size > 0 ? FastMath.sqrt(getSumsq() / size) : Double.NaN;
+        return ROR_greater(size, 0, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.getQuadraticMean_234", _mut4620, _mut4621, _mut4622, _mut4623, _mut4624) ? FastMath.sqrt(AOR_divide(getSumsq(), size, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.getQuadraticMean_234", _mut4625, _mut4626, _mut4627, _mut4628)) : Double.NaN;
     }
 
     /**
@@ -341,14 +383,12 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
         outBuffer.append("max: ").append(getMax()).append(endl);
         outBuffer.append("sum: ").append(getSum()).append(endl);
         outBuffer.append("mean: ").append(getMean()).append(endl);
-        outBuffer.append("geometric mean: ").append(getGeometricMean())
-            .append(endl);
+        outBuffer.append("geometric mean: ").append(getGeometricMean()).append(endl);
         outBuffer.append("variance: ").append(getVariance()).append(endl);
         outBuffer.append("population variance: ").append(getPopulationVariance()).append(endl);
         outBuffer.append("second moment: ").append(getSecondMoment()).append(endl);
         outBuffer.append("sum of squares: ").append(getSumsq()).append(endl);
-        outBuffer.append("standard deviation: ").append(getStandardDeviation())
-            .append(endl);
+        outBuffer.append("standard deviation: ").append(getStandardDeviation()).append(endl);
         outBuffer.append("sum of logs: ").append(getSumOfLogs()).append(endl);
         return outBuffer.toString();
     }
@@ -382,21 +422,15 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      */
     @Override
     public boolean equals(Object object) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.SummaryStatistics.equals_383");
         if (object == this) {
             return true;
         }
         if (object instanceof SummaryStatistics == false) {
             return false;
         }
-        SummaryStatistics stat = (SummaryStatistics)object;
-        return Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) &&
-               Precision.equalsIncludingNaN(stat.getMax(),           getMax())           &&
-               Precision.equalsIncludingNaN(stat.getMean(),          getMean())          &&
-               Precision.equalsIncludingNaN(stat.getMin(),           getMin())           &&
-               Precision.equalsIncludingNaN(stat.getN(),             getN())             &&
-               Precision.equalsIncludingNaN(stat.getSum(),           getSum())           &&
-               Precision.equalsIncludingNaN(stat.getSumsq(),         getSumsq())         &&
-               Precision.equalsIncludingNaN(stat.getVariance(),      getVariance());
+        SummaryStatistics stat = (SummaryStatistics) object;
+        return (_mut4635 ? ((_mut4634 ? ((_mut4633 ? ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) || Precision.equalsIncludingNaN(stat.getSum(), getSum())) : ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) && Precision.equalsIncludingNaN(stat.getSum(), getSum()))) || Precision.equalsIncludingNaN(stat.getSumsq(), getSumsq())) : ((_mut4633 ? ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) || Precision.equalsIncludingNaN(stat.getSum(), getSum())) : ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) && Precision.equalsIncludingNaN(stat.getSum(), getSum()))) && Precision.equalsIncludingNaN(stat.getSumsq(), getSumsq()))) || Precision.equalsIncludingNaN(stat.getVariance(), getVariance())) : ((_mut4634 ? ((_mut4633 ? ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) || Precision.equalsIncludingNaN(stat.getSum(), getSum())) : ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) && Precision.equalsIncludingNaN(stat.getSum(), getSum()))) || Precision.equalsIncludingNaN(stat.getSumsq(), getSumsq())) : ((_mut4633 ? ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) || Precision.equalsIncludingNaN(stat.getSum(), getSum())) : ((_mut4632 ? ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) || Precision.equalsIncludingNaN(stat.getN(), getN())) : ((_mut4631 ? ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) || Precision.equalsIncludingNaN(stat.getMin(), getMin())) : ((_mut4630 ? ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) || Precision.equalsIncludingNaN(stat.getMean(), getMean())) : ((_mut4629 ? (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) || Precision.equalsIncludingNaN(stat.getMax(), getMax())) : (Precision.equalsIncludingNaN(stat.getGeometricMean(), getGeometricMean()) && Precision.equalsIncludingNaN(stat.getMax(), getMax()))) && Precision.equalsIncludingNaN(stat.getMean(), getMean()))) && Precision.equalsIncludingNaN(stat.getMin(), getMin()))) && Precision.equalsIncludingNaN(stat.getN(), getN()))) && Precision.equalsIncludingNaN(stat.getSum(), getSum()))) && Precision.equalsIncludingNaN(stat.getSumsq(), getSumsq()))) && Precision.equalsIncludingNaN(stat.getVariance(), getVariance())));
     }
 
     /**
@@ -405,19 +439,19 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      */
     @Override
     public int hashCode() {
-        int result = 31 + MathUtils.hash(getGeometricMean());
-        result = result * 31 + MathUtils.hash(getGeometricMean());
-        result = result * 31 + MathUtils.hash(getMax());
-        result = result * 31 + MathUtils.hash(getMean());
-        result = result * 31 + MathUtils.hash(getMin());
-        result = result * 31 + MathUtils.hash(getN());
-        result = result * 31 + MathUtils.hash(getSum());
-        result = result * 31 + MathUtils.hash(getSumsq());
-        result = result * 31 + MathUtils.hash(getVariance());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406");
+        int result = AOR_plus(31, MathUtils.hash(getGeometricMean()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4636, _mut4637, _mut4638, _mut4639);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4640, _mut4641, _mut4642, _mut4643), MathUtils.hash(getGeometricMean()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4644, _mut4645, _mut4646, _mut4647);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4648, _mut4649, _mut4650, _mut4651), MathUtils.hash(getMax()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4652, _mut4653, _mut4654, _mut4655);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4656, _mut4657, _mut4658, _mut4659), MathUtils.hash(getMean()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4660, _mut4661, _mut4662, _mut4663);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4664, _mut4665, _mut4666, _mut4667), MathUtils.hash(getMin()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4668, _mut4669, _mut4670, _mut4671);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4672, _mut4673, _mut4674, _mut4675), MathUtils.hash(getN()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4676, _mut4677, _mut4678, _mut4679);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4680, _mut4681, _mut4682, _mut4683), MathUtils.hash(getSum()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4684, _mut4685, _mut4686, _mut4687);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4688, _mut4689, _mut4690, _mut4691), MathUtils.hash(getSumsq()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4692, _mut4693, _mut4694, _mut4695);
+        result = AOR_plus(AOR_multiply(result, 31, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4696, _mut4697, _mut4698, _mut4699), MathUtils.hash(getVariance()), "org.apache.commons.math3.stat.descriptive.SummaryStatistics.hashCode_406", _mut4700, _mut4701, _mut4702, _mut4703);
         return result;
     }
 
-    // Getters and setters for statistics implementations
     /**
      * Returns the currently configured Sum implementation
      * @return the StorelessUnivariateStatistic implementing the sum
@@ -442,8 +476,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n >0)
      * @since 1.2
      */
-    public void setSumImpl(StorelessUnivariateStatistic sumImpl)
-    throws MathIllegalStateException {
+    public void setSumImpl(StorelessUnivariateStatistic sumImpl) throws MathIllegalStateException {
         checkEmpty();
         this.sumImpl = sumImpl;
     }
@@ -472,8 +505,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setSumsqImpl(StorelessUnivariateStatistic sumsqImpl)
-    throws MathIllegalStateException {
+    public void setSumsqImpl(StorelessUnivariateStatistic sumsqImpl) throws MathIllegalStateException {
         checkEmpty();
         this.sumsqImpl = sumsqImpl;
     }
@@ -502,8 +534,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setMinImpl(StorelessUnivariateStatistic minImpl)
-    throws MathIllegalStateException {
+    public void setMinImpl(StorelessUnivariateStatistic minImpl) throws MathIllegalStateException {
         checkEmpty();
         this.minImpl = minImpl;
     }
@@ -532,8 +563,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setMaxImpl(StorelessUnivariateStatistic maxImpl)
-    throws MathIllegalStateException {
+    public void setMaxImpl(StorelessUnivariateStatistic maxImpl) throws MathIllegalStateException {
         checkEmpty();
         this.maxImpl = maxImpl;
     }
@@ -562,8 +592,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setSumLogImpl(StorelessUnivariateStatistic sumLogImpl)
-    throws MathIllegalStateException {
+    public void setSumLogImpl(StorelessUnivariateStatistic sumLogImpl) throws MathIllegalStateException {
         checkEmpty();
         this.sumLogImpl = sumLogImpl;
         geoMean.setSumLogImpl(sumLogImpl);
@@ -593,8 +622,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setGeoMeanImpl(StorelessUnivariateStatistic geoMeanImpl)
-    throws MathIllegalStateException {
+    public void setGeoMeanImpl(StorelessUnivariateStatistic geoMeanImpl) throws MathIllegalStateException {
         checkEmpty();
         this.geoMeanImpl = geoMeanImpl;
     }
@@ -623,8 +651,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setMeanImpl(StorelessUnivariateStatistic meanImpl)
-    throws MathIllegalStateException {
+    public void setMeanImpl(StorelessUnivariateStatistic meanImpl) throws MathIllegalStateException {
         checkEmpty();
         this.meanImpl = meanImpl;
     }
@@ -653,8 +680,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has already been added (i.e if n > 0)
      * @since 1.2
      */
-    public void setVarianceImpl(StorelessUnivariateStatistic varianceImpl)
-    throws MathIllegalStateException {
+    public void setVarianceImpl(StorelessUnivariateStatistic varianceImpl) throws MathIllegalStateException {
         checkEmpty();
         this.varianceImpl = varianceImpl;
     }
@@ -664,9 +690,9 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @throws MathIllegalStateException if data has been added
      */
     private void checkEmpty() throws MathIllegalStateException {
-        if (n > 0) {
-            throw new MathIllegalStateException(
-                LocalizedFormats.VALUES_ADDED_BEFORE_CONFIGURING_STATISTIC, n);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.SummaryStatistics.checkEmpty_666");
+        if (ROR_greater(n, 0, "org.apache.commons.math3.stat.descriptive.SummaryStatistics.checkEmpty_666", _mut4704, _mut4705, _mut4706, _mut4707, _mut4708)) {
+            throw new MathIllegalStateException(LocalizedFormats.VALUES_ADDED_BEFORE_CONFIGURING_STATISTIC, n);
         }
     }
 
@@ -690,8 +716,7 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
      * @param dest SummaryStatistics to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(SummaryStatistics source, SummaryStatistics dest)
-        throws NullArgumentException {
+    public static void copy(SummaryStatistics source, SummaryStatistics dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.maxImpl = source.maxImpl.copy();
@@ -701,7 +726,6 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
         dest.sumsqImpl = source.sumsqImpl.copy();
         dest.secondMoment = source.secondMoment.copy();
         dest.n = source.n;
-
         // Keep commons-math supplied statistics with embedded moments in synch
         if (source.getVarianceImpl() instanceof Variance) {
             dest.varianceImpl = new Variance(dest.secondMoment);
@@ -718,8 +742,6 @@ public class SummaryStatistics implements StatisticalSummary, Serializable {
         } else {
             dest.geoMeanImpl = source.geoMeanImpl.copy();
         }
-
-        // Make sure that if stat == statImpl in source, same
         // holds in dest; otherwise copy stat
         if (source.geoMean == source.geoMeanImpl) {
             dest.geoMean = (GeometricMean) dest.geoMeanImpl;

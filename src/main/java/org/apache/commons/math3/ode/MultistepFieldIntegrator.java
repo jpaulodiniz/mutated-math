@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode;
 
 import org.apache.commons.math3.Field;
@@ -33,6 +32,8 @@ import org.apache.commons.math3.ode.sampling.FieldStepInterpolator;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathArrays;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class is the base class for multistep integrators for Ordinary
@@ -65,33 +66,50 @@ import org.apache.commons.math3.util.MathUtils;
  * @param <T> the type of the field elements
  * @since 3.6
  */
-public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
-    extends AdaptiveStepsizeFieldIntegrator<T> {
+public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>> extends AdaptiveStepsizeFieldIntegrator<T> {
 
-    /** First scaled derivative (h y'). */
+    @Conditional
+    public static boolean _mut12097 = false, _mut12098 = false, _mut12099 = false, _mut12100 = false, _mut12101 = false, _mut12102 = false, _mut12103 = false, _mut12104 = false, _mut12105 = false, _mut12106 = false, _mut12107 = false, _mut12108 = false, _mut12109 = false, _mut12110 = false, _mut12111 = false, _mut12112 = false, _mut12113 = false, _mut12114 = false, _mut12115 = false, _mut12116 = false, _mut12117 = false, _mut12118 = false, _mut12119 = false, _mut12120 = false, _mut12121 = false, _mut12122 = false, _mut12123 = false, _mut12124 = false, _mut12125 = false, _mut12126 = false, _mut12127 = false, _mut12128 = false, _mut12129 = false, _mut12130 = false, _mut12131 = false, _mut12132 = false, _mut12133 = false, _mut12134 = false, _mut12135 = false, _mut12136 = false, _mut12137 = false, _mut12138 = false, _mut12139 = false, _mut12140 = false, _mut12141 = false, _mut12142 = false, _mut12143 = false, _mut12144 = false, _mut12145 = false, _mut12146 = false, _mut12147 = false, _mut12148 = false, _mut12149 = false, _mut12150 = false, _mut12151 = false, _mut12152 = false, _mut12153 = false, _mut12154 = false, _mut12155 = false, _mut12156 = false, _mut12157 = false, _mut12158 = false, _mut12159 = false;
+
+    /**
+     * First scaled derivative (h y').
+     */
     protected T[] scaled;
 
-    /** Nordsieck matrix of the higher scaled derivatives.
+    /**
+     * Nordsieck matrix of the higher scaled derivatives.
      * <p>(h<sup>2</sup>/2 y'', h<sup>3</sup>/6 y''' ..., h<sup>k</sup>/k! y<sup>(k)</sup>)</p>
      */
     protected Array2DRowFieldMatrix<T> nordsieck;
 
-    /** Starter integrator. */
+    /**
+     * Starter integrator.
+     */
     private FirstOrderFieldIntegrator<T> starter;
 
-    /** Number of steps of the multistep method (excluding the one being computed). */
+    /**
+     * Number of steps of the multistep method (excluding the one being computed).
+     */
     private final int nSteps;
 
-    /** Stepsize control exponent. */
+    /**
+     * Stepsize control exponent.
+     */
     private double exp;
 
-    /** Safety factor for stepsize control. */
+    /**
+     * Safety factor for stepsize control.
+     */
     private double safety;
 
-    /** Minimal reduction factor for stepsize control. */
+    /**
+     * Minimal reduction factor for stepsize control.
+     */
     private double minReduction;
 
-    /** Maximal growth factor for stepsize control. */
+    /**
+     * Maximal growth factor for stepsize control.
+     */
     private double maxGrowth;
 
     /**
@@ -115,33 +133,19 @@ public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
      * @param scalRelativeTolerance allowed relative error
      * @exception NumberIsTooSmallException if number of steps is smaller than 2
      */
-    protected MultistepFieldIntegrator(final Field<T> field, final String name,
-                                       final int nSteps, final int order,
-                                       final double minStep, final double maxStep,
-                                       final double scalAbsoluteTolerance,
-                                       final double scalRelativeTolerance)
-        throws NumberIsTooSmallException {
-
+    protected MultistepFieldIntegrator(final Field<T> field, final String name, final int nSteps, final int order, final double minStep, final double maxStep, final double scalAbsoluteTolerance, final double scalRelativeTolerance) throws NumberIsTooSmallException {
         super(field, name, minStep, maxStep, scalAbsoluteTolerance, scalRelativeTolerance);
-
-        if (nSteps < 2) {
-            throw new NumberIsTooSmallException(
-                  LocalizedFormats.INTEGRATION_METHOD_NEEDS_AT_LEAST_TWO_PREVIOUS_POINTS,
-                  nSteps, 2, true);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.MultistepFieldIntegrator_118");
+        if (ROR_less(nSteps, 2, "org.apache.commons.math3.ode.MultistepFieldIntegrator.MultistepFieldIntegrator_118", _mut12097, _mut12098, _mut12099, _mut12100, _mut12101)) {
+            throw new NumberIsTooSmallException(LocalizedFormats.INTEGRATION_METHOD_NEEDS_AT_LEAST_TWO_PREVIOUS_POINTS, nSteps, 2, true);
         }
-
-        starter = new DormandPrince853FieldIntegrator<T>(field, minStep, maxStep,
-                                                         scalAbsoluteTolerance,
-                                                         scalRelativeTolerance);
+        starter = new DormandPrince853FieldIntegrator<T>(field, minStep, maxStep, scalAbsoluteTolerance, scalRelativeTolerance);
         this.nSteps = nSteps;
-
-        exp = -1.0 / order;
-
+        exp = AOR_divide(-1.0, order, "org.apache.commons.math3.ode.MultistepFieldIntegrator.MultistepFieldIntegrator_118", _mut12102, _mut12103, _mut12104, _mut12105);
         // set the default values of the algorithm control parameters
         setSafety(0.9);
         setMinReduction(0.2);
         setMaxGrowth(FastMath.pow(2.0, -exp));
-
     }
 
     /**
@@ -164,24 +168,16 @@ public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
      * @param vecAbsoluteTolerance allowed absolute error
      * @param vecRelativeTolerance allowed relative error
      */
-    protected MultistepFieldIntegrator(final Field<T> field, final String name, final int nSteps,
-                                       final int order,
-                                       final double minStep, final double maxStep,
-                                       final double[] vecAbsoluteTolerance,
-                                       final double[] vecRelativeTolerance) {
+    protected MultistepFieldIntegrator(final Field<T> field, final String name, final int nSteps, final int order, final double minStep, final double maxStep, final double[] vecAbsoluteTolerance, final double[] vecRelativeTolerance) {
         super(field, name, minStep, maxStep, vecAbsoluteTolerance, vecRelativeTolerance);
-        starter = new DormandPrince853FieldIntegrator<T>(field, minStep, maxStep,
-                                                         vecAbsoluteTolerance,
-                                                         vecRelativeTolerance);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.MultistepFieldIntegrator_167");
+        starter = new DormandPrince853FieldIntegrator<T>(field, minStep, maxStep, vecAbsoluteTolerance, vecRelativeTolerance);
         this.nSteps = nSteps;
-
-        exp = -1.0 / order;
-
+        exp = AOR_divide(-1.0, order, "org.apache.commons.math3.ode.MultistepFieldIntegrator.MultistepFieldIntegrator_167", _mut12106, _mut12107, _mut12108, _mut12109);
         // set the default values of the algorithm control parameters
         setSafety(0.9);
         setMinReduction(0.2);
         setMaxGrowth(FastMath.pow(2.0, -exp));
-
     }
 
     /**
@@ -203,7 +199,8 @@ public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
         this.starter = starterIntegrator;
     }
 
-    /** Start the integration.
+    /**
+     * Start the integration.
      * <p>This method computes one step using the underlying starter integrator,
      * and initializes the Nordsieck vector at step start. The starter integrator
      * purpose is only to establish initial conditions, it does not really change
@@ -221,41 +218,28 @@ public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
      * @exception MaxCountExceededException if the number of functions evaluations is exceeded
      * @exception NoBracketingException if the location of an event cannot be bracketed
      */
-    protected void start(final FieldExpandableODE<T> equations, final FieldODEState<T> initialState, final T t)
-        throws DimensionMismatchException, NumberIsTooSmallException,
-               MaxCountExceededException, NoBracketingException {
-
-        // make sure NO user event nor user step handler is triggered,
-        // this is the task of the top level integrator, not the task
+    protected void start(final FieldExpandableODE<T> equations, final FieldODEState<T> initialState, final T t) throws DimensionMismatchException, NumberIsTooSmallException, MaxCountExceededException, NoBracketingException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.start_224");
         // of the starter integrator
         starter.clearEventHandlers();
         starter.clearStepHandlers();
-
         // set up one specific step handler to extract initial Nordsieck vector
-        starter.addStepHandler(new FieldNordsieckInitializer(equations.getMapper(), (nSteps + 3) / 2));
-
+        starter.addStepHandler(new FieldNordsieckInitializer(equations.getMapper(), AOR_divide((AOR_plus(nSteps, 3, "org.apache.commons.math3.ode.MultistepFieldIntegrator.start_224", _mut12110, _mut12111, _mut12112, _mut12113)), 2, "org.apache.commons.math3.ode.MultistepFieldIntegrator.start_224", _mut12114, _mut12115, _mut12116, _mut12117)));
         // start integration, expecting a InitializationCompletedMarkerException
         try {
-
             starter.integrate(equations, initialState, t);
-
             // we should not reach this step
             throw new MathIllegalStateException(LocalizedFormats.MULTISTEP_STARTER_STOPPED_EARLY);
-
-        } catch (InitializationCompletedMarkerException icme) { // NOPMD
-            // this is the expected nominal interruption of the start integrator
-
+        } catch (InitializationCompletedMarkerException icme) {
             // count the evaluations used by the starter
             getEvaluationsCounter().increment(starter.getEvaluations());
-
         }
-
         // remove the specific step handler
         starter.clearStepHandlers();
-
     }
 
-    /** Initialize the high order scaled derivatives at step start.
+    /**
+     * Initialize the high order scaled derivatives at step start.
      * @param h step size to use for scaling
      * @param t first steps times
      * @param y first steps states
@@ -263,192 +247,206 @@ public abstract class MultistepFieldIntegrator<T extends RealFieldElement<T>>
      * @return Nordieck vector at first step (h<sup>2</sup>/2 y''<sub>n</sub>,
      * h<sup>3</sup>/6 y'''<sub>n</sub> ... h<sup>k</sup>/k! y<sup>(k)</sup><sub>n</sub>)
      */
-    protected abstract Array2DRowFieldMatrix<T> initializeHighOrderDerivatives(final T h, final T[] t,
-                                                                               final T[][] y,
-                                                                               final T[][] yDot);
+    protected abstract Array2DRowFieldMatrix<T> initializeHighOrderDerivatives(final T h, final T[] t, final T[][] y, final T[][] yDot);
 
-    /** Get the minimal reduction factor for stepsize control.
+    /**
+     * Get the minimal reduction factor for stepsize control.
      * @return minimal reduction factor
      */
     public double getMinReduction() {
         return minReduction;
     }
 
-    /** Set the minimal reduction factor for stepsize control.
+    /**
+     * Set the minimal reduction factor for stepsize control.
      * @param minReduction minimal reduction factor
      */
     public void setMinReduction(final double minReduction) {
         this.minReduction = minReduction;
     }
 
-    /** Get the maximal growth factor for stepsize control.
+    /**
+     * Get the maximal growth factor for stepsize control.
      * @return maximal growth factor
      */
     public double getMaxGrowth() {
         return maxGrowth;
     }
 
-    /** Set the maximal growth factor for stepsize control.
+    /**
+     * Set the maximal growth factor for stepsize control.
      * @param maxGrowth maximal growth factor
      */
     public void setMaxGrowth(final double maxGrowth) {
         this.maxGrowth = maxGrowth;
     }
 
-    /** Get the safety factor for stepsize control.
+    /**
+     * Get the safety factor for stepsize control.
      * @return safety factor
      */
     public double getSafety() {
-      return safety;
+        return safety;
     }
 
-    /** Set the safety factor for stepsize control.
+    /**
+     * Set the safety factor for stepsize control.
      * @param safety safety factor
      */
     public void setSafety(final double safety) {
-      this.safety = safety;
+        this.safety = safety;
     }
 
-    /** Get the number of steps of the multistep method (excluding the one being computed).
+    /**
+     * Get the number of steps of the multistep method (excluding the one being computed).
      * @return number of steps of the multistep method (excluding the one being computed)
      */
     public int getNSteps() {
-      return nSteps;
+        return nSteps;
     }
 
-    /** Rescale the instance.
+    /**
+     * Rescale the instance.
      * <p>Since the scaled and Nordsieck arrays are shared with the caller,
      * this method has the side effect of rescaling this arrays in the caller too.</p>
      * @param newStepSize new step size to use in the scaled and Nordsieck arrays
      */
     protected void rescale(final T newStepSize) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324");
         final T ratio = newStepSize.divide(getStepSize());
-        for (int i = 0; i < scaled.length; ++i) {
+        for (int i = 0; ROR_less(i, scaled.length, "org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324", _mut12118, _mut12119, _mut12120, _mut12121, _mut12122); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324");
             scaled[i] = scaled[i].multiply(ratio);
         }
-
         final T[][] nData = nordsieck.getDataRef();
         T power = ratio;
-        for (int i = 0; i < nData.length; ++i) {
+        for (int i = 0; ROR_less(i, nData.length, "org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324", _mut12128, _mut12129, _mut12130, _mut12131, _mut12132); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324");
             power = power.multiply(ratio);
             final T[] nDataI = nData[i];
-            for (int j = 0; j < nDataI.length; ++j) {
+            for (int j = 0; ROR_less(j, nDataI.length, "org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324", _mut12123, _mut12124, _mut12125, _mut12126, _mut12127); ++j) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.rescale_324");
                 nDataI[j] = nDataI[j].multiply(power);
             }
         }
-
         setStepSize(newStepSize);
-
     }
 
-
-    /** Compute step grow/shrink factor according to normalized error.
+    /**
+     * Compute step grow/shrink factor according to normalized error.
      * @param error normalized error of the current step
      * @return grow/shrink factor for next step
      */
     protected T computeStepGrowShrinkFactor(final T error) {
-        return MathUtils.min(error.getField().getZero().add(maxGrowth),
-                             MathUtils.max(error.getField().getZero().add(minReduction),
-                                           error.pow(exp).multiply(safety)));
+        return MathUtils.min(error.getField().getZero().add(maxGrowth), MathUtils.max(error.getField().getZero().add(minReduction), error.pow(exp).multiply(safety)));
     }
 
-    /** Specialized step handler storing the first step.
+    /**
+     * Specialized step handler storing the first step.
      */
     private class FieldNordsieckInitializer implements FieldStepHandler<T> {
 
-        /** Equation mapper. */
+        /**
+         * Equation mapper.
+         */
         private final FieldEquationsMapper<T> mapper;
 
-        /** Steps counter. */
+        /**
+         * Steps counter.
+         */
         private int count;
 
-        /** Saved start. */
+        /**
+         * Saved start.
+         */
         private FieldODEStateAndDerivative<T> savedStart;
 
-        /** First steps times. */
+        /**
+         * First steps times.
+         */
         private final T[] t;
 
-        /** First steps states. */
+        /**
+         * First steps states.
+         */
         private final T[][] y;
 
-        /** First steps derivatives. */
+        /**
+         * First steps derivatives.
+         */
         private final T[][] yDot;
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          * @param mapper equation mapper
          * @param nbStartPoints number of start points (including the initial point)
          */
         FieldNordsieckInitializer(final FieldEquationsMapper<T> mapper, final int nbStartPoints) {
             this.mapper = mapper;
-            this.count  = 0;
-            this.t      = MathArrays.buildArray(getField(), nbStartPoints);
-            this.y      = MathArrays.buildArray(getField(), nbStartPoints, -1);
-            this.yDot   = MathArrays.buildArray(getField(), nbStartPoints, -1);
+            this.count = 0;
+            this.t = MathArrays.buildArray(getField(), nbStartPoints);
+            this.y = MathArrays.buildArray(getField(), nbStartPoints, -1);
+            this.yDot = MathArrays.buildArray(getField(), nbStartPoints, -1);
         }
 
-        /** {@inheritDoc} */
-        public void handleStep(FieldStepInterpolator<T> interpolator, boolean isLast)
-            throws MaxCountExceededException {
-
-
-            if (count == 0) {
+        /**
+         * {@inheritDoc}
+         */
+        public void handleStep(FieldStepInterpolator<T> interpolator, boolean isLast) throws MaxCountExceededException {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391");
+            if (ROR_equals(count, 0, "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12133, _mut12134, _mut12135, _mut12136, _mut12137)) {
                 // first step, we need to store also the point at the beginning of the step
                 final FieldODEStateAndDerivative<T> prev = interpolator.getPreviousState();
-                savedStart  = prev;
-                t[count]    = prev.getTime();
-                y[count]    = mapper.mapState(prev);
+                savedStart = prev;
+                t[count] = prev.getTime();
+                y[count] = mapper.mapState(prev);
                 yDot[count] = mapper.mapDerivative(prev);
             }
-
             // store the point at the end of the step
             ++count;
             final FieldODEStateAndDerivative<T> curr = interpolator.getCurrentState();
-            t[count]    = curr.getTime();
-            y[count]    = mapper.mapState(curr);
+            t[count] = curr.getTime();
+            y[count] = mapper.mapState(curr);
             yDot[count] = mapper.mapDerivative(curr);
-
-            if (count == t.length - 1) {
-
+            if (ROR_equals(count, AOR_minus(t.length, 1, "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12138, _mut12139, _mut12140, _mut12141), "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12142, _mut12143, _mut12144, _mut12145, _mut12146)) {
                 // this was the last point we needed, we can compute the derivatives
-                setStepSize(t[t.length - 1].subtract(t[0]).divide(t.length - 1));
-
+                setStepSize(t[AOR_minus(t.length, 1, "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12151, _mut12152, _mut12153, _mut12154)].subtract(t[0]).divide(AOR_minus(t.length, 1, "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12147, _mut12148, _mut12149, _mut12150)));
                 // first scaled derivative
                 scaled = MathArrays.buildArray(getField(), yDot[0].length);
-                for (int j = 0; j < scaled.length; ++j) {
+                for (int j = 0; ROR_less(j, scaled.length, "org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391", _mut12155, _mut12156, _mut12157, _mut12158, _mut12159); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.MultistepFieldIntegrator.handleStep_391");
                     scaled[j] = yDot[0][j].multiply(getStepSize());
                 }
-
                 // higher order derivatives
                 nordsieck = initializeHighOrderDerivatives(getStepSize(), t, y, yDot);
-
                 // stop the integrator now that all needed steps have been handled
                 setStepStart(savedStart);
                 throw new InitializationCompletedMarkerException();
-
             }
-
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public void init(final FieldODEStateAndDerivative<T> initialState, T finalTime) {
-            // nothing to do
         }
-
     }
 
-    /** Marker exception used ONLY to stop the starter integrator after first step. */
-    private static class InitializationCompletedMarkerException
-        extends RuntimeException {
+    /**
+     * Marker exception used ONLY to stop the starter integrator after first step.
+     */
+    private static class InitializationCompletedMarkerException extends RuntimeException {
 
-        /** Serializable version identifier. */
+        /**
+         * Serializable version identifier.
+         */
         private static final long serialVersionUID = -1914085471038046418L;
 
-        /** Simple constructor. */
+        /**
+         * Simple constructor.
+         */
         InitializationCompletedMarkerException() {
             super((Throwable) null);
         }
-
     }
-
 }

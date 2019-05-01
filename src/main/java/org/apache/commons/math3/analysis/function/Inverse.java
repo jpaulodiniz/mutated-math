@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.function;
 
 import org.apache.commons.math3.analysis.FunctionUtils;
@@ -22,6 +21,8 @@ import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.DifferentiableUnivariateFunction;
 import org.apache.commons.math3.analysis.differentiation.DerivativeStructure;
 import org.apache.commons.math3.analysis.differentiation.UnivariateDifferentiableFunction;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Inverse function.
@@ -29,12 +30,20 @@ import org.apache.commons.math3.analysis.differentiation.UnivariateDifferentiabl
  * @since 3.0
  */
 public class Inverse implements UnivariateDifferentiableFunction, DifferentiableUnivariateFunction {
-    /** {@inheritDoc} */
+
+    @Conditional
+    public static boolean _mut90960 = false, _mut90961 = false, _mut90962 = false, _mut90963 = false;
+
+    /**
+     * {@inheritDoc}
+     */
     public double value(double x) {
-        return 1 / x;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.Inverse.value_33");
+        return AOR_divide(1, x, "org.apache.commons.math3.analysis.function.Inverse.value_33", _mut90960, _mut90961, _mut90962, _mut90963);
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @deprecated as of 3.1, replaced by {@link #value(DerivativeStructure)}
      */
     @Deprecated
@@ -42,11 +51,11 @@ public class Inverse implements UnivariateDifferentiableFunction, Differentiable
         return FunctionUtils.toDifferentiableUnivariateFunction(this).derivative();
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @since 3.1
      */
     public DerivativeStructure value(final DerivativeStructure t) {
         return t.reciprocal();
     }
-
 }

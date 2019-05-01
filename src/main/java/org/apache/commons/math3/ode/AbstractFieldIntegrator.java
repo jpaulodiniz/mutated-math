@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.analysis.solvers.BracketedRealFieldUnivariateSolver;
@@ -41,6 +39,8 @@ import org.apache.commons.math3.ode.sampling.AbstractFieldStepInterpolator;
 import org.apache.commons.math3.ode.sampling.FieldStepHandler;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.IntegerSequence;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class managing common boilerplate for all integrators.
@@ -49,200 +49,243 @@ import org.apache.commons.math3.util.IntegerSequence;
  */
 public abstract class AbstractFieldIntegrator<T extends RealFieldElement<T>> implements FirstOrderFieldIntegrator<T> {
 
-    /** Default relative accuracy. */
+    @Conditional
+    public static boolean _mut11763 = false, _mut11764 = false, _mut11765 = false, _mut11766 = false, _mut11767 = false, _mut11768 = false, _mut11769 = false, _mut11770 = false, _mut11771 = false, _mut11772 = false, _mut11773 = false, _mut11774 = false, _mut11775 = false, _mut11776 = false, _mut11777 = false, _mut11778 = false, _mut11779 = false, _mut11780 = false, _mut11781 = false, _mut11782 = false, _mut11783 = false, _mut11784 = false, _mut11785 = false, _mut11786 = false, _mut11787 = false, _mut11788 = false;
+
+    /**
+     * Default relative accuracy.
+     */
     private static final double DEFAULT_RELATIVE_ACCURACY = 1e-14;
 
-    /** Default function value accuracy. */
+    /**
+     * Default function value accuracy.
+     */
     private static final double DEFAULT_FUNCTION_VALUE_ACCURACY = 1e-15;
 
-    /** Step handler. */
+    /**
+     * Step handler.
+     */
     private Collection<FieldStepHandler<T>> stepHandlers;
 
-    /** Current step start. */
+    /**
+     * Current step start.
+     */
     private FieldODEStateAndDerivative<T> stepStart;
 
-    /** Current stepsize. */
+    /**
+     * Current stepsize.
+     */
     private T stepSize;
 
-    /** Indicator for last step. */
+    /**
+     * Indicator for last step.
+     */
     private boolean isLastStep;
 
-    /** Indicator that a state or derivative reset was triggered by some event. */
+    /**
+     * Indicator that a state or derivative reset was triggered by some event.
+     */
     private boolean resetOccurred;
 
-    /** Field to which the time and state vector elements belong. */
+    /**
+     * Field to which the time and state vector elements belong.
+     */
     private final Field<T> field;
 
-    /** Events states. */
+    /**
+     * Events states.
+     */
     private Collection<FieldEventState<T>> eventsStates;
 
-    /** Initialization indicator of events states. */
+    /**
+     * Initialization indicator of events states.
+     */
     private boolean statesInitialized;
 
-    /** Name of the method. */
+    /**
+     * Name of the method.
+     */
     private final String name;
 
-    /** Counter for number of evaluations. */
+    /**
+     * Counter for number of evaluations.
+     */
     private IntegerSequence.Incrementor evaluations;
 
-    /** Differential equations to integrate. */
+    /**
+     * Differential equations to integrate.
+     */
     private transient FieldExpandableODE<T> equations;
 
-    /** Build an instance.
+    /**
+     * Build an instance.
      * @param field field to which the time and state vector elements belong
      * @param name name of the method
      */
     protected AbstractFieldIntegrator(final Field<T> field, final String name) {
-        this.field        = field;
-        this.name         = name;
-        stepHandlers      = new ArrayList<FieldStepHandler<T>>();
-        stepStart         = null;
-        stepSize          = null;
-        eventsStates      = new ArrayList<FieldEventState<T>>();
+        this.field = field;
+        this.name = name;
+        stepHandlers = new ArrayList<FieldStepHandler<T>>();
+        stepStart = null;
+        stepSize = null;
+        eventsStates = new ArrayList<FieldEventState<T>>();
         statesInitialized = false;
-        evaluations       = IntegerSequence.Incrementor.create().withMaximalCount(Integer.MAX_VALUE);
+        evaluations = IntegerSequence.Incrementor.create().withMaximalCount(Integer.MAX_VALUE);
     }
 
-    /** Get the field to which state vector elements belong.
+    /**
+     * Get the field to which state vector elements belong.
      * @return field to which state vector elements belong
      */
     public Field<T> getField() {
         return field;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public String getName() {
         return name;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void addStepHandler(final FieldStepHandler<T> handler) {
         stepHandlers.add(handler);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Collection<FieldStepHandler<T>> getStepHandlers() {
         return Collections.unmodifiableCollection(stepHandlers);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void clearStepHandlers() {
         stepHandlers.clear();
     }
 
-    /** {@inheritDoc} */
-    public void addEventHandler(final FieldEventHandler<T> handler,
-                                final double maxCheckInterval,
-                                final double convergence,
-                                final int maxIterationCount) {
-        addEventHandler(handler, maxCheckInterval, convergence,
-                        maxIterationCount,
-                        new FieldBracketingNthOrderBrentSolver<T>(field.getZero().add(DEFAULT_RELATIVE_ACCURACY),
-                                                                  field.getZero().add(convergence),
-                                                                  field.getZero().add(DEFAULT_FUNCTION_VALUE_ACCURACY),
-                                                                  5));
+    /**
+     * {@inheritDoc}
+     */
+    public void addEventHandler(final FieldEventHandler<T> handler, final double maxCheckInterval, final double convergence, final int maxIterationCount) {
+        addEventHandler(handler, maxCheckInterval, convergence, maxIterationCount, new FieldBracketingNthOrderBrentSolver<T>(field.getZero().add(DEFAULT_RELATIVE_ACCURACY), field.getZero().add(convergence), field.getZero().add(DEFAULT_FUNCTION_VALUE_ACCURACY), 5));
     }
 
-    /** {@inheritDoc} */
-    public void addEventHandler(final FieldEventHandler<T> handler,
-                                final double maxCheckInterval,
-                                final double convergence,
-                                final int maxIterationCount,
-                                final BracketedRealFieldUnivariateSolver<T> solver) {
-        eventsStates.add(new FieldEventState<T>(handler, maxCheckInterval, field.getZero().add(convergence),
-                                                maxIterationCount, solver));
+    /**
+     * {@inheritDoc}
+     */
+    public void addEventHandler(final FieldEventHandler<T> handler, final double maxCheckInterval, final double convergence, final int maxIterationCount, final BracketedRealFieldUnivariateSolver<T> solver) {
+        eventsStates.add(new FieldEventState<T>(handler, maxCheckInterval, field.getZero().add(convergence), maxIterationCount, solver));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Collection<FieldEventHandler<T>> getEventHandlers() {
         final List<FieldEventHandler<T>> list = new ArrayList<FieldEventHandler<T>>(eventsStates.size());
         for (FieldEventState<T> state : eventsStates) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.getEventHandlers_157");
             list.add(state.getEventHandler());
         }
         return Collections.unmodifiableCollection(list);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void clearEventHandlers() {
         eventsStates.clear();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public FieldODEStateAndDerivative<T> getCurrentStepStart() {
         return stepStart;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T getCurrentSignedStepsize() {
         return stepSize;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setMaxEvaluations(int maxEvaluations) {
-        evaluations = evaluations.withMaximalCount((maxEvaluations < 0) ? Integer.MAX_VALUE : maxEvaluations);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.setMaxEvaluations_181");
+        evaluations = evaluations.withMaximalCount((ROR_less(maxEvaluations, 0, "org.apache.commons.math3.ode.AbstractFieldIntegrator.setMaxEvaluations_181", _mut11763, _mut11764, _mut11765, _mut11766, _mut11767)) ? Integer.MAX_VALUE : maxEvaluations);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxEvaluations() {
         return evaluations.getMaximalCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getEvaluations() {
         return evaluations.getCount();
     }
 
-    /** Prepare the start of an integration.
+    /**
+     * Prepare the start of an integration.
      * @param eqn equations to integrate
      * @param t0 start value of the independent <i>time</i> variable
      * @param y0 array containing the start value of the state vector
      * @param t target time for the integration
      * @return initial state with derivatives added
      */
-    protected FieldODEStateAndDerivative<T> initIntegration(final FieldExpandableODE<T> eqn,
-                                                            final T t0, final T[] y0, final T t) {
-
+    protected FieldODEStateAndDerivative<T> initIntegration(final FieldExpandableODE<T> eqn, final T t0, final T[] y0, final T t) {
         this.equations = eqn;
-        evaluations    = evaluations.withStart(0);
-
+        evaluations = evaluations.withStart(0);
         // initialize ODE
         eqn.init(t0, y0, t);
-
         // set up derivatives of initial state
         final T[] y0Dot = computeDerivatives(t0, y0);
         final FieldODEStateAndDerivative<T> state0 = new FieldODEStateAndDerivative<T>(t0, y0, y0Dot);
-
         // initialize event handlers
         for (final FieldEventState<T> state : eventsStates) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.initIntegration_202");
             state.getEventHandler().init(state0, t);
         }
-
         // initialize step handlers
         for (FieldStepHandler<T> handler : stepHandlers) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.initIntegration_202");
             handler.init(state0, t);
         }
-
         setStateInitialized(false);
-
         return state0;
-
     }
 
-    /** Get the differential equations to integrate.
+    /**
+     * Get the differential equations to integrate.
      * @return differential equations to integrate
      */
     protected FieldExpandableODE<T> getEquations() {
         return equations;
     }
 
-    /** Get the evaluations counter.
+    /**
+     * Get the evaluations counter.
      * @return evaluations counter
      */
     protected IntegerSequence.Incrementor getEvaluationsCounter() {
         return evaluations;
     }
 
-    /** Compute the derivatives and check the number of evaluations.
+    /**
+     * Compute the derivatives and check the number of evaluations.
      * @param t current value of the independent <I>time</I> variable
      * @param y array containing the current value of the state vector
      * @return state completed with derivatives
@@ -252,13 +295,13 @@ public abstract class AbstractFieldIntegrator<T extends RealFieldElement<T>> imp
      * is called outside of a call to {@link #integrate(FieldExpandableODE, FieldODEState,
      * RealFieldElement) integrate}
      */
-    public T[] computeDerivatives(final T t, final T[] y)
-        throws DimensionMismatchException, MaxCountExceededException, NullPointerException {
+    public T[] computeDerivatives(final T t, final T[] y) throws DimensionMismatchException, MaxCountExceededException, NullPointerException {
         evaluations.increment();
         return equations.computeDerivatives(t, y);
     }
 
-    /** Set the stateInitialized flag.
+    /**
+     * Set the stateInitialized flag.
      * <p>This method must be called by integrators with the value
      * {@code false} before they start integration, so a proper lazy
      * initialization is done automatically on the first step.</p>
@@ -268,7 +311,8 @@ public abstract class AbstractFieldIntegrator<T extends RealFieldElement<T>> imp
         this.statesInitialized = stateInitialized;
     }
 
-    /** Accept a step, triggering events and step handlers.
+    /**
+     * Accept a step, triggering events and step handlers.
      * @param interpolator step interpolator
      * @param tEnd final integration time
      * @return state at end of step
@@ -277,177 +321,170 @@ public abstract class AbstractFieldIntegrator<T extends RealFieldElement<T>> imp
      * @exception NoBracketingException if the location of an event cannot be bracketed
      * @exception DimensionMismatchException if arrays dimensions do not match equations settings
      */
-    protected FieldODEStateAndDerivative<T> acceptStep(final AbstractFieldStepInterpolator<T> interpolator,
-                                                       final T tEnd)
-        throws MaxCountExceededException, DimensionMismatchException, NoBracketingException {
-
-            FieldODEStateAndDerivative<T> previousState = interpolator.getGlobalPreviousState();
-            final FieldODEStateAndDerivative<T> currentState = interpolator.getGlobalCurrentState();
-
-            // initialize the events states if needed
-            if (! statesInitialized) {
-                for (FieldEventState<T> state : eventsStates) {
-                    state.reinitializeBegin(interpolator);
-                }
-                statesInitialized = true;
+    protected FieldODEStateAndDerivative<T> acceptStep(final AbstractFieldStepInterpolator<T> interpolator, final T tEnd) throws MaxCountExceededException, DimensionMismatchException, NoBracketingException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+        FieldODEStateAndDerivative<T> previousState = interpolator.getGlobalPreviousState();
+        final FieldODEStateAndDerivative<T> currentState = interpolator.getGlobalCurrentState();
+        // initialize the events states if needed
+        if (!statesInitialized) {
+            for (FieldEventState<T> state : eventsStates) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.acceptStep_280");
+                state.reinitializeBegin(interpolator);
             }
+            statesInitialized = true;
+        }
+        // search for next events that may occur during the step
+        final int orderingSign = interpolator.isForward() ? +1 : -1;
+        SortedSet<FieldEventState<T>> occurringEvents = new TreeSet<FieldEventState<T>>(new Comparator<FieldEventState<T>>() {
 
-            // search for next events that may occur during the step
-            final int orderingSign = interpolator.isForward() ? +1 : -1;
-            SortedSet<FieldEventState<T>> occurringEvents = new TreeSet<FieldEventState<T>>(new Comparator<FieldEventState<T>>() {
-
-                /** {@inheritDoc} */
-                public int compare(FieldEventState<T> es0, FieldEventState<T> es1) {
-                    return orderingSign * Double.compare(es0.getEventTime().getReal(), es1.getEventTime().getReal());
-                }
-
-            });
-
+            /**
+             * {@inheritDoc}
+             */
+            public int compare(FieldEventState<T> es0, FieldEventState<T> es1) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+                return AOR_multiply(orderingSign, Double.compare(es0.getEventTime().getReal(), es1.getEventTime().getReal()), "org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300", _mut11768, _mut11769, _mut11770, _mut11771);
+            }
+        });
+        for (final FieldEventState<T> state : eventsStates) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+            if (state.evaluateStep(interpolator)) {
+                // the event occurs during the current step
+                occurringEvents.add(state);
+            }
+        }
+        AbstractFieldStepInterpolator<T> restricted = interpolator;
+        while (!occurringEvents.isEmpty()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+            // handle the chronologically first event
+            final Iterator<FieldEventState<T>> iterator = occurringEvents.iterator();
+            final FieldEventState<T> currentEvent = iterator.next();
+            iterator.remove();
+            // get state at event time
+            final FieldODEStateAndDerivative<T> eventState = restricted.getInterpolatedState(currentEvent.getEventTime());
+            // restrict the interpolator to the first part of the step, up to the event
+            restricted = restricted.restrictStep(previousState, eventState);
+            // advance all event states to current time
             for (final FieldEventState<T> state : eventsStates) {
-                if (state.evaluateStep(interpolator)) {
-                    // the event occurs during the current step
-                    occurringEvents.add(state);
-                }
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+                state.stepAccepted(eventState);
+                isLastStep = (_mut11772 ? (isLastStep && state.stop()) : (isLastStep || state.stop()));
             }
-
-            AbstractFieldStepInterpolator<T> restricted = interpolator;
-            while (!occurringEvents.isEmpty()) {
-
-                // handle the chronologically first event
-                final Iterator<FieldEventState<T>> iterator = occurringEvents.iterator();
-                final FieldEventState<T> currentEvent = iterator.next();
-                iterator.remove();
-
-                // get state at event time
-                final FieldODEStateAndDerivative<T> eventState = restricted.getInterpolatedState(currentEvent.getEventTime());
-
-                // restrict the interpolator to the first part of the step, up to the event
-                restricted = restricted.restrictStep(previousState, eventState);
-
-                // advance all event states to current time
-                for (final FieldEventState<T> state : eventsStates) {
-                    state.stepAccepted(eventState);
-                    isLastStep = isLastStep || state.stop();
-                }
-
-                // handle the first part of the step, up to the event
-                for (final FieldStepHandler<T> handler : stepHandlers) {
-                    handler.handleStep(restricted, isLastStep);
-                }
-
-                if (isLastStep) {
-                    // the event asked to stop integration
-                    return eventState;
-                }
-
-                FieldODEState<T> newState = null;
-                resetOccurred = false;
-                for (final FieldEventState<T> state : eventsStates) {
-                    newState = state.reset(eventState);
-                    if (newState != null) {
-                        // some event handler has triggered changes that
-                        // invalidate the derivatives, we need to recompute them
-                        final T[] y    = equations.getMapper().mapState(newState);
-                        final T[] yDot = computeDerivatives(newState.getTime(), y);
-                        resetOccurred = true;
-                        return equations.getMapper().mapStateAndDerivative(newState.getTime(), y, yDot);
-                    }
-                }
-
-                // prepare handling of the remaining part of the step
-                previousState = eventState;
-                restricted = restricted.restrictStep(eventState, currentState);
-
-                // check if the same event occurs again in the remaining part of the step
-                if (currentEvent.evaluateStep(restricted)) {
-                    // the event occurs during the current step
-                    occurringEvents.add(currentEvent);
-                }
-
-            }
-
-            // last part of the step, after the last event
-            for (final FieldEventState<T> state : eventsStates) {
-                state.stepAccepted(currentState);
-                isLastStep = isLastStep || state.stop();
-            }
-            isLastStep = isLastStep || currentState.getTime().subtract(tEnd).abs().getReal() <= FastMath.ulp(tEnd.getReal());
-
-            // handle the remaining part of the step, after all events if any
-            for (FieldStepHandler<T> handler : stepHandlers) {
+            // handle the first part of the step, up to the event
+            for (final FieldStepHandler<T> handler : stepHandlers) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
                 handler.handleStep(restricted, isLastStep);
             }
-
-            return currentState;
-
+            if (isLastStep) {
+                // the event asked to stop integration
+                return eventState;
+            }
+            FieldODEState<T> newState = null;
+            resetOccurred = false;
+            for (final FieldEventState<T> state : eventsStates) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+                newState = state.reset(eventState);
+                if (newState != null) {
+                    // invalidate the derivatives, we need to recompute them
+                    final T[] y = equations.getMapper().mapState(newState);
+                    final T[] yDot = computeDerivatives(newState.getTime(), y);
+                    resetOccurred = true;
+                    return equations.getMapper().mapStateAndDerivative(newState.getTime(), y, yDot);
+                }
+            }
+            // prepare handling of the remaining part of the step
+            previousState = eventState;
+            restricted = restricted.restrictStep(eventState, currentState);
+            // check if the same event occurs again in the remaining part of the step
+            if (currentEvent.evaluateStep(restricted)) {
+                // the event occurs during the current step
+                occurringEvents.add(currentEvent);
+            }
+        }
+        // last part of the step, after the last event
+        for (final FieldEventState<T> state : eventsStates) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+            state.stepAccepted(currentState);
+            isLastStep = (_mut11773 ? (isLastStep && state.stop()) : (isLastStep || state.stop()));
+        }
+        isLastStep = (_mut11779 ? (isLastStep && ROR_less_equals(currentState.getTime().subtract(tEnd).abs().getReal(), FastMath.ulp(tEnd.getReal()), "org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300", _mut11774, _mut11775, _mut11776, _mut11777, _mut11778)) : (isLastStep || ROR_less_equals(currentState.getTime().subtract(tEnd).abs().getReal(), FastMath.ulp(tEnd.getReal()), "org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300", _mut11774, _mut11775, _mut11776, _mut11777, _mut11778)));
+        // handle the remaining part of the step, after all events if any
+        for (FieldStepHandler<T> handler : stepHandlers) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.compare_300");
+            handler.handleStep(restricted, isLastStep);
+        }
+        return currentState;
     }
 
-    /** Check the integration span.
+    /**
+     * Check the integration span.
      * @param eqn set of differential equations
      * @param t target time for the integration
      * @exception NumberIsTooSmallException if integration span is too small
      * @exception DimensionMismatchException if adaptive step size integrators
      * tolerance arrays dimensions are not compatible with equations settings
      */
-    protected void sanityChecks(final FieldODEState<T> eqn, final T t)
-        throws NumberIsTooSmallException, DimensionMismatchException {
-
-        final double threshold = 1000 * FastMath.ulp(FastMath.max(FastMath.abs(eqn.getTime().getReal()),
-                                                                  FastMath.abs(t.getReal())));
+    protected void sanityChecks(final FieldODEState<T> eqn, final T t) throws NumberIsTooSmallException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.AbstractFieldIntegrator.sanityChecks_392");
+        final double threshold = AOR_multiply(1000, FastMath.ulp(FastMath.max(FastMath.abs(eqn.getTime().getReal()), FastMath.abs(t.getReal()))), "org.apache.commons.math3.ode.AbstractFieldIntegrator.sanityChecks_392", _mut11780, _mut11781, _mut11782, _mut11783);
         final double dt = eqn.getTime().subtract(t).abs().getReal();
-        if (dt <= threshold) {
-            throw new NumberIsTooSmallException(LocalizedFormats.TOO_SMALL_INTEGRATION_INTERVAL,
-                                                dt, threshold, false);
+        if (ROR_less_equals(dt, threshold, "org.apache.commons.math3.ode.AbstractFieldIntegrator.sanityChecks_392", _mut11784, _mut11785, _mut11786, _mut11787, _mut11788)) {
+            throw new NumberIsTooSmallException(LocalizedFormats.TOO_SMALL_INTEGRATION_INTERVAL, dt, threshold, false);
         }
-
     }
 
-    /** Check if a reset occurred while last step was accepted.
+    /**
+     * Check if a reset occurred while last step was accepted.
      * @return true if a reset occurred while last step was accepted
      */
     protected boolean resetOccurred() {
         return resetOccurred;
     }
 
-    /** Set the current step size.
+    /**
+     * Set the current step size.
      * @param stepSize step size to set
      */
     protected void setStepSize(final T stepSize) {
         this.stepSize = stepSize;
     }
 
-    /** Get the current step size.
+    /**
+     * Get the current step size.
      * @return current step size
      */
     protected T getStepSize() {
         return stepSize;
     }
-    /** Set current step start.
+
+    /**
+     * Set current step start.
      * @param stepStart step start
      */
     protected void setStepStart(final FieldODEStateAndDerivative<T> stepStart) {
         this.stepStart = stepStart;
     }
 
-    /** Getcurrent step start.
+    /**
+     * Getcurrent step start.
      * @return current step start
      */
     protected FieldODEStateAndDerivative<T> getStepStart() {
         return stepStart;
     }
 
-    /** Set the last state flag.
+    /**
+     * Set the last state flag.
      * @param isLastStep if true, this step is the last one
      */
     protected void setIsLastStep(final boolean isLastStep) {
         this.isLastStep = isLastStep;
     }
 
-    /** Check if this step is the last one.
+    /**
+     * Check if this step is the last one.
      * @return true if this step is the last one
      */
     protected boolean isLastStep() {
         return isLastStep;
     }
-
 }

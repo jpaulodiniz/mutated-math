@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.random;
 
 import java.io.BufferedReader;
@@ -27,7 +26,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.math3.distribution.AbstractRealDistribution;
 import org.apache.commons.math3.distribution.ConstantRealDistribution;
 import org.apache.commons.math3.distribution.NormalDistribution;
@@ -43,6 +41,8 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>Represents an <a href="http://http://en.wikipedia.org/wiki/Empirical_distribution_function">
@@ -98,44 +98,70 @@ import org.apache.commons.math3.util.MathUtils;
  *<li>The input file <i>must</i> be a plain text file containing one valid numeric
  *    entry per line.</li>
  * </ul></p>
- *
  */
 public class EmpiricalDistribution extends AbstractRealDistribution {
 
-    /** Default bin count */
+    @Conditional
+    public static boolean _mut51910 = false, _mut51911 = false, _mut51912 = false, _mut51913 = false, _mut51914 = false, _mut51915 = false, _mut51916 = false, _mut51917 = false, _mut51918 = false, _mut51919 = false, _mut51920 = false, _mut51921 = false, _mut51922 = false, _mut51923 = false, _mut51924 = false, _mut51925 = false, _mut51926 = false, _mut51927 = false, _mut51928 = false, _mut51929 = false, _mut51930 = false, _mut51931 = false, _mut51932 = false, _mut51933 = false, _mut51934 = false, _mut51935 = false, _mut51936 = false, _mut51937 = false, _mut51938 = false, _mut51939 = false, _mut51940 = false, _mut51941 = false, _mut51942 = false, _mut51943 = false, _mut51944 = false, _mut51945 = false, _mut51946 = false, _mut51947 = false, _mut51948 = false, _mut51949 = false, _mut51950 = false, _mut51951 = false, _mut51952 = false, _mut51953 = false, _mut51954 = false, _mut51955 = false, _mut51956 = false, _mut51957 = false, _mut51958 = false, _mut51959 = false, _mut51960 = false, _mut51961 = false, _mut51962 = false, _mut51963 = false, _mut51964 = false, _mut51965 = false, _mut51966 = false, _mut51967 = false, _mut51968 = false, _mut51969 = false, _mut51970 = false, _mut51971 = false, _mut51972 = false, _mut51973 = false, _mut51974 = false, _mut51975 = false, _mut51976 = false, _mut51977 = false, _mut51978 = false, _mut51979 = false, _mut51980 = false, _mut51981 = false, _mut51982 = false, _mut51983 = false, _mut51984 = false, _mut51985 = false, _mut51986 = false, _mut51987 = false, _mut51988 = false, _mut51989 = false, _mut51990 = false, _mut51991 = false, _mut51992 = false, _mut51993 = false, _mut51994 = false, _mut51995 = false, _mut51996 = false, _mut51997 = false, _mut51998 = false, _mut51999 = false, _mut52000 = false, _mut52001 = false, _mut52002 = false, _mut52003 = false, _mut52004 = false, _mut52005 = false, _mut52006 = false, _mut52007 = false, _mut52008 = false, _mut52009 = false, _mut52010 = false, _mut52011 = false, _mut52012 = false, _mut52013 = false, _mut52014 = false, _mut52015 = false, _mut52016 = false, _mut52017 = false, _mut52018 = false, _mut52019 = false, _mut52020 = false, _mut52021 = false, _mut52022 = false, _mut52023 = false, _mut52024 = false, _mut52025 = false, _mut52026 = false, _mut52027 = false, _mut52028 = false, _mut52029 = false, _mut52030 = false, _mut52031 = false, _mut52032 = false, _mut52033 = false, _mut52034 = false, _mut52035 = false, _mut52036 = false, _mut52037 = false, _mut52038 = false, _mut52039 = false, _mut52040 = false, _mut52041 = false, _mut52042 = false, _mut52043 = false, _mut52044 = false, _mut52045 = false, _mut52046 = false, _mut52047 = false, _mut52048 = false, _mut52049 = false, _mut52050 = false, _mut52051 = false, _mut52052 = false, _mut52053 = false, _mut52054 = false, _mut52055 = false, _mut52056 = false, _mut52057 = false, _mut52058 = false, _mut52059 = false, _mut52060 = false, _mut52061 = false, _mut52062 = false, _mut52063 = false, _mut52064 = false, _mut52065 = false, _mut52066 = false, _mut52067 = false, _mut52068 = false, _mut52069 = false, _mut52070 = false, _mut52071 = false, _mut52072 = false, _mut52073 = false, _mut52074 = false, _mut52075 = false, _mut52076 = false, _mut52077 = false, _mut52078 = false, _mut52079 = false, _mut52080 = false, _mut52081 = false, _mut52082 = false, _mut52083 = false, _mut52084 = false, _mut52085 = false, _mut52086 = false, _mut52087 = false, _mut52088 = false, _mut52089 = false, _mut52090 = false, _mut52091 = false, _mut52092 = false, _mut52093 = false, _mut52094 = false, _mut52095 = false, _mut52096 = false, _mut52097 = false, _mut52098 = false, _mut52099 = false, _mut52100 = false, _mut52101 = false, _mut52102 = false, _mut52103 = false, _mut52104 = false, _mut52105 = false, _mut52106 = false, _mut52107 = false, _mut52108 = false, _mut52109 = false, _mut52110 = false, _mut52111 = false, _mut52112 = false, _mut52113 = false, _mut52114 = false, _mut52115 = false, _mut52116 = false, _mut52117 = false, _mut52118 = false, _mut52119 = false, _mut52120 = false, _mut52121 = false, _mut52122 = false, _mut52123 = false, _mut52124 = false, _mut52125 = false, _mut52126 = false, _mut52127 = false, _mut52128 = false, _mut52129 = false, _mut52130 = false, _mut52131 = false, _mut52132 = false, _mut52133 = false, _mut52134 = false, _mut52135 = false, _mut52136 = false, _mut52137 = false, _mut52138 = false, _mut52139 = false, _mut52140 = false, _mut52141 = false, _mut52142 = false, _mut52143 = false, _mut52144 = false, _mut52145 = false, _mut52146 = false, _mut52147 = false, _mut52148 = false, _mut52149 = false, _mut52150 = false, _mut52151 = false, _mut52152 = false, _mut52153 = false, _mut52154 = false, _mut52155 = false, _mut52156 = false, _mut52157 = false, _mut52158 = false, _mut52159 = false, _mut52160 = false, _mut52161 = false, _mut52162 = false, _mut52163 = false, _mut52164 = false, _mut52165 = false, _mut52166 = false, _mut52167 = false, _mut52168 = false, _mut52169 = false, _mut52170 = false, _mut52171 = false, _mut52172 = false, _mut52173 = false;
+
+    /**
+     * Default bin count
+     */
     public static final int DEFAULT_BIN_COUNT = 1000;
 
-    /** Character set for file input */
+    /**
+     * Character set for file input
+     */
     private static final String FILE_CHARSET = "US-ASCII";
 
-    /** Serializable version identifier */
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 5729073523949762654L;
 
-    /** RandomDataGenerator instance to use in repeated calls to getNext() */
+    /**
+     * RandomDataGenerator instance to use in repeated calls to getNext()
+     */
     protected final RandomDataGenerator randomData;
 
-    /** List of SummaryStatistics objects characterizing the bins */
+    /**
+     * List of SummaryStatistics objects characterizing the bins
+     */
     private final List<SummaryStatistics> binStats;
 
-    /** Sample statistics */
+    /**
+     * Sample statistics
+     */
     private SummaryStatistics sampleStats = null;
 
-    /** Max loaded value */
+    /**
+     * Max loaded value
+     */
     private double max = Double.NEGATIVE_INFINITY;
 
-    /** Min loaded value */
+    /**
+     * Min loaded value
+     */
     private double min = Double.POSITIVE_INFINITY;
 
-    /** Grid size */
+    /**
+     * Grid size
+     */
     private double delta = 0d;
 
-    /** number of bins */
+    /**
+     * number of bins
+     */
     private final int binCount;
 
-    /** is the distribution loaded? */
+    /**
+     * is the distribution loaded?
+     */
     private boolean loaded = false;
 
-    /** upper bounds of subintervals in (0,1) "belonging" to the bins */
+    /**
+     * upper bounds of subintervals in (0,1) "belonging" to the bins
+     */
     private double[] upperBounds = null;
 
     /**
@@ -214,10 +240,10 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @param randomData Random data generator.
      * @throws NotStrictlyPositiveException if {@code binCount <= 0}.
      */
-    private EmpiricalDistribution(int binCount,
-                                  RandomDataGenerator randomData) {
+    private EmpiricalDistribution(int binCount, RandomDataGenerator randomData) {
         super(randomData.getRandomGenerator());
-        if (binCount <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.EmpiricalDistribution_217");
+        if (ROR_less_equals(binCount, 0, "org.apache.commons.math3.random.EmpiricalDistribution.EmpiricalDistribution_217", _mut51910, _mut51911, _mut51912, _mut51913, _mut51914)) {
             throw new NotStrictlyPositiveException(binCount);
         }
         this.binCount = binCount;
@@ -243,7 +269,6 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
             throw new MathInternalError();
         }
         loaded = true;
-
     }
 
     /**
@@ -259,14 +284,14 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @throws ZeroException if URL contains no data
      */
     public void load(URL url) throws IOException, NullArgumentException, ZeroException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.load_261");
         MathUtils.checkNotNull(url);
         Charset charset = Charset.forName(FILE_CHARSET);
-        BufferedReader in =
-            new BufferedReader(new InputStreamReader(url.openStream(), charset));
+        BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream(), charset));
         try {
             DataAdapter da = new StreamDataAdapter(in);
             da.computeStats();
-            if (sampleStats.getN() == 0) {
+            if (ROR_equals(sampleStats.getN(), 0, "org.apache.commons.math3.random.EmpiricalDistribution.load_261", _mut51915, _mut51916, _mut51917, _mut51918, _mut51919)) {
                 throw new ZeroException(LocalizedFormats.URL_CONTAINS_NO_DATA, url);
             }
             // new adapter for the second pass
@@ -274,11 +299,10 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
             fillBinStats(new StreamDataAdapter(in));
             loaded = true;
         } finally {
-           try {
-               in.close();
-           } catch (IOException ex) { //NOPMD
-               // ignore
-           }
+            try {
+                in.close();
+            } catch (IOException ex) {
+            }
         }
     }
 
@@ -308,8 +332,7 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
         } finally {
             try {
                 in.close();
-            } catch (IOException ex) { //NOPMD
-                // ignore
+            } catch (IOException ex) {
             }
         }
     }
@@ -318,7 +341,7 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * Provides methods for computing <code>sampleStats</code> and
      * <code>beanStats</code> abstracting the source of data.
      */
-    private abstract class DataAdapter{
+    private abstract class DataAdapter {
 
         /**
          * Compute bin stats.
@@ -333,15 +356,16 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
          * @throws IOException if an error occurs computing sample stats
          */
         public abstract void computeStats() throws IOException;
-
     }
 
     /**
      * <code>DataAdapter</code> for data provided through some input stream
      */
-    private class StreamDataAdapter extends DataAdapter{
+    private class StreamDataAdapter extends DataAdapter {
 
-        /** Input stream providing access to the data */
+        /**
+         * Input stream providing access to the data
+         */
         private BufferedReader inputStream;
 
         /**
@@ -349,33 +373,38 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
          *
          * @param in BufferedReader input stream
          */
-        StreamDataAdapter(BufferedReader in){
+        StreamDataAdapter(BufferedReader in) {
             super();
             inputStream = in;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void computeBinStats() throws IOException {
             String str = null;
             double val = 0.0d;
             while ((str = inputStream.readLine()) != null) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeBinStats_358");
                 val = Double.parseDouble(str);
                 SummaryStatistics stats = binStats.get(findBin(val));
                 stats.addValue(val);
             }
-
             inputStream.close();
             inputStream = null;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void computeStats() throws IOException {
             String str = null;
             double val = 0.0;
             sampleStats = new SummaryStatistics();
             while ((str = inputStream.readLine()) != null) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeStats_373");
                 val = Double.parseDouble(str);
                 sampleStats.addValue(val);
             }
@@ -389,7 +418,9 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      */
     private class ArrayDataAdapter extends DataAdapter {
 
-        /** Array of input  data values */
+        /**
+         * Array of input  data values
+         */
         private double[] inputArray;
 
         /**
@@ -404,21 +435,28 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
             inputArray = in;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void computeStats() throws IOException {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeStats_408");
             sampleStats = new SummaryStatistics();
-            for (int i = 0; i < inputArray.length; i++) {
+            for (int i = 0; ROR_less(i, inputArray.length, "org.apache.commons.math3.random.EmpiricalDistribution.computeStats_408", _mut51920, _mut51921, _mut51922, _mut51923, _mut51924); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeStats_408");
                 sampleStats.addValue(inputArray[i]);
             }
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public void computeBinStats() throws IOException {
-            for (int i = 0; i < inputArray.length; i++) {
-                SummaryStatistics stats =
-                    binStats.get(findBin(inputArray[i]));
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeBinStats_417");
+            for (int i = 0; ROR_less(i, inputArray.length, "org.apache.commons.math3.random.EmpiricalDistribution.computeBinStats_417", _mut51925, _mut51926, _mut51927, _mut51928, _mut51929); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.computeBinStats_417");
+                SummaryStatistics stats = binStats.get(findBin(inputArray[i]));
                 stats.addValue(inputArray[i]);
             }
         }
@@ -430,34 +468,31 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @param da object providing access to the data
      * @throws IOException  if an IO error occurs
      */
-    private void fillBinStats(final DataAdapter da)
-        throws IOException {
+    private void fillBinStats(final DataAdapter da) throws IOException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433");
         // Set up grid
         min = sampleStats.getMin();
         max = sampleStats.getMax();
-        delta = (max - min)/((double) binCount);
-
+        delta = AOR_divide((AOR_minus(max, min, "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51930, _mut51931, _mut51932, _mut51933)), ((double) binCount), "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51934, _mut51935, _mut51936, _mut51937);
         // Initialize binStats ArrayList
         if (!binStats.isEmpty()) {
             binStats.clear();
         }
-        for (int i = 0; i < binCount; i++) {
+        for (int i = 0; ROR_less(i, binCount, "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51938, _mut51939, _mut51940, _mut51941, _mut51942); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433");
             SummaryStatistics stats = new SummaryStatistics();
-            binStats.add(i,stats);
+            binStats.add(i, stats);
         }
-
         // Filling data in binStats Array
         da.computeBinStats();
-
         // Assign upperBounds based on bin counts
         upperBounds = new double[binCount];
-        upperBounds[0] =
-        ((double) binStats.get(0).getN()) / (double) sampleStats.getN();
-        for (int i = 1; i < binCount-1; i++) {
-            upperBounds[i] = upperBounds[i-1] +
-            ((double) binStats.get(i).getN()) / (double) sampleStats.getN();
+        upperBounds[0] = AOR_divide(((double) binStats.get(0).getN()), (double) sampleStats.getN(), "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51943, _mut51944, _mut51945, _mut51946);
+        for (int i = 1; ROR_less(i, AOR_minus(binCount, 1, "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51959, _mut51960, _mut51961, _mut51962), "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51963, _mut51964, _mut51965, _mut51966, _mut51967); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433");
+            upperBounds[i] = AOR_plus(upperBounds[AOR_minus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51947, _mut51948, _mut51949, _mut51950)], AOR_divide(((double) binStats.get(i).getN()), (double) sampleStats.getN(), "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51951, _mut51952, _mut51953, _mut51954), "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51955, _mut51956, _mut51957, _mut51958);
         }
-        upperBounds[binCount-1] = 1.0d;
+        upperBounds[AOR_minus(binCount, 1, "org.apache.commons.math3.random.EmpiricalDistribution.fillBinStats_433", _mut51968, _mut51969, _mut51970, _mut51971)] = 1.0d;
     }
 
     /**
@@ -467,9 +502,8 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @return the index of the bin containing the value
      */
     private int findBin(double value) {
-        return FastMath.min(
-                FastMath.max((int) FastMath.ceil((value - min) / delta) - 1, 0),
-                binCount - 1);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.findBin_469");
+        return FastMath.min(FastMath.max(AOR_minus((int) FastMath.ceil(AOR_divide((AOR_minus(value, min, "org.apache.commons.math3.random.EmpiricalDistribution.findBin_469", _mut51972, _mut51973, _mut51974, _mut51975)), delta, "org.apache.commons.math3.random.EmpiricalDistribution.findBin_469", _mut51976, _mut51977, _mut51978, _mut51979)), 1, "org.apache.commons.math3.random.EmpiricalDistribution.findBin_469", _mut51980, _mut51981, _mut51982, _mut51983), 0), AOR_minus(binCount, 1, "org.apache.commons.math3.random.EmpiricalDistribution.findBin_469", _mut51984, _mut51985, _mut51986, _mut51987));
     }
 
     /**
@@ -480,11 +514,9 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @throws MathIllegalStateException if the distribution has not been loaded
      */
     public double getNextValue() throws MathIllegalStateException {
-
         if (!loaded) {
             throw new MathIllegalStateException(LocalizedFormats.DISTRIBUTION_NOT_LOADED);
         }
-
         return sample();
     }
 
@@ -534,11 +566,13 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @since 2.1
      */
     public double[] getUpperBounds() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536");
         double[] binUpperBounds = new double[binCount];
-        for (int i = 0; i < binCount - 1; i++) {
-            binUpperBounds[i] = min + delta * (i + 1);
+        for (int i = 0; ROR_less(i, AOR_minus(binCount, 1, "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut52000, _mut52001, _mut52002, _mut52003), "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut52004, _mut52005, _mut52006, _mut52007, _mut52008); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536");
+            binUpperBounds[i] = AOR_plus(min, AOR_multiply(delta, (AOR_plus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut51988, _mut51989, _mut51990, _mut51991)), "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut51992, _mut51993, _mut51994, _mut51995), "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut51996, _mut51997, _mut51998, _mut51999);
         }
-        binUpperBounds[binCount - 1] = max;
+        binUpperBounds[AOR_minus(binCount, 1, "org.apache.commons.math3.random.EmpiricalDistribution.getUpperBounds_536", _mut52009, _mut52010, _mut52011, _mut52012)] = max;
         return binUpperBounds;
     }
 
@@ -584,8 +618,6 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
         randomData.reSeed(seed);
     }
 
-    // Distribution methods ---------------------------
-
     /**
      * {@inheritDoc}
      * @since 3.1
@@ -610,12 +642,13 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @since 3.1
      */
     public double density(double x) {
-        if (x < min || x > max) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.density_612");
+        if ((_mut52023 ? (ROR_less(x, min, "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52013, _mut52014, _mut52015, _mut52016, _mut52017) && ROR_greater(x, max, "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52018, _mut52019, _mut52020, _mut52021, _mut52022)) : (ROR_less(x, min, "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52013, _mut52014, _mut52015, _mut52016, _mut52017) || ROR_greater(x, max, "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52018, _mut52019, _mut52020, _mut52021, _mut52022)))) {
             return 0d;
         }
         final int binIndex = findBin(x);
         final RealDistribution kernel = getKernel(binStats.get(binIndex));
-        return kernel.density(x) * pB(binIndex) / kB(binIndex);
+        return AOR_divide(AOR_multiply(kernel.density(x), pB(binIndex), "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52024, _mut52025, _mut52026, _mut52027), kB(binIndex), "org.apache.commons.math3.random.EmpiricalDistribution.density_612", _mut52028, _mut52029, _mut52030, _mut52031);
     }
 
     /**
@@ -634,9 +667,10 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @since 3.1
      */
     public double cumulativeProbability(double x) {
-        if (x < min) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636");
+        if (ROR_less(x, min, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52032, _mut52033, _mut52034, _mut52035, _mut52036)) {
             return 0d;
-        } else if (x >= max) {
+        } else if (ROR_greater_equals(x, max, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52037, _mut52038, _mut52039, _mut52040, _mut52041)) {
             return 1d;
         }
         final int binIndex = findBin(x);
@@ -644,18 +678,17 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
         final double pB = pB(binIndex);
         final RealDistribution kernel = k(x);
         if (kernel instanceof ConstantRealDistribution) {
-            if (x < kernel.getNumericalMean()) {
+            if (ROR_less(x, kernel.getNumericalMean(), "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52042, _mut52043, _mut52044, _mut52045, _mut52046)) {
                 return pBminus;
             } else {
-                return pBminus + pB;
+                return AOR_plus(pBminus, pB, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52047, _mut52048, _mut52049, _mut52050);
             }
         }
         final double[] binBounds = getUpperBounds();
         final double kB = kB(binIndex);
-        final double lower = binIndex == 0 ? min : binBounds[binIndex - 1];
-        final double withinBinCum =
-            (kernel.cumulativeProbability(x) -  kernel.cumulativeProbability(lower)) / kB;
-        return pBminus + pB * withinBinCum;
+        final double lower = ROR_equals(binIndex, 0, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52051, _mut52052, _mut52053, _mut52054, _mut52055) ? min : binBounds[AOR_minus(binIndex, 1, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52056, _mut52057, _mut52058, _mut52059)];
+        final double withinBinCum = AOR_divide((AOR_minus(kernel.cumulativeProbability(x), kernel.cumulativeProbability(lower), "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52060, _mut52061, _mut52062, _mut52063)), kB, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52064, _mut52065, _mut52066, _mut52067);
+        return AOR_plus(pBminus, AOR_multiply(pB, withinBinCum, "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52068, _mut52069, _mut52070, _mut52071), "org.apache.commons.math3.random.EmpiricalDistribution.cumulativeProbability_636", _mut52072, _mut52073, _mut52074, _mut52075);
     }
 
     /**
@@ -680,35 +713,33 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      */
     @Override
     public double inverseCumulativeProbability(final double p) throws OutOfRangeException {
-        if (p < 0.0 || p > 1.0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681");
+        if ((_mut52086 ? (ROR_less(p, 0.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52076, _mut52077, _mut52078, _mut52079, _mut52080) && ROR_greater(p, 1.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52081, _mut52082, _mut52083, _mut52084, _mut52085)) : (ROR_less(p, 0.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52076, _mut52077, _mut52078, _mut52079, _mut52080) || ROR_greater(p, 1.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52081, _mut52082, _mut52083, _mut52084, _mut52085)))) {
             throw new OutOfRangeException(p, 0, 1);
         }
-
-        if (p == 0.0) {
+        if (ROR_equals(p, 0.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52087, _mut52088, _mut52089, _mut52090, _mut52091)) {
             return getSupportLowerBound();
         }
-
-        if (p == 1.0) {
+        if (ROR_equals(p, 1.0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52092, _mut52093, _mut52094, _mut52095, _mut52096)) {
             return getSupportUpperBound();
         }
-
         int i = 0;
-        while (cumBinP(i) < p) {
+        while (ROR_less(cumBinP(i), p, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52097, _mut52098, _mut52099, _mut52100, _mut52101)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681");
             i++;
         }
-
         final RealDistribution kernel = getKernel(binStats.get(i));
         final double kB = kB(i);
         final double[] binBounds = getUpperBounds();
-        final double lower = i == 0 ? min : binBounds[i - 1];
+        final double lower = ROR_equals(i, 0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52102, _mut52103, _mut52104, _mut52105, _mut52106) ? min : binBounds[AOR_minus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52107, _mut52108, _mut52109, _mut52110)];
         final double kBminus = kernel.cumulativeProbability(lower);
         final double pB = pB(i);
         final double pBminus = pBminus(i);
-        final double pCrit = p - pBminus;
-        if (pCrit <= 0) {
+        final double pCrit = AOR_minus(p, pBminus, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52111, _mut52112, _mut52113, _mut52114);
+        if (ROR_less_equals(pCrit, 0, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52115, _mut52116, _mut52117, _mut52118, _mut52119)) {
             return lower;
         }
-        return kernel.inverseCumulativeProbability(kBminus + pCrit * kB / pB);
+        return kernel.inverseCumulativeProbability(AOR_plus(kBminus, AOR_divide(AOR_multiply(pCrit, kB, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52120, _mut52121, _mut52122, _mut52123), pB, "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52124, _mut52125, _mut52126, _mut52127), "org.apache.commons.math3.random.EmpiricalDistribution.inverseCumulativeProbability_681", _mut52128, _mut52129, _mut52130, _mut52131));
     }
 
     /**
@@ -716,7 +747,7 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @since 3.1
      */
     public double getNumericalMean() {
-       return sampleStats.getMean();
+        return sampleStats.getMean();
     }
 
     /**
@@ -732,7 +763,7 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @since 3.1
      */
     public double getSupportLowerBound() {
-       return min;
+        return min;
     }
 
     /**
@@ -783,8 +814,8 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @return the probability that selection begins in bin i
      */
     private double pB(int i) {
-        return i == 0 ? upperBounds[0] :
-            upperBounds[i] - upperBounds[i - 1];
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.pB_785");
+        return ROR_equals(i, 0, "org.apache.commons.math3.random.EmpiricalDistribution.pB_785", _mut52132, _mut52133, _mut52134, _mut52135, _mut52136) ? upperBounds[0] : AOR_minus(upperBounds[i], upperBounds[AOR_minus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.pB_785", _mut52137, _mut52138, _mut52139, _mut52140)], "org.apache.commons.math3.random.EmpiricalDistribution.pB_785", _mut52141, _mut52142, _mut52143, _mut52144);
     }
 
     /**
@@ -794,7 +825,8 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @return the probability that selection begins in a bin below bin i.
      */
     private double pBminus(int i) {
-        return i == 0 ? 0 : upperBounds[i - 1];
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.pBminus_796");
+        return ROR_equals(i, 0, "org.apache.commons.math3.random.EmpiricalDistribution.pBminus_796", _mut52145, _mut52146, _mut52147, _mut52148, _mut52149) ? 0 : upperBounds[AOR_minus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.pBminus_796", _mut52150, _mut52151, _mut52152, _mut52153)];
     }
 
     /**
@@ -806,10 +838,10 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      */
     @SuppressWarnings("deprecation")
     private double kB(int i) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.kB_807");
         final double[] binBounds = getUpperBounds();
         final RealDistribution kernel = getKernel(binStats.get(i));
-        return i == 0 ? kernel.cumulativeProbability(min, binBounds[0]) :
-            kernel.cumulativeProbability(binBounds[i - 1], binBounds[i]);
+        return ROR_equals(i, 0, "org.apache.commons.math3.random.EmpiricalDistribution.kB_807", _mut52154, _mut52155, _mut52156, _mut52157, _mut52158) ? kernel.cumulativeProbability(min, binBounds[0]) : kernel.cumulativeProbability(binBounds[AOR_minus(i, 1, "org.apache.commons.math3.random.EmpiricalDistribution.kB_807", _mut52159, _mut52160, _mut52161, _mut52162)], binBounds[i]);
     }
 
     /**
@@ -842,12 +874,11 @@ public class EmpiricalDistribution extends AbstractRealDistribution {
      * @return within-bin kernel parameterized by bStats
      */
     protected RealDistribution getKernel(SummaryStatistics bStats) {
-        if (bStats.getN() == 1 || bStats.getVariance() == 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.EmpiricalDistribution.getKernel_844");
+        if ((_mut52173 ? (ROR_equals(bStats.getN(), 1, "org.apache.commons.math3.random.EmpiricalDistribution.getKernel_844", _mut52163, _mut52164, _mut52165, _mut52166, _mut52167) && ROR_equals(bStats.getVariance(), 0, "org.apache.commons.math3.random.EmpiricalDistribution.getKernel_844", _mut52168, _mut52169, _mut52170, _mut52171, _mut52172)) : (ROR_equals(bStats.getN(), 1, "org.apache.commons.math3.random.EmpiricalDistribution.getKernel_844", _mut52163, _mut52164, _mut52165, _mut52166, _mut52167) || ROR_equals(bStats.getVariance(), 0, "org.apache.commons.math3.random.EmpiricalDistribution.getKernel_844", _mut52168, _mut52169, _mut52170, _mut52171, _mut52172)))) {
             return new ConstantRealDistribution(bStats.getMean());
         } else {
-            return new NormalDistribution(randomData.getRandomGenerator(),
-                bStats.getMean(), bStats.getStandardDeviation(),
-                NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
+            return new NormalDistribution(randomData.getRandomGenerator(), bStats.getMean(), bStats.getStandardDeviation(), NormalDistribution.DEFAULT_INVERSE_ABSOLUTE_ACCURACY);
         }
     }
 }

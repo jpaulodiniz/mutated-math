@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>Adapter extending bounded {@link MultivariateFunction} to an unbouded
@@ -64,17 +66,34 @@ import org.apache.commons.math3.util.MathUtils;
  *
  * @since 3.0
  */
-public class MultivariateFunctionPenaltyAdapter
-    implements MultivariateFunction {
-    /** Underlying bounded function. */
+public class MultivariateFunctionPenaltyAdapter implements MultivariateFunction {
+
+    @Conditional
+    public static boolean _mut60140 = false, _mut60141 = false, _mut60142 = false, _mut60143 = false, _mut60144 = false, _mut60145 = false, _mut60146 = false, _mut60147 = false, _mut60148 = false, _mut60149 = false, _mut60150 = false, _mut60151 = false, _mut60152 = false, _mut60153 = false, _mut60154 = false, _mut60155 = false, _mut60156 = false, _mut60157 = false, _mut60158 = false, _mut60159 = false, _mut60160 = false, _mut60161 = false, _mut60162 = false, _mut60163 = false, _mut60164 = false, _mut60165 = false, _mut60166 = false, _mut60167 = false, _mut60168 = false, _mut60169 = false, _mut60170 = false, _mut60171 = false, _mut60172 = false, _mut60173 = false, _mut60174 = false, _mut60175 = false, _mut60176 = false, _mut60177 = false, _mut60178 = false, _mut60179 = false, _mut60180 = false, _mut60181 = false, _mut60182 = false, _mut60183 = false, _mut60184 = false, _mut60185 = false, _mut60186 = false, _mut60187 = false, _mut60188 = false, _mut60189 = false, _mut60190 = false, _mut60191 = false, _mut60192 = false, _mut60193 = false, _mut60194 = false, _mut60195 = false, _mut60196 = false, _mut60197 = false, _mut60198 = false, _mut60199 = false, _mut60200 = false, _mut60201 = false, _mut60202 = false, _mut60203 = false, _mut60204 = false, _mut60205 = false, _mut60206 = false, _mut60207 = false, _mut60208 = false, _mut60209 = false, _mut60210 = false;
+
+    /**
+     * Underlying bounded function.
+     */
     private final MultivariateFunction bounded;
-    /** Lower bounds. */
+
+    /**
+     * Lower bounds.
+     */
     private final double[] lower;
-    /** Upper bounds. */
+
+    /**
+     * Upper bounds.
+     */
     private final double[] upper;
-    /** Penalty offset. */
+
+    /**
+     * Penalty offset.
+     */
     private final double offset;
-    /** Penalty scales. */
+
+    /**
+     * Penalty scales.
+     */
     private final double[] scale;
 
     /**
@@ -119,32 +138,30 @@ public class MultivariateFunctionPenaltyAdapter
      * scales are not consistent, either according to dimension or to bounadary
      * values
      */
-    public MultivariateFunctionPenaltyAdapter(final MultivariateFunction bounded,
-                                              final double[] lower, final double[] upper,
-                                              final double offset, final double[] scale) {
-
+    public MultivariateFunctionPenaltyAdapter(final MultivariateFunction bounded, final double[] lower, final double[] upper, final double offset, final double[] scale) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122");
         // safety checks
         MathUtils.checkNotNull(lower);
         MathUtils.checkNotNull(upper);
         MathUtils.checkNotNull(scale);
-        if (lower.length != upper.length) {
+        if (ROR_not_equals(lower.length, upper.length, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122", _mut60140, _mut60141, _mut60142, _mut60143, _mut60144)) {
             throw new DimensionMismatchException(lower.length, upper.length);
         }
-        if (lower.length != scale.length) {
+        if (ROR_not_equals(lower.length, scale.length, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122", _mut60145, _mut60146, _mut60147, _mut60148, _mut60149)) {
             throw new DimensionMismatchException(lower.length, scale.length);
         }
-        for (int i = 0; i < lower.length; ++i) {
+        for (int i = 0; ROR_less(i, lower.length, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122", _mut60155, _mut60156, _mut60157, _mut60158, _mut60159); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122");
             // note the following test is written in such a way it also fails for NaN
-            if (!(upper[i] >= lower[i])) {
+            if (!(ROR_greater_equals(upper[i], lower[i], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_122", _mut60150, _mut60151, _mut60152, _mut60153, _mut60154))) {
                 throw new NumberIsTooSmallException(upper[i], lower[i], true);
             }
         }
-
         this.bounded = bounded;
-        this.lower   = lower.clone();
-        this.upper   = upper.clone();
-        this.offset  = offset;
-        this.scale   = scale.clone();
+        this.lower = lower.clone();
+        this.upper = upper.clone();
+        this.offset = offset;
+        this.scale = scale.clone();
     }
 
     /**
@@ -159,27 +176,27 @@ public class MultivariateFunctionPenaltyAdapter
      * @return either underlying function value or penalty function value
      */
     public double value(double[] point) {
-
-        for (int i = 0; i < scale.length; ++i) {
-            if ((point[i] < lower[i]) || (point[i] > upper[i])) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161");
+        for (int i = 0; ROR_less(i, scale.length, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60206, _mut60207, _mut60208, _mut60209, _mut60210); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161");
+            if ((_mut60170 ? ((ROR_less(point[i], lower[i], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60160, _mut60161, _mut60162, _mut60163, _mut60164)) && (ROR_greater(point[i], upper[i], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60165, _mut60166, _mut60167, _mut60168, _mut60169))) : ((ROR_less(point[i], lower[i], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60160, _mut60161, _mut60162, _mut60163, _mut60164)) || (ROR_greater(point[i], upper[i], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60165, _mut60166, _mut60167, _mut60168, _mut60169))))) {
                 // bound violation starting at this component
                 double sum = 0;
-                for (int j = i; j < scale.length; ++j) {
+                for (int j = i; ROR_less(j, scale.length, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60197, _mut60198, _mut60199, _mut60200, _mut60201); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161");
                     final double overshoot;
-                    if (point[j] < lower[j]) {
-                        overshoot = scale[j] * (lower[j] - point[j]);
-                    } else if (point[j] > upper[j]) {
-                        overshoot = scale[j] * (point[j] - upper[j]);
+                    if (ROR_less(point[j], lower[j], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60171, _mut60172, _mut60173, _mut60174, _mut60175)) {
+                        overshoot = AOR_multiply(scale[j], (AOR_minus(lower[j], point[j], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60189, _mut60190, _mut60191, _mut60192)), "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60193, _mut60194, _mut60195, _mut60196);
+                    } else if (ROR_greater(point[j], upper[j], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60176, _mut60177, _mut60178, _mut60179, _mut60180)) {
+                        overshoot = AOR_multiply(scale[j], (AOR_minus(point[j], upper[j], "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60181, _mut60182, _mut60183, _mut60184)), "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60185, _mut60186, _mut60187, _mut60188);
                     } else {
                         overshoot = 0;
                     }
                     sum += FastMath.sqrt(overshoot);
                 }
-                return offset + sum;
+                return AOR_plus(offset, sum, "org.apache.commons.math3.optim.nonlinear.scalar.MultivariateFunctionPenaltyAdapter.value_161", _mut60202, _mut60203, _mut60204, _mut60205);
             }
         }
-
-        // all boundaries are fulfilled, we are in the expected
         // domain of the underlying function
         return bounded.value(point);
     }

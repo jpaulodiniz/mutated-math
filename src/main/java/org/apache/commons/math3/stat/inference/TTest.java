@@ -29,6 +29,8 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.stat.StatUtils;
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * An implementation for Student's t-tests.
@@ -53,9 +55,12 @@ import org.apache.commons.math3.util.FastMath;
  * {@link StatisticalSummary} instances.</p><p>
  * Uses commons-math {@link org.apache.commons.math3.distribution.TDistribution}
  * implementation to estimate exact p-values.</p>
- *
  */
 public class TTest {
+
+    @Conditional
+    public static boolean _mut5394 = false, _mut5395 = false, _mut5396 = false, _mut5397 = false, _mut5398 = false, _mut5399 = false, _mut5400 = false, _mut5401 = false, _mut5402 = false, _mut5403 = false, _mut5404 = false, _mut5405 = false, _mut5406 = false, _mut5407 = false, _mut5408 = false, _mut5409 = false, _mut5410 = false, _mut5411 = false, _mut5412 = false, _mut5413 = false, _mut5414 = false, _mut5415 = false, _mut5416 = false, _mut5417 = false, _mut5418 = false, _mut5419 = false, _mut5420 = false, _mut5421 = false, _mut5422 = false, _mut5423 = false, _mut5424 = false, _mut5425 = false, _mut5426 = false, _mut5427 = false, _mut5428 = false, _mut5429 = false, _mut5430 = false, _mut5431 = false, _mut5432 = false, _mut5433 = false, _mut5434 = false, _mut5435 = false, _mut5436 = false, _mut5437 = false, _mut5438 = false, _mut5439 = false, _mut5440 = false, _mut5441 = false, _mut5442 = false, _mut5443 = false, _mut5444 = false, _mut5445 = false, _mut5446 = false, _mut5447 = false, _mut5448 = false, _mut5449 = false, _mut5450 = false, _mut5451 = false, _mut5452 = false, _mut5453 = false, _mut5454 = false, _mut5455 = false, _mut5456 = false, _mut5457 = false, _mut5458 = false, _mut5459 = false, _mut5460 = false, _mut5461 = false, _mut5462 = false, _mut5463 = false, _mut5464 = false, _mut5465 = false, _mut5466 = false, _mut5467 = false, _mut5468 = false, _mut5469 = false, _mut5470 = false, _mut5471 = false, _mut5472 = false, _mut5473 = false, _mut5474 = false, _mut5475 = false, _mut5476 = false, _mut5477 = false, _mut5478 = false, _mut5479 = false, _mut5480 = false, _mut5481 = false, _mut5482 = false, _mut5483 = false, _mut5484 = false, _mut5485 = false, _mut5486 = false, _mut5487 = false, _mut5488 = false, _mut5489 = false, _mut5490 = false, _mut5491 = false, _mut5492 = false, _mut5493 = false, _mut5494 = false, _mut5495 = false, _mut5496 = false, _mut5497 = false, _mut5498 = false, _mut5499 = false, _mut5500 = false, _mut5501 = false, _mut5502 = false, _mut5503 = false, _mut5504 = false, _mut5505 = false, _mut5506 = false, _mut5507 = false, _mut5508 = false, _mut5509 = false, _mut5510 = false, _mut5511 = false, _mut5512 = false, _mut5513 = false, _mut5514 = false, _mut5515 = false, _mut5516 = false, _mut5517 = false, _mut5518 = false, _mut5519 = false, _mut5520 = false, _mut5521 = false, _mut5522 = false, _mut5523 = false, _mut5524 = false, _mut5525 = false, _mut5526 = false, _mut5527 = false, _mut5528 = false, _mut5529 = false, _mut5530 = false, _mut5531 = false, _mut5532 = false, _mut5533 = false, _mut5534 = false, _mut5535 = false, _mut5536 = false, _mut5537 = false, _mut5538 = false, _mut5539 = false, _mut5540 = false, _mut5541 = false, _mut5542 = false, _mut5543 = false, _mut5544 = false, _mut5545 = false, _mut5546 = false, _mut5547 = false, _mut5548 = false, _mut5549 = false, _mut5550 = false, _mut5551 = false, _mut5552 = false, _mut5553 = false, _mut5554 = false, _mut5555 = false, _mut5556 = false, _mut5557 = false, _mut5558 = false, _mut5559 = false, _mut5560 = false, _mut5561 = false, _mut5562 = false, _mut5563 = false, _mut5564 = false, _mut5565 = false, _mut5566 = false, _mut5567 = false, _mut5568 = false, _mut5569 = false, _mut5570 = false, _mut5571 = false, _mut5572 = false, _mut5573 = false, _mut5574 = false, _mut5575 = false, _mut5576 = false, _mut5577 = false, _mut5578 = false, _mut5579 = false, _mut5580 = false, _mut5581 = false, _mut5582 = false, _mut5583 = false, _mut5584 = false, _mut5585 = false, _mut5586 = false, _mut5587 = false, _mut5588 = false, _mut5589 = false, _mut5590 = false, _mut5591 = false, _mut5592 = false, _mut5593 = false, _mut5594 = false, _mut5595 = false, _mut5596 = false, _mut5597 = false, _mut5598 = false, _mut5599 = false, _mut5600 = false, _mut5601 = false, _mut5602 = false, _mut5603 = false, _mut5604 = false, _mut5605 = false, _mut5606 = false, _mut5607 = false, _mut5608 = false, _mut5609 = false, _mut5610 = false, _mut5611 = false, _mut5612 = false, _mut5613 = false, _mut5614 = false, _mut5615 = false, _mut5616 = false, _mut5617 = false, _mut5618 = false, _mut5619 = false, _mut5620 = false, _mut5621 = false, _mut5622 = false, _mut5623 = false, _mut5624 = false, _mut5625 = false, _mut5626 = false, _mut5627 = false, _mut5628 = false, _mut5629 = false, _mut5630 = false, _mut5631 = false, _mut5632 = false;
+
     /**
      * Computes a paired, 2-sample t-statistic based on the data in the input
      * arrays.  The t-statistic returned is equivalent to what would be returned by
@@ -77,17 +82,11 @@ public class TTest {
      * @throws DimensionMismatchException if the length of the arrays is not equal
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      */
-    public double pairedT(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NoDataException,
-        DimensionMismatchException, NumberIsTooSmallException {
-
+    public double pairedT(final double[] sample1, final double[] sample2) throws NullArgumentException, NoDataException, DimensionMismatchException, NumberIsTooSmallException {
         checkSampleData(sample1);
         checkSampleData(sample2);
         double meanDifference = StatUtils.meanDifference(sample1, sample2);
-        return t(meanDifference, 0,
-                 StatUtils.varianceDifference(sample1, sample2, meanDifference),
-                 sample1.length);
-
+        return t(meanDifference, 0, StatUtils.varianceDifference(sample1, sample2, meanDifference), sample1.length);
     }
 
     /**
@@ -126,15 +125,9 @@ public class TTest {
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double pairedTTest(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NoDataException, DimensionMismatchException,
-        NumberIsTooSmallException, MaxCountExceededException {
-
+    public double pairedTTest(final double[] sample1, final double[] sample2) throws NullArgumentException, NoDataException, DimensionMismatchException, NumberIsTooSmallException, MaxCountExceededException {
         double meanDifference = StatUtils.meanDifference(sample1, sample2);
-        return tTest(meanDifference, 0,
-                StatUtils.varianceDifference(sample1, sample2, meanDifference),
-                sample1.length);
-
+        return tTest(meanDifference, 0, StatUtils.varianceDifference(sample1, sample2, meanDifference), sample1.length);
     }
 
     /**
@@ -173,14 +166,10 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public boolean pairedTTest(final double[] sample1, final double[] sample2,
-                               final double alpha)
-        throws NullArgumentException, NoDataException, DimensionMismatchException,
-        NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
-
+    public boolean pairedTTest(final double[] sample1, final double[] sample2, final double alpha) throws NullArgumentException, NoDataException, DimensionMismatchException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.pairedTTest_176");
         checkSignificanceLevel(alpha);
-        return pairedTTest(sample1, sample2) < alpha;
-
+        return ROR_less(pairedTTest(sample1, sample2), alpha, "org.apache.commons.math3.stat.inference.TTest.pairedTTest_176", _mut5394, _mut5395, _mut5396, _mut5397, _mut5398);
     }
 
     /**
@@ -199,14 +188,10 @@ public class TTest {
      * @throws NullArgumentException if <code>observed</code> is <code>null</code>
      * @throws NumberIsTooSmallException if the length of <code>observed</code> is &lt; 2
      */
-    public double t(final double mu, final double[] observed)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double t(final double mu, final double[] observed) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(observed);
         // No try-catch or advertised exception because args have just been checked
-        return t(StatUtils.mean(observed), mu, StatUtils.variance(observed),
-                observed.length);
-
+        return t(StatUtils.mean(observed), mu, StatUtils.variance(observed), observed.length);
     }
 
     /**
@@ -226,13 +211,9 @@ public class TTest {
      * @throws NullArgumentException if <code>sampleStats</code> is <code>null</code>
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      */
-    public double t(final double mu, final StatisticalSummary sampleStats)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double t(final double mu, final StatisticalSummary sampleStats) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(sampleStats);
-        return t(sampleStats.getMean(), mu, sampleStats.getVariance(),
-                 sampleStats.getN());
-
+        return t(sampleStats.getMean(), mu, sampleStats.getVariance(), sampleStats.getN());
     }
 
     /**
@@ -269,16 +250,11 @@ public class TTest {
      * @throws NullArgumentException if the arrays are <code>null</code>
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      */
-    public double homoscedasticT(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double homoscedasticT(final double[] sample1, final double[] sample2) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(sample1);
         checkSampleData(sample2);
         // No try-catch or advertised exception because args have just been checked
-        return homoscedasticT(StatUtils.mean(sample1), StatUtils.mean(sample2),
-                              StatUtils.variance(sample1), StatUtils.variance(sample2),
-                              sample1.length, sample2.length);
-
+        return homoscedasticT(StatUtils.mean(sample1), StatUtils.mean(sample2), StatUtils.variance(sample1), StatUtils.variance(sample2), sample1.length, sample2.length);
     }
 
     /**
@@ -310,16 +286,11 @@ public class TTest {
      * @throws NullArgumentException if the arrays are <code>null</code>
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      */
-    public double t(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double t(final double[] sample1, final double[] sample2) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(sample1);
         checkSampleData(sample2);
         // No try-catch or advertised exception because args have just been checked
-        return t(StatUtils.mean(sample1), StatUtils.mean(sample2),
-                 StatUtils.variance(sample1), StatUtils.variance(sample2),
-                 sample1.length, sample2.length);
-
+        return t(StatUtils.mean(sample1), StatUtils.mean(sample2), StatUtils.variance(sample1), StatUtils.variance(sample2), sample1.length, sample2.length);
     }
 
     /**
@@ -332,7 +303,7 @@ public class TTest {
      * This statistic can be used to perform a two-sample t-test to compare
      * sample means.</p>
      * <p>
-      * The returned  t-statistic is</p>
+     * The returned  t-statistic is</p>
      * <p>
      * &nbsp;&nbsp; <code>  t = (m1 - m2) / sqrt(var1/n1 + var2/n2)</code>
      * </p><p>
@@ -354,16 +325,10 @@ public class TTest {
      * @throws NullArgumentException if the sample statistics are <code>null</code>
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      */
-    public double t(final StatisticalSummary sampleStats1,
-                    final StatisticalSummary sampleStats2)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double t(final StatisticalSummary sampleStats1, final StatisticalSummary sampleStats2) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(sampleStats1);
         checkSampleData(sampleStats2);
-        return t(sampleStats1.getMean(), sampleStats2.getMean(),
-                 sampleStats1.getVariance(), sampleStats2.getVariance(),
-                 sampleStats1.getN(), sampleStats2.getN());
-
+        return t(sampleStats1.getMean(), sampleStats2.getMean(), sampleStats1.getVariance(), sampleStats2.getVariance(), sampleStats1.getN(), sampleStats2.getN());
     }
 
     /**
@@ -402,16 +367,10 @@ public class TTest {
      * @throws NullArgumentException if the sample statistics are <code>null</code>
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      */
-    public double homoscedasticT(final StatisticalSummary sampleStats1,
-                                 final StatisticalSummary sampleStats2)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    public double homoscedasticT(final StatisticalSummary sampleStats1, final StatisticalSummary sampleStats2) throws NullArgumentException, NumberIsTooSmallException {
         checkSampleData(sampleStats1);
         checkSampleData(sampleStats2);
-        return homoscedasticT(sampleStats1.getMean(), sampleStats2.getMean(),
-                              sampleStats1.getVariance(), sampleStats2.getVariance(),
-                              sampleStats1.getN(), sampleStats2.getN());
-
+        return homoscedasticT(sampleStats1.getMean(), sampleStats2.getMean(), sampleStats1.getVariance(), sampleStats2.getVariance(), sampleStats1.getN(), sampleStats2.getN());
     }
 
     /**
@@ -441,15 +400,10 @@ public class TTest {
      * @throws NumberIsTooSmallException if the length of the array is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double tTest(final double mu, final double[] sample)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double tTest(final double mu, final double[] sample) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sample);
         // No try-catch or advertised exception because args have just been checked
-        return tTest(StatUtils.mean(sample), mu, StatUtils.variance(sample),
-                     sample.length);
-
+        return tTest(StatUtils.mean(sample), mu, StatUtils.variance(sample), sample.length);
     }
 
     /**
@@ -489,13 +443,10 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error computing the p-value
      */
-    public boolean tTest(final double mu, final double[] sample, final double alpha)
-        throws NullArgumentException, NumberIsTooSmallException,
-        OutOfRangeException, MaxCountExceededException {
-
+    public boolean tTest(final double mu, final double[] sample, final double alpha) throws NullArgumentException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_492");
         checkSignificanceLevel(alpha);
-        return tTest(mu, sample) < alpha;
-
+        return ROR_less(tTest(mu, sample), alpha, "org.apache.commons.math3.stat.inference.TTest.tTest_492", _mut5399, _mut5400, _mut5401, _mut5402, _mut5403);
     }
 
     /**
@@ -527,14 +478,9 @@ public class TTest {
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double tTest(final double mu, final StatisticalSummary sampleStats)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double tTest(final double mu, final StatisticalSummary sampleStats) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sampleStats);
-        return tTest(sampleStats.getMean(), mu, sampleStats.getVariance(),
-                     sampleStats.getN());
-
+        return tTest(sampleStats.getMean(), mu, sampleStats.getVariance(), sampleStats.getN());
     }
 
     /**
@@ -575,14 +521,10 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public boolean tTest(final double mu, final StatisticalSummary sampleStats,
-                         final double alpha)
-    throws NullArgumentException, NumberIsTooSmallException,
-    OutOfRangeException, MaxCountExceededException {
-
+    public boolean tTest(final double mu, final StatisticalSummary sampleStats, final double alpha) throws NullArgumentException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_578");
         checkSignificanceLevel(alpha);
-        return tTest(mu, sampleStats) < alpha;
-
+        return ROR_less(tTest(mu, sampleStats), alpha, "org.apache.commons.math3.stat.inference.TTest.tTest_578", _mut5404, _mut5405, _mut5406, _mut5407, _mut5408);
     }
 
     /**
@@ -622,17 +564,11 @@ public class TTest {
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double tTest(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double tTest(final double[] sample1, final double[] sample2) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sample1);
         checkSampleData(sample2);
         // No try-catch or advertised exception because args have just been checked
-        return tTest(StatUtils.mean(sample1), StatUtils.mean(sample2),
-                     StatUtils.variance(sample1), StatUtils.variance(sample2),
-                     sample1.length, sample2.length);
-
+        return tTest(StatUtils.mean(sample1), StatUtils.mean(sample2), StatUtils.variance(sample1), StatUtils.variance(sample2), sample1.length, sample2.length);
     }
 
     /**
@@ -669,19 +605,11 @@ public class TTest {
      * @throws NumberIsTooSmallException if the length of the arrays is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double homoscedasticTTest(final double[] sample1, final double[] sample2)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double homoscedasticTTest(final double[] sample1, final double[] sample2) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sample1);
         checkSampleData(sample2);
         // No try-catch or advertised exception because args have just been checked
-        return homoscedasticTTest(StatUtils.mean(sample1),
-                                  StatUtils.mean(sample2),
-                                  StatUtils.variance(sample1),
-                                  StatUtils.variance(sample2),
-                                  sample1.length, sample2.length);
-
+        return homoscedasticTTest(StatUtils.mean(sample1), StatUtils.mean(sample2), StatUtils.variance(sample1), StatUtils.variance(sample2), sample1.length, sample2.length);
     }
 
     /**
@@ -736,14 +664,10 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public boolean tTest(final double[] sample1, final double[] sample2,
-                         final double alpha)
-        throws NullArgumentException, NumberIsTooSmallException,
-        OutOfRangeException, MaxCountExceededException {
-
+    public boolean tTest(final double[] sample1, final double[] sample2, final double alpha) throws NullArgumentException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_739");
         checkSignificanceLevel(alpha);
-        return tTest(sample1, sample2) < alpha;
-
+        return ROR_less(tTest(sample1, sample2), alpha, "org.apache.commons.math3.stat.inference.TTest.tTest_739", _mut5409, _mut5410, _mut5411, _mut5412, _mut5413);
     }
 
     /**
@@ -799,14 +723,10 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public boolean homoscedasticTTest(final double[] sample1, final double[] sample2,
-                                      final double alpha)
-        throws NullArgumentException, NumberIsTooSmallException,
-        OutOfRangeException, MaxCountExceededException {
-
+    public boolean homoscedasticTTest(final double[] sample1, final double[] sample2, final double alpha) throws NullArgumentException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_802");
         checkSignificanceLevel(alpha);
-        return homoscedasticTTest(sample1, sample2) < alpha;
-
+        return ROR_less(homoscedasticTTest(sample1, sample2), alpha, "org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_802", _mut5414, _mut5415, _mut5416, _mut5417, _mut5418);
     }
 
     /**
@@ -844,17 +764,10 @@ public class TTest {
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double tTest(final StatisticalSummary sampleStats1,
-                        final StatisticalSummary sampleStats2)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double tTest(final StatisticalSummary sampleStats1, final StatisticalSummary sampleStats2) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sampleStats1);
         checkSampleData(sampleStats2);
-        return tTest(sampleStats1.getMean(), sampleStats2.getMean(),
-                     sampleStats1.getVariance(), sampleStats2.getVariance(),
-                     sampleStats1.getN(), sampleStats2.getN());
-
+        return tTest(sampleStats1.getMean(), sampleStats2.getMean(), sampleStats1.getVariance(), sampleStats2.getVariance(), sampleStats1.getN(), sampleStats2.getN());
     }
 
     /**
@@ -891,19 +804,10 @@ public class TTest {
      * @throws NumberIsTooSmallException if the number of samples is &lt; 2
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public double homoscedasticTTest(final StatisticalSummary sampleStats1,
-                                     final StatisticalSummary sampleStats2)
-        throws NullArgumentException, NumberIsTooSmallException,
-        MaxCountExceededException {
-
+    public double homoscedasticTTest(final StatisticalSummary sampleStats1, final StatisticalSummary sampleStats2) throws NullArgumentException, NumberIsTooSmallException, MaxCountExceededException {
         checkSampleData(sampleStats1);
         checkSampleData(sampleStats2);
-        return homoscedasticTTest(sampleStats1.getMean(),
-                                  sampleStats2.getMean(),
-                                  sampleStats1.getVariance(),
-                                  sampleStats2.getVariance(),
-                                  sampleStats1.getN(), sampleStats2.getN());
-
+        return homoscedasticTTest(sampleStats1.getMean(), sampleStats2.getMean(), sampleStats1.getVariance(), sampleStats2.getVariance(), sampleStats1.getN(), sampleStats2.getN());
     }
 
     /**
@@ -961,18 +865,11 @@ public class TTest {
      * @throws OutOfRangeException if <code>alpha</code> is not in the range (0, 0.5]
      * @throws MaxCountExceededException if an error occurs computing the p-value
      */
-    public boolean tTest(final StatisticalSummary sampleStats1,
-                         final StatisticalSummary sampleStats2,
-                         final double alpha)
-        throws NullArgumentException, NumberIsTooSmallException,
-        OutOfRangeException, MaxCountExceededException {
-
+    public boolean tTest(final StatisticalSummary sampleStats1, final StatisticalSummary sampleStats2, final double alpha) throws NullArgumentException, NumberIsTooSmallException, OutOfRangeException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_964");
         checkSignificanceLevel(alpha);
-        return tTest(sampleStats1, sampleStats2) < alpha;
-
+        return ROR_less(tTest(sampleStats1, sampleStats2), alpha, "org.apache.commons.math3.stat.inference.TTest.tTest_964", _mut5419, _mut5420, _mut5421, _mut5422, _mut5423);
     }
-
-    //----------------------------------------------- Protected methods
 
     /**
      * Computes approximate degrees of freedom for 2-sample t-test.
@@ -984,9 +881,8 @@ public class TTest {
      * @return approximate degrees of freedom
      */
     protected double df(double v1, double v2, double n1, double n2) {
-        return (((v1 / n1) + (v2 / n2)) * ((v1 / n1) + (v2 / n2))) /
-        ((v1 * v1) / (n1 * n1 * (n1 - 1d)) + (v2 * v2) /
-                (n2 * n2 * (n2 - 1d)));
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.df_986");
+        return AOR_divide((AOR_multiply((AOR_plus((AOR_divide(v1, n1, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5424, _mut5425, _mut5426, _mut5427)), (AOR_divide(v2, n2, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5428, _mut5429, _mut5430, _mut5431)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5432, _mut5433, _mut5434, _mut5435)), (AOR_plus((AOR_divide(v1, n1, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5436, _mut5437, _mut5438, _mut5439)), (AOR_divide(v2, n2, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5440, _mut5441, _mut5442, _mut5443)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5444, _mut5445, _mut5446, _mut5447)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5448, _mut5449, _mut5450, _mut5451)), (AOR_plus(AOR_divide((AOR_multiply(v1, v1, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5452, _mut5453, _mut5454, _mut5455)), (AOR_multiply(AOR_multiply(n1, n1, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5456, _mut5457, _mut5458, _mut5459), (AOR_minus(n1, 1d, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5460, _mut5461, _mut5462, _mut5463)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5464, _mut5465, _mut5466, _mut5467)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5468, _mut5469, _mut5470, _mut5471), AOR_divide((AOR_multiply(v2, v2, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5472, _mut5473, _mut5474, _mut5475)), (AOR_multiply(AOR_multiply(n2, n2, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5476, _mut5477, _mut5478, _mut5479), (AOR_minus(n2, 1d, "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5480, _mut5481, _mut5482, _mut5483)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5484, _mut5485, _mut5486, _mut5487)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5488, _mut5489, _mut5490, _mut5491), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5492, _mut5493, _mut5494, _mut5495)), "org.apache.commons.math3.stat.inference.TTest.df_986", _mut5496, _mut5497, _mut5498, _mut5499);
     }
 
     /**
@@ -998,9 +894,9 @@ public class TTest {
      * @param n sample n
      * @return t test statistic
      */
-    protected double t(final double m, final double mu,
-                       final double v, final double n) {
-        return (m - mu) / FastMath.sqrt(v / n);
+    protected double t(final double m, final double mu, final double v, final double n) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.t_1001");
+        return AOR_divide((AOR_minus(m, mu, "org.apache.commons.math3.stat.inference.TTest.t_1001", _mut5500, _mut5501, _mut5502, _mut5503)), FastMath.sqrt(AOR_divide(v, n, "org.apache.commons.math3.stat.inference.TTest.t_1001", _mut5504, _mut5505, _mut5506, _mut5507)), "org.apache.commons.math3.stat.inference.TTest.t_1001", _mut5508, _mut5509, _mut5510, _mut5511);
     }
 
     /**
@@ -1016,10 +912,9 @@ public class TTest {
      * @param n2 second sample n
      * @return t test statistic
      */
-    protected double t(final double m1, final double m2,
-                       final double v1, final double v2,
-                       final double n1, final double n2)  {
-        return (m1 - m2) / FastMath.sqrt((v1 / n1) + (v2 / n2));
+    protected double t(final double m1, final double m2, final double v1, final double v2, final double n1, final double n2) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.t_1019");
+        return AOR_divide((AOR_minus(m1, m2, "org.apache.commons.math3.stat.inference.TTest.t_1019", _mut5512, _mut5513, _mut5514, _mut5515)), FastMath.sqrt(AOR_plus((AOR_divide(v1, n1, "org.apache.commons.math3.stat.inference.TTest.t_1019", _mut5516, _mut5517, _mut5518, _mut5519)), (AOR_divide(v2, n2, "org.apache.commons.math3.stat.inference.TTest.t_1019", _mut5520, _mut5521, _mut5522, _mut5523)), "org.apache.commons.math3.stat.inference.TTest.t_1019", _mut5524, _mut5525, _mut5526, _mut5527)), "org.apache.commons.math3.stat.inference.TTest.t_1019", _mut5528, _mut5529, _mut5530, _mut5531);
     }
 
     /**
@@ -1034,11 +929,10 @@ public class TTest {
      * @param n2 second sample n
      * @return t test statistic
      */
-    protected double homoscedasticT(final double m1, final double m2,
-                                    final double v1, final double v2,
-                                    final double n1, final double n2)  {
-        final double pooledVariance = ((n1  - 1) * v1 + (n2 -1) * v2 ) / (n1 + n2 - 2);
-        return (m1 - m2) / FastMath.sqrt(pooledVariance * (1d / n1 + 1d / n2));
+    protected double homoscedasticT(final double m1, final double m2, final double v1, final double v2, final double n1, final double n2) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037");
+        final double pooledVariance = AOR_divide((AOR_plus(AOR_multiply((AOR_minus(n1, 1, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5532, _mut5533, _mut5534, _mut5535)), v1, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5536, _mut5537, _mut5538, _mut5539), AOR_multiply((AOR_minus(n2, 1, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5540, _mut5541, _mut5542, _mut5543)), v2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5544, _mut5545, _mut5546, _mut5547), "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5548, _mut5549, _mut5550, _mut5551)), (AOR_minus(AOR_plus(n1, n2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5552, _mut5553, _mut5554, _mut5555), 2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5556, _mut5557, _mut5558, _mut5559)), "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5560, _mut5561, _mut5562, _mut5563);
+        return AOR_divide((AOR_minus(m1, m2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5564, _mut5565, _mut5566, _mut5567)), FastMath.sqrt(AOR_multiply(pooledVariance, (AOR_plus(AOR_divide(1d, n1, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5568, _mut5569, _mut5570, _mut5571), AOR_divide(1d, n2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5572, _mut5573, _mut5574, _mut5575), "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5576, _mut5577, _mut5578, _mut5579)), "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5580, _mut5581, _mut5582, _mut5583)), "org.apache.commons.math3.stat.inference.TTest.homoscedasticT_1037", _mut5584, _mut5585, _mut5586, _mut5587);
     }
 
     /**
@@ -1052,15 +946,12 @@ public class TTest {
      * @throws MaxCountExceededException if an error occurs computing the p-value
      * @throws MathIllegalArgumentException if n is not greater than 1
      */
-    protected double tTest(final double m, final double mu,
-                           final double v, final double n)
-        throws MaxCountExceededException, MathIllegalArgumentException {
-
+    protected double tTest(final double m, final double mu, final double v, final double n) throws MaxCountExceededException, MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_1055");
         final double t = FastMath.abs(t(m, mu, v, n));
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
-        final TDistribution distribution = new TDistribution(null, n - 1);
-        return 2.0 * distribution.cumulativeProbability(-t);
-
+        final TDistribution distribution = new TDistribution(null, AOR_minus(n, 1, "org.apache.commons.math3.stat.inference.TTest.tTest_1055", _mut5588, _mut5589, _mut5590, _mut5591));
+        return AOR_multiply(2.0, distribution.cumulativeProbability(-t), "org.apache.commons.math3.stat.inference.TTest.tTest_1055", _mut5592, _mut5593, _mut5594, _mut5595);
     }
 
     /**
@@ -1080,17 +971,13 @@ public class TTest {
      * @throws NotStrictlyPositiveException if the estimated degrees of freedom is not
      * strictly positive
      */
-    protected double tTest(final double m1, final double m2,
-                           final double v1, final double v2,
-                           final double n1, final double n2)
-        throws MaxCountExceededException, NotStrictlyPositiveException {
-
+    protected double tTest(final double m1, final double m2, final double v1, final double v2, final double n1, final double n2) throws MaxCountExceededException, NotStrictlyPositiveException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.tTest_1083");
         final double t = FastMath.abs(t(m1, m2, v1, v2, n1, n2));
         final double degreesOfFreedom = df(v1, v2, n1, n2);
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
         final TDistribution distribution = new TDistribution(null, degreesOfFreedom);
-        return 2.0 * distribution.cumulativeProbability(-t);
-
+        return AOR_multiply(2.0, distribution.cumulativeProbability(-t), "org.apache.commons.math3.stat.inference.TTest.tTest_1083", _mut5596, _mut5597, _mut5598, _mut5599);
     }
 
     /**
@@ -1110,17 +997,13 @@ public class TTest {
      * @throws NotStrictlyPositiveException if the estimated degrees of freedom is not
      * strictly positive
      */
-    protected double homoscedasticTTest(double m1, double m2,
-                                        double v1, double v2,
-                                        double n1, double n2)
-        throws MaxCountExceededException, NotStrictlyPositiveException {
-
+    protected double homoscedasticTTest(double m1, double m2, double v1, double v2, double n1, double n2) throws MaxCountExceededException, NotStrictlyPositiveException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_1113");
         final double t = FastMath.abs(homoscedasticT(m1, m2, v1, v2, n1, n2));
-        final double degreesOfFreedom = n1 + n2 - 2;
+        final double degreesOfFreedom = AOR_minus(AOR_plus(n1, n2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_1113", _mut5600, _mut5601, _mut5602, _mut5603), 2, "org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_1113", _mut5604, _mut5605, _mut5606, _mut5607);
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
         final TDistribution distribution = new TDistribution(null, degreesOfFreedom);
-        return 2.0 * distribution.cumulativeProbability(-t);
-
+        return AOR_multiply(2.0, distribution.cumulativeProbability(-t), "org.apache.commons.math3.stat.inference.TTest.homoscedasticTTest_1113", _mut5608, _mut5609, _mut5610, _mut5611);
     }
 
     /**
@@ -1129,14 +1012,11 @@ public class TTest {
      * @param alpha significance level
      * @throws OutOfRangeException if the significance level is out of bounds.
      */
-    private void checkSignificanceLevel(final double alpha)
-        throws OutOfRangeException {
-
-        if (alpha <= 0 || alpha > 0.5) {
-            throw new OutOfRangeException(LocalizedFormats.SIGNIFICANCE_LEVEL,
-                                          alpha, 0.0, 0.5);
+    private void checkSignificanceLevel(final double alpha) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.checkSignificanceLevel_1132");
+        if ((_mut5622 ? (ROR_less_equals(alpha, 0, "org.apache.commons.math3.stat.inference.TTest.checkSignificanceLevel_1132", _mut5612, _mut5613, _mut5614, _mut5615, _mut5616) && ROR_greater(alpha, 0.5, "org.apache.commons.math3.stat.inference.TTest.checkSignificanceLevel_1132", _mut5617, _mut5618, _mut5619, _mut5620, _mut5621)) : (ROR_less_equals(alpha, 0, "org.apache.commons.math3.stat.inference.TTest.checkSignificanceLevel_1132", _mut5612, _mut5613, _mut5614, _mut5615, _mut5616) || ROR_greater(alpha, 0.5, "org.apache.commons.math3.stat.inference.TTest.checkSignificanceLevel_1132", _mut5617, _mut5618, _mut5619, _mut5620, _mut5621)))) {
+            throw new OutOfRangeException(LocalizedFormats.SIGNIFICANCE_LEVEL, alpha, 0.0, 0.5);
         }
-
     }
 
     /**
@@ -1146,18 +1026,14 @@ public class TTest {
      * @throws NullArgumentException if {@code data} is {@code null}.
      * @throws NumberIsTooSmallException if there is not enough sample data.
      */
-    private void checkSampleData(final double[] data)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    private void checkSampleData(final double[] data) throws NullArgumentException, NumberIsTooSmallException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.checkSampleData_1149");
         if (data == null) {
             throw new NullArgumentException();
         }
-        if (data.length < 2) {
-            throw new NumberIsTooSmallException(
-                    LocalizedFormats.INSUFFICIENT_DATA_FOR_T_STATISTIC,
-                    data.length, 2, true);
+        if (ROR_less(data.length, 2, "org.apache.commons.math3.stat.inference.TTest.checkSampleData_1149", _mut5623, _mut5624, _mut5625, _mut5626, _mut5627)) {
+            throw new NumberIsTooSmallException(LocalizedFormats.INSUFFICIENT_DATA_FOR_T_STATISTIC, data.length, 2, true);
         }
-
     }
 
     /**
@@ -1167,18 +1043,13 @@ public class TTest {
      * @throws NullArgumentException if {@code data} is {@code null}.
      * @throws NumberIsTooSmallException if there is not enough sample data.
      */
-    private void checkSampleData(final StatisticalSummary stat)
-        throws NullArgumentException, NumberIsTooSmallException {
-
+    private void checkSampleData(final StatisticalSummary stat) throws NullArgumentException, NumberIsTooSmallException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.TTest.checkSampleData_1170");
         if (stat == null) {
             throw new NullArgumentException();
         }
-        if (stat.getN() < 2) {
-            throw new NumberIsTooSmallException(
-                    LocalizedFormats.INSUFFICIENT_DATA_FOR_T_STATISTIC,
-                    stat.getN(), 2, true);
+        if (ROR_less(stat.getN(), 2, "org.apache.commons.math3.stat.inference.TTest.checkSampleData_1170", _mut5628, _mut5629, _mut5630, _mut5631, _mut5632)) {
+            throw new NumberIsTooSmallException(LocalizedFormats.INSUFFICIENT_DATA_FOR_T_STATISTIC, stat.getN(), 2, true);
         }
-
     }
-
 }

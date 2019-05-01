@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.geometry.euclidean.twod;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.geometry.Vector;
 import org.apache.commons.math3.geometry.VectorFormat;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a 2D vector in components list format "{x; y}".
@@ -45,14 +45,16 @@ import org.apache.commons.math3.util.CompositeFormat;
  */
 public class Vector2DFormat extends VectorFormat<Euclidean2D> {
 
+    @Conditional
+    public static boolean _mut85293 = false, _mut85294 = false, _mut85295 = false, _mut85296 = false, _mut85297 = false;
+
     /**
      * Create an instance with default settings.
      * <p>The instance uses the default prefix, suffix and separator:
      * "{", "}", and "; " and the default number format for components.</p>
      */
     public Vector2DFormat() {
-        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR,
-              CompositeFormat.getDefaultNumberFormat());
+        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -69,8 +71,7 @@ public class Vector2DFormat extends VectorFormat<Euclidean2D> {
      * @param suffix suffix to use instead of the default "}"
      * @param separator separator to use instead of the default "; "
      */
-    public Vector2DFormat(final String prefix, final String suffix,
-                         final String separator) {
+    public Vector2DFormat(final String prefix, final String suffix, final String separator) {
         super(prefix, suffix, separator, CompositeFormat.getDefaultNumberFormat());
     }
 
@@ -82,8 +83,7 @@ public class Vector2DFormat extends VectorFormat<Euclidean2D> {
      * @param separator separator to use instead of the default "; "
      * @param format the custom format for components.
      */
-    public Vector2DFormat(final String prefix, final String suffix,
-                         final String separator, final NumberFormat format) {
+    public Vector2DFormat(final String prefix, final String suffix, final String separator, final NumberFormat format) {
         super(prefix, suffix, separator, format);
     }
 
@@ -104,28 +104,32 @@ public class Vector2DFormat extends VectorFormat<Euclidean2D> {
         return new Vector2DFormat(CompositeFormat.getDefaultNumberFormat(locale));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public StringBuffer format(final Vector<Euclidean2D> vector, final StringBuffer toAppendTo,
-                               final FieldPosition pos) {
+    public StringBuffer format(final Vector<Euclidean2D> vector, final StringBuffer toAppendTo, final FieldPosition pos) {
         final Vector2D p2 = (Vector2D) vector;
         return format(toAppendTo, pos, p2.getX(), p2.getY());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector2D parse(final String source) throws MathParseException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.euclidean.twod.Vector2DFormat.parse_116");
         ParsePosition parsePosition = new ParsePosition(0);
         Vector2D result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         Vector2D.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.geometry.euclidean.twod.Vector2DFormat.parse_116", _mut85293, _mut85294, _mut85295, _mut85296, _mut85297)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), Vector2D.class);
         }
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector2D parse(final String source, final ParsePosition pos) {
         final double[] coordinates = parseCoordinates(2, source, pos);
@@ -134,5 +138,4 @@ public class Vector2DFormat extends VectorFormat<Euclidean2D> {
         }
         return new Vector2D(coordinates[0], coordinates[1]);
     }
-
 }

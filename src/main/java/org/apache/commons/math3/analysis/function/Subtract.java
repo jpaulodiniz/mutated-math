@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.function;
 
 import org.apache.commons.math3.analysis.BivariateFunction;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Subtract the second operand from the first.
@@ -25,8 +26,15 @@ import org.apache.commons.math3.analysis.BivariateFunction;
  * @since 3.0
  */
 public class Subtract implements BivariateFunction {
-    /** {@inheritDoc} */
+
+    @Conditional
+    public static boolean _mut91946 = false, _mut91947 = false, _mut91948 = false, _mut91949 = false;
+
+    /**
+     * {@inheritDoc}
+     */
     public double value(double x, double y) {
-        return x - y;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.Subtract.value_29");
+        return AOR_minus(x, y, "org.apache.commons.math3.analysis.function.Subtract.value_29", _mut91946, _mut91947, _mut91948, _mut91949);
     }
 }

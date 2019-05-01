@@ -21,7 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathArithmeticException;
 import org.apache.commons.math3.exception.NotANumberException;
@@ -31,6 +30,8 @@ import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
 import org.apache.commons.math3.util.Pair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>Implementation of a real-valued {@link EnumeratedDistribution}.
@@ -44,7 +45,12 @@ import org.apache.commons.math3.util.Pair;
  */
 public class EnumeratedRealDistribution extends AbstractRealDistribution {
 
-    /** Serializable UID. */
+    @Conditional
+    public static boolean _mut55359 = false, _mut55360 = false, _mut55361 = false, _mut55362 = false, _mut55363 = false, _mut55364 = false, _mut55365 = false, _mut55366 = false, _mut55367 = false, _mut55368 = false, _mut55369 = false, _mut55370 = false, _mut55371 = false, _mut55372 = false, _mut55373 = false, _mut55374 = false, _mut55375 = false, _mut55376 = false, _mut55377 = false, _mut55378 = false, _mut55379 = false, _mut55380 = false, _mut55381 = false, _mut55382 = false, _mut55383 = false, _mut55384 = false, _mut55385 = false, _mut55386 = false, _mut55387 = false, _mut55388 = false, _mut55389 = false, _mut55390 = false, _mut55391 = false, _mut55392 = false, _mut55393 = false, _mut55394 = false, _mut55395 = false, _mut55396 = false, _mut55397 = false, _mut55398 = false, _mut55399 = false, _mut55400 = false, _mut55401 = false, _mut55402 = false, _mut55403 = false, _mut55404 = false, _mut55405 = false, _mut55406 = false, _mut55407 = false, _mut55408 = false, _mut55409 = false, _mut55410 = false, _mut55411 = false, _mut55412 = false, _mut55413 = false, _mut55414 = false, _mut55415 = false, _mut55416 = false, _mut55417 = false, _mut55418 = false, _mut55419 = false, _mut55420 = false, _mut55421 = false, _mut55422 = false, _mut55423 = false, _mut55424 = false, _mut55425 = false, _mut55426 = false, _mut55427 = false, _mut55428 = false, _mut55429 = false, _mut55430 = false, _mut55431 = false, _mut55432 = false, _mut55433 = false, _mut55434 = false, _mut55435 = false, _mut55436 = false, _mut55437 = false, _mut55438 = false, _mut55439 = false, _mut55440 = false, _mut55441 = false, _mut55442 = false, _mut55443 = false, _mut55444 = false;
+
+    /**
+     * Serializable UID.
+     */
     private static final long serialVersionUID = 20130308L;
 
     /**
@@ -73,9 +79,7 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @throws NotANumberException if any of the probabilities are NaN.
      * @throws MathArithmeticException all of the probabilities are 0.
      */
-    public EnumeratedRealDistribution(final double[] singletons, final double[] probabilities)
-    throws DimensionMismatchException, NotPositiveException, MathArithmeticException,
-           NotFiniteNumberException, NotANumberException {
+    public EnumeratedRealDistribution(final double[] singletons, final double[] probabilities) throws DimensionMismatchException, NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
         this(new Well19937c(), singletons, probabilities);
     }
 
@@ -93,14 +97,9 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @throws NotANumberException if any of the probabilities are NaN.
      * @throws MathArithmeticException all of the probabilities are 0.
      */
-    public EnumeratedRealDistribution(final RandomGenerator rng,
-                                    final double[] singletons, final double[] probabilities)
-        throws DimensionMismatchException, NotPositiveException, MathArithmeticException,
-               NotFiniteNumberException, NotANumberException {
+    public EnumeratedRealDistribution(final RandomGenerator rng, final double[] singletons, final double[] probabilities) throws DimensionMismatchException, NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
         super(rng);
-
-        innerDistribution = new EnumeratedDistribution<Double>(
-                rng, createDistribution(singletons, probabilities));
+        innerDistribution = new EnumeratedDistribution<Double>(rng, createDistribution(singletons, probabilities));
     }
 
     /**
@@ -113,8 +112,10 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      */
     public EnumeratedRealDistribution(final RandomGenerator rng, final double[] data) {
         super(rng);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.EnumeratedRealDistribution_114");
         final Map<Double, Integer> dataMap = new HashMap<Double, Integer>();
         for (double value : data) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.EnumeratedRealDistribution_114");
             Integer count = dataMap.get(value);
             if (count == null) {
                 count = 0;
@@ -127,8 +128,9 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
         final double[] probabilities = new double[massPoints];
         int index = 0;
         for (Entry<Double, Integer> entry : dataMap.entrySet()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.EnumeratedRealDistribution_114");
             values[index] = entry.getKey();
-            probabilities[index] = entry.getValue().intValue() / denom;
+            probabilities[index] = AOR_divide(entry.getValue().intValue(), denom, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.EnumeratedRealDistribution_114", _mut55359, _mut55360, _mut55361, _mut55362);
             index++;
         }
         innerDistribution = new EnumeratedDistribution<Double>(rng, createDistribution(values, probabilities));
@@ -145,6 +147,7 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
     public EnumeratedRealDistribution(final double[] data) {
         this(new Well19937c(), data);
     }
+
     /**
      * Create the list of Pairs representing the distribution from singletons and probabilities.
      *
@@ -152,18 +155,17 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @param probabilities probabilities
      * @return list of value/probability pairs
      */
-    private static List<Pair<Double, Double>>  createDistribution(double[] singletons, double[] probabilities) {
-        if (singletons.length != probabilities.length) {
+    private static List<Pair<Double, Double>> createDistribution(double[] singletons, double[] probabilities) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.createDistribution_155");
+        if (ROR_not_equals(singletons.length, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.createDistribution_155", _mut55363, _mut55364, _mut55365, _mut55366, _mut55367)) {
             throw new DimensionMismatchException(probabilities.length, singletons.length);
         }
-
         final List<Pair<Double, Double>> samples = new ArrayList<Pair<Double, Double>>(singletons.length);
-
-        for (int i = 0; i < singletons.length; i++) {
+        for (int i = 0; ROR_less(i, singletons.length, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.createDistribution_155", _mut55368, _mut55369, _mut55370, _mut55371, _mut55372); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.createDistribution_155");
             samples.add(new Pair<Double, Double>(singletons[i], probabilities[i]));
         }
         return samples;
-
     }
 
     /**
@@ -191,14 +193,14 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * {@inheritDoc}
      */
     public double cumulativeProbability(final double x) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.cumulativeProbability_193");
         double probability = 0;
-
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            if (sample.getKey() <= x) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.cumulativeProbability_193");
+            if (ROR_less_equals(sample.getKey(), x, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.cumulativeProbability_193", _mut55373, _mut55374, _mut55375, _mut55376, _mut55377)) {
                 probability += sample.getValue();
             }
         }
-
         return probability;
     }
 
@@ -207,25 +209,23 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      */
     @Override
     public double inverseCumulativeProbability(final double p) throws OutOfRangeException {
-        if (p < 0.0 || p > 1.0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208");
+        if ((_mut55388 ? (ROR_less(p, 0.0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55378, _mut55379, _mut55380, _mut55381, _mut55382) && ROR_greater(p, 1.0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55383, _mut55384, _mut55385, _mut55386, _mut55387)) : (ROR_less(p, 0.0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55378, _mut55379, _mut55380, _mut55381, _mut55382) || ROR_greater(p, 1.0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55383, _mut55384, _mut55385, _mut55386, _mut55387)))) {
             throw new OutOfRangeException(p, 0, 1);
         }
-
         double probability = 0;
         double x = getSupportLowerBound();
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            if (sample.getValue() == 0.0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208");
+            if (ROR_equals(sample.getValue(), 0.0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55389, _mut55390, _mut55391, _mut55392, _mut55393)) {
                 continue;
             }
-
             probability += sample.getValue();
             x = sample.getKey();
-
-            if (probability >= p) {
+            if (ROR_greater_equals(probability, p, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.inverseCumulativeProbability_208", _mut55394, _mut55395, _mut55396, _mut55397, _mut55398)) {
                 break;
             }
         }
-
         return x;
     }
 
@@ -235,12 +235,12 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @return {@code sum(singletons[i] * probabilities[i])}
      */
     public double getNumericalMean() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalMean_237");
         double mean = 0;
-
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            mean += sample.getValue() * sample.getKey();
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalMean_237");
+            mean += AOR_multiply(sample.getValue(), sample.getKey(), "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalMean_237", _mut55399, _mut55400, _mut55401, _mut55402);
         }
-
         return mean;
     }
 
@@ -250,15 +250,15 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @return {@code sum((singletons[i] - mean) ^ 2 * probabilities[i])}
      */
     public double getNumericalVariance() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252");
         double mean = 0;
         double meanOfSquares = 0;
-
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            mean += sample.getValue() * sample.getKey();
-            meanOfSquares += sample.getValue() * sample.getKey() * sample.getKey();
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252");
+            mean += AOR_multiply(sample.getValue(), sample.getKey(), "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252", _mut55403, _mut55404, _mut55405, _mut55406);
+            meanOfSquares += AOR_multiply(AOR_multiply(sample.getValue(), sample.getKey(), "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252", _mut55407, _mut55408, _mut55409, _mut55410), sample.getKey(), "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252", _mut55411, _mut55412, _mut55413, _mut55414);
         }
-
-        return meanOfSquares - mean * mean;
+        return AOR_minus(meanOfSquares, AOR_multiply(mean, mean, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252", _mut55415, _mut55416, _mut55417, _mut55418), "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getNumericalVariance_252", _mut55419, _mut55420, _mut55421, _mut55422);
     }
 
     /**
@@ -269,13 +269,14 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @return the lowest value with non-zero probability.
      */
     public double getSupportLowerBound() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271");
         double min = Double.POSITIVE_INFINITY;
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            if (sample.getKey() < min && sample.getValue() > 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271");
+            if ((_mut55433 ? (ROR_less(sample.getKey(), min, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271", _mut55423, _mut55424, _mut55425, _mut55426, _mut55427) || ROR_greater(sample.getValue(), 0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271", _mut55428, _mut55429, _mut55430, _mut55431, _mut55432)) : (ROR_less(sample.getKey(), min, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271", _mut55423, _mut55424, _mut55425, _mut55426, _mut55427) && ROR_greater(sample.getValue(), 0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportLowerBound_271", _mut55428, _mut55429, _mut55430, _mut55431, _mut55432)))) {
                 min = sample.getKey();
             }
         }
-
         return min;
     }
 
@@ -287,13 +288,14 @@ public class EnumeratedRealDistribution extends AbstractRealDistribution {
      * @return the highest value with non-zero probability.
      */
     public double getSupportUpperBound() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289");
         double max = Double.NEGATIVE_INFINITY;
         for (final Pair<Double, Double> sample : innerDistribution.getPmf()) {
-            if (sample.getKey() > max && sample.getValue() > 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289");
+            if ((_mut55444 ? (ROR_greater(sample.getKey(), max, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289", _mut55434, _mut55435, _mut55436, _mut55437, _mut55438) || ROR_greater(sample.getValue(), 0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289", _mut55439, _mut55440, _mut55441, _mut55442, _mut55443)) : (ROR_greater(sample.getKey(), max, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289", _mut55434, _mut55435, _mut55436, _mut55437, _mut55438) && ROR_greater(sample.getValue(), 0, "org.apache.commons.math3.distribution.EnumeratedRealDistribution.getSupportUpperBound_289", _mut55439, _mut55440, _mut55441, _mut55442, _mut55443)))) {
                 max = sample.getKey();
             }
         }
-
         return max;
     }
 

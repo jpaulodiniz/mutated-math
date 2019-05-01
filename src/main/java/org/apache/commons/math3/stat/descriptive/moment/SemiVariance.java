@@ -14,15 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>Computes the semivariance of a set of values with respect to a given cutoff value.
@@ -53,6 +53,9 @@ import org.apache.commons.math3.util.MathUtils;
  */
 public class SemiVariance extends AbstractUnivariateStatistic implements Serializable {
 
+    @Conditional
+    public static boolean _mut3373 = false, _mut3374 = false, _mut3375 = false, _mut3376 = false, _mut3377 = false, _mut3378 = false, _mut3379 = false, _mut3380 = false, _mut3381 = false, _mut3382 = false, _mut3383 = false, _mut3384 = false, _mut3385 = false, _mut3386 = false, _mut3387 = false, _mut3388 = false, _mut3389 = false, _mut3390 = false, _mut3391 = false, _mut3392 = false, _mut3393 = false, _mut3394 = false, _mut3395 = false, _mut3396 = false, _mut3397 = false, _mut3398 = false, _mut3399 = false, _mut3400 = false, _mut3401 = false, _mut3402 = false, _mut3403 = false, _mut3404 = false, _mut3405 = false, _mut3406 = false, _mut3407 = false, _mut3408 = false, _mut3409 = false, _mut3410 = false, _mut3411 = false, _mut3412 = false;
+
     /**
      * The UPSIDE Direction is used to specify that the observations above the
      * cutoff point will be used to calculate SemiVariance.
@@ -65,7 +68,9 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
      */
     public static final Direction DOWNSIDE_VARIANCE = Direction.DOWNSIDE;
 
-    /** Serializable version identifier */
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -2653430366886024994L;
 
     /**
@@ -98,7 +103,6 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
         this.biasCorrected = biasCorrected;
     }
 
-
     /**
      * Constructs a SemiVariance with the specified <code>Direction</code> property
      * and default (true) <code>biasCorrected</code> property
@@ -109,7 +113,6 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
     public SemiVariance(final Direction direction) {
         this.varianceDirection = direction;
     }
-
 
     /**
      * Constructs a SemiVariance with the specified <code>isBiasCorrected</code>
@@ -127,7 +130,6 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
         this.varianceDirection = direction;
     }
 
-
     /**
      * Copy constructor, creates a new {@code SemiVariance} identical
      * to the {@code original}
@@ -138,7 +140,6 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
     public SemiVariance(final SemiVariance original) throws NullArgumentException {
         copy(original, this);
     }
-
 
     /**
      * {@inheritDoc}
@@ -151,7 +152,6 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
         return result;
     }
 
-
     /**
      * Copies source to dest.
      * <p>Neither source nor dest can be null.</p>
@@ -160,8 +160,7 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
      * @param dest SemiVariance to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(final SemiVariance source, SemiVariance dest)
-        throws NullArgumentException {
+    public static void copy(final SemiVariance source, SemiVariance dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());
@@ -170,121 +169,110 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
     }
 
     /**
-      * <p>Returns the {@link SemiVariance} of the designated values against the mean, using
-      * instance properties varianceDirection and biasCorrection.</p>
-      *
-      * <p>Returns <code>NaN</code> if the array is empty and throws
-      * <code>IllegalArgumentException</code> if the array is null.</p>
-      *
-      * @param values the input array
-      * @param start index of the first array element to include
-      * @param length the number of elements to include
-      * @return the SemiVariance
-      * @throws MathIllegalArgumentException if the parameters are not valid
-      *
-      */
-      @Override
-      public double evaluate(final double[] values, final int start, final int length)
-      throws MathIllegalArgumentException {
+     * <p>Returns the {@link SemiVariance} of the designated values against the mean, using
+     * instance properties varianceDirection and biasCorrection.</p>
+     *
+     * <p>Returns <code>NaN</code> if the array is empty and throws
+     * <code>IllegalArgumentException</code> if the array is null.</p>
+     *
+     * @param values the input array
+     * @param start index of the first array element to include
+     * @param length the number of elements to include
+     * @return the SemiVariance
+     * @throws MathIllegalArgumentException if the parameters are not valid
+     */
+    @Override
+    public double evaluate(final double[] values, final int start, final int length) throws MathIllegalArgumentException {
         double m = (new Mean()).evaluate(values, start, length);
         return evaluate(values, m, varianceDirection, biasCorrected, 0, values.length);
-      }
+    }
 
+    /**
+     * This method calculates {@link SemiVariance} for the entire array against the mean, using
+     * the current value of the biasCorrection instance property.
+     *
+     * @param values the input array
+     * @param direction the {@link Direction} of the semivariance
+     * @return the SemiVariance
+     * @throws MathIllegalArgumentException if values is null
+     */
+    public double evaluate(final double[] values, Direction direction) throws MathIllegalArgumentException {
+        double m = (new Mean()).evaluate(values);
+        return evaluate(values, m, direction, biasCorrected, 0, values.length);
+    }
 
-      /**
-       * This method calculates {@link SemiVariance} for the entire array against the mean, using
-       * the current value of the biasCorrection instance property.
-       *
-       * @param values the input array
-       * @param direction the {@link Direction} of the semivariance
-       * @return the SemiVariance
-       * @throws MathIllegalArgumentException if values is null
-       *
-       */
-      public double evaluate(final double[] values, Direction direction)
-      throws MathIllegalArgumentException {
-          double m = (new Mean()).evaluate(values);
-          return evaluate (values, m, direction, biasCorrected, 0, values.length);
-      }
+    /**
+     * <p>Returns the {@link SemiVariance} of the designated values against the cutoff, using
+     * instance properties variancDirection and biasCorrection.</p>
+     *
+     * <p>Returns <code>NaN</code> if the array is empty and throws
+     * <code>MathIllegalArgumentException</code> if the array is null.</p>
+     *
+     * @param values the input array
+     * @param cutoff the reference point
+     * @return the SemiVariance
+     * @throws MathIllegalArgumentException if values is null
+     */
+    public double evaluate(final double[] values, final double cutoff) throws MathIllegalArgumentException {
+        return evaluate(values, cutoff, varianceDirection, biasCorrected, 0, values.length);
+    }
 
-      /**
-       * <p>Returns the {@link SemiVariance} of the designated values against the cutoff, using
-       * instance properties variancDirection and biasCorrection.</p>
-       *
-       * <p>Returns <code>NaN</code> if the array is empty and throws
-       * <code>MathIllegalArgumentException</code> if the array is null.</p>
-       *
-       * @param values the input array
-       * @param cutoff the reference point
-       * @return the SemiVariance
-       * @throws MathIllegalArgumentException if values is null
-       */
-      public double evaluate(final double[] values, final double cutoff)
-      throws MathIllegalArgumentException {
-          return evaluate(values, cutoff, varianceDirection, biasCorrected, 0, values.length);
-      }
+    /**
+     * <p>Returns the {@link SemiVariance} of the designated values against the cutoff in the
+     * given direction, using the current value of the biasCorrection instance property.</p>
+     *
+     * <p>Returns <code>NaN</code> if the array is empty and throws
+     * <code>MathIllegalArgumentException</code> if the array is null.</p>
+     *
+     * @param values the input array
+     * @param cutoff the reference point
+     * @param direction the {@link Direction} of the semivariance
+     * @return the SemiVariance
+     * @throws MathIllegalArgumentException if values is null
+     */
+    public double evaluate(final double[] values, final double cutoff, final Direction direction) throws MathIllegalArgumentException {
+        return evaluate(values, cutoff, direction, biasCorrected, 0, values.length);
+    }
 
-      /**
-       * <p>Returns the {@link SemiVariance} of the designated values against the cutoff in the
-       * given direction, using the current value of the biasCorrection instance property.</p>
-       *
-       * <p>Returns <code>NaN</code> if the array is empty and throws
-       * <code>MathIllegalArgumentException</code> if the array is null.</p>
-       *
-       * @param values the input array
-       * @param cutoff the reference point
-       * @param direction the {@link Direction} of the semivariance
-       * @return the SemiVariance
-       * @throws MathIllegalArgumentException if values is null
-       */
-      public double evaluate(final double[] values, final double cutoff, final Direction direction)
-      throws MathIllegalArgumentException {
-          return evaluate(values, cutoff, direction, biasCorrected, 0, values.length);
-      }
-
-
-     /**
-      * <p>Returns the {@link SemiVariance} of the designated values against the cutoff
-      * in the given direction with the provided bias correction.</p>
-      *
-      * <p>Returns <code>NaN</code> if the array is empty and throws
-      * <code>IllegalArgumentException</code> if the array is null.</p>
-      *
-      * @param values the input array
-      * @param cutoff the reference point
-      * @param direction the {@link Direction} of the semivariance
-      * @param corrected the BiasCorrection flag
-      * @param start index of the first array element to include
-      * @param length the number of elements to include
-      * @return the SemiVariance
-      * @throws MathIllegalArgumentException if the parameters are not valid
-      *
-      */
-    public double evaluate (final double[] values, final double cutoff, final Direction direction,
-            final boolean corrected, final int start, final int length) throws MathIllegalArgumentException {
-
+    /**
+     * <p>Returns the {@link SemiVariance} of the designated values against the cutoff
+     * in the given direction with the provided bias correction.</p>
+     *
+     * <p>Returns <code>NaN</code> if the array is empty and throws
+     * <code>IllegalArgumentException</code> if the array is null.</p>
+     *
+     * @param values the input array
+     * @param cutoff the reference point
+     * @param direction the {@link Direction} of the semivariance
+     * @param corrected the BiasCorrection flag
+     * @param start index of the first array element to include
+     * @param length the number of elements to include
+     * @return the SemiVariance
+     * @throws MathIllegalArgumentException if the parameters are not valid
+     */
+    public double evaluate(final double[] values, final double cutoff, final Direction direction, final boolean corrected, final int start, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263");
         test(values, start, length);
-        if (values.length == 0) {
+        if (ROR_equals(values.length, 0, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3373, _mut3374, _mut3375, _mut3376, _mut3377)) {
             return Double.NaN;
         } else {
-            if (values.length == 1) {
+            if (ROR_equals(values.length, 1, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3378, _mut3379, _mut3380, _mut3381, _mut3382)) {
                 return 0.0;
             } else {
                 final boolean booleanDirection = direction.getDirection();
-
                 double dev = 0.0;
                 double sumsq = 0.0;
-                for (int i = start; i < length; i++) {
-                    if ((values[i] > cutoff) == booleanDirection) {
-                       dev = values[i] - cutoff;
-                       sumsq += dev * dev;
+                for (int i = start; ROR_less(i, length, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3396, _mut3397, _mut3398, _mut3399, _mut3400); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263");
+                    if ((ROR_greater(values[i], cutoff, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3383, _mut3384, _mut3385, _mut3386, _mut3387)) == booleanDirection) {
+                        dev = AOR_minus(values[i], cutoff, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3388, _mut3389, _mut3390, _mut3391);
+                        sumsq += AOR_multiply(dev, dev, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3392, _mut3393, _mut3394, _mut3395);
                     }
                 }
-
                 if (corrected) {
-                    return sumsq / (length - 1.0);
+                    return AOR_divide(sumsq, (AOR_minus(length, 1.0, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3405, _mut3406, _mut3407, _mut3408)), "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3409, _mut3410, _mut3411, _mut3412);
                 } else {
-                    return sumsq / length;
+                    return AOR_divide(sumsq, length, "org.apache.commons.math3.stat.descriptive.moment.SemiVariance.evaluate_263", _mut3401, _mut3402, _mut3403, _mut3404);
                 }
             }
         }
@@ -313,7 +301,7 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
      *
      * @return the varianceDirection
      */
-    public Direction getVarianceDirection () {
+    public Direction getVarianceDirection() {
         return varianceDirection;
     }
 
@@ -331,17 +319,17 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
      * is represented by boolean, with true corresponding to UPSIDE semivariance.
      */
     public enum Direction {
+
         /**
          * The UPSIDE Direction is used to specify that the observations above the
          * cutoff point will be used to calculate SemiVariance
          */
-        UPSIDE (true),
-
+        UPSIDE(true),
         /**
          * The DOWNSIDE Direction is used to specify that the observations below
          * the cutoff point will be used to calculate SemiVariance
          */
-        DOWNSIDE (false);
+        DOWNSIDE(false);
 
         /**
          *   boolean value  UPSIDE <-> true
@@ -353,7 +341,7 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
          *
          * @param b boolean value representing the Direction. True corresponds to UPSIDE.
          */
-        Direction (boolean b) {
+        Direction(boolean b) {
             direction = b;
         }
 
@@ -362,7 +350,7 @@ public class SemiVariance extends AbstractUnivariateStatistic implements Seriali
          *
          * @return true if direction is UPSIDE; false otherwise
          */
-        boolean getDirection () {
+        boolean getDirection() {
             return direction;
         }
     }

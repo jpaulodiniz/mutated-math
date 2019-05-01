@@ -21,8 +21,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This TansformerMap automates the transformation of mixed object types.
@@ -32,7 +33,12 @@ import org.apache.commons.math3.exception.MathIllegalArgumentException;
  */
 public class TransformerMap implements NumberTransformer, Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut49661 = false, _mut49662 = false, _mut49663 = false, _mut49664 = false, _mut49665 = false, _mut49666 = false, _mut49667 = false, _mut49668 = false, _mut49669 = false, _mut49670 = false, _mut49671 = false, _mut49672 = false, _mut49673 = false, _mut49674 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 4605318041528645258L;
 
     /**
@@ -138,9 +144,9 @@ public class TransformerMap implements NumberTransformer, Serializable {
      * @see org.apache.commons.math3.util.NumberTransformer#transform(java.lang.Object)
      */
     public double transform(Object o) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.TransformerMap.transform_140");
         double value = Double.NaN;
-
-        if (o instanceof Number || o instanceof String) {
+        if ((_mut49661 ? (o instanceof Number && o instanceof String) : (o instanceof Number || o instanceof String))) {
             value = defaultTransformer.transform(o);
         } else {
             NumberTransformer trans = getTransformer(o.getClass());
@@ -148,26 +154,29 @@ public class TransformerMap implements NumberTransformer, Serializable {
                 value = trans.transform(o);
             }
         }
-
         return value;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object other) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.TransformerMap.equals_156");
         if (this == other) {
             return true;
         }
         if (other instanceof TransformerMap) {
             TransformerMap rhs = (TransformerMap) other;
-            if (! defaultTransformer.equals(rhs.defaultTransformer)) {
+            if (!defaultTransformer.equals(rhs.defaultTransformer)) {
                 return false;
             }
-            if (map.size() != rhs.map.size()) {
+            if (ROR_not_equals(map.size(), rhs.map.size(), "org.apache.commons.math3.util.TransformerMap.equals_156", _mut49662, _mut49663, _mut49664, _mut49665, _mut49666)) {
                 return false;
             }
             for (Map.Entry<Class<?>, NumberTransformer> entry : map.entrySet()) {
-                if (! entry.getValue().equals(rhs.map.get(entry.getKey()))) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.TransformerMap.equals_156");
+                if (!entry.getValue().equals(rhs.map.get(entry.getKey()))) {
                     return false;
                 }
             }
@@ -176,14 +185,17 @@ public class TransformerMap implements NumberTransformer, Serializable {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.TransformerMap.hashCode_180");
         int hash = defaultTransformer.hashCode();
         for (NumberTransformer t : map.values()) {
-            hash = hash * 31 + t.hashCode();
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.TransformerMap.hashCode_180");
+            hash = AOR_plus(AOR_multiply(hash, 31, "org.apache.commons.math3.util.TransformerMap.hashCode_180", _mut49667, _mut49668, _mut49669, _mut49670), t.hashCode(), "org.apache.commons.math3.util.TransformerMap.hashCode_180", _mut49671, _mut49672, _mut49673, _mut49674);
         }
         return hash;
     }
-
 }

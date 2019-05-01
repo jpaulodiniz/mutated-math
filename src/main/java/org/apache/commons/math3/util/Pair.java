@@ -16,6 +16,9 @@
  */
 package org.apache.commons.math3.util;
 
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
+
 /**
  * Generic pair.
  * <br/>
@@ -29,9 +32,18 @@ package org.apache.commons.math3.util;
  * @since 3.0
  */
 public class Pair<K, V> {
-    /** Key. */
+
+    @Conditional
+    public static boolean _mut50340 = false, _mut50341 = false, _mut50342 = false, _mut50343 = false, _mut50344 = false, _mut50345 = false, _mut50346 = false, _mut50347 = false, _mut50348 = false;
+
+    /**
+     * Key.
+     */
     private final K key;
-    /** Value. */
+
+    /**
+     * Value.
+     */
     private final V value;
 
     /**
@@ -102,6 +114,7 @@ public class Pair<K, V> {
      */
     @Override
     public boolean equals(Object o) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Pair.equals_103");
         if (this == o) {
             return true;
         }
@@ -109,12 +122,7 @@ public class Pair<K, V> {
             return false;
         } else {
             Pair<?, ?> oP = (Pair<?, ?>) o;
-            return (key == null ?
-                    oP.key == null :
-                    key.equals(oP.key)) &&
-                (value == null ?
-                 oP.value == null :
-                 value.equals(oP.value));
+            return (_mut50340 ? ((key == null ? oP.key == null : key.equals(oP.key)) || (value == null ? oP.value == null : value.equals(oP.value))) : ((key == null ? oP.key == null : key.equals(oP.key)) && (value == null ? oP.value == null : value.equals(oP.value))));
         }
     }
 
@@ -125,15 +133,16 @@ public class Pair<K, V> {
      */
     @Override
     public int hashCode() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.Pair.hashCode_126");
         int result = key == null ? 0 : key.hashCode();
-
         final int h = value == null ? 0 : value.hashCode();
-        result = 37 * result + h ^ (h >>> 16);
-
+        result = AOR_plus(AOR_multiply(37, result, "org.apache.commons.math3.util.Pair.hashCode_126", _mut50341, _mut50342, _mut50343, _mut50344), h, "org.apache.commons.math3.util.Pair.hashCode_126", _mut50345, _mut50346, _mut50347, _mut50348) ^ (h >>> 16);
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return "[" + getKey() + ", " + getValue() + "]";

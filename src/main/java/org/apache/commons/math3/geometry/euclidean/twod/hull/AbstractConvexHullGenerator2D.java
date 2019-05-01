@@ -17,12 +17,13 @@
 package org.apache.commons.math3.geometry.euclidean.twod.hull;
 
 import java.util.Collection;
-
 import org.apache.commons.math3.exception.ConvergenceException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Abstract base class for convex hull generators in the two-dimensional euclidean space.
@@ -31,10 +32,17 @@ import org.apache.commons.math3.util.MathUtils;
  */
 abstract class AbstractConvexHullGenerator2D implements ConvexHullGenerator2D {
 
-    /** Default value for tolerance. */
+    @Conditional
+    public static boolean _mut84781 = false, _mut84782 = false, _mut84783 = false, _mut84784 = false, _mut84785 = false;
+
+    /**
+     * Default value for tolerance.
+     */
     private static final double DEFAULT_TOLERANCE = 1e-10;
 
-    /** Tolerance below which points are considered identical. */
+    /**
+     * Tolerance below which points are considered identical.
+     */
     private final double tolerance;
 
     /**
@@ -84,22 +92,21 @@ abstract class AbstractConvexHullGenerator2D implements ConvexHullGenerator2D {
         return includeCollinearPoints;
     }
 
-    /** {@inheritDoc} */
-    public ConvexHull2D generate(final Collection<Vector2D> points)
-            throws NullArgumentException, ConvergenceException {
+    /**
+     * {@inheritDoc}
+     */
+    public ConvexHull2D generate(final Collection<Vector2D> points) throws NullArgumentException, ConvergenceException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.euclidean.twod.hull.AbstractConvexHullGenerator2D.generate_88");
         // check for null points
         MathUtils.checkNotNull(points);
-
         Collection<Vector2D> hullVertices = null;
-        if (points.size() < 2) {
+        if (ROR_less(points.size(), 2, "org.apache.commons.math3.geometry.euclidean.twod.hull.AbstractConvexHullGenerator2D.generate_88", _mut84781, _mut84782, _mut84783, _mut84784, _mut84785)) {
             hullVertices = points;
         } else {
             hullVertices = findHullVertices(points);
         }
-
         try {
-            return new ConvexHull2D(hullVertices.toArray(new Vector2D[hullVertices.size()]),
-                                    tolerance);
+            return new ConvexHull2D(hullVertices.toArray(new Vector2D[hullVertices.size()]), tolerance);
         } catch (MathIllegalArgumentException e) {
             // the hull vertices may not form a convex hull if the tolerance value is to large
             throw new ConvergenceException();
@@ -112,5 +119,4 @@ abstract class AbstractConvexHullGenerator2D implements ConvexHullGenerator2D {
      * @return the convex hull vertices in CCW winding
      */
     protected abstract Collection<Vector2D> findHullVertices(Collection<Vector2D> points);
-
 }

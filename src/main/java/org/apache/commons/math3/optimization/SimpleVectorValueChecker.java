@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization;
 
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Simple implementation of the {@link ConvergenceChecker} interface using
@@ -37,8 +38,11 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
  * @since 3.0
  */
 @Deprecated
-public class SimpleVectorValueChecker
-    extends AbstractConvergenceChecker<PointVectorValuePair> {
+public class SimpleVectorValueChecker extends AbstractConvergenceChecker<PointVectorValuePair> {
+
+    @Conditional
+    public static boolean _mut72086 = false, _mut72087 = false, _mut72088 = false, _mut72089 = false, _mut72090 = false, _mut72091 = false, _mut72092 = false, _mut72093 = false, _mut72094 = false, _mut72095 = false, _mut72096 = false, _mut72097 = false, _mut72098 = false, _mut72099 = false, _mut72100 = false, _mut72101 = false, _mut72102 = false, _mut72103 = false, _mut72104 = false, _mut72105 = false, _mut72106 = false, _mut72107 = false, _mut72108 = false, _mut72109 = false, _mut72110 = false, _mut72111 = false, _mut72112 = false, _mut72113 = false, _mut72114 = false, _mut72115 = false, _mut72116 = false, _mut72117 = false, _mut72118 = false, _mut72119 = false, _mut72120 = false, _mut72121 = false, _mut72122 = false, _mut72123 = false, _mut72124 = false, _mut72125 = false;
+
     /**
      * If {@link #maxIterationCount} is set to this value, the number of
      * iterations will never cause
@@ -46,6 +50,7 @@ public class SimpleVectorValueChecker
      * to return {@code true}.
      */
     private static final int ITERATION_CHECK_DISABLED = -1;
+
     /**
      * Number of iterations after which the
      * {@link #converged(int,PointVectorValuePair,PointVectorValuePair)} method
@@ -72,8 +77,7 @@ public class SimpleVectorValueChecker
      * @param relativeThreshold relative tolerance threshold
      * @param absoluteThreshold absolute tolerance threshold
      */
-    public SimpleVectorValueChecker(final double relativeThreshold,
-                                    final double absoluteThreshold) {
+    public SimpleVectorValueChecker(final double relativeThreshold, final double absoluteThreshold) {
         super(relativeThreshold, absoluteThreshold);
         maxIterationCount = ITERATION_CHECK_DISABLED;
     }
@@ -93,12 +97,10 @@ public class SimpleVectorValueChecker
      *
      * @since 3.1
      */
-    public SimpleVectorValueChecker(final double relativeThreshold,
-                                    final double absoluteThreshold,
-                                    final int maxIter) {
+    public SimpleVectorValueChecker(final double relativeThreshold, final double absoluteThreshold, final int maxIter) {
         super(relativeThreshold, absoluteThreshold);
-
-        if (maxIter <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimpleVectorValueChecker.SimpleVectorValueChecker_96");
+        if (ROR_less_equals(maxIter, 0, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.SimpleVectorValueChecker_96", _mut72086, _mut72087, _mut72088, _mut72089, _mut72090)) {
             throw new NotStrictlyPositiveException(maxIter);
         }
         maxIterationCount = maxIter;
@@ -121,22 +123,20 @@ public class SimpleVectorValueChecker
      * @return {@code true} if the arguments satify the convergence criterion.
      */
     @Override
-    public boolean converged(final int iteration,
-                             final PointVectorValuePair previous,
-                             final PointVectorValuePair current) {
-        if (maxIterationCount != ITERATION_CHECK_DISABLED && iteration >= maxIterationCount) {
+    public boolean converged(final int iteration, final PointVectorValuePair previous, final PointVectorValuePair current) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123");
+        if ((_mut72101 ? (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72091, _mut72092, _mut72093, _mut72094, _mut72095) || ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72096, _mut72097, _mut72098, _mut72099, _mut72100)) : (ROR_not_equals(maxIterationCount, ITERATION_CHECK_DISABLED, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72091, _mut72092, _mut72093, _mut72094, _mut72095) && ROR_greater_equals(iteration, maxIterationCount, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72096, _mut72097, _mut72098, _mut72099, _mut72100)))) {
             return true;
         }
-
         final double[] p = previous.getValueRef();
         final double[] c = current.getValueRef();
-        for (int i = 0; i < p.length; ++i) {
-            final double pi         = p[i];
-            final double ci         = c[i];
-            final double difference = FastMath.abs(pi - ci);
-            final double size       = FastMath.max(FastMath.abs(pi), FastMath.abs(ci));
-            if (difference > size * getRelativeThreshold() &&
-                difference > getAbsoluteThreshold()) {
+        for (int i = 0; ROR_less(i, p.length, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72121, _mut72122, _mut72123, _mut72124, _mut72125); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123");
+            final double pi = p[i];
+            final double ci = c[i];
+            final double difference = FastMath.abs(AOR_minus(pi, ci, "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72102, _mut72103, _mut72104, _mut72105));
+            final double size = FastMath.max(FastMath.abs(pi), FastMath.abs(ci));
+            if ((_mut72120 ? (ROR_greater(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72106, _mut72107, _mut72108, _mut72109), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72110, _mut72111, _mut72112, _mut72113, _mut72114) || ROR_greater(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72115, _mut72116, _mut72117, _mut72118, _mut72119)) : (ROR_greater(difference, AOR_multiply(size, getRelativeThreshold(), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72106, _mut72107, _mut72108, _mut72109), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72110, _mut72111, _mut72112, _mut72113, _mut72114) && ROR_greater(difference, getAbsoluteThreshold(), "org.apache.commons.math3.optimization.SimpleVectorValueChecker.converged_123", _mut72115, _mut72116, _mut72117, _mut72118, _mut72119)))) {
                 return false;
             }
         }

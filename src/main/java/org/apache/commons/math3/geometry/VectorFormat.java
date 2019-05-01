@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.geometry;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.util.CompositeFormat;
 import org.apache.commons.math3.exception.MathParseException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a vector in components list format "{x; y; ...}".
@@ -44,34 +44,57 @@ import org.apache.commons.math3.exception.MathParseException;
  */
 public abstract class VectorFormat<S extends Space> {
 
-    /** The default prefix: "{". */
+    @Conditional
+    public static boolean _mut86411 = false, _mut86412 = false, _mut86413 = false, _mut86414 = false, _mut86415 = false, _mut86416 = false, _mut86417 = false, _mut86418 = false, _mut86419 = false, _mut86420 = false, _mut86421 = false, _mut86422 = false, _mut86423 = false, _mut86424 = false, _mut86425 = false, _mut86426 = false, _mut86427 = false, _mut86428 = false, _mut86429 = false, _mut86430 = false, _mut86431 = false;
+
+    /**
+     * The default prefix: "{".
+     */
     public static final String DEFAULT_PREFIX = "{";
 
-    /** The default suffix: "}". */
+    /**
+     * The default suffix: "}".
+     */
     public static final String DEFAULT_SUFFIX = "}";
 
-    /** The default separator: ", ". */
+    /**
+     * The default separator: ", ".
+     */
     public static final String DEFAULT_SEPARATOR = "; ";
 
-    /** Prefix. */
+    /**
+     * Prefix.
+     */
     private final String prefix;
 
-    /** Suffix. */
+    /**
+     * Suffix.
+     */
     private final String suffix;
 
-    /** Separator. */
+    /**
+     * Separator.
+     */
     private final String separator;
 
-    /** Trimmed prefix. */
+    /**
+     * Trimmed prefix.
+     */
     private final String trimmedPrefix;
 
-    /** Trimmed suffix. */
+    /**
+     * Trimmed suffix.
+     */
     private final String trimmedSuffix;
 
-    /** Trimmed separator. */
+    /**
+     * Trimmed separator.
+     */
     private final String trimmedSeparator;
 
-    /** The format used for components. */
+    /**
+     * The format used for components.
+     */
     private final NumberFormat format;
 
     /**
@@ -80,8 +103,7 @@ public abstract class VectorFormat<S extends Space> {
      * "{", "}", and "; " and the default number format for components.</p>
      */
     protected VectorFormat() {
-        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR,
-             CompositeFormat.getDefaultNumberFormat());
+        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -98,8 +120,7 @@ public abstract class VectorFormat<S extends Space> {
      * @param suffix suffix to use instead of the default "}"
      * @param separator separator to use instead of the default "; "
      */
-    protected VectorFormat(final String prefix, final String suffix,
-                          final String separator) {
+    protected VectorFormat(final String prefix, final String suffix, final String separator) {
         this(prefix, suffix, separator, CompositeFormat.getDefaultNumberFormat());
     }
 
@@ -111,15 +132,14 @@ public abstract class VectorFormat<S extends Space> {
      * @param separator separator to use instead of the default "; "
      * @param format the custom format for components.
      */
-    protected VectorFormat(final String prefix, final String suffix,
-                          final String separator, final NumberFormat format) {
-        this.prefix      = prefix;
-        this.suffix      = suffix;
-        this.separator   = separator;
-        trimmedPrefix    = prefix.trim();
-        trimmedSuffix    = suffix.trim();
+    protected VectorFormat(final String prefix, final String suffix, final String separator, final NumberFormat format) {
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.separator = separator;
+        trimmedPrefix = prefix.trim();
+        trimmedSuffix = suffix.trim();
         trimmedSeparator = separator.trim();
-        this.format      = format;
+        this.format = format;
     }
 
     /**
@@ -180,8 +200,7 @@ public abstract class VectorFormat<S extends Space> {
      *            offsets of the alignment field
      * @return the value passed in as toAppendTo.
      */
-    public abstract StringBuffer format(Vector<S> vector,
-                                        StringBuffer toAppendTo, FieldPosition pos);
+    public abstract StringBuffer format(Vector<S> vector, StringBuffer toAppendTo, FieldPosition pos);
 
     /**
      * Formats the coordinates of a {@link Vector} to produce a string.
@@ -191,28 +210,23 @@ public abstract class VectorFormat<S extends Space> {
      * @param coordinates coordinates of the object to format.
      * @return the value passed in as toAppendTo.
      */
-    protected StringBuffer format(StringBuffer toAppendTo, FieldPosition pos,
-                                  double ... coordinates) {
-
+    protected StringBuffer format(StringBuffer toAppendTo, FieldPosition pos, double... coordinates) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.VectorFormat.format_194");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         // format prefix
         toAppendTo.append(prefix);
-
         // format components
-        for (int i = 0; i < coordinates.length; ++i) {
-            if (i > 0) {
+        for (int i = 0; ROR_less(i, coordinates.length, "org.apache.commons.math3.geometry.VectorFormat.format_194", _mut86416, _mut86417, _mut86418, _mut86419, _mut86420); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.VectorFormat.format_194");
+            if (ROR_greater(i, 0, "org.apache.commons.math3.geometry.VectorFormat.format_194", _mut86411, _mut86412, _mut86413, _mut86414, _mut86415)) {
                 toAppendTo.append(separator);
             }
             CompositeFormat.formatDouble(coordinates[i], format, toAppendTo, pos);
         }
-
         // format suffix
         toAppendTo.append(suffix);
-
         return toAppendTo;
-
     }
 
     /**
@@ -240,51 +254,39 @@ public abstract class VectorFormat<S extends Space> {
      * @return coordinates array.
      */
     protected double[] parseCoordinates(int dimension, String source, ParsePosition pos) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.VectorFormat.parseCoordinates_242");
         int initialIndex = pos.getIndex();
         double[] coordinates = new double[dimension];
-
         // parse prefix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedPrefix, pos)) {
             return null;
         }
-
-        for (int i = 0; i < dimension; ++i) {
-
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.geometry.VectorFormat.parseCoordinates_242", _mut86427, _mut86428, _mut86429, _mut86430, _mut86431); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.VectorFormat.parseCoordinates_242");
             // skip whitespace
             CompositeFormat.parseAndIgnoreWhitespace(source, pos);
-
             // parse separator
-            if (i > 0 && !CompositeFormat.parseFixedstring(source, trimmedSeparator, pos)) {
+            if ((_mut86426 ? (ROR_greater(i, 0, "org.apache.commons.math3.geometry.VectorFormat.parseCoordinates_242", _mut86421, _mut86422, _mut86423, _mut86424, _mut86425) || !CompositeFormat.parseFixedstring(source, trimmedSeparator, pos)) : (ROR_greater(i, 0, "org.apache.commons.math3.geometry.VectorFormat.parseCoordinates_242", _mut86421, _mut86422, _mut86423, _mut86424, _mut86425) && !CompositeFormat.parseFixedstring(source, trimmedSeparator, pos)))) {
                 return null;
             }
-
             // skip whitespace
             CompositeFormat.parseAndIgnoreWhitespace(source, pos);
-
             // parse coordinate
             Number c = CompositeFormat.parseNumber(source, format, pos);
             if (c == null) {
-                // invalid coordinate
                 // set index back to initial, error index should already be set
                 pos.setIndex(initialIndex);
                 return null;
             }
-
             // store coordinate
             coordinates[i] = c.doubleValue();
-
         }
-
         // parse suffix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedSuffix, pos)) {
             return null;
         }
-
         return coordinates;
-
     }
-
 }

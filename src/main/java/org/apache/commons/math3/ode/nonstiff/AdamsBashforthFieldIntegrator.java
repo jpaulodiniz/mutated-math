@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.Field;
@@ -29,7 +28,8 @@ import org.apache.commons.math3.ode.FieldExpandableODE;
 import org.apache.commons.math3.ode.FieldODEState;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
 import org.apache.commons.math3.util.MathArrays;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements explicit Adams-Bashforth integrators for Ordinary
@@ -146,7 +146,12 @@ import org.apache.commons.math3.util.MathArrays;
  */
 public class AdamsBashforthFieldIntegrator<T extends RealFieldElement<T>> extends AdamsFieldIntegrator<T> {
 
-    /** Integrator method name. */
+    @Conditional
+    public static boolean _mut14132 = false, _mut14133 = false, _mut14134 = false, _mut14135 = false, _mut14136 = false, _mut14137 = false, _mut14138 = false, _mut14139 = false, _mut14140 = false, _mut14141 = false, _mut14142 = false, _mut14143 = false, _mut14144 = false, _mut14145 = false, _mut14146 = false, _mut14147 = false, _mut14148 = false, _mut14149 = false, _mut14150 = false, _mut14151 = false, _mut14152 = false, _mut14153 = false, _mut14154 = false, _mut14155 = false, _mut14156 = false, _mut14157 = false, _mut14158 = false, _mut14159 = false, _mut14160 = false, _mut14161 = false, _mut14162 = false, _mut14163 = false, _mut14164 = false, _mut14165 = false, _mut14166 = false, _mut14167 = false, _mut14168 = false, _mut14169 = false, _mut14170 = false, _mut14171 = false, _mut14172 = false, _mut14173 = false, _mut14174 = false, _mut14175 = false, _mut14176 = false, _mut14177 = false, _mut14178 = false, _mut14179 = false, _mut14180 = false, _mut14181 = false, _mut14182 = false, _mut14183 = false, _mut14184 = false, _mut14185 = false, _mut14186 = false, _mut14187 = false, _mut14188 = false, _mut14189 = false, _mut14190 = false;
+
+    /**
+     * Integrator method name.
+     */
     private static final String METHOD_NAME = "Adams-Bashforth";
 
     /**
@@ -163,13 +168,8 @@ public class AdamsBashforthFieldIntegrator<T extends RealFieldElement<T>> extend
      * @param scalRelativeTolerance allowed relative error
      * @exception NumberIsTooSmallException if order is 1 or less
      */
-    public AdamsBashforthFieldIntegrator(final Field<T> field, final int nSteps,
-                                         final double minStep, final double maxStep,
-                                         final double scalAbsoluteTolerance,
-                                         final double scalRelativeTolerance)
-        throws NumberIsTooSmallException {
-        super(field, METHOD_NAME, nSteps, nSteps, minStep, maxStep,
-              scalAbsoluteTolerance, scalRelativeTolerance);
+    public AdamsBashforthFieldIntegrator(final Field<T> field, final int nSteps, final double minStep, final double maxStep, final double scalAbsoluteTolerance, final double scalRelativeTolerance) throws NumberIsTooSmallException {
+        super(field, METHOD_NAME, nSteps, nSteps, minStep, maxStep, scalAbsoluteTolerance, scalRelativeTolerance);
     }
 
     /**
@@ -186,16 +186,12 @@ public class AdamsBashforthFieldIntegrator<T extends RealFieldElement<T>> extend
      * @param vecRelativeTolerance allowed relative error
      * @exception IllegalArgumentException if order is 1 or less
      */
-    public AdamsBashforthFieldIntegrator(final Field<T> field, final int nSteps,
-                                         final double minStep, final double maxStep,
-                                         final double[] vecAbsoluteTolerance,
-                                         final double[] vecRelativeTolerance)
-        throws IllegalArgumentException {
-        super(field, METHOD_NAME, nSteps, nSteps, minStep, maxStep,
-              vecAbsoluteTolerance, vecRelativeTolerance);
+    public AdamsBashforthFieldIntegrator(final Field<T> field, final int nSteps, final double minStep, final double maxStep, final double[] vecAbsoluteTolerance, final double[] vecRelativeTolerance) throws IllegalArgumentException {
+        super(field, METHOD_NAME, nSteps, nSteps, minStep, maxStep, vecAbsoluteTolerance, vecRelativeTolerance);
     }
 
-    /** Estimate error.
+    /**
+     * Estimate error.
      * <p>
      * Error is estimated by interpolating back to previous state using
      * the state Taylor expansion and comparing to real previous state.
@@ -206,149 +202,102 @@ public class AdamsBashforthFieldIntegrator<T extends RealFieldElement<T>> extend
      * @param predictedNordsieck predicted value of the Nordsieck vector at step end
      * @return estimated normalized local discretization error
      */
-    private T errorEstimation(final T[] previousState,
-                              final T[] predictedState,
-                              final T[] predictedScaled,
-                              final FieldMatrix<T> predictedNordsieck) {
-
+    private T errorEstimation(final T[] previousState, final T[] predictedState, final T[] predictedScaled, final FieldMatrix<T> predictedNordsieck) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209");
         T error = getField().getZero();
-        for (int i = 0; i < mainSetDimension; ++i) {
+        for (int i = 0; ROR_less(i, mainSetDimension, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209", _mut14146, _mut14147, _mut14148, _mut14149, _mut14150); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209");
             final T yScale = predictedState[i].abs();
-            final T tol = (vecAbsoluteTolerance == null) ?
-                          yScale.multiply(scalRelativeTolerance).add(scalAbsoluteTolerance) :
-                          yScale.multiply(vecRelativeTolerance[i]).add(vecAbsoluteTolerance[i]);
-
-            // apply Taylor formula from high order to low order,
+            final T tol = (vecAbsoluteTolerance == null) ? yScale.multiply(scalRelativeTolerance).add(scalAbsoluteTolerance) : yScale.multiply(vecRelativeTolerance[i]).add(vecAbsoluteTolerance[i]);
             // for the sake of numerical accuracy
             T variation = getField().getZero();
-            int sign = predictedNordsieck.getRowDimension() % 2 == 0 ? -1 : 1;
-            for (int k = predictedNordsieck.getRowDimension() - 1; k >= 0; --k) {
+            int sign = ROR_equals(AOR_remainder(predictedNordsieck.getRowDimension(), 2, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209", _mut14132, _mut14133, _mut14134, _mut14135), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209", _mut14136, _mut14137, _mut14138, _mut14139, _mut14140) ? -1 : 1;
+            for (int k = predictedNordsieck.getRowDimension() - 1; ROR_greater_equals(k, 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209", _mut14141, _mut14142, _mut14143, _mut14144, _mut14145); --k) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.errorEstimation_209");
                 variation = variation.add(predictedNordsieck.getEntry(k, i).multiply(sign));
-                sign      = -sign;
+                sign = -sign;
             }
             variation = variation.subtract(predictedScaled[i]);
-
-            final T ratio  = predictedState[i].subtract(previousState[i]).add(variation).divide(tol);
+            final T ratio = predictedState[i].subtract(previousState[i]).add(variation).divide(tol);
             error = error.add(ratio.multiply(ratio));
-
         }
-
         return error.divide(mainSetDimension).sqrt();
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public FieldODEStateAndDerivative<T> integrate(final FieldExpandableODE<T> equations,
-                                                   final FieldODEState<T> initialState,
-                                                   final T finalTime)
-        throws NumberIsTooSmallException, DimensionMismatchException,
-               MaxCountExceededException, NoBracketingException {
-
+    public FieldODEStateAndDerivative<T> integrate(final FieldExpandableODE<T> equations, final FieldODEState<T> initialState, final T finalTime) throws NumberIsTooSmallException, DimensionMismatchException, MaxCountExceededException, NoBracketingException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241");
         sanityChecks(initialState, finalTime);
-        final T   t0 = initialState.getTime();
-        final T[] y  = equations.getMapper().mapState(initialState);
+        final T t0 = initialState.getTime();
+        final T[] y = equations.getMapper().mapState(initialState);
         setStepStart(initIntegration(equations, t0, y, finalTime));
-        final boolean forward = finalTime.subtract(initialState.getTime()).getReal() > 0;
-
+        final boolean forward = ROR_greater(finalTime.subtract(initialState.getTime()).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14151, _mut14152, _mut14153, _mut14154, _mut14155);
         // compute the initial Nordsieck vector using the configured starter integrator
         start(equations, getStepStart(), finalTime);
-
         // reuse the step that was chosen by the starter integrator
         FieldODEStateAndDerivative<T> stepStart = getStepStart();
-        FieldODEStateAndDerivative<T> stepEnd   =
-                        AdamsFieldStepInterpolator.taylor(stepStart,
-                                                          stepStart.getTime().add(getStepSize()),
-                                                          getStepSize(), scaled, nordsieck);
-
+        FieldODEStateAndDerivative<T> stepEnd = AdamsFieldStepInterpolator.taylor(stepStart, stepStart.getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
         // main integration loop
         setIsLastStep(false);
         do {
-
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241");
             T[] predictedY = null;
             final T[] predictedScaled = MathArrays.buildArray(getField(), y.length);
             Array2DRowFieldMatrix<T> predictedNordsieck = null;
             T error = getField().getZero().add(10);
-            while (error.subtract(1.0).getReal() >= 0.0) {
-
+            while (ROR_greater_equals(error.subtract(1.0).getReal(), 0.0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14166, _mut14167, _mut14168, _mut14169, _mut14170)) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241");
                 // predict a first estimate of the state at step end
                 predictedY = stepEnd.getState();
-
                 // evaluate the derivative
                 final T[] yDot = computeDerivatives(stepEnd.getTime(), predictedY);
-
                 // predict Nordsieck vector at step end
-                for (int j = 0; j < predictedScaled.length; ++j) {
+                for (int j = 0; ROR_less(j, predictedScaled.length, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14156, _mut14157, _mut14158, _mut14159, _mut14160); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241");
                     predictedScaled[j] = getStepSize().multiply(yDot[j]);
                 }
                 predictedNordsieck = updateHighOrderDerivativesPhase1(nordsieck);
                 updateHighOrderDerivativesPhase2(scaled, predictedScaled, predictedNordsieck);
-
                 // evaluate error
                 error = errorEstimation(y, predictedY, predictedScaled, predictedNordsieck);
-
-                if (error.subtract(1.0).getReal() >= 0.0) {
+                if (ROR_greater_equals(error.subtract(1.0).getReal(), 0.0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14161, _mut14162, _mut14163, _mut14164, _mut14165)) {
                     // reject the step and attempt to reduce error by stepsize control
                     final T factor = computeStepGrowShrinkFactor(error);
                     rescale(filterStep(getStepSize().multiply(factor), forward, false));
-                    stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(),
-                                                                getStepStart().getTime().add(getStepSize()),
-                                                                getStepSize(),
-                                                                scaled,
-                                                                nordsieck);
-
+                    stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
                 }
             }
-
             // discrete events handling
-            setStepStart(acceptStep(new AdamsFieldStepInterpolator<T>(getStepSize(), stepEnd,
-                                                                      predictedScaled, predictedNordsieck, forward,
-                                                                      getStepStart(), stepEnd,
-                                                                      equations.getMapper()),
-                                    finalTime));
-            scaled    = predictedScaled;
+            setStepStart(acceptStep(new AdamsFieldStepInterpolator<T>(getStepSize(), stepEnd, predictedScaled, predictedNordsieck, forward, getStepStart(), stepEnd, equations.getMapper()), finalTime));
+            scaled = predictedScaled;
             nordsieck = predictedNordsieck;
-
             if (!isLastStep()) {
-
                 System.arraycopy(predictedY, 0, y, 0, y.length);
-
                 if (resetOccurred()) {
-                    // some events handler has triggered changes that
                     // invalidate the derivatives, we need to restart from scratch
                     start(equations, getStepStart(), finalTime);
                 }
-
                 // stepsize control for next step
-                final T       factor     = computeStepGrowShrinkFactor(error);
-                final T       scaledH    = getStepSize().multiply(factor);
-                final T       nextT      = getStepStart().getTime().add(scaledH);
-                final boolean nextIsLast = forward ?
-                                           nextT.subtract(finalTime).getReal() >= 0 :
-                                           nextT.subtract(finalTime).getReal() <= 0;
+                final T factor = computeStepGrowShrinkFactor(error);
+                final T scaledH = getStepSize().multiply(factor);
+                final T nextT = getStepStart().getTime().add(scaledH);
+                final boolean nextIsLast = forward ? ROR_greater_equals(nextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14176, _mut14177, _mut14178, _mut14179, _mut14180) : ROR_less_equals(nextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14171, _mut14172, _mut14173, _mut14174, _mut14175);
                 T hNew = filterStep(scaledH, forward, nextIsLast);
-
-                final T       filteredNextT      = getStepStart().getTime().add(hNew);
-                final boolean filteredNextIsLast = forward ?
-                                                   filteredNextT.subtract(finalTime).getReal() >= 0 :
-                                                   filteredNextT.subtract(finalTime).getReal() <= 0;
+                final T filteredNextT = getStepStart().getTime().add(hNew);
+                final boolean filteredNextIsLast = forward ? ROR_greater_equals(filteredNextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14186, _mut14187, _mut14188, _mut14189, _mut14190) : ROR_less_equals(filteredNextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsBashforthFieldIntegrator.integrate_241", _mut14181, _mut14182, _mut14183, _mut14184, _mut14185);
                 if (filteredNextIsLast) {
                     hNew = finalTime.subtract(getStepStart().getTime());
                 }
-
                 rescale(hNew);
-                stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()),
-                                                            getStepSize(), scaled, nordsieck);
-
+                stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
             }
-
         } while (!isLastStep());
-
         final FieldODEStateAndDerivative<T> finalState = getStepStart();
         setStepStart(null);
         setStepSize(null);
         return finalState;
-
     }
-
 }

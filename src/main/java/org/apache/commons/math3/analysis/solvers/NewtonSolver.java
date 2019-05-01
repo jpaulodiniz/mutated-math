@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.solvers;
 
 import org.apache.commons.math3.analysis.DifferentiableUnivariateFunction;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implements <a href="http://mathworld.wolfram.com/NewtonsMethod.html">
@@ -31,7 +32,13 @@ import org.apache.commons.math3.exception.TooManyEvaluationsException;
  */
 @Deprecated
 public class NewtonSolver extends AbstractDifferentiableUnivariateSolver {
-    /** Default absolute accuracy. */
+
+    @Conditional
+    public static boolean _mut100623 = false, _mut100624 = false, _mut100625 = false, _mut100626 = false, _mut100627 = false, _mut100628 = false, _mut100629 = false, _mut100630 = false, _mut100631 = false, _mut100632 = false, _mut100633 = false, _mut100634 = false, _mut100635 = false, _mut100636 = false, _mut100637 = false, _mut100638 = false, _mut100639 = false;
+
+    /**
+     * Default absolute accuracy.
+     */
     private static final double DEFAULT_ABSOLUTE_ACCURACY = 1e-6;
 
     /**
@@ -40,6 +47,7 @@ public class NewtonSolver extends AbstractDifferentiableUnivariateSolver {
     public NewtonSolver() {
         this(DEFAULT_ABSOLUTE_ACCURACY);
     }
+
     /**
      * Construct a solver.
      *
@@ -63,9 +71,7 @@ public class NewtonSolver extends AbstractDifferentiableUnivariateSolver {
      * if {@code min >= max}.
      */
     @Override
-    public double solve(int maxEval, final DifferentiableUnivariateFunction f,
-                        final double min, final double max)
-        throws TooManyEvaluationsException {
+    public double solve(int maxEval, final DifferentiableUnivariateFunction f, final double min, final double max) throws TooManyEvaluationsException {
         return super.solve(maxEval, f, UnivariateSolverUtils.midpoint(min, max));
     }
 
@@ -73,19 +79,18 @@ public class NewtonSolver extends AbstractDifferentiableUnivariateSolver {
      * {@inheritDoc}
      */
     @Override
-    protected double doSolve()
-        throws TooManyEvaluationsException {
+    protected double doSolve() throws TooManyEvaluationsException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75");
         final double startValue = getStartValue();
         final double absoluteAccuracy = getAbsoluteAccuracy();
-
         double x0 = startValue;
         double x1;
         while (true) {
-            x1 = x0 - (computeObjectiveValue(x0) / computeDerivativeObjectiveValue(x0));
-            if (FastMath.abs(x1 - x0) <= absoluteAccuracy) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75");
+            x1 = AOR_minus(x0, (AOR_divide(computeObjectiveValue(x0), computeDerivativeObjectiveValue(x0), "org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75", _mut100623, _mut100624, _mut100625, _mut100626)), "org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75", _mut100627, _mut100628, _mut100629, _mut100630);
+            if (ROR_less_equals(FastMath.abs(AOR_minus(x1, x0, "org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75", _mut100631, _mut100632, _mut100633, _mut100634)), absoluteAccuracy, "org.apache.commons.math3.analysis.solvers.NewtonSolver.doSolve_75", _mut100635, _mut100636, _mut100637, _mut100638, _mut100639)) {
                 return x1;
             }
-
             x0 = x1;
         }
     }

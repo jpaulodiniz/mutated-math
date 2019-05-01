@@ -14,14 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.stat.correlation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
@@ -30,6 +28,8 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.ranking.NaNStrategy;
 import org.apache.commons.math3.stat.ranking.NaturalRanking;
 import org.apache.commons.math3.stat.ranking.RankingAlgorithm;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Spearman's rank correlation. This implementation performs a rank
@@ -44,13 +44,22 @@ import org.apache.commons.math3.stat.ranking.RankingAlgorithm;
  */
 public class SpearmansCorrelation {
 
-    /** Input data */
+    @Conditional
+    public static boolean _mut11023 = false, _mut11024 = false, _mut11025 = false, _mut11026 = false, _mut11027 = false, _mut11028 = false, _mut11029 = false, _mut11030 = false, _mut11031 = false, _mut11032 = false, _mut11033 = false, _mut11034 = false, _mut11035 = false, _mut11036 = false, _mut11037 = false, _mut11038 = false, _mut11039 = false, _mut11040 = false, _mut11041 = false, _mut11042 = false, _mut11043 = false, _mut11044 = false, _mut11045 = false, _mut11046 = false, _mut11047 = false, _mut11048 = false, _mut11049 = false, _mut11050 = false, _mut11051 = false, _mut11052 = false, _mut11053 = false, _mut11054 = false, _mut11055 = false, _mut11056 = false, _mut11057 = false, _mut11058 = false, _mut11059 = false, _mut11060 = false, _mut11061 = false, _mut11062 = false, _mut11063 = false, _mut11064 = false, _mut11065 = false, _mut11066 = false, _mut11067 = false;
+
+    /**
+     * Input data
+     */
     private final RealMatrix data;
 
-    /** Ranking algorithm  */
+    /**
+     * Ranking algorithm
+     */
     private final RankingAlgorithm rankingAlgorithm;
 
-    /** Rank correlation */
+    /**
+     * Rank correlation
+     */
     private final PearsonsCorrelation rankCorrelation;
 
     /**
@@ -151,7 +160,7 @@ public class SpearmansCorrelation {
      * @return correlation matrix
      */
     public RealMatrix computeCorrelationMatrix(final double[][] matrix) {
-       return computeCorrelationMatrix(new BlockRealMatrix(matrix));
+        return computeCorrelationMatrix(new BlockRealMatrix(matrix));
     }
 
     /**
@@ -164,21 +173,18 @@ public class SpearmansCorrelation {
      * @throws MathIllegalArgumentException if the array length is less than 2
      */
     public double correlation(final double[] xArray, final double[] yArray) {
-        if (xArray.length != yArray.length) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.correlation_166");
+        if (ROR_not_equals(xArray.length, yArray.length, "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.correlation_166", _mut11023, _mut11024, _mut11025, _mut11026, _mut11027)) {
             throw new DimensionMismatchException(xArray.length, yArray.length);
-        } else if (xArray.length < 2) {
-            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_DIMENSION,
-                                                   xArray.length, 2);
+        } else if (ROR_less(xArray.length, 2, "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.correlation_166", _mut11028, _mut11029, _mut11030, _mut11031, _mut11032)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INSUFFICIENT_DIMENSION, xArray.length, 2);
         } else {
             double[] x = xArray;
             double[] y = yArray;
-            if (rankingAlgorithm instanceof NaturalRanking &&
-                NaNStrategy.REMOVED == ((NaturalRanking) rankingAlgorithm).getNanStrategy()) {
+            if ((_mut11033 ? (rankingAlgorithm instanceof NaturalRanking || NaNStrategy.REMOVED == ((NaturalRanking) rankingAlgorithm).getNanStrategy()) : (rankingAlgorithm instanceof NaturalRanking && NaNStrategy.REMOVED == ((NaturalRanking) rankingAlgorithm).getNanStrategy()))) {
                 final Set<Integer> nanPositions = new HashSet<Integer>();
-
                 nanPositions.addAll(getNaNPositions(xArray));
                 nanPositions.addAll(getNaNPositions(yArray));
-
                 x = removeValues(xArray, nanPositions);
                 y = removeValues(yArray, nanPositions);
             }
@@ -194,33 +200,30 @@ public class SpearmansCorrelation {
      * @return a rank-transformed matrix
      */
     private RealMatrix rankTransform(final RealMatrix matrix) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196");
         RealMatrix transformed = null;
-
-        if (rankingAlgorithm instanceof NaturalRanking &&
-                ((NaturalRanking) rankingAlgorithm).getNanStrategy() == NaNStrategy.REMOVED) {
+        if ((_mut11034 ? (rankingAlgorithm instanceof NaturalRanking || ((NaturalRanking) rankingAlgorithm).getNanStrategy() == NaNStrategy.REMOVED) : (rankingAlgorithm instanceof NaturalRanking && ((NaturalRanking) rankingAlgorithm).getNanStrategy() == NaNStrategy.REMOVED))) {
             final Set<Integer> nanPositions = new HashSet<Integer>();
-            for (int i = 0; i < matrix.getColumnDimension(); i++) {
+            for (int i = 0; ROR_less(i, matrix.getColumnDimension(), "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196", _mut11035, _mut11036, _mut11037, _mut11038, _mut11039); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196");
                 nanPositions.addAll(getNaNPositions(matrix.getColumn(i)));
             }
-
             // if we have found NaN values, we have to update the matrix size
             if (!nanPositions.isEmpty()) {
-                transformed = new BlockRealMatrix(matrix.getRowDimension() - nanPositions.size(),
-                                                  matrix.getColumnDimension());
-                for (int i = 0; i < transformed.getColumnDimension(); i++) {
+                transformed = new BlockRealMatrix(AOR_minus(matrix.getRowDimension(), nanPositions.size(), "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196", _mut11040, _mut11041, _mut11042, _mut11043), matrix.getColumnDimension());
+                for (int i = 0; ROR_less(i, transformed.getColumnDimension(), "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196", _mut11044, _mut11045, _mut11046, _mut11047, _mut11048); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196");
                     transformed.setColumn(i, removeValues(matrix.getColumn(i), nanPositions));
                 }
             }
         }
-
         if (transformed == null) {
             transformed = matrix.copy();
         }
-
-        for (int i = 0; i < transformed.getColumnDimension(); i++) {
+        for (int i = 0; ROR_less(i, transformed.getColumnDimension(), "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196", _mut11049, _mut11050, _mut11051, _mut11052, _mut11053); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.rankTransform_196");
             transformed.setColumn(i, rankingAlgorithm.rank(transformed.getColumn(i)));
         }
-
         return transformed;
     }
 
@@ -231,8 +234,10 @@ public class SpearmansCorrelation {
      * @return a list of NaN positions in the input array
      */
     private List<Integer> getNaNPositions(final double[] input) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.getNaNPositions_233");
         final List<Integer> positions = new ArrayList<Integer>();
-        for (int i = 0; i < input.length; i++) {
+        for (int i = 0; ROR_less(i, input.length, "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.getNaNPositions_233", _mut11054, _mut11055, _mut11056, _mut11057, _mut11058); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.getNaNPositions_233");
             if (Double.isNaN(input[i])) {
                 positions.add(i);
             }
@@ -248,11 +253,13 @@ public class SpearmansCorrelation {
      * @return the input array without the values at the specified indices
      */
     private double[] removeValues(final double[] input, final Set<Integer> indices) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.removeValues_250");
         if (indices.isEmpty()) {
             return input;
         }
-        final double[] result = new double[input.length - indices.size()];
-        for (int i = 0, j = 0; i < input.length; i++) {
+        final double[] result = new double[AOR_minus(input.length, indices.size(), "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.removeValues_250", _mut11059, _mut11060, _mut11061, _mut11062)];
+        for (int i = 0, j = 0; ROR_less(i, input.length, "org.apache.commons.math3.stat.correlation.SpearmansCorrelation.removeValues_250", _mut11063, _mut11064, _mut11065, _mut11066, _mut11067); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.SpearmansCorrelation.removeValues_250");
             if (!indices.contains(i)) {
                 result[j++] = input[i];
             }

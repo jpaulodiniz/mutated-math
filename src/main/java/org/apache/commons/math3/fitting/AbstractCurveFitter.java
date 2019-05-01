@@ -17,13 +17,14 @@
 package org.apache.commons.math3.fitting;
 
 import java.util.Collection;
-
 import org.apache.commons.math3.analysis.MultivariateVectorFunction;
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
 import org.apache.commons.math3.analysis.ParametricUnivariateFunction;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresOptimizer;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem;
 import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class that contains common code for fitting parametric univariate
@@ -50,6 +51,10 @@ import org.apache.commons.math3.fitting.leastsquares.LevenbergMarquardtOptimizer
  * @since 3.3
  */
 public abstract class AbstractCurveFitter {
+
+    @Conditional
+    public static boolean _mut39426 = false, _mut39427 = false, _mut39428 = false, _mut39429 = false, _mut39430 = false, _mut39431 = false, _mut39432 = false, _mut39433 = false, _mut39434 = false, _mut39435 = false;
+
     /**
      * Fits a curve.
      * This method computes the coefficients of the curve that best
@@ -89,23 +94,28 @@ public abstract class AbstractCurveFitter {
      * Vector function for computing function theoretical values.
      */
     protected static class TheoreticalValuesFunction {
-        /** Function to fit. */
+
+        /**
+         * Function to fit.
+         */
         private final ParametricUnivariateFunction f;
-        /** Observations. */
+
+        /**
+         * Observations.
+         */
         private final double[] points;
 
         /**
          * @param f function to fit.
          * @param observations Observations.
          */
-        public TheoreticalValuesFunction(final ParametricUnivariateFunction f,
-                                         final Collection<WeightedObservedPoint> observations) {
+        public TheoreticalValuesFunction(final ParametricUnivariateFunction f, final Collection<WeightedObservedPoint> observations) {
             this.f = f;
-
             final int len = observations.size();
             this.points = new double[len];
             int i = 0;
             for (WeightedObservedPoint obs : observations) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.TheoreticalValuesFunction_101");
                 this.points[i++] = obs.getX();
             }
         }
@@ -114,15 +124,20 @@ public abstract class AbstractCurveFitter {
          * @return the model function values.
          */
         public MultivariateVectorFunction getModelFunction() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_119");
             return new MultivariateVectorFunction() {
-                /** {@inheritDoc} */
+
+                /**
+                 * {@inheritDoc}
+                 */
                 public double[] value(double[] p) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_119");
                     final int len = points.length;
                     final double[] values = new double[len];
-                    for (int i = 0; i < len; i++) {
+                    for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.fitting.AbstractCurveFitter.value_119", _mut39426, _mut39427, _mut39428, _mut39429, _mut39430); i++) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_119");
                         values[i] = f.value(points[i], p);
                     }
-
                     return values;
                 }
             };
@@ -132,12 +147,18 @@ public abstract class AbstractCurveFitter {
          * @return the model function Jacobian.
          */
         public MultivariateMatrixFunction getModelFunctionJacobian() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_137");
             return new MultivariateMatrixFunction() {
-                /** {@inheritDoc} */
+
+                /**
+                 * {@inheritDoc}
+                 */
                 public double[][] value(double[] p) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_137");
                     final int len = points.length;
                     final double[][] jacobian = new double[len][];
-                    for (int i = 0; i < len; i++) {
+                    for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.fitting.AbstractCurveFitter.value_137", _mut39431, _mut39432, _mut39433, _mut39434, _mut39435); i++) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.AbstractCurveFitter.value_137");
                         jacobian[i] = f.gradient(points[i], p);
                     }
                     return jacobian;

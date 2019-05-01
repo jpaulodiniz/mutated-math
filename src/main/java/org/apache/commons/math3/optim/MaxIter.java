@@ -17,6 +17,8 @@
 package org.apache.commons.math3.optim;
 
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Maximum number of iterations performed by an (iterative) algorithm.
@@ -24,7 +26,13 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
  * @since 3.1
  */
 public class MaxIter implements OptimizationData {
-    /** Allowed number of evalutations. */
+
+    @Conditional
+    public static boolean _mut59515 = false, _mut59516 = false, _mut59517 = false, _mut59518 = false, _mut59519 = false;
+
+    /**
+     * Allowed number of evalutations.
+     */
     private final int maxIter;
 
     /**
@@ -32,10 +40,10 @@ public class MaxIter implements OptimizationData {
      * @throws NotStrictlyPositiveException if {@code max <= 0}.
      */
     public MaxIter(int max) {
-        if (max <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.MaxIter.MaxIter_34");
+        if (ROR_less_equals(max, 0, "org.apache.commons.math3.optim.MaxIter.MaxIter_34", _mut59515, _mut59516, _mut59517, _mut59518, _mut59519)) {
             throw new NotStrictlyPositiveException(max);
         }
-
         maxIter = max;
     }
 

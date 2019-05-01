@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.linear;
 
 import java.text.FieldPosition;
@@ -23,9 +22,10 @@ import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a vector in components list format "{v0; v1; ...; vk-1}".
@@ -42,25 +42,57 @@ import org.apache.commons.math3.util.CompositeFormat;
  */
 public class RealVectorFormat {
 
-    /** The default prefix: "{". */
+    @Conditional
+    public static boolean _mut29477 = false, _mut29478 = false, _mut29479 = false, _mut29480 = false, _mut29481 = false, _mut29482 = false, _mut29483 = false, _mut29484 = false, _mut29485 = false, _mut29486 = false, _mut29487 = false, _mut29488 = false, _mut29489 = false, _mut29490 = false, _mut29491 = false, _mut29492 = false, _mut29493 = false, _mut29494 = false, _mut29495 = false, _mut29496 = false;
+
+    /**
+     * The default prefix: "{".
+     */
     private static final String DEFAULT_PREFIX = "{";
-    /** The default suffix: "}". */
+
+    /**
+     * The default suffix: "}".
+     */
     private static final String DEFAULT_SUFFIX = "}";
-    /** The default separator: ", ". */
+
+    /**
+     * The default separator: ", ".
+     */
     private static final String DEFAULT_SEPARATOR = "; ";
-    /** Prefix. */
+
+    /**
+     * Prefix.
+     */
     private final String prefix;
-    /** Suffix. */
+
+    /**
+     * Suffix.
+     */
     private final String suffix;
-    /** Separator. */
+
+    /**
+     * Separator.
+     */
     private final String separator;
-    /** Trimmed prefix. */
+
+    /**
+     * Trimmed prefix.
+     */
     private final String trimmedPrefix;
-    /** Trimmed suffix. */
+
+    /**
+     * Trimmed suffix.
+     */
     private final String trimmedSuffix;
-    /** Trimmed separator. */
+
+    /**
+     * Trimmed separator.
+     */
     private final String trimmedSeparator;
-    /** The format used for components. */
+
+    /**
+     * The format used for components.
+     */
     private final NumberFormat format;
 
     /**
@@ -69,8 +101,7 @@ public class RealVectorFormat {
      * "{", "}", and "; " and the default number format for components.</p>
      */
     public RealVectorFormat() {
-        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR,
-             CompositeFormat.getDefaultNumberFormat());
+        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -87,10 +118,8 @@ public class RealVectorFormat {
      * @param suffix suffix to use instead of the default "}"
      * @param separator separator to use instead of the default "; "
      */
-    public RealVectorFormat(final String prefix, final String suffix,
-                            final String separator) {
-        this(prefix, suffix, separator,
-             CompositeFormat.getDefaultNumberFormat());
+    public RealVectorFormat(final String prefix, final String suffix, final String separator) {
+        this(prefix, suffix, separator, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -101,15 +130,14 @@ public class RealVectorFormat {
      * @param separator separator to use instead of the default "; "
      * @param format the custom format for components.
      */
-    public RealVectorFormat(final String prefix, final String suffix,
-                            final String separator, final NumberFormat format) {
-        this.prefix      = prefix;
-        this.suffix      = suffix;
-        this.separator   = separator;
-        trimmedPrefix    = prefix.trim();
-        trimmedSuffix    = suffix.trim();
+    public RealVectorFormat(final String prefix, final String suffix, final String separator, final NumberFormat format) {
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.separator = separator;
+        trimmedPrefix = prefix.trim();
+        trimmedSuffix = suffix.trim();
         trimmedSeparator = separator.trim();
-        this.format      = format;
+        this.format = format;
     }
 
     /**
@@ -188,26 +216,22 @@ public class RealVectorFormat {
      *            offsets of the alignment field
      * @return the value passed in as toAppendTo.
      */
-    public StringBuffer format(RealVector vector, StringBuffer toAppendTo,
-                               FieldPosition pos) {
-
+    public StringBuffer format(RealVector vector, StringBuffer toAppendTo, FieldPosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.format_191");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         // format prefix
         toAppendTo.append(prefix);
-
         // format components
-        for (int i = 0; i < vector.getDimension(); ++i) {
-            if (i > 0) {
+        for (int i = 0; ROR_less(i, vector.getDimension(), "org.apache.commons.math3.linear.RealVectorFormat.format_191", _mut29482, _mut29483, _mut29484, _mut29485, _mut29486); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.format_191");
+            if (ROR_greater(i, 0, "org.apache.commons.math3.linear.RealVectorFormat.format_191", _mut29477, _mut29478, _mut29479, _mut29480, _mut29481)) {
                 toAppendTo.append(separator);
             }
             CompositeFormat.formatDouble(vector.getEntry(i), format, toAppendTo, pos);
         }
-
         // format suffix
         toAppendTo.append(suffix);
-
         return toAppendTo;
     }
 
@@ -220,12 +244,11 @@ public class RealVectorFormat {
      * cannot be parsed.
      */
     public ArrayRealVector parse(String source) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.parse_222");
         final ParsePosition parsePosition = new ParsePosition(0);
         final ArrayRealVector result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         ArrayRealVector.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.linear.RealVectorFormat.parse_222", _mut29487, _mut29488, _mut29489, _mut29490, _mut29491)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), ArrayRealVector.class);
         }
         return result;
     }
@@ -238,49 +261,44 @@ public class RealVectorFormat {
      * @return the parsed {@link RealVector} object.
      */
     public ArrayRealVector parse(String source, ParsePosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.parse_240");
         int initialIndex = pos.getIndex();
-
         // parse prefix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedPrefix, pos)) {
             return null;
         }
-
         // parse components
         List<Number> components = new ArrayList<Number>();
-        for (boolean loop = true; loop;){
-
+        for (boolean loop = true; loop; ) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.parse_240");
             if (!components.isEmpty()) {
                 CompositeFormat.parseAndIgnoreWhitespace(source, pos);
                 if (!CompositeFormat.parseFixedstring(source, trimmedSeparator, pos)) {
                     loop = false;
                 }
             }
-
             if (loop) {
                 CompositeFormat.parseAndIgnoreWhitespace(source, pos);
                 Number component = CompositeFormat.parseNumber(source, format, pos);
                 if (component != null) {
                     components.add(component);
                 } else {
-                    // invalid component
                     // set index back to initial, error index should already be set
                     pos.setIndex(initialIndex);
                     return null;
                 }
             }
-
         }
-
         // parse suffix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedSuffix, pos)) {
             return null;
         }
-
         // build vector
         double[] data = new double[components.size()];
-        for (int i = 0; i < data.length; ++i) {
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.RealVectorFormat.parse_240", _mut29492, _mut29493, _mut29494, _mut29495, _mut29496); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealVectorFormat.parse_240");
             data[i] = components.get(i).doubleValue();
         }
         return new ArrayRealVector(data, false);

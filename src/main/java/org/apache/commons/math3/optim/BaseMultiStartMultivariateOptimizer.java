@@ -20,6 +20,8 @@ import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
 import org.apache.commons.math3.random.RandomVectorGenerator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class multi-start optimizer for a multivariate function.
@@ -34,23 +36,42 @@ import org.apache.commons.math3.random.RandomVectorGenerator;
  *
  * @since 3.0
  */
-public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
-    extends BaseMultivariateOptimizer<PAIR> {
-    /** Underlying classical optimizer. */
+public abstract class BaseMultiStartMultivariateOptimizer<PAIR> extends BaseMultivariateOptimizer<PAIR> {
+
+    @Conditional
+    public static boolean _mut59452 = false, _mut59453 = false, _mut59454 = false, _mut59455 = false, _mut59456 = false, _mut59457 = false, _mut59458 = false, _mut59459 = false, _mut59460 = false, _mut59461 = false, _mut59462 = false, _mut59463 = false, _mut59464 = false, _mut59465 = false, _mut59466 = false, _mut59467 = false, _mut59468 = false, _mut59469 = false, _mut59470 = false, _mut59471 = false, _mut59472 = false, _mut59473 = false, _mut59474 = false, _mut59475 = false, _mut59476 = false, _mut59477 = false, _mut59478 = false, _mut59479 = false, _mut59480 = false, _mut59481 = false, _mut59482 = false, _mut59483 = false, _mut59484 = false, _mut59485 = false, _mut59486 = false, _mut59487 = false, _mut59488 = false, _mut59489 = false, _mut59490 = false, _mut59491 = false, _mut59492 = false, _mut59493 = false, _mut59494 = false, _mut59495 = false, _mut59496 = false, _mut59497 = false, _mut59498 = false, _mut59499 = false, _mut59500 = false, _mut59501 = false, _mut59502 = false, _mut59503 = false, _mut59504 = false, _mut59505 = false, _mut59506 = false, _mut59507 = false, _mut59508 = false, _mut59509 = false, _mut59510 = false, _mut59511 = false, _mut59512 = false, _mut59513 = false, _mut59514 = false;
+
+    /**
+     * Underlying classical optimizer.
+     */
     private final BaseMultivariateOptimizer<PAIR> optimizer;
-    /** Number of evaluations already performed for all starts. */
+
+    /**
+     * Number of evaluations already performed for all starts.
+     */
     private int totalEvaluations;
-    /** Number of starts to go. */
+
+    /**
+     * Number of starts to go.
+     */
     private int starts;
-    /** Random generator for multi-start. */
+
+    /**
+     * Random generator for multi-start.
+     */
     private RandomVectorGenerator generator;
-    /** Optimization data. */
+
+    /**
+     * Optimization data.
+     */
     private OptimizationData[] optimData;
+
     /**
      * Location in {@link #optimData} where the updated maximum
      * number of evaluations will be stored.
      */
     private int maxEvalIndex = -1;
+
     /**
      * Location in {@link #optimData} where the updated start value
      * will be stored.
@@ -75,21 +96,20 @@ public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
      * @param generator Random vector generator to use for restarts.
      * @throws NotStrictlyPositiveException if {@code starts < 1}.
      */
-    public BaseMultiStartMultivariateOptimizer(final BaseMultivariateOptimizer<PAIR> optimizer,
-                                               final int starts,
-                                               final RandomVectorGenerator generator) {
+    public BaseMultiStartMultivariateOptimizer(final BaseMultivariateOptimizer<PAIR> optimizer, final int starts, final RandomVectorGenerator generator) {
         super(optimizer.getConvergenceChecker());
-
-        if (starts < 1) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.BaseMultiStartMultivariateOptimizer_78");
+        if (ROR_less(starts, 1, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.BaseMultiStartMultivariateOptimizer_78", _mut59452, _mut59453, _mut59454, _mut59455, _mut59456)) {
             throw new NotStrictlyPositiveException(starts);
         }
-
         this.optimizer = optimizer;
         this.starts = starts;
         this.generator = generator;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getEvaluations() {
         return totalEvaluations;
@@ -129,20 +149,20 @@ public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
     @Override
     public PAIR optimize(OptimizationData... optData) {
         // Store arguments in order to pass them to the internal optimizer.
-       optimData = optData;
+        optimData = optData;
         // Set up base class and perform computations.
         return super.optimize(optData);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PAIR doOptimize() {
-        // Remove all instances of "MaxEval" and "InitialGuess" from the
-        // array that will be passed to the internal optimizer.
-        // The former is to enforce smaller numbers of allowed evaluations
-        // (according to how many have been used up already), and the latter
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138");
         // to impose a different start value for each start.
-        for (int i = 0; i < optimData.length; i++) {
+        for (int i = 0; ROR_less(i, optimData.length, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59457, _mut59458, _mut59459, _mut59460, _mut59461); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138");
             if (optimData[i] instanceof MaxEval) {
                 optimData[i] = null;
                 maxEvalIndex = i;
@@ -153,41 +173,41 @@ public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
                 continue;
             }
         }
-        if (maxEvalIndex == -1) {
+        if (ROR_equals(maxEvalIndex, -1, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59462, _mut59463, _mut59464, _mut59465, _mut59466)) {
             throw new MathIllegalStateException();
         }
-        if (initialGuessIndex == -1) {
+        if (ROR_equals(initialGuessIndex, -1, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59467, _mut59468, _mut59469, _mut59470, _mut59471)) {
             throw new MathIllegalStateException();
         }
-
         RuntimeException lastException = null;
         totalEvaluations = 0;
         clear();
-
         final int maxEval = getMaxEvaluations();
         final double[] min = getLowerBound();
         final double[] max = getUpperBound();
         final double[] startPoint = getStartPoint();
-
         // Multi-start loop.
-        for (int i = 0; i < starts; i++) {
+        for (int i = 0; ROR_less(i, starts, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59505, _mut59506, _mut59507, _mut59508, _mut59509); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138");
             // CHECKSTYLE: stop IllegalCatch
             try {
                 // Decrease number of allowed evaluations.
-                optimData[maxEvalIndex] = new MaxEval(maxEval - totalEvaluations);
+                optimData[maxEvalIndex] = new MaxEval(AOR_minus(maxEval, totalEvaluations, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59472, _mut59473, _mut59474, _mut59475));
                 // New start value.
                 double[] s = null;
-                if (i == 0) {
+                if (ROR_equals(i, 0, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59476, _mut59477, _mut59478, _mut59479, _mut59480)) {
                     s = startPoint;
                 } else {
                     int attempts = 0;
                     while (s == null) {
-                        if (attempts++ >= getMaxEvaluations()) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138");
+                        if (ROR_greater_equals(attempts++, getMaxEvaluations(), "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59481, _mut59482, _mut59483, _mut59484, _mut59485)) {
                             throw new TooManyEvaluationsException(getMaxEvaluations());
                         }
                         s = generator.nextVector();
-                        for (int k = 0; s != null && k < s.length; ++k) {
-                            if ((min != null && s[k] < min[k]) || (max != null && s[k] > max[k])) {
+                        for (int k = 0; (_mut59504 ? (s != null || ROR_less(k, s.length, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59499, _mut59500, _mut59501, _mut59502, _mut59503)) : (s != null && ROR_less(k, s.length, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59499, _mut59500, _mut59501, _mut59502, _mut59503))); ++k) {
+                            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138");
+                            if ((_mut59498 ? (((_mut59491 ? (min != null || ROR_less(s[k], min[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59486, _mut59487, _mut59488, _mut59489, _mut59490)) : (min != null && ROR_less(s[k], min[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59486, _mut59487, _mut59488, _mut59489, _mut59490)))) && ((_mut59497 ? (max != null || ROR_greater(s[k], max[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59492, _mut59493, _mut59494, _mut59495, _mut59496)) : (max != null && ROR_greater(s[k], max[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59492, _mut59493, _mut59494, _mut59495, _mut59496))))) : (((_mut59491 ? (min != null || ROR_less(s[k], min[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59486, _mut59487, _mut59488, _mut59489, _mut59490)) : (min != null && ROR_less(s[k], min[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59486, _mut59487, _mut59488, _mut59489, _mut59490)))) || ((_mut59497 ? (max != null || ROR_greater(s[k], max[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59492, _mut59493, _mut59494, _mut59495, _mut59496)) : (max != null && ROR_greater(s[k], max[k], "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59492, _mut59493, _mut59494, _mut59495, _mut59496))))))) {
                                 // reject the vector
                                 s = null;
                             }
@@ -201,17 +221,13 @@ public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
             } catch (RuntimeException mue) {
                 lastException = mue;
             }
-            // CHECKSTYLE: resume IllegalCatch
-
             totalEvaluations += optimizer.getEvaluations();
         }
-
         final PAIR[] optima = getOptima();
-        if (optima.length == 0) {
-            // All runs failed.
-            throw lastException; // Cannot be null if starts >= 1.
+        if (ROR_equals(optima.length, 0, "org.apache.commons.math3.optim.BaseMultiStartMultivariateOptimizer.doOptimize_138", _mut59510, _mut59511, _mut59512, _mut59513, _mut59514)) {
+            // Cannot be null if starts >= 1.
+            throw lastException;
         }
-
         // Return the best optimum.
         return optima[0];
     }
@@ -222,6 +238,7 @@ public abstract class BaseMultiStartMultivariateOptimizer<PAIR>
      * @param optimum Result of an optimization run.
      */
     protected abstract void store(PAIR optimum);
+
     /**
      * Method that will called in order to clear all stored optima.
      */

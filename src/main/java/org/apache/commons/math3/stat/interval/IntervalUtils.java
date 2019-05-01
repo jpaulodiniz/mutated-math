@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Factory methods to generate confidence intervals for a binomial proportion.
@@ -36,16 +38,27 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  */
 public final class IntervalUtils {
 
-    /** Singleton Agresti-Coull instance. */
+    @Conditional
+    public static boolean _mut5159 = false, _mut5160 = false, _mut5161 = false, _mut5162 = false, _mut5163 = false, _mut5164 = false, _mut5165 = false, _mut5166 = false, _mut5167 = false, _mut5168 = false, _mut5169 = false, _mut5170 = false, _mut5171 = false, _mut5172 = false, _mut5173 = false, _mut5174 = false, _mut5175 = false, _mut5176 = false, _mut5177 = false, _mut5178 = false, _mut5179 = false, _mut5180 = false, _mut5181 = false, _mut5182 = false, _mut5183 = false, _mut5184 = false;
+
+    /**
+     * Singleton Agresti-Coull instance.
+     */
     private static final BinomialConfidenceInterval AGRESTI_COULL = new AgrestiCoullInterval();
 
-    /** Singleton Clopper-Pearson instance. */
+    /**
+     * Singleton Clopper-Pearson instance.
+     */
     private static final BinomialConfidenceInterval CLOPPER_PEARSON = new ClopperPearsonInterval();
 
-    /** Singleton NormalApproximation instance. */
+    /**
+     * Singleton NormalApproximation instance.
+     */
     private static final BinomialConfidenceInterval NORMAL_APPROXIMATION = new NormalApproximationInterval();
 
-    /** Singleton Wilson score instance. */
+    /**
+     * Singleton Wilson score instance.
+     */
     private static final BinomialConfidenceInterval WILSON_SCORE = new WilsonScoreInterval();
 
     /**
@@ -70,8 +83,7 @@ public final class IntervalUtils {
      * @throws NumberIsTooLargeException if {@code numberOfSuccesses > numberOfTrials}.
      * @throws OutOfRangeException if {@code confidenceLevel} is not in the interval {@code (0, 1)}.
      */
-    public static ConfidenceInterval getAgrestiCoullInterval(int numberOfTrials, int numberOfSuccesses,
-                                                             double confidenceLevel) {
+    public static ConfidenceInterval getAgrestiCoullInterval(int numberOfTrials, int numberOfSuccesses, double confidenceLevel) {
         return AGRESTI_COULL.createInterval(numberOfTrials, numberOfSuccesses, confidenceLevel);
     }
 
@@ -99,8 +111,7 @@ public final class IntervalUtils {
      * @throws NumberIsTooLargeException if {@code numberOfSuccesses > numberOfTrials}.
      * @throws OutOfRangeException if {@code confidenceLevel} is not in the interval {@code (0, 1)}.
      */
-    public static ConfidenceInterval getClopperPearsonInterval(int numberOfTrials, int numberOfSuccesses,
-                                                               double confidenceLevel) {
+    public static ConfidenceInterval getClopperPearsonInterval(int numberOfTrials, int numberOfSuccesses, double confidenceLevel) {
         return CLOPPER_PEARSON.createInterval(numberOfTrials, numberOfSuccesses, confidenceLevel);
     }
 
@@ -117,8 +128,7 @@ public final class IntervalUtils {
      * @return Confidence interval containing the probability of success with
      *         probability {@code confidenceLevel}
      */
-    public static ConfidenceInterval getNormalApproximationInterval(int numberOfTrials, int numberOfSuccesses,
-                                                                    double confidenceLevel) {
+    public static ConfidenceInterval getNormalApproximationInterval(int numberOfTrials, int numberOfSuccesses, double confidenceLevel) {
         return NORMAL_APPROXIMATION.createInterval(numberOfTrials, numberOfSuccesses, confidenceLevel);
     }
 
@@ -138,8 +148,7 @@ public final class IntervalUtils {
      * @throws NumberIsTooLargeException if {@code numberOfSuccesses > numberOfTrials}.
      * @throws OutOfRangeException if {@code confidenceLevel} is not in the interval {@code (0, 1)}.
      */
-    public static ConfidenceInterval getWilsonScoreInterval(int numberOfTrials, int numberOfSuccesses,
-                                                            double confidenceLevel) {
+    public static ConfidenceInterval getWilsonScoreInterval(int numberOfTrials, int numberOfSuccesses, double confidenceLevel) {
         return WILSON_SCORE.createInterval(numberOfTrials, numberOfSuccesses, confidenceLevel);
     }
 
@@ -155,20 +164,18 @@ public final class IntervalUtils {
      * @throws OutOfRangeException if {@code confidenceLevel} is not in the interval {@code (0, 1)}.
      */
     static void checkParameters(int numberOfTrials, int numberOfSuccesses, double confidenceLevel) {
-        if (numberOfTrials <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157");
+        if (ROR_less_equals(numberOfTrials, 0, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5159, _mut5160, _mut5161, _mut5162, _mut5163)) {
             throw new NotStrictlyPositiveException(LocalizedFormats.NUMBER_OF_TRIALS, numberOfTrials);
         }
-        if (numberOfSuccesses < 0) {
+        if (ROR_less(numberOfSuccesses, 0, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5164, _mut5165, _mut5166, _mut5167, _mut5168)) {
             throw new NotPositiveException(LocalizedFormats.NEGATIVE_NUMBER_OF_SUCCESSES, numberOfSuccesses);
         }
-        if (numberOfSuccesses > numberOfTrials) {
-            throw new NumberIsTooLargeException(LocalizedFormats.NUMBER_OF_SUCCESS_LARGER_THAN_POPULATION_SIZE,
-                                                numberOfSuccesses, numberOfTrials, true);
+        if (ROR_greater(numberOfSuccesses, numberOfTrials, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5169, _mut5170, _mut5171, _mut5172, _mut5173)) {
+            throw new NumberIsTooLargeException(LocalizedFormats.NUMBER_OF_SUCCESS_LARGER_THAN_POPULATION_SIZE, numberOfSuccesses, numberOfTrials, true);
         }
-        if (confidenceLevel <= 0 || confidenceLevel >= 1) {
-            throw new OutOfRangeException(LocalizedFormats.OUT_OF_BOUNDS_CONFIDENCE_LEVEL,
-                                          confidenceLevel, 0, 1);
+        if ((_mut5184 ? (ROR_less_equals(confidenceLevel, 0, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5174, _mut5175, _mut5176, _mut5177, _mut5178) && ROR_greater_equals(confidenceLevel, 1, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5179, _mut5180, _mut5181, _mut5182, _mut5183)) : (ROR_less_equals(confidenceLevel, 0, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5174, _mut5175, _mut5176, _mut5177, _mut5178) || ROR_greater_equals(confidenceLevel, 1, "org.apache.commons.math3.stat.interval.IntervalUtils.checkParameters_157", _mut5179, _mut5180, _mut5181, _mut5182, _mut5183)))) {
+            throw new OutOfRangeException(LocalizedFormats.OUT_OF_BOUNDS_CONFIDENCE_LEVEL, confidenceLevel, 0, 1);
         }
     }
-
 }

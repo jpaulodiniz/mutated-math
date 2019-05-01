@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.geometry.euclidean.oned;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.geometry.Vector;
 import org.apache.commons.math3.geometry.VectorFormat;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a 1D vector in components list format "{x}".
@@ -45,14 +45,16 @@ import org.apache.commons.math3.util.CompositeFormat;
  */
 public class Vector1DFormat extends VectorFormat<Euclidean1D> {
 
+    @Conditional
+    public static boolean _mut84021 = false, _mut84022 = false, _mut84023 = false, _mut84024 = false, _mut84025 = false;
+
     /**
      * Create an instance with default settings.
      * <p>The instance uses the default prefix, suffix and separator:
      * "{", "}", and "; " and the default number format for components.</p>
      */
     public Vector1DFormat() {
-        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR,
-              CompositeFormat.getDefaultNumberFormat());
+        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -79,8 +81,7 @@ public class Vector1DFormat extends VectorFormat<Euclidean1D> {
      * @param suffix suffix to use instead of the default "}"
      * @param format the custom format for components.
      */
-    public Vector1DFormat(final String prefix, final String suffix,
-                         final NumberFormat format) {
+    public Vector1DFormat(final String prefix, final String suffix, final NumberFormat format) {
         super(prefix, suffix, DEFAULT_SEPARATOR, format);
     }
 
@@ -101,28 +102,32 @@ public class Vector1DFormat extends VectorFormat<Euclidean1D> {
         return new Vector1DFormat(CompositeFormat.getDefaultNumberFormat(locale));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public StringBuffer format(final Vector<Euclidean1D> vector, final StringBuffer toAppendTo,
-                               final FieldPosition pos) {
+    public StringBuffer format(final Vector<Euclidean1D> vector, final StringBuffer toAppendTo, final FieldPosition pos) {
         final Vector1D p1 = (Vector1D) vector;
         return format(toAppendTo, pos, p1.getX());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector1D parse(final String source) throws MathParseException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.euclidean.oned.Vector1DFormat.parse_113");
         ParsePosition parsePosition = new ParsePosition(0);
         Vector1D result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         Vector1D.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.geometry.euclidean.oned.Vector1DFormat.parse_113", _mut84021, _mut84022, _mut84023, _mut84024, _mut84025)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), Vector1D.class);
         }
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Vector1D parse(final String source, final ParsePosition pos) {
         final double[] coordinates = parseCoordinates(1, source, pos);
@@ -131,5 +136,4 @@ public class Vector1DFormat extends VectorFormat<Euclidean1D> {
         }
         return new Vector1D(coordinates[0]);
     }
-
 }

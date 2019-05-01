@@ -17,12 +17,13 @@
 package org.apache.commons.math3.fitting;
 
 import java.util.Collection;
-
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.exception.MathInternalError;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresBuilder;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem;
 import org.apache.commons.math3.linear.DiagonalMatrix;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Fits points to a {@link
@@ -37,11 +38,23 @@ import org.apache.commons.math3.linear.DiagonalMatrix;
  * @since 3.3
  */
 public class PolynomialCurveFitter extends AbstractCurveFitter {
-    /** Parametric function to be fitted. */
+
+    @Conditional
+    public static boolean _mut37977 = false, _mut37978 = false, _mut37979 = false, _mut37980 = false;
+
+    /**
+     * Parametric function to be fitted.
+     */
     private static final PolynomialFunction.Parametric FUNCTION = new PolynomialFunction.Parametric();
-    /** Initial guess. */
+
+    /**
+     * Initial guess.
+     */
     private final double[] initialGuess;
-    /** Maximum number of iterations of the optimization algorithm. */
+
+    /**
+     * Maximum number of iterations of the optimization algorithm.
+     */
     private final int maxIter;
 
     /**
@@ -51,8 +64,7 @@ public class PolynomialCurveFitter extends AbstractCurveFitter {
      * @param maxIter Maximum number of iterations of the optimization algorithm.
      * @throws MathInternalError if {@code initialGuess} is {@code null}.
      */
-    private PolynomialCurveFitter(double[] initialGuess,
-                                  int maxIter) {
+    private PolynomialCurveFitter(double[] initialGuess, int maxIter) {
         this.initialGuess = initialGuess;
         this.maxIter = maxIter;
     }
@@ -70,7 +82,8 @@ public class PolynomialCurveFitter extends AbstractCurveFitter {
      * @see #withMaxIterations(int)
      */
     public static PolynomialCurveFitter create(int degree) {
-        return new PolynomialCurveFitter(new double[degree + 1], Integer.MAX_VALUE);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.PolynomialCurveFitter.create_72");
+        return new PolynomialCurveFitter(new double[AOR_plus(degree, 1, "org.apache.commons.math3.fitting.PolynomialCurveFitter.create_72", _mut37977, _mut37978, _mut37979, _mut37980)], Integer.MAX_VALUE);
     }
 
     /**
@@ -79,8 +92,7 @@ public class PolynomialCurveFitter extends AbstractCurveFitter {
      * @return a new instance.
      */
     public PolynomialCurveFitter withStartPoint(double[] newStart) {
-        return new PolynomialCurveFitter(newStart.clone(),
-                                         maxIter);
+        return new PolynomialCurveFitter(newStart.clone(), maxIter);
     }
 
     /**
@@ -89,43 +101,30 @@ public class PolynomialCurveFitter extends AbstractCurveFitter {
      * @return a new instance.
      */
     public PolynomialCurveFitter withMaxIterations(int newMaxIter) {
-        return new PolynomialCurveFitter(initialGuess,
-                                         newMaxIter);
+        return new PolynomialCurveFitter(initialGuess, newMaxIter);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected LeastSquaresProblem getProblem(Collection<WeightedObservedPoint> observations) {
         // Prepare least-squares problem.
         final int len = observations.size();
-        final double[] target  = new double[len];
+        final double[] target = new double[len];
         final double[] weights = new double[len];
-
         int i = 0;
         for (WeightedObservedPoint obs : observations) {
-            target[i]  = obs.getY();
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.PolynomialCurveFitter.getProblem_97");
+            target[i] = obs.getY();
             weights[i] = obs.getWeight();
             ++i;
         }
-
-        final AbstractCurveFitter.TheoreticalValuesFunction model =
-                new AbstractCurveFitter.TheoreticalValuesFunction(FUNCTION, observations);
-
+        final AbstractCurveFitter.TheoreticalValuesFunction model = new AbstractCurveFitter.TheoreticalValuesFunction(FUNCTION, observations);
         if (initialGuess == null) {
             throw new MathInternalError();
         }
-
-        // Return a new least squares problem set up to fit a polynomial curve to the
         // observed points.
-        return new LeastSquaresBuilder().
-                maxEvaluations(Integer.MAX_VALUE).
-                maxIterations(maxIter).
-                start(initialGuess).
-                target(target).
-                weight(new DiagonalMatrix(weights)).
-                model(model.getModelFunction(), model.getModelFunctionJacobian()).
-                build();
-
+        return new LeastSquaresBuilder().maxEvaluations(Integer.MAX_VALUE).maxIterations(maxIter).start(initialGuess).target(target).weight(new DiagonalMatrix(weights)).model(model.getModelFunction(), model.getModelFunctionJacobian()).build();
     }
-
 }

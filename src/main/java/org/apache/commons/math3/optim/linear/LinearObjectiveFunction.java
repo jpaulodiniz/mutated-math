@@ -25,6 +25,8 @@ import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.optim.OptimizationData;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * An objective function for a linear optimization problem.
@@ -39,15 +41,24 @@ import org.apache.commons.math3.optim.OptimizationData;
  *
  * @since 2.0
  */
-public class LinearObjectiveFunction
-    implements MultivariateFunction,
-               OptimizationData,
-               Serializable {
-    /** Serializable version identifier. */
+public class LinearObjectiveFunction implements MultivariateFunction, OptimizationData, Serializable {
+
+    @Conditional
+    public static boolean _mut59956 = false, _mut59957 = false, _mut59958 = false, _mut59959 = false, _mut59960 = false, _mut59961 = false, _mut59962 = false, _mut59963 = false, _mut59964 = false, _mut59965 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = -4531815507568396090L;
-    /** Coefficients of the linear equation (c<sub>i</sub>). */
+
+    /**
+     * Coefficients of the linear equation (c<sub>i</sub>).
+     */
     private final transient RealVector coefficients;
-    /** Constant term of the linear equation. */
+
+    /**
+     * Constant term of the linear equation.
+     */
     private final double constantTerm;
 
     /**
@@ -102,24 +113,29 @@ public class LinearObjectiveFunction
      * @return the value of the linear equation at the current point.
      */
     public double value(final RealVector point) {
-        return coefficients.dotProduct(point) + constantTerm;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.linear.LinearObjectiveFunction.value_104");
+        return AOR_plus(coefficients.dotProduct(point), constantTerm, "org.apache.commons.math3.optim.linear.LinearObjectiveFunction.value_104", _mut59956, _mut59957, _mut59958, _mut59959);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object other) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.linear.LinearObjectiveFunction.equals_109");
         if (this == other) {
             return true;
         }
         if (other instanceof LinearObjectiveFunction) {
             LinearObjectiveFunction rhs = (LinearObjectiveFunction) other;
-          return (constantTerm == rhs.constantTerm) && coefficients.equals(rhs.coefficients);
+            return (_mut59965 ? ((ROR_equals(constantTerm, rhs.constantTerm, "org.apache.commons.math3.optim.linear.LinearObjectiveFunction.equals_109", _mut59960, _mut59961, _mut59962, _mut59963, _mut59964)) || coefficients.equals(rhs.coefficients)) : ((ROR_equals(constantTerm, rhs.constantTerm, "org.apache.commons.math3.optim.linear.LinearObjectiveFunction.equals_109", _mut59960, _mut59961, _mut59962, _mut59963, _mut59964)) && coefficients.equals(rhs.coefficients)));
         }
-
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Double.valueOf(constantTerm).hashCode() ^ coefficients.hashCode();
@@ -130,8 +146,7 @@ public class LinearObjectiveFunction
      * @param oos stream where object should be written
      * @throws IOException if object cannot be written to stream
      */
-    private void writeObject(ObjectOutputStream oos)
-        throws IOException {
+    private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         MatrixUtils.serializeRealVector(coefficients, oos);
     }
@@ -142,8 +157,7 @@ public class LinearObjectiveFunction
      * @throws ClassNotFoundException if a class in the stream cannot be found
      * @throws IOException if object cannot be read from the stream
      */
-    private void readObject(ObjectInputStream ois)
-      throws ClassNotFoundException, IOException {
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
         ois.defaultReadObject();
         MatrixUtils.deserializeRealVector(this, "coefficients", ois);
     }

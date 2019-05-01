@@ -14,11 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import java.util.Arrays;
-
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.exception.DimensionMismatchException;
@@ -32,7 +30,8 @@ import org.apache.commons.math3.ode.FieldODEState;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
 import org.apache.commons.math3.util.MathArrays;
 import org.apache.commons.math3.util.MathUtils;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements implicit Adams-Moulton integrators for Ordinary
@@ -162,7 +161,12 @@ import org.apache.commons.math3.util.MathUtils;
  */
 public class AdamsMoultonFieldIntegrator<T extends RealFieldElement<T>> extends AdamsFieldIntegrator<T> {
 
-    /** Integrator method name. */
+    @Conditional
+    public static boolean _mut17153 = false, _mut17154 = false, _mut17155 = false, _mut17156 = false, _mut17157 = false, _mut17158 = false, _mut17159 = false, _mut17160 = false, _mut17161 = false, _mut17162 = false, _mut17163 = false, _mut17164 = false, _mut17165 = false, _mut17166 = false, _mut17167 = false, _mut17168 = false, _mut17169 = false, _mut17170 = false, _mut17171 = false, _mut17172 = false, _mut17173 = false, _mut17174 = false, _mut17175 = false, _mut17176 = false, _mut17177 = false, _mut17178 = false, _mut17179 = false, _mut17180 = false, _mut17181 = false, _mut17182 = false, _mut17183 = false, _mut17184 = false, _mut17185 = false, _mut17186 = false, _mut17187 = false, _mut17188 = false, _mut17189 = false, _mut17190 = false, _mut17191 = false, _mut17192 = false, _mut17193 = false, _mut17194 = false, _mut17195 = false, _mut17196 = false, _mut17197 = false, _mut17198 = false, _mut17199 = false, _mut17200 = false, _mut17201 = false, _mut17202 = false, _mut17203 = false, _mut17204 = false, _mut17205 = false, _mut17206 = false, _mut17207 = false, _mut17208 = false, _mut17209 = false, _mut17210 = false, _mut17211 = false, _mut17212 = false, _mut17213 = false, _mut17214 = false, _mut17215 = false, _mut17216 = false, _mut17217 = false, _mut17218 = false, _mut17219 = false, _mut17220 = false;
+
+    /**
+     * Integrator method name.
+     */
     private static final String METHOD_NAME = "Adams-Moulton";
 
     /**
@@ -179,13 +183,9 @@ public class AdamsMoultonFieldIntegrator<T extends RealFieldElement<T>> extends 
      * @param scalRelativeTolerance allowed relative error
      * @exception NumberIsTooSmallException if order is 1 or less
      */
-    public AdamsMoultonFieldIntegrator(final Field<T> field, final int nSteps,
-                                       final double minStep, final double maxStep,
-                                       final double scalAbsoluteTolerance,
-                                       final double scalRelativeTolerance)
-        throws NumberIsTooSmallException {
-        super(field, METHOD_NAME, nSteps, nSteps + 1, minStep, maxStep,
-              scalAbsoluteTolerance, scalRelativeTolerance);
+    public AdamsMoultonFieldIntegrator(final Field<T> field, final int nSteps, final double minStep, final double maxStep, final double scalAbsoluteTolerance, final double scalRelativeTolerance) throws NumberIsTooSmallException {
+        super(field, METHOD_NAME, nSteps, AOR_plus(nSteps, 1, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.AdamsMoultonFieldIntegrator_182", _mut17153, _mut17154, _mut17155, _mut17156), minStep, maxStep, scalAbsoluteTolerance, scalRelativeTolerance);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.AdamsMoultonFieldIntegrator_182");
     }
 
     /**
@@ -202,140 +202,100 @@ public class AdamsMoultonFieldIntegrator<T extends RealFieldElement<T>> extends 
      * @param vecRelativeTolerance allowed relative error
      * @exception IllegalArgumentException if order is 1 or less
      */
-    public AdamsMoultonFieldIntegrator(final Field<T> field, final int nSteps,
-                                       final double minStep, final double maxStep,
-                                       final double[] vecAbsoluteTolerance,
-                                       final double[] vecRelativeTolerance)
-        throws IllegalArgumentException {
-        super(field, METHOD_NAME, nSteps, nSteps + 1, minStep, maxStep,
-              vecAbsoluteTolerance, vecRelativeTolerance);
+    public AdamsMoultonFieldIntegrator(final Field<T> field, final int nSteps, final double minStep, final double maxStep, final double[] vecAbsoluteTolerance, final double[] vecRelativeTolerance) throws IllegalArgumentException {
+        super(field, METHOD_NAME, nSteps, AOR_plus(nSteps, 1, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.AdamsMoultonFieldIntegrator_205", _mut17157, _mut17158, _mut17159, _mut17160), minStep, maxStep, vecAbsoluteTolerance, vecRelativeTolerance);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.AdamsMoultonFieldIntegrator_205");
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public FieldODEStateAndDerivative<T> integrate(final FieldExpandableODE<T> equations,
-                                                   final FieldODEState<T> initialState,
-                                                   final T finalTime)
-        throws NumberIsTooSmallException, DimensionMismatchException,
-               MaxCountExceededException, NoBracketingException {
-
+    public FieldODEStateAndDerivative<T> integrate(final FieldExpandableODE<T> equations, final FieldODEState<T> initialState, final T finalTime) throws NumberIsTooSmallException, DimensionMismatchException, MaxCountExceededException, NoBracketingException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215");
         sanityChecks(initialState, finalTime);
-        final T   t0 = initialState.getTime();
-        final T[] y  = equations.getMapper().mapState(initialState);
+        final T t0 = initialState.getTime();
+        final T[] y = equations.getMapper().mapState(initialState);
         setStepStart(initIntegration(equations, t0, y, finalTime));
-        final boolean forward = finalTime.subtract(initialState.getTime()).getReal() > 0;
-
+        final boolean forward = ROR_greater(finalTime.subtract(initialState.getTime()).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17161, _mut17162, _mut17163, _mut17164, _mut17165);
         // compute the initial Nordsieck vector using the configured starter integrator
         start(equations, getStepStart(), finalTime);
-
         // reuse the step that was chosen by the starter integrator
         FieldODEStateAndDerivative<T> stepStart = getStepStart();
-        FieldODEStateAndDerivative<T> stepEnd   =
-                        AdamsFieldStepInterpolator.taylor(stepStart,
-                                                          stepStart.getTime().add(getStepSize()),
-                                                          getStepSize(), scaled, nordsieck);
-
+        FieldODEStateAndDerivative<T> stepEnd = AdamsFieldStepInterpolator.taylor(stepStart, stepStart.getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
         // main integration loop
         setIsLastStep(false);
         do {
-
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215");
             T[] predictedY = null;
             final T[] predictedScaled = MathArrays.buildArray(getField(), y.length);
             Array2DRowFieldMatrix<T> predictedNordsieck = null;
             T error = getField().getZero().add(10);
-            while (error.subtract(1.0).getReal() >= 0.0) {
-
+            while (ROR_greater_equals(error.subtract(1.0).getReal(), 0.0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17176, _mut17177, _mut17178, _mut17179, _mut17180)) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215");
                 // predict a first estimate of the state at step end (P in the PECE sequence)
                 predictedY = stepEnd.getState();
-
                 // evaluate a first estimate of the derivative (first E in the PECE sequence)
                 final T[] yDot = computeDerivatives(stepEnd.getTime(), predictedY);
-
                 // update Nordsieck vector
-                for (int j = 0; j < predictedScaled.length; ++j) {
+                for (int j = 0; ROR_less(j, predictedScaled.length, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17166, _mut17167, _mut17168, _mut17169, _mut17170); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215");
                     predictedScaled[j] = getStepSize().multiply(yDot[j]);
                 }
                 predictedNordsieck = updateHighOrderDerivativesPhase1(nordsieck);
                 updateHighOrderDerivativesPhase2(scaled, predictedScaled, predictedNordsieck);
-
                 // apply correction (C in the PECE sequence)
                 error = predictedNordsieck.walkInOptimizedOrder(new Corrector(y, predictedScaled, predictedY));
-
-                if (error.subtract(1.0).getReal() >= 0.0) {
+                if (ROR_greater_equals(error.subtract(1.0).getReal(), 0.0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17171, _mut17172, _mut17173, _mut17174, _mut17175)) {
                     // reject the step and attempt to reduce error by stepsize control
                     final T factor = computeStepGrowShrinkFactor(error);
                     rescale(filterStep(getStepSize().multiply(factor), forward, false));
-                    stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(),
-                                                                getStepStart().getTime().add(getStepSize()),
-                                                                getStepSize(),
-                                                                scaled,
-                                                                nordsieck);
+                    stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
                 }
             }
-
             // evaluate a final estimate of the derivative (second E in the PECE sequence)
             final T[] correctedYDot = computeDerivatives(stepEnd.getTime(), predictedY);
-
             // update Nordsieck vector
             final T[] correctedScaled = MathArrays.buildArray(getField(), y.length);
-            for (int j = 0; j < correctedScaled.length; ++j) {
+            for (int j = 0; ROR_less(j, correctedScaled.length, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17181, _mut17182, _mut17183, _mut17184, _mut17185); ++j) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215");
                 correctedScaled[j] = getStepSize().multiply(correctedYDot[j]);
             }
             updateHighOrderDerivativesPhase2(predictedScaled, correctedScaled, predictedNordsieck);
-
             // discrete events handling
             stepEnd = new FieldODEStateAndDerivative<T>(stepEnd.getTime(), predictedY, correctedYDot);
-            setStepStart(acceptStep(new AdamsFieldStepInterpolator<T>(getStepSize(), stepEnd,
-                                                                      correctedScaled, predictedNordsieck, forward,
-                                                                      getStepStart(), stepEnd,
-                                                                      equations.getMapper()),
-                                    finalTime));
-            scaled    = correctedScaled;
+            setStepStart(acceptStep(new AdamsFieldStepInterpolator<T>(getStepSize(), stepEnd, correctedScaled, predictedNordsieck, forward, getStepStart(), stepEnd, equations.getMapper()), finalTime));
+            scaled = correctedScaled;
             nordsieck = predictedNordsieck;
-
             if (!isLastStep()) {
-
                 System.arraycopy(predictedY, 0, y, 0, y.length);
-
                 if (resetOccurred()) {
-                    // some events handler has triggered changes that
                     // invalidate the derivatives, we need to restart from scratch
                     start(equations, getStepStart(), finalTime);
                 }
-
                 // stepsize control for next step
-                final T  factor     = computeStepGrowShrinkFactor(error);
-                final T  scaledH    = getStepSize().multiply(factor);
-                final T  nextT      = getStepStart().getTime().add(scaledH);
-                final boolean nextIsLast = forward ?
-                                           nextT.subtract(finalTime).getReal() >= 0 :
-                                           nextT.subtract(finalTime).getReal() <= 0;
+                final T factor = computeStepGrowShrinkFactor(error);
+                final T scaledH = getStepSize().multiply(factor);
+                final T nextT = getStepStart().getTime().add(scaledH);
+                final boolean nextIsLast = forward ? ROR_greater_equals(nextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17191, _mut17192, _mut17193, _mut17194, _mut17195) : ROR_less_equals(nextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17186, _mut17187, _mut17188, _mut17189, _mut17190);
                 T hNew = filterStep(scaledH, forward, nextIsLast);
-
-                final T  filteredNextT      = getStepStart().getTime().add(hNew);
-                final boolean filteredNextIsLast = forward ?
-                                                   filteredNextT.subtract(finalTime).getReal() >= 0 :
-                                                   filteredNextT.subtract(finalTime).getReal() <= 0;
+                final T filteredNextT = getStepStart().getTime().add(hNew);
+                final boolean filteredNextIsLast = forward ? ROR_greater_equals(filteredNextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17201, _mut17202, _mut17203, _mut17204, _mut17205) : ROR_less_equals(filteredNextT.subtract(finalTime).getReal(), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.integrate_215", _mut17196, _mut17197, _mut17198, _mut17199, _mut17200);
                 if (filteredNextIsLast) {
                     hNew = finalTime.subtract(getStepStart().getTime());
                 }
-
                 rescale(hNew);
-                stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()),
-                                                            getStepSize(), scaled, nordsieck);
-
+                stepEnd = AdamsFieldStepInterpolator.taylor(getStepStart(), getStepStart().getTime().add(getStepSize()), getStepSize(), scaled, nordsieck);
             }
-
         } while (!isLastStep());
-
         final FieldODEStateAndDerivative<T> finalState = getStepStart();
         setStepStart(null);
         setStepSize(null);
         return finalState;
-
     }
 
-    /** Corrector for current state in Adams-Moulton method.
+    /**
+     * Corrector for current state in Adams-Moulton method.
      * <p>
      * This visitor implements the Taylor series formula:
      * <pre>
@@ -345,39 +305,52 @@ public class AdamsMoultonFieldIntegrator<T extends RealFieldElement<T>> extends 
      */
     private class Corrector implements FieldMatrixPreservingVisitor<T> {
 
-        /** Previous state. */
+        /**
+         * Previous state.
+         */
         private final T[] previous;
 
-        /** Current scaled first derivative. */
+        /**
+         * Current scaled first derivative.
+         */
         private final T[] scaled;
 
-        /** Current state before correction. */
+        /**
+         * Current state before correction.
+         */
         private final T[] before;
 
-        /** Current state after correction. */
+        /**
+         * Current state after correction.
+         */
         private final T[] after;
 
-        /** Simple constructor.
+        /**
+         * Simple constructor.
          * @param previous previous state
          * @param scaled current scaled first derivative
          * @param state state to correct (will be overwritten after visit)
          */
         Corrector(final T[] previous, final T[] scaled, final T[] state) {
             this.previous = previous;
-            this.scaled   = scaled;
-            this.after    = state;
-            this.before   = state.clone();
+            this.scaled = scaled;
+            this.after = state;
+            this.before = state.clone();
         }
 
-        /** {@inheritDoc} */
-        public void start(int rows, int columns,
-                          int startRow, int endRow, int startColumn, int endColumn) {
+        /**
+         * {@inheritDoc}
+         */
+        public void start(int rows, int columns, int startRow, int endRow, int startColumn, int endColumn) {
             Arrays.fill(after, getField().getZero());
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public void visit(int row, int column, T value) {
-            if ((row & 0x1) == 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.visit_379");
+            if (ROR_equals((row & 0x1), 0, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.visit_379", _mut17206, _mut17207, _mut17208, _mut17209, _mut17210)) {
                 after[column] = after[column].subtract(value);
             } else {
                 after[column] = after[column].add(value);
@@ -394,23 +367,20 @@ public class AdamsMoultonFieldIntegrator<T extends RealFieldElement<T>> extends 
          * must be rejected
          */
         public T end() {
-
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.end_396");
             T error = getField().getZero();
-            for (int i = 0; i < after.length; ++i) {
+            for (int i = 0; ROR_less(i, after.length, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.end_396", _mut17216, _mut17217, _mut17218, _mut17219, _mut17220); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.end_396");
                 after[i] = after[i].add(previous[i].add(scaled[i]));
-                if (i < mainSetDimension) {
+                if (ROR_less(i, mainSetDimension, "org.apache.commons.math3.ode.nonstiff.AdamsMoultonFieldIntegrator.end_396", _mut17211, _mut17212, _mut17213, _mut17214, _mut17215)) {
                     final T yScale = MathUtils.max(previous[i].abs(), after[i].abs());
-                    final T tol = (vecAbsoluteTolerance == null) ?
-                                  yScale.multiply(scalRelativeTolerance).add(scalAbsoluteTolerance) :
-                                  yScale.multiply(vecRelativeTolerance[i]).add(vecAbsoluteTolerance[i]);
-                    final T ratio  = after[i].subtract(before[i]).divide(tol); // (corrected-predicted)/tol
+                    final T tol = (vecAbsoluteTolerance == null) ? yScale.multiply(scalRelativeTolerance).add(scalAbsoluteTolerance) : yScale.multiply(vecRelativeTolerance[i]).add(vecAbsoluteTolerance[i]);
+                    // (corrected-predicted)/tol
+                    final T ratio = after[i].subtract(before[i]).divide(tol);
                     error = error.add(ratio.multiply(ratio));
                 }
             }
-
             return error.divide(mainSetDimension).sqrt();
-
         }
     }
-
 }

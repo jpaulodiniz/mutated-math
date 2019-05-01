@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization;
 
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.DiagonalMatrix;
 import org.apache.commons.math3.linear.NonSquareMatrixException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Weight matrix of the residuals between model and observations.
@@ -31,7 +32,13 @@ import org.apache.commons.math3.linear.NonSquareMatrixException;
  */
 @Deprecated
 public class Weight implements OptimizationData {
-    /** Weight matrix. */
+
+    @Conditional
+    public static boolean _mut72040 = false, _mut72041 = false, _mut72042 = false, _mut72043 = false, _mut72044 = false;
+
+    /**
+     * Weight matrix.
+     */
     private final RealMatrix weightMatrix;
 
     /**
@@ -49,11 +56,10 @@ public class Weight implements OptimizationData {
      * a square matrix.
      */
     public Weight(RealMatrix weight) {
-        if (weight.getColumnDimension() != weight.getRowDimension()) {
-            throw new NonSquareMatrixException(weight.getColumnDimension(),
-                                               weight.getRowDimension());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.Weight.Weight_51");
+        if (ROR_not_equals(weight.getColumnDimension(), weight.getRowDimension(), "org.apache.commons.math3.optimization.Weight.Weight_51", _mut72040, _mut72041, _mut72042, _mut72043, _mut72044)) {
+            throw new NonSquareMatrixException(weight.getColumnDimension(), weight.getRowDimension());
         }
-
         weightMatrix = weight.copy();
     }
 

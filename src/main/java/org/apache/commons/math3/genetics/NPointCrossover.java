@@ -18,13 +18,14 @@ package org.apache.commons.math3.genetics;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.random.RandomGenerator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * N-point crossover policy. For each iteration a random crossover point is
@@ -51,7 +52,12 @@ import org.apache.commons.math3.random.RandomGenerator;
  */
 public class NPointCrossover<T> implements CrossoverPolicy {
 
-    /** The number of crossover points. */
+    @Conditional
+    public static boolean _mut2325 = false, _mut2326 = false, _mut2327 = false, _mut2328 = false, _mut2329 = false, _mut2330 = false, _mut2331 = false, _mut2332 = false, _mut2333 = false, _mut2334 = false, _mut2335 = false, _mut2336 = false, _mut2337 = false, _mut2338 = false, _mut2339 = false, _mut2340 = false, _mut2341 = false, _mut2342 = false, _mut2343 = false, _mut2344 = false, _mut2345 = false, _mut2346 = false, _mut2347 = false, _mut2348 = false, _mut2349 = false, _mut2350 = false, _mut2351 = false, _mut2352 = false, _mut2353 = false, _mut2354 = false, _mut2355 = false, _mut2356 = false, _mut2357 = false, _mut2358 = false, _mut2359 = false, _mut2360 = false, _mut2361 = false, _mut2362 = false, _mut2363 = false, _mut2364 = false, _mut2365 = false, _mut2366 = false, _mut2367 = false, _mut2368 = false, _mut2369 = false, _mut2370 = false, _mut2371 = false;
+
+    /**
+     * The number of crossover points.
+     */
     private final int crossoverPoints;
 
     /**
@@ -64,7 +70,8 @@ public class NPointCrossover<T> implements CrossoverPolicy {
      * @throws NotStrictlyPositiveException if the number of {@code crossoverPoints} is not strictly positive
      */
     public NPointCrossover(final int crossoverPoints) throws NotStrictlyPositiveException {
-        if (crossoverPoints <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.NPointCrossover_66");
+        if (ROR_less_equals(crossoverPoints, 0, "org.apache.commons.math3.genetics.NPointCrossover.NPointCrossover_66", _mut2325, _mut2326, _mut2327, _mut2328, _mut2329)) {
             throw new NotStrictlyPositiveException(crossoverPoints);
         }
         this.crossoverPoints = crossoverPoints;
@@ -103,11 +110,11 @@ public class NPointCrossover<T> implements CrossoverPolicy {
      *   not an instance of {@link AbstractListChromosome}
      * @throws DimensionMismatchException if the length of the two chromosomes is different
      */
-    @SuppressWarnings("unchecked") // OK because of instanceof checks
-    public ChromosomePair crossover(final Chromosome first, final Chromosome second)
-        throws DimensionMismatchException, MathIllegalArgumentException {
-
-        if (!(first instanceof AbstractListChromosome<?> && second instanceof AbstractListChromosome<?>)) {
+    // OK because of instanceof checks
+    @SuppressWarnings("unchecked")
+    public ChromosomePair crossover(final Chromosome first, final Chromosome second) throws DimensionMismatchException, MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.crossover_106");
+        if (!((_mut2330 ? (first instanceof AbstractListChromosome<?> || second instanceof AbstractListChromosome<?>) : (first instanceof AbstractListChromosome<?> && second instanceof AbstractListChromosome<?>)))) {
             throw new MathIllegalArgumentException(LocalizedFormats.INVALID_FIXED_LENGTH_CHROMOSOME);
         }
         return mate((AbstractListChromosome<T>) first, (AbstractListChromosome<T>) second);
@@ -122,57 +129,48 @@ public class NPointCrossover<T> implements CrossoverPolicy {
      * @throws DimensionMismatchException if the length of the two chromosomes is different
      * @throws NumberIsTooLargeException if the number of crossoverPoints is too large for the actual chromosomes
      */
-    private ChromosomePair mate(final AbstractListChromosome<T> first,
-                                final AbstractListChromosome<T> second)
-        throws DimensionMismatchException, NumberIsTooLargeException {
-
+    private ChromosomePair mate(final AbstractListChromosome<T> first, final AbstractListChromosome<T> second) throws DimensionMismatchException, NumberIsTooLargeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.mate_125");
         final int length = first.getLength();
-        if (length != second.getLength()) {
+        if (ROR_not_equals(length, second.getLength(), "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2331, _mut2332, _mut2333, _mut2334, _mut2335)) {
             throw new DimensionMismatchException(second.getLength(), length);
         }
-        if (crossoverPoints >= length) {
+        if (ROR_greater_equals(crossoverPoints, length, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2336, _mut2337, _mut2338, _mut2339, _mut2340)) {
             throw new NumberIsTooLargeException(crossoverPoints, length, false);
         }
-
         // array representations of the parents
         final List<T> parent1Rep = first.getRepresentation();
         final List<T> parent2Rep = second.getRepresentation();
         // and of the children
         final List<T> child1Rep = new ArrayList<T>(length);
         final List<T> child2Rep = new ArrayList<T>(length);
-
         final RandomGenerator random = GeneticAlgorithm.getRandomGenerator();
-
         List<T> c1 = child1Rep;
         List<T> c2 = child2Rep;
-
         int remainingPoints = crossoverPoints;
         int lastIndex = 0;
-        for (int i = 0; i < crossoverPoints; i++, remainingPoints--) {
+        for (int i = 0; ROR_less(i, crossoverPoints, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2362, _mut2363, _mut2364, _mut2365, _mut2366); i++, remainingPoints--) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.mate_125");
             // select the next crossover point at random
-            final int crossoverIndex = 1 + lastIndex + random.nextInt(length - lastIndex - remainingPoints);
-
+            final int crossoverIndex = AOR_plus(AOR_plus(1, lastIndex, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2341, _mut2342, _mut2343, _mut2344), random.nextInt(AOR_minus(AOR_minus(length, lastIndex, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2345, _mut2346, _mut2347, _mut2348), remainingPoints, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2349, _mut2350, _mut2351, _mut2352)), "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2353, _mut2354, _mut2355, _mut2356);
             // copy the current segment
-            for (int j = lastIndex; j < crossoverIndex; j++) {
+            for (int j = lastIndex; ROR_less(j, crossoverIndex, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2357, _mut2358, _mut2359, _mut2360, _mut2361); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.mate_125");
                 c1.add(parent1Rep.get(j));
                 c2.add(parent2Rep.get(j));
             }
-
             // swap the children for the next segment
             List<T> tmp = c1;
             c1 = c2;
             c2 = tmp;
-
             lastIndex = crossoverIndex;
         }
-
         // copy the last segment
-        for (int j = lastIndex; j < length; j++) {
+        for (int j = lastIndex; ROR_less(j, length, "org.apache.commons.math3.genetics.NPointCrossover.mate_125", _mut2367, _mut2368, _mut2369, _mut2370, _mut2371); j++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.NPointCrossover.mate_125");
             c1.add(parent1Rep.get(j));
             c2.add(parent2Rep.get(j));
         }
-
-        return new ChromosomePair(first.newFixedLengthChromosome(child1Rep),
-                                  second.newFixedLengthChromosome(child2Rep));
+        return new ChromosomePair(first.newFixedLengthChromosome(child1Rep), second.newFixedLengthChromosome(child2Rep));
     }
 }

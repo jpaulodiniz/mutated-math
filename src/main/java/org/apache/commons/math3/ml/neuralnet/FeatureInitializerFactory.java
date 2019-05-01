@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.neuralnet;
 
 import org.apache.commons.math3.distribution.RealDistribution;
@@ -22,6 +21,8 @@ import org.apache.commons.math3.distribution.UniformRealDistribution;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.analysis.function.Constant;
 import org.apache.commons.math3.random.RandomGenerator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Creates functions that will select the initial values of a neuron's
@@ -30,8 +31,15 @@ import org.apache.commons.math3.random.RandomGenerator;
  * @since 3.3
  */
 public class FeatureInitializerFactory {
-    /** Class contains only static methods. */
-    private FeatureInitializerFactory() {}
+
+    @Conditional
+    public static boolean _mut102751 = false, _mut102752 = false, _mut102753 = false, _mut102754 = false;
+
+    /**
+     * Class contains only static methods.
+     */
+    private FeatureInitializerFactory() {
+    }
 
     /**
      * Uniform sampling of the given range.
@@ -45,11 +53,8 @@ public class FeatureInitializerFactory {
      * @throws org.apache.commons.math3.exception.NumberIsTooLargeException
      * if {@code min >= max}.
      */
-    public static FeatureInitializer uniform(final RandomGenerator rng,
-                                             final double min,
-                                             final double max) {
-        return randomize(new UniformRealDistribution(rng, min, max),
-                         function(new Constant(0), 0, 0));
+    public static FeatureInitializer uniform(final RandomGenerator rng, final double min, final double max) {
+        return randomize(new UniformRealDistribution(rng, min, max), function(new Constant(0), 0, 0));
     }
 
     /**
@@ -62,10 +67,8 @@ public class FeatureInitializerFactory {
      * @throws org.apache.commons.math3.exception.NumberIsTooLargeException
      * if {@code min >= max}.
      */
-    public static FeatureInitializer uniform(final double min,
-                                             final double max) {
-        return randomize(new UniformRealDistribution(min, max),
-                         function(new Constant(0), 0, 0));
+    public static FeatureInitializer uniform(final double min, final double max) {
+        return randomize(new UniformRealDistribution(min, max), function(new Constant(0), 0, 0));
     }
 
     /**
@@ -78,14 +81,17 @@ public class FeatureInitializerFactory {
      * @param inc Increment
      * @return the initializer.
      */
-    public static FeatureInitializer function(final UnivariateFunction f,
-                                              final double init,
-                                              final double inc) {
+    public static FeatureInitializer function(final UnivariateFunction f, final double init, final double inc) {
         return new FeatureInitializer() {
-            /** Argument. */
+
+            /**
+             * Argument.
+             */
             private double arg = init;
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public double value() {
                 final double result = f.value(arg);
                 arg += inc;
@@ -102,12 +108,16 @@ public class FeatureInitializerFactory {
      * @return an initializer whose {@link FeatureInitializer#value() value}
      * method will return {@code orig.value() + random.sample()}.
      */
-    public static FeatureInitializer randomize(final RealDistribution random,
-                                               final FeatureInitializer orig) {
+    public static FeatureInitializer randomize(final RealDistribution random, final FeatureInitializer orig) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.FeatureInitializerFactory.value_109");
         return new FeatureInitializer() {
-            /** {@inheritDoc} */
+
+            /**
+             * {@inheritDoc}
+             */
             public double value() {
-                return orig.value() + random.sample();
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.FeatureInitializerFactory.value_109");
+                return AOR_plus(orig.value(), random.sample(), "org.apache.commons.math3.ml.neuralnet.FeatureInitializerFactory.value_109", _mut102751, _mut102752, _mut102753, _mut102754);
             }
         };
     }

@@ -14,76 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.util.FastMath;
-
-
-/**
- * This class implements the Luther sixth order Runge-Kutta
- * integrator for Ordinary Differential Equations.
-
- * <p>
- * This method is described in H. A. Luther 1968 paper <a
- * href="http://www.ams.org/journals/mcom/1968-22-102/S0025-5718-68-99876-1/S0025-5718-68-99876-1.pdf">
- * An explicit Sixth-Order Runge-Kutta Formula</a>.
- * </p>
-
- * <p>This method is an explicit Runge-Kutta method, its Butcher-array
- * is the following one :
- * <pre>
- *        0   |               0                     0                     0                     0                     0                     0
- *        1   |               1                     0                     0                     0                     0                     0
- *       1/2  |              3/8                   1/8                    0                     0                     0                     0
- *       2/3  |              8/27                  2/27                  8/27                   0                     0                     0
- *   (7-q)/14 | (  -21 +   9q)/392    (  -56 +   8q)/392    (  336 -  48q)/392    (  -63 +   3q)/392                  0                     0
- *   (7+q)/14 | (-1155 - 255q)/1960   ( -280 -  40q)/1960   (    0 - 320q)/1960   (   63 + 363q)/1960   ( 2352 + 392q)/1960                 0
- *        1   | (  330 + 105q)/180    (  120 +   0q)/180    ( -200 + 280q)/180    (  126 - 189q)/180    ( -686 - 126q)/180     ( 490 -  70q)/180
- *            |--------------------------------------------------------------------------------------------------------------------------------------------------
- *            |              1/20                   0                   16/45                  0                   49/180                 49/180         1/20
- * </pre>
- * where q = &radic;21</p>
- *
- * @see EulerIntegrator
- * @see ClassicalRungeKuttaIntegrator
- * @see GillIntegrator
- * @see MidpointIntegrator
- * @see ThreeEighthesIntegrator
- * @since 3.3
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 public class LutherIntegrator extends RungeKuttaIntegrator {
 
-    /** Square root. */
+    @Conditional
+    public static boolean _mut18706 = false, _mut18707 = false, _mut18708 = false, _mut18709 = false, _mut18710 = false, _mut18711 = false, _mut18712 = false, _mut18713 = false, _mut18714 = false, _mut18715 = false, _mut18716 = false, _mut18717 = false, _mut18718 = false, _mut18719 = false, _mut18720 = false, _mut18721 = false, _mut18722 = false, _mut18723 = false, _mut18724 = false, _mut18725 = false, _mut18726 = false, _mut18727 = false, _mut18728 = false, _mut18729 = false, _mut18730 = false, _mut18731 = false, _mut18732 = false, _mut18733 = false, _mut18734 = false, _mut18735 = false, _mut18736 = false, _mut18737 = false, _mut18738 = false, _mut18739 = false, _mut18740 = false, _mut18741 = false, _mut18742 = false, _mut18743 = false, _mut18744 = false, _mut18745 = false, _mut18746 = false, _mut18747 = false, _mut18748 = false, _mut18749 = false, _mut18750 = false, _mut18751 = false, _mut18752 = false, _mut18753 = false, _mut18754 = false, _mut18755 = false, _mut18756 = false, _mut18757 = false, _mut18758 = false, _mut18759 = false, _mut18760 = false, _mut18761 = false, _mut18762 = false, _mut18763 = false, _mut18764 = false, _mut18765 = false, _mut18766 = false, _mut18767 = false, _mut18768 = false, _mut18769 = false, _mut18770 = false, _mut18771 = false, _mut18772 = false, _mut18773 = false, _mut18774 = false, _mut18775 = false, _mut18776 = false, _mut18777 = false, _mut18778 = false, _mut18779 = false, _mut18780 = false, _mut18781 = false, _mut18782 = false, _mut18783 = false, _mut18784 = false, _mut18785 = false, _mut18786 = false, _mut18787 = false, _mut18788 = false, _mut18789 = false, _mut18790 = false, _mut18791 = false, _mut18792 = false, _mut18793 = false, _mut18794 = false, _mut18795 = false, _mut18796 = false, _mut18797 = false, _mut18798 = false, _mut18799 = false, _mut18800 = false, _mut18801 = false, _mut18802 = false, _mut18803 = false, _mut18804 = false, _mut18805 = false, _mut18806 = false, _mut18807 = false, _mut18808 = false, _mut18809 = false, _mut18810 = false, _mut18811 = false, _mut18812 = false, _mut18813 = false, _mut18814 = false, _mut18815 = false, _mut18816 = false, _mut18817 = false, _mut18818 = false, _mut18819 = false, _mut18820 = false, _mut18821 = false, _mut18822 = false, _mut18823 = false, _mut18824 = false, _mut18825 = false, _mut18826 = false, _mut18827 = false, _mut18828 = false, _mut18829 = false, _mut18830 = false, _mut18831 = false, _mut18832 = false, _mut18833 = false, _mut18834 = false, _mut18835 = false, _mut18836 = false, _mut18837 = false, _mut18838 = false, _mut18839 = false, _mut18840 = false, _mut18841 = false, _mut18842 = false, _mut18843 = false, _mut18844 = false, _mut18845 = false, _mut18846 = false, _mut18847 = false, _mut18848 = false, _mut18849 = false, _mut18850 = false, _mut18851 = false, _mut18852 = false, _mut18853 = false, _mut18854 = false, _mut18855 = false, _mut18856 = false, _mut18857 = false, _mut18858 = false, _mut18859 = false, _mut18860 = false, _mut18861 = false, _mut18862 = false, _mut18863 = false, _mut18864 = false, _mut18865 = false, _mut18866 = false, _mut18867 = false, _mut18868 = false, _mut18869 = false, _mut18870 = false, _mut18871 = false, _mut18872 = false, _mut18873 = false, _mut18874 = false, _mut18875 = false, _mut18876 = false, _mut18877 = false, _mut18878 = false, _mut18879 = false, _mut18880 = false, _mut18881 = false, _mut18882 = false, _mut18883 = false, _mut18884 = false, _mut18885 = false, _mut18886 = false, _mut18887 = false, _mut18888 = false, _mut18889 = false, _mut18890 = false, _mut18891 = false, _mut18892 = false, _mut18893 = false, _mut18894 = false, _mut18895 = false, _mut18896 = false, _mut18897 = false, _mut18898 = false, _mut18899 = false, _mut18900 = false, _mut18901 = false, _mut18902 = false, _mut18903 = false, _mut18904 = false, _mut18905 = false, _mut18906 = false, _mut18907 = false, _mut18908 = false, _mut18909 = false, _mut18910 = false, _mut18911 = false, _mut18912 = false, _mut18913 = false, _mut18914 = false, _mut18915 = false, _mut18916 = false, _mut18917 = false, _mut18918 = false, _mut18919 = false, _mut18920 = false, _mut18921 = false, _mut18922 = false, _mut18923 = false, _mut18924 = false, _mut18925 = false, _mut18926 = false, _mut18927 = false, _mut18928 = false, _mut18929 = false, _mut18930 = false, _mut18931 = false, _mut18932 = false, _mut18933 = false, _mut18934 = false, _mut18935 = false, _mut18936 = false, _mut18937 = false, _mut18938 = false, _mut18939 = false, _mut18940 = false, _mut18941 = false, _mut18942 = false, _mut18943 = false, _mut18944 = false, _mut18945 = false, _mut18946 = false, _mut18947 = false, _mut18948 = false, _mut18949 = false;
+
+    /**
+     * Square root.
+     */
     private static final double Q = FastMath.sqrt(21);
 
-    /** Time steps Butcher array. */
-    private static final double[] STATIC_C = {
-        1.0, 1.0 / 2.0, 2.0 / 3.0, (7.0 - Q) / 14.0, (7.0 + Q) / 14.0, 1.0
-    };
+    /**
+     * Time steps Butcher array.
+     */
+    private static final double[] STATIC_C = { 1.0, AOR_divide(1.0, 2.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18706, _mut18707, _mut18708, _mut18709), AOR_divide(2.0, 3.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18710, _mut18711, _mut18712, _mut18713), AOR_divide((AOR_minus(7.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18714, _mut18715, _mut18716, _mut18717)), 14.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18718, _mut18719, _mut18720, _mut18721), AOR_divide((AOR_plus(7.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18722, _mut18723, _mut18724, _mut18725)), 14.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18726, _mut18727, _mut18728, _mut18729), 1.0 };
 
-    /** Internal weights Butcher array. */
-    private static final double[][] STATIC_A = {
-        {                      1.0        },
-        {                   3.0 /   8.0,                  1.0 /   8.0  },
-        {                   8.0 /   27.0,                 2.0 /   27.0,                  8.0 /   27.0  },
-        { (  -21.0 +   9.0 * Q) /  392.0, ( -56.0 +  8.0 * Q) /  392.0, ( 336.0 -  48.0 * Q) /  392.0, (-63.0 +   3.0 * Q) /  392.0 },
-        { (-1155.0 - 255.0 * Q) / 1960.0, (-280.0 - 40.0 * Q) / 1960.0, (   0.0 - 320.0 * Q) / 1960.0, ( 63.0 + 363.0 * Q) / 1960.0,   (2352.0 + 392.0 * Q) / 1960.0 },
-        { (  330.0 + 105.0 * Q) /  180.0, ( 120.0 +  0.0 * Q) /  180.0, (-200.0 + 280.0 * Q) /  180.0, (126.0 - 189.0 * Q) /  180.0,   (-686.0 - 126.0 * Q) /  180.0,   (490.0 -  70.0 * Q) / 180.0 }
-    };
+    /**
+     * Internal weights Butcher array.
+     */
+    private static final double[][] STATIC_A = { { 1.0 }, { AOR_divide(3.0, 8.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18730, _mut18731, _mut18732, _mut18733), AOR_divide(1.0, 8.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18734, _mut18735, _mut18736, _mut18737) }, { AOR_divide(8.0, 27.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18738, _mut18739, _mut18740, _mut18741), AOR_divide(2.0, 27.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18742, _mut18743, _mut18744, _mut18745), AOR_divide(8.0, 27.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18746, _mut18747, _mut18748, _mut18749) }, { AOR_divide((AOR_plus(-21.0, AOR_multiply(9.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18750, _mut18751, _mut18752, _mut18753), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18754, _mut18755, _mut18756, _mut18757)), 392.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18758, _mut18759, _mut18760, _mut18761), AOR_divide((AOR_plus(-56.0, AOR_multiply(8.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18762, _mut18763, _mut18764, _mut18765), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18766, _mut18767, _mut18768, _mut18769)), 392.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18770, _mut18771, _mut18772, _mut18773), AOR_divide((AOR_minus(336.0, AOR_multiply(48.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18774, _mut18775, _mut18776, _mut18777), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18778, _mut18779, _mut18780, _mut18781)), 392.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18782, _mut18783, _mut18784, _mut18785), AOR_divide((AOR_plus(-63.0, AOR_multiply(3.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18786, _mut18787, _mut18788, _mut18789), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18790, _mut18791, _mut18792, _mut18793)), 392.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18794, _mut18795, _mut18796, _mut18797) }, { AOR_divide((AOR_minus(-1155.0, AOR_multiply(255.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18798, _mut18799, _mut18800, _mut18801), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18802, _mut18803, _mut18804, _mut18805)), 1960.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18806, _mut18807, _mut18808, _mut18809), AOR_divide((AOR_minus(-280.0, AOR_multiply(40.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18810, _mut18811, _mut18812, _mut18813), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18814, _mut18815, _mut18816, _mut18817)), 1960.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18818, _mut18819, _mut18820, _mut18821), AOR_divide((AOR_minus(0.0, AOR_multiply(320.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18822, _mut18823, _mut18824, _mut18825), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18826, _mut18827, _mut18828, _mut18829)), 1960.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18830, _mut18831, _mut18832, _mut18833), AOR_divide((AOR_plus(63.0, AOR_multiply(363.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18834, _mut18835, _mut18836, _mut18837), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18838, _mut18839, _mut18840, _mut18841)), 1960.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18842, _mut18843, _mut18844, _mut18845), AOR_divide((AOR_plus(2352.0, AOR_multiply(392.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18846, _mut18847, _mut18848, _mut18849), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18850, _mut18851, _mut18852, _mut18853)), 1960.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18854, _mut18855, _mut18856, _mut18857) }, { AOR_divide((AOR_plus(330.0, AOR_multiply(105.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18858, _mut18859, _mut18860, _mut18861), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18862, _mut18863, _mut18864, _mut18865)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18866, _mut18867, _mut18868, _mut18869), AOR_divide((AOR_plus(120.0, AOR_multiply(0.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18870, _mut18871, _mut18872, _mut18873), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18874, _mut18875, _mut18876, _mut18877)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18878, _mut18879, _mut18880, _mut18881), AOR_divide((AOR_plus(-200.0, AOR_multiply(280.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18882, _mut18883, _mut18884, _mut18885), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18886, _mut18887, _mut18888, _mut18889)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18890, _mut18891, _mut18892, _mut18893), AOR_divide((AOR_minus(126.0, AOR_multiply(189.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18894, _mut18895, _mut18896, _mut18897), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18898, _mut18899, _mut18900, _mut18901)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18902, _mut18903, _mut18904, _mut18905), AOR_divide((AOR_minus(-686.0, AOR_multiply(126.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18906, _mut18907, _mut18908, _mut18909), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18910, _mut18911, _mut18912, _mut18913)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18914, _mut18915, _mut18916, _mut18917), AOR_divide((AOR_minus(490.0, AOR_multiply(70.0, Q, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18918, _mut18919, _mut18920, _mut18921), "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18922, _mut18923, _mut18924, _mut18925)), 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18926, _mut18927, _mut18928, _mut18929) } };
 
-    /** Propagation weights Butcher array. */
-    private static final double[] STATIC_B = {
-        1.0 / 20.0, 0, 16.0 / 45.0, 0, 49.0 / 180.0, 49.0 / 180.0, 1.0 / 20.0
-    };
+    /**
+     * Propagation weights Butcher array.
+     */
+    private static final double[] STATIC_B = { AOR_divide(1.0, 20.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18930, _mut18931, _mut18932, _mut18933), 0, AOR_divide(16.0, 45.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18934, _mut18935, _mut18936, _mut18937), 0, AOR_divide(49.0, 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18938, _mut18939, _mut18940, _mut18941), AOR_divide(49.0, 180.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18942, _mut18943, _mut18944, _mut18945), AOR_divide(1.0, 20.0, "org.apache.commons.math3.ode.nonstiff.LutherIntegrator.computeInterpolatedStateAndDerivatives_72", _mut18946, _mut18947, _mut18948, _mut18949) };
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * Build a fourth-order Luther integrator with the given step.
      * @param step integration step
      */
     public LutherIntegrator(final double step) {
         super("Luther", STATIC_C, STATIC_A, STATIC_B, new LutherStepInterpolator(), step);
     }
-
 }

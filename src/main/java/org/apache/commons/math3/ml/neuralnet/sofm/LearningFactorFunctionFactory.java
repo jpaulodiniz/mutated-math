@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.neuralnet.sofm;
 
 import org.apache.commons.math3.ml.neuralnet.sofm.util.ExponentialDecayFunction;
 import org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction;
 import org.apache.commons.math3.exception.OutOfRangeException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Factory for creating instances of {@link LearningFactorFunction}.
@@ -27,8 +28,15 @@ import org.apache.commons.math3.exception.OutOfRangeException;
  * @since 3.3
  */
 public class LearningFactorFunctionFactory {
-    /** Class contains only static methods. */
-    private LearningFactorFunctionFactory() {}
+
+    @Conditional
+    public static boolean _mut103627 = false, _mut103628 = false, _mut103629 = false, _mut103630 = false, _mut103631 = false, _mut103632 = false, _mut103633 = false, _mut103634 = false, _mut103635 = false, _mut103636 = false, _mut103637 = false, _mut103638 = false, _mut103639 = false, _mut103640 = false, _mut103641 = false, _mut103642 = false, _mut103643 = false, _mut103644 = false, _mut103645 = false, _mut103646 = false, _mut103647 = false, _mut103648 = false;
+
+    /**
+     * Class contains only static methods.
+     */
+    private LearningFactorFunctionFactory() {
+    }
 
     /**
      * Creates an exponential decay {@link LearningFactorFunction function}.
@@ -54,20 +62,21 @@ public class LearningFactorFunctionFactory {
      * @throws org.apache.commons.math3.exception.NotStrictlyPositiveException
      * if {@code numCall <= 0}.
      */
-    public static LearningFactorFunction exponentialDecay(final double initValue,
-                                                          final double valueAtNumCall,
-                                                          final long numCall) {
-        if (initValue <= 0 ||
-            initValue > 1) {
+    public static LearningFactorFunction exponentialDecay(final double initValue, final double valueAtNumCall, final long numCall) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.value_71");
+        if ((_mut103637 ? (ROR_less_equals(initValue, 0, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.exponentialDecay_57", _mut103627, _mut103628, _mut103629, _mut103630, _mut103631) && ROR_greater(initValue, 1, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.exponentialDecay_57", _mut103632, _mut103633, _mut103634, _mut103635, _mut103636)) : (ROR_less_equals(initValue, 0, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.exponentialDecay_57", _mut103627, _mut103628, _mut103629, _mut103630, _mut103631) || ROR_greater(initValue, 1, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.exponentialDecay_57", _mut103632, _mut103633, _mut103634, _mut103635, _mut103636)))) {
             throw new OutOfRangeException(initValue, 0, 1);
         }
-
         return new LearningFactorFunction() {
-            /** DecayFunction. */
-            private final ExponentialDecayFunction decay
-                = new ExponentialDecayFunction(initValue, valueAtNumCall, numCall);
 
-            /** {@inheritDoc} */
+            /**
+             * DecayFunction.
+             */
+            private final ExponentialDecayFunction decay = new ExponentialDecayFunction(initValue, valueAtNumCall, numCall);
+
+            /**
+             * {@inheritDoc}
+             */
             public double value(long n) {
                 return decay.value(n);
             }
@@ -95,20 +104,21 @@ public class LearningFactorFunctionFactory {
      * @throws org.apache.commons.math3.exception.NotStrictlyPositiveException
      * if {@code numCall <= 0}.
      */
-    public static LearningFactorFunction quasiSigmoidDecay(final double initValue,
-                                                           final double slope,
-                                                           final long numCall) {
-        if (initValue <= 0 ||
-            initValue > 1) {
+    public static LearningFactorFunction quasiSigmoidDecay(final double initValue, final double slope, final long numCall) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.value_112");
+        if ((_mut103648 ? (ROR_less_equals(initValue, 0, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.quasiSigmoidDecay_98", _mut103638, _mut103639, _mut103640, _mut103641, _mut103642) && ROR_greater(initValue, 1, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.quasiSigmoidDecay_98", _mut103643, _mut103644, _mut103645, _mut103646, _mut103647)) : (ROR_less_equals(initValue, 0, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.quasiSigmoidDecay_98", _mut103638, _mut103639, _mut103640, _mut103641, _mut103642) || ROR_greater(initValue, 1, "org.apache.commons.math3.ml.neuralnet.sofm.LearningFactorFunctionFactory.quasiSigmoidDecay_98", _mut103643, _mut103644, _mut103645, _mut103646, _mut103647)))) {
             throw new OutOfRangeException(initValue, 0, 1);
         }
-
         return new LearningFactorFunction() {
-            /** DecayFunction. */
-            private final QuasiSigmoidDecayFunction decay
-                = new QuasiSigmoidDecayFunction(initValue, slope, numCall);
 
-            /** {@inheritDoc} */
+            /**
+             * DecayFunction.
+             */
+            private final QuasiSigmoidDecayFunction decay = new QuasiSigmoidDecayFunction(initValue, slope, numCall);
+
+            /**
+             * {@inheritDoc}
+             */
             public double value(long n) {
                 return decay.value(n);
             }

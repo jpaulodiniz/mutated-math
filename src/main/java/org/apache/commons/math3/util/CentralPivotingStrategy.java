@@ -17,9 +17,9 @@
 package org.apache.commons.math3.util;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * A mid point strategy based on the average of begin and end indices.
@@ -27,7 +27,12 @@ import org.apache.commons.math3.exception.MathIllegalArgumentException;
  */
 public class CentralPivotingStrategy implements PivotingStrategyInterface, Serializable {
 
-    /** Serializable UID. */
+    @Conditional
+    public static boolean _mut39898 = false, _mut39899 = false, _mut39900 = false, _mut39901 = false, _mut39902 = false, _mut39903 = false, _mut39904 = false, _mut39905 = false, _mut39906 = false, _mut39907 = false, _mut39908 = false, _mut39909 = false, _mut39910 = false, _mut39911 = false, _mut39912 = false, _mut39913 = false;
+
+    /**
+     * Serializable UID.
+     */
     private static final long serialVersionUID = 20140713L;
 
     /**
@@ -37,10 +42,9 @@ public class CentralPivotingStrategy implements PivotingStrategyInterface, Seria
      * the first and the last element indices of the array slice
      * @throws MathIllegalArgumentException when indices exceeds range
      */
-    public int pivotIndex(final double[] work, final int begin, final int end)
-        throws MathIllegalArgumentException {
-        MathArrays.verifyValues(work, begin, end-begin);
-        return begin + (end - begin)/2;
+    public int pivotIndex(final double[] work, final int begin, final int end) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.CentralPivotingStrategy.pivotIndex_40");
+        MathArrays.verifyValues(work, begin, AOR_minus(end, begin, "org.apache.commons.math3.util.CentralPivotingStrategy.pivotIndex_40", _mut39898, _mut39899, _mut39900, _mut39901));
+        return AOR_plus(begin, AOR_divide((AOR_minus(end, begin, "org.apache.commons.math3.util.CentralPivotingStrategy.pivotIndex_40", _mut39902, _mut39903, _mut39904, _mut39905)), 2, "org.apache.commons.math3.util.CentralPivotingStrategy.pivotIndex_40", _mut39906, _mut39907, _mut39908, _mut39909), "org.apache.commons.math3.util.CentralPivotingStrategy.pivotIndex_40", _mut39910, _mut39911, _mut39912, _mut39913);
     }
-
 }

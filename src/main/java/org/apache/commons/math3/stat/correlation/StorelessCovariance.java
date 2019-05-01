@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.MathUnsupportedOperationException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealMatrix;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Covariance implementation that does not require input data to be
@@ -41,10 +43,17 @@ import org.apache.commons.math3.linear.RealMatrix;
  */
 public class StorelessCovariance extends Covariance {
 
-    /** the square covariance matrix (upper triangular part) */
+    @Conditional
+    public static boolean _mut10596 = false, _mut10597 = false, _mut10598 = false, _mut10599 = false, _mut10600 = false, _mut10601 = false, _mut10602 = false, _mut10603 = false, _mut10604 = false, _mut10605 = false, _mut10606 = false, _mut10607 = false, _mut10608 = false, _mut10609 = false, _mut10610 = false, _mut10611 = false, _mut10612 = false, _mut10613 = false, _mut10614 = false, _mut10615 = false, _mut10616 = false, _mut10617 = false, _mut10618 = false, _mut10619 = false, _mut10620 = false, _mut10621 = false, _mut10622 = false, _mut10623 = false, _mut10624 = false, _mut10625 = false, _mut10626 = false, _mut10627 = false, _mut10628 = false, _mut10629 = false, _mut10630 = false, _mut10631 = false, _mut10632 = false, _mut10633 = false, _mut10634 = false, _mut10635 = false, _mut10636 = false, _mut10637 = false, _mut10638 = false, _mut10639 = false, _mut10640 = false, _mut10641 = false, _mut10642 = false, _mut10643 = false, _mut10644 = false, _mut10645 = false, _mut10646 = false, _mut10647 = false, _mut10648 = false, _mut10649 = false, _mut10650 = false, _mut10651 = false, _mut10652 = false, _mut10653 = false, _mut10654 = false, _mut10655 = false, _mut10656 = false, _mut10657 = false, _mut10658 = false, _mut10659 = false, _mut10660 = false, _mut10661 = false, _mut10662 = false, _mut10663 = false, _mut10664 = false, _mut10665 = false, _mut10666 = false, _mut10667 = false, _mut10668 = false, _mut10669 = false, _mut10670 = false, _mut10671 = false, _mut10672 = false, _mut10673 = false, _mut10674 = false, _mut10675 = false, _mut10676 = false, _mut10677 = false, _mut10678 = false, _mut10679 = false, _mut10680 = false, _mut10681 = false, _mut10682 = false, _mut10683 = false, _mut10684 = false, _mut10685 = false, _mut10686 = false, _mut10687 = false, _mut10688 = false, _mut10689 = false, _mut10690 = false, _mut10691 = false, _mut10692 = false, _mut10693 = false, _mut10694 = false;
+
+    /**
+     * the square covariance matrix (upper triangular part)
+     */
     private StorelessBivariateCovariance[] covMatrix;
 
-    /** dimension of the square covariance matrix */
+    /**
+     * dimension of the square covariance matrix
+     */
     private int dimension;
 
     /**
@@ -66,8 +75,9 @@ public class StorelessCovariance extends Covariance {
      * i.e. n in the denominator.
      */
     public StorelessCovariance(final int dim, final boolean biasCorrected) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.StorelessCovariance_68");
         dimension = dim;
-        covMatrix = new StorelessBivariateCovariance[dimension * (dimension + 1) / 2];
+        covMatrix = new StorelessBivariateCovariance[AOR_divide(AOR_multiply(dimension, (AOR_plus(dimension, 1, "org.apache.commons.math3.stat.correlation.StorelessCovariance.StorelessCovariance_68", _mut10596, _mut10597, _mut10598, _mut10599)), "org.apache.commons.math3.stat.correlation.StorelessCovariance.StorelessCovariance_68", _mut10600, _mut10601, _mut10602, _mut10603), 2, "org.apache.commons.math3.stat.correlation.StorelessCovariance.StorelessCovariance_68", _mut10604, _mut10605, _mut10606, _mut10607)];
         initializeMatrix(biasCorrected);
     }
 
@@ -78,8 +88,11 @@ public class StorelessCovariance extends Covariance {
      * @param biasCorrected if the covariance estimate shall be corrected for bias
      */
     private void initializeMatrix(final boolean biasCorrected) {
-        for(int i = 0; i < dimension; i++){
-            for(int j = 0; j < dimension; j++){
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.initializeMatrix_80");
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.initializeMatrix_80", _mut10613, _mut10614, _mut10615, _mut10616, _mut10617); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.initializeMatrix_80");
+            for (int j = 0; ROR_less(j, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.initializeMatrix_80", _mut10608, _mut10609, _mut10610, _mut10611, _mut10612); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.initializeMatrix_80");
                 setElement(i, j, new StorelessBivariateCovariance(biasCorrected));
             }
         }
@@ -95,7 +108,8 @@ public class StorelessCovariance extends Covariance {
      * @return the corresponding index in the matrix array
      */
     private int indexOf(final int i, final int j) {
-        return j < i ? i * (i + 1) / 2 + j : j * (j + 1) / 2 + i;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97");
+        return ROR_less(j, i, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10618, _mut10619, _mut10620, _mut10621, _mut10622) ? AOR_plus(AOR_divide(AOR_multiply(i, (AOR_plus(i, 1, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10639, _mut10640, _mut10641, _mut10642)), "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10643, _mut10644, _mut10645, _mut10646), 2, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10647, _mut10648, _mut10649, _mut10650), j, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10651, _mut10652, _mut10653, _mut10654) : AOR_plus(AOR_divide(AOR_multiply(j, (AOR_plus(j, 1, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10623, _mut10624, _mut10625, _mut10626)), "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10627, _mut10628, _mut10629, _mut10630), 2, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10631, _mut10632, _mut10633, _mut10634), i, "org.apache.commons.math3.stat.correlation.StorelessCovariance.indexOf_97", _mut10635, _mut10636, _mut10637, _mut10638);
     }
 
     /**
@@ -114,8 +128,7 @@ public class StorelessCovariance extends Covariance {
      * @param j the column index
      * @param cov the {@link StorelessBivariateCovariance} element to be set
      */
-    private void setElement(final int i, final int j,
-                            final StorelessBivariateCovariance cov) {
+    private void setElement(final int i, final int j, final StorelessBivariateCovariance cov) {
         covMatrix[indexOf(i, j)] = cov;
     }
 
@@ -128,12 +141,8 @@ public class StorelessCovariance extends Covariance {
      * @throws NumberIsTooSmallException if the number of observations
      * in the cell is &lt; 2
      */
-    public double getCovariance(final int xIndex,
-                                final int yIndex)
-        throws NumberIsTooSmallException {
-
+    public double getCovariance(final int xIndex, final int yIndex) throws NumberIsTooSmallException {
         return getElement(xIndex, yIndex).getResult();
-
     }
 
     /**
@@ -143,22 +152,20 @@ public class StorelessCovariance extends Covariance {
      * @throws DimensionMismatchException if the length of <code>rowData</code>
      * does not match with the covariance matrix
      */
-    public void increment(final double[] data)
-        throws DimensionMismatchException {
-
+    public void increment(final double[] data) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146");
         int length = data.length;
-        if (length != dimension) {
+        if (ROR_not_equals(length, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146", _mut10655, _mut10656, _mut10657, _mut10658, _mut10659)) {
             throw new DimensionMismatchException(length, dimension);
         }
-
-        // only update the upper triangular part of the covariance matrix
         // as only these parts are actually stored
-        for (int i = 0; i < length; i++){
-            for (int j = i; j < length; j++){
+        for (int i = 0; ROR_less(i, length, "org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146", _mut10665, _mut10666, _mut10667, _mut10668, _mut10669); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146");
+            for (int j = i; ROR_less(j, length, "org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146", _mut10660, _mut10661, _mut10662, _mut10663, _mut10664); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.increment_146");
                 getElement(i, j).increment(data[i], data[j]);
             }
         }
-
     }
 
     /**
@@ -172,14 +179,15 @@ public class StorelessCovariance extends Covariance {
      * @since 3.3
      */
     public void append(StorelessCovariance sc) throws DimensionMismatchException {
-        if (sc.dimension != dimension) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174");
+        if (ROR_not_equals(sc.dimension, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174", _mut10670, _mut10671, _mut10672, _mut10673, _mut10674)) {
             throw new DimensionMismatchException(sc.dimension, dimension);
         }
-
-        // only update the upper triangular part of the covariance matrix
         // as only these parts are actually stored
-        for (int i = 0; i < dimension; i++) {
-            for (int j = i; j < dimension; j++) {
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174", _mut10680, _mut10681, _mut10682, _mut10683, _mut10684); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174");
+            for (int j = i; ROR_less(j, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174", _mut10675, _mut10676, _mut10677, _mut10678, _mut10679); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.append_174");
                 getElement(i, j).append(sc.getElement(i, j));
             }
         }
@@ -203,9 +211,12 @@ public class StorelessCovariance extends Covariance {
      * for a cell is &lt; 2
      */
     public double[][] getData() throws NumberIsTooSmallException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.getData_205");
         final double[][] data = new double[dimension][dimension];
-        for (int i = 0; i < dimension; i++) {
-            for (int j = 0; j < dimension; j++) {
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.getData_205", _mut10690, _mut10691, _mut10692, _mut10693, _mut10694); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.getData_205");
+            for (int j = 0; ROR_less(j, dimension, "org.apache.commons.math3.stat.correlation.StorelessCovariance.getData_205", _mut10685, _mut10686, _mut10687, _mut10688, _mut10689); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.correlation.StorelessCovariance.getData_205");
                 data[i][j] = getElement(i, j).getResult();
             }
         }
@@ -222,8 +233,7 @@ public class StorelessCovariance extends Covariance {
      * @throws MathUnsupportedOperationException in all cases
      */
     @Override
-    public int getN()
-        throws MathUnsupportedOperationException {
+    public int getN() throws MathUnsupportedOperationException {
         throw new MathUnsupportedOperationException();
     }
 }

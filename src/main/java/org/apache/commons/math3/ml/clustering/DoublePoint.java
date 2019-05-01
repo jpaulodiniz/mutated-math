@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.clustering;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * A simple implementation of {@link Clusterable} for points with double coordinates.
@@ -26,10 +27,17 @@ import java.util.Arrays;
  */
 public class DoublePoint implements Clusterable, Serializable {
 
-    /** Serializable version identifier. */
+    @Conditional
+    public static boolean _mut102654 = false, _mut102655 = false, _mut102656 = false, _mut102657 = false, _mut102658 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 3946024775784901369L;
 
-    /** Point coordinates. */
+    /**
+     * Point coordinates.
+     */
     private final double[] point;
 
     /**
@@ -51,18 +59,24 @@ public class DoublePoint implements Clusterable, Serializable {
      * @param point the n-dimensional point in integer space
      */
     public DoublePoint(final int[] point) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DoublePoint.DoublePoint_53");
         this.point = new double[point.length];
-        for ( int i = 0; i < point.length; i++) {
+        for (int i = 0; ROR_less(i, point.length, "org.apache.commons.math3.ml.clustering.DoublePoint.DoublePoint_53", _mut102654, _mut102655, _mut102656, _mut102657, _mut102658); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DoublePoint.DoublePoint_53");
             this.point[i] = point[i];
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double[] getPoint() {
         return point;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object other) {
         if (!(other instanceof DoublePoint)) {
@@ -71,16 +85,19 @@ public class DoublePoint implements Clusterable, Serializable {
         return Arrays.equals(point, ((DoublePoint) other).point);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(point);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return Arrays.toString(point);
     }
-
 }

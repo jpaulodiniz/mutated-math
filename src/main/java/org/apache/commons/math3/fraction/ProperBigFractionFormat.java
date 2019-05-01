@@ -20,9 +20,10 @@ import java.math.BigInteger;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.exception.NullArgumentException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a BigFraction number in proper format.  The number format for each of
@@ -36,10 +37,17 @@ import org.apache.commons.math3.exception.NullArgumentException;
  */
 public class ProperBigFractionFormat extends BigFractionFormat {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut278 = false, _mut279 = false, _mut280 = false, _mut281 = false, _mut282 = false, _mut283 = false, _mut284 = false, _mut285 = false, _mut286 = false, _mut287 = false, _mut288 = false, _mut289 = false, _mut290 = false, _mut291 = false, _mut292 = false, _mut293 = false, _mut294 = false, _mut295 = false, _mut296 = false, _mut297 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -6337346779577272307L;
 
-    /** The format used for the whole number. */
+    /**
+     * The format used for the whole number.
+     */
     private NumberFormat wholeFormat;
 
     /**
@@ -57,7 +65,7 @@ public class ProperBigFractionFormat extends BigFractionFormat {
      *        denominator.
      */
     public ProperBigFractionFormat(final NumberFormat format) {
-        this(format, (NumberFormat)format.clone(), (NumberFormat)format.clone());
+        this(format, (NumberFormat) format.clone(), (NumberFormat) format.clone());
     }
 
     /**
@@ -67,9 +75,7 @@ public class ProperBigFractionFormat extends BigFractionFormat {
      * @param numeratorFormat the custom format for the numerator.
      * @param denominatorFormat the custom format for the denominator.
      */
-    public ProperBigFractionFormat(final NumberFormat wholeFormat,
-                                   final NumberFormat numeratorFormat,
-                                   final NumberFormat denominatorFormat) {
+    public ProperBigFractionFormat(final NumberFormat wholeFormat, final NumberFormat numeratorFormat, final NumberFormat denominatorFormat) {
         super(numeratorFormat, denominatorFormat);
         setWholeFormat(wholeFormat);
     }
@@ -85,28 +91,24 @@ public class ProperBigFractionFormat extends BigFractionFormat {
      * @return the value passed in as toAppendTo.
      */
     @Override
-    public StringBuffer format(final BigFraction fraction,
-                               final StringBuffer toAppendTo, final FieldPosition pos) {
-
+    public StringBuffer format(final BigFraction fraction, final StringBuffer toAppendTo, final FieldPosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fraction.ProperBigFractionFormat.format_87");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         BigInteger num = fraction.getNumerator();
         BigInteger den = fraction.getDenominator();
         BigInteger whole = num.divide(den);
         num = num.remainder(den);
-
         if (!BigInteger.ZERO.equals(whole)) {
             getWholeFormat().format(whole, toAppendTo, pos);
             toAppendTo.append(' ');
-            if (num.compareTo(BigInteger.ZERO) < 0) {
+            if (ROR_less(num.compareTo(BigInteger.ZERO), 0, "org.apache.commons.math3.fraction.ProperBigFractionFormat.format_87", _mut278, _mut279, _mut280, _mut281, _mut282)) {
                 num = num.negate();
             }
         }
         getNumeratorFormat().format(num, toAppendTo, pos);
         toAppendTo.append(" / ");
         getDenominatorFormat().format(den, toAppendTo, pos);
-
         return toAppendTo;
     }
 
@@ -132,86 +134,67 @@ public class ProperBigFractionFormat extends BigFractionFormat {
      */
     @Override
     public BigFraction parse(final String source, final ParsePosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fraction.ProperBigFractionFormat.parse_133");
         // try to parse improper BigFraction
         BigFraction ret = super.parse(source, pos);
         if (ret != null) {
             return ret;
         }
-
         final int initialIndex = pos.getIndex();
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse whole
         BigInteger whole = parseNextBigInteger(source, pos);
         if (whole == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse numerator
         BigInteger num = parseNextBigInteger(source, pos);
         if (num == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
-        if (num.compareTo(BigInteger.ZERO) < 0) {
+        if (ROR_less(num.compareTo(BigInteger.ZERO), 0, "org.apache.commons.math3.fraction.ProperBigFractionFormat.parse_133", _mut283, _mut284, _mut285, _mut286, _mut287)) {
             // minus signs should be leading, invalid expression
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse '/'
         final int startIndex = pos.getIndex();
         final char c = parseNextCharacter(source, pos);
-        switch (c) {
-        case 0 :
-            // no '/'
-            // return num as a BigFraction
-            return new BigFraction(num);
-        case '/' :
-            // found '/', continue parsing denominator
-            break;
-        default :
-            // invalid '/'
-            // set index back to initial, error index should be the last
-            // character examined.
-            pos.setIndex(initialIndex);
-            pos.setErrorIndex(startIndex);
-            return null;
+        switch(c) {
+            case 0:
+                // return num as a BigFraction
+                return new BigFraction(num);
+            case '/':
+                // found '/', continue parsing denominator
+                break;
+            default:
+                // character examined.
+                pos.setIndex(initialIndex);
+                pos.setErrorIndex(startIndex);
+                return null;
         }
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse denominator
         final BigInteger den = parseNextBigInteger(source, pos);
         if (den == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
-        if (den.compareTo(BigInteger.ZERO) < 0) {
+        if (ROR_less(den.compareTo(BigInteger.ZERO), 0, "org.apache.commons.math3.fraction.ProperBigFractionFormat.parse_133", _mut288, _mut289, _mut290, _mut291, _mut292)) {
             // minus signs must be leading, invalid
             pos.setIndex(initialIndex);
             return null;
         }
-
-        boolean wholeIsNeg = whole.compareTo(BigInteger.ZERO) < 0;
+        boolean wholeIsNeg = ROR_less(whole.compareTo(BigInteger.ZERO), 0, "org.apache.commons.math3.fraction.ProperBigFractionFormat.parse_133", _mut293, _mut294, _mut295, _mut296, _mut297);
         if (wholeIsNeg) {
             whole = whole.negate();
         }
@@ -219,9 +202,7 @@ public class ProperBigFractionFormat extends BigFractionFormat {
         if (wholeIsNeg) {
             num = num.negate();
         }
-
         return new BigFraction(num, den);
-
     }
 
     /**

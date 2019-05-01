@@ -23,12 +23,13 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
 import org.apache.commons.math3.exception.NotPositiveException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * DBSCAN (density-based spatial clustering of applications with noise) algorithm.
@@ -57,17 +58,31 @@ import org.apache.commons.math3.util.MathUtils;
  */
 public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
 
-    /** Maximum radius of the neighborhood to be considered. */
-    private final double              eps;
+    @Conditional
+    public static boolean _mut102679 = false, _mut102680 = false, _mut102681 = false, _mut102682 = false, _mut102683 = false, _mut102684 = false, _mut102685 = false, _mut102686 = false, _mut102687 = false, _mut102688 = false, _mut102689 = false, _mut102690 = false, _mut102691 = false, _mut102692 = false, _mut102693 = false, _mut102694 = false, _mut102695 = false, _mut102696 = false, _mut102697 = false, _mut102698 = false, _mut102699 = false, _mut102700 = false, _mut102701 = false, _mut102702 = false, _mut102703 = false, _mut102704 = false, _mut102705 = false, _mut102706 = false, _mut102707 = false, _mut102708 = false, _mut102709 = false;
 
-    /** Minimum number of points needed for a cluster. */
-    private final int                 minPts;
+    /**
+     * Maximum radius of the neighborhood to be considered.
+     */
+    private final double eps;
 
-    /** Status of a point during the clustering process. */
+    /**
+     * Minimum number of points needed for a cluster.
+     */
+    private final int minPts;
+
+    /**
+     * Status of a point during the clustering process.
+     */
     private enum PointStatus {
-        /** The point has is considered to be noise. */
+
+        /**
+         * The point has is considered to be noise.
+         */
         NOISE,
-        /** The point is already part of a cluster. */
+        /**
+         * The point is already part of a cluster.
+         */
         PART_OF_CLUSTER
     }
 
@@ -80,8 +95,7 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
      * @param minPts minimum number of points needed for a cluster
      * @throws NotPositiveException if {@code eps < 0.0} or {@code minPts < 0}
      */
-    public DBSCANClusterer(final double eps, final int minPts)
-        throws NotPositiveException {
+    public DBSCANClusterer(final double eps, final int minPts) throws NotPositiveException {
         this(eps, minPts, new EuclideanDistance());
     }
 
@@ -93,14 +107,13 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
      * @param measure the distance measure to use
      * @throws NotPositiveException if {@code eps < 0.0} or {@code minPts < 0}
      */
-    public DBSCANClusterer(final double eps, final int minPts, final DistanceMeasure measure)
-        throws NotPositiveException {
+    public DBSCANClusterer(final double eps, final int minPts, final DistanceMeasure measure) throws NotPositiveException {
         super(measure);
-
-        if (eps < 0.0d) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.DBSCANClusterer_96");
+        if (ROR_less(eps, 0.0d, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.DBSCANClusterer_96", _mut102679, _mut102680, _mut102681, _mut102682, _mut102683)) {
             throw new NotPositiveException(eps);
         }
-        if (minPts < 0) {
+        if (ROR_less(minPts, 0, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.DBSCANClusterer_96", _mut102684, _mut102685, _mut102686, _mut102687, _mut102688)) {
             throw new NotPositiveException(minPts);
         }
         this.eps = eps;
@@ -132,19 +145,18 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
      */
     @Override
     public List<Cluster<T>> cluster(final Collection<T> points) throws NullArgumentException {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.cluster_133");
         // sanity checks
         MathUtils.checkNotNull(points);
-
         final List<Cluster<T>> clusters = new ArrayList<Cluster<T>>();
         final Map<Clusterable, PointStatus> visited = new HashMap<Clusterable, PointStatus>();
-
         for (final T point : points) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.cluster_133");
             if (visited.get(point) != null) {
                 continue;
             }
             final List<T> neighbors = getNeighbors(point, points);
-            if (neighbors.size() >= minPts) {
+            if (ROR_greater_equals(neighbors.size(), minPts, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.cluster_133", _mut102689, _mut102690, _mut102691, _mut102692, _mut102693)) {
                 // DBSCAN does not care about center points
                 final Cluster<T> cluster = new Cluster<T>();
                 clusters.add(expandCluster(cluster, point, neighbors, points, visited));
@@ -152,7 +164,6 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
                 visited.put(point, PointStatus.NOISE);
             }
         }
-
         return clusters;
     }
 
@@ -166,32 +177,27 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
      * @param visited the set of already visited points
      * @return the expanded cluster
      */
-    private Cluster<T> expandCluster(final Cluster<T> cluster,
-                                     final T point,
-                                     final List<T> neighbors,
-                                     final Collection<T> points,
-                                     final Map<Clusterable, PointStatus> visited) {
+    private Cluster<T> expandCluster(final Cluster<T> cluster, final T point, final List<T> neighbors, final Collection<T> points, final Map<Clusterable, PointStatus> visited) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.expandCluster_169");
         cluster.addPoint(point);
         visited.put(point, PointStatus.PART_OF_CLUSTER);
-
         List<T> seeds = new ArrayList<T>(neighbors);
         int index = 0;
-        while (index < seeds.size()) {
+        while (ROR_less(index, seeds.size(), "org.apache.commons.math3.ml.clustering.DBSCANClusterer.expandCluster_169", _mut102699, _mut102700, _mut102701, _mut102702, _mut102703)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.expandCluster_169");
             final T current = seeds.get(index);
             PointStatus pStatus = visited.get(current);
             // only check non-visited points
             if (pStatus == null) {
                 final List<T> currentNeighbors = getNeighbors(current, points);
-                if (currentNeighbors.size() >= minPts) {
+                if (ROR_greater_equals(currentNeighbors.size(), minPts, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.expandCluster_169", _mut102694, _mut102695, _mut102696, _mut102697, _mut102698)) {
                     seeds = merge(seeds, currentNeighbors);
                 }
             }
-
             if (pStatus != PointStatus.PART_OF_CLUSTER) {
                 visited.put(current, PointStatus.PART_OF_CLUSTER);
                 cluster.addPoint(current);
             }
-
             index++;
         }
         return cluster;
@@ -205,9 +211,11 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
      * @return the List of neighbors
      */
     private List<T> getNeighbors(final T point, final Collection<T> points) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.getNeighbors_207");
         final List<T> neighbors = new ArrayList<T>();
         for (final T neighbor : points) {
-            if (point != neighbor && distance(neighbor, point) <= eps) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.getNeighbors_207");
+            if ((_mut102709 ? (point != neighbor || ROR_less_equals(distance(neighbor, point), eps, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.getNeighbors_207", _mut102704, _mut102705, _mut102706, _mut102707, _mut102708)) : (point != neighbor && ROR_less_equals(distance(neighbor, point), eps, "org.apache.commons.math3.ml.clustering.DBSCANClusterer.getNeighbors_207", _mut102704, _mut102705, _mut102706, _mut102707, _mut102708)))) {
                 neighbors.add(neighbor);
             }
         }
@@ -224,6 +232,7 @@ public class DBSCANClusterer<T extends Clusterable> extends Clusterer<T> {
     private List<T> merge(final List<T> one, final List<T> two) {
         final Set<T> oneSet = new HashSet<T>(one);
         for (T item : two) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.DBSCANClusterer.merge_224");
             if (!oneSet.contains(item)) {
                 one.add(item);
             }

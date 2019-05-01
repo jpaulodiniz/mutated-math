@@ -14,36 +14,49 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.complex;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.exception.NoDataException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a Complex number in cartesian format "Re(c) + Im(c)i".  'i' can
  * be replaced with 'j' (or anything else), and the number format for both real
  * and imaginary parts can be configured.
- *
  */
 public class ComplexFormat {
 
-     /** The default imaginary character. */
+    @Conditional
+    public static boolean _mut37952 = false, _mut37953 = false, _mut37954 = false, _mut37955 = false, _mut37956 = false, _mut37957 = false, _mut37958 = false, _mut37959 = false, _mut37960 = false, _mut37961 = false, _mut37962 = false, _mut37963 = false, _mut37964 = false, _mut37965 = false, _mut37966 = false, _mut37967 = false, _mut37968 = false, _mut37969 = false, _mut37970 = false, _mut37971 = false, _mut37972 = false, _mut37973 = false, _mut37974 = false, _mut37975 = false, _mut37976 = false;
+
+    /**
+     * The default imaginary character.
+     */
     private static final String DEFAULT_IMAGINARY_CHARACTER = "i";
-    /** The notation used to signify the imaginary part of the complex number. */
+
+    /**
+     * The notation used to signify the imaginary part of the complex number.
+     */
     private final String imaginaryCharacter;
-    /** The format used for the imaginary part. */
+
+    /**
+     * The format used for the imaginary part.
+     */
     private final NumberFormat imaginaryFormat;
-    /** The format used for the real part. */
+
+    /**
+     * The format used for the real part.
+     */
     private final NumberFormat realFormat;
 
     /**
@@ -78,16 +91,14 @@ public class ComplexFormat {
      * @param imaginaryFormat the custom format for the imaginary part.
      * @throws NullArgumentException if {@code imaginaryFormat} is {@code null}.
      * @throws NullArgumentException if {@code realFormat} is {@code null}.
-      */
-    public ComplexFormat(NumberFormat realFormat, NumberFormat imaginaryFormat)
-        throws NullArgumentException {
+     */
+    public ComplexFormat(NumberFormat realFormat, NumberFormat imaginaryFormat) throws NullArgumentException {
         if (imaginaryFormat == null) {
             throw new NullArgumentException(LocalizedFormats.IMAGINARY_FORMAT);
         }
         if (realFormat == null) {
             throw new NullArgumentException(LocalizedFormats.REAL_FORMAT);
         }
-
         this.imaginaryCharacter = DEFAULT_IMAGINARY_CHARACTER;
         this.imaginaryFormat = imaginaryFormat;
         this.realFormat = realFormat;
@@ -102,8 +113,7 @@ public class ComplexFormat {
      * @throws NoDataException if {@code imaginaryCharacter} is an
      * empty string.
      */
-    public ComplexFormat(String imaginaryCharacter)
-        throws NullArgumentException, NoDataException {
+    public ComplexFormat(String imaginaryCharacter) throws NullArgumentException, NoDataException {
         this(imaginaryCharacter, CompositeFormat.getDefaultNumberFormat());
     }
 
@@ -118,8 +128,7 @@ public class ComplexFormat {
      * empty string.
      * @throws NullArgumentException if {@code format} is {@code null}.
      */
-    public ComplexFormat(String imaginaryCharacter, NumberFormat format)
-        throws NullArgumentException, NoDataException {
+    public ComplexFormat(String imaginaryCharacter, NumberFormat format) throws NullArgumentException, NoDataException {
         this(imaginaryCharacter, format, format);
     }
 
@@ -138,14 +147,12 @@ public class ComplexFormat {
      * @throws NullArgumentException if {@code imaginaryFormat} is {@code null}.
      * @throws NullArgumentException if {@code realFormat} is {@code null}.
      */
-    public ComplexFormat(String imaginaryCharacter,
-                         NumberFormat realFormat,
-                         NumberFormat imaginaryFormat)
-        throws NullArgumentException, NoDataException {
+    public ComplexFormat(String imaginaryCharacter, NumberFormat realFormat, NumberFormat imaginaryFormat) throws NullArgumentException, NoDataException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexFormat.ComplexFormat_141");
         if (imaginaryCharacter == null) {
             throw new NullArgumentException();
         }
-        if (imaginaryCharacter.length() == 0) {
+        if (ROR_equals(imaginaryCharacter.length(), 0, "org.apache.commons.math3.complex.ComplexFormat.ComplexFormat_141", _mut37952, _mut37953, _mut37954, _mut37955, _mut37956)) {
             throw new NoDataException();
         }
         if (imaginaryFormat == null) {
@@ -154,7 +161,6 @@ public class ComplexFormat {
         if (realFormat == null) {
             throw new NullArgumentException(LocalizedFormats.REAL_FORMAT);
         }
-
         this.imaginaryCharacter = imaginaryCharacter;
         this.imaginaryFormat = imaginaryFormat;
         this.realFormat = realFormat;
@@ -198,30 +204,27 @@ public class ComplexFormat {
      *            offsets of the alignment field
      * @return the value passed in as toAppendTo.
      */
-    public StringBuffer format(Complex complex, StringBuffer toAppendTo,
-                               FieldPosition pos) {
+    public StringBuffer format(Complex complex, StringBuffer toAppendTo, FieldPosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexFormat.format_201");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         // format real
         double re = complex.getReal();
         CompositeFormat.formatDouble(re, getRealFormat(), toAppendTo, pos);
-
         // format sign and imaginary
         double im = complex.getImaginary();
         StringBuffer imAppendTo;
-        if (im < 0.0) {
+        if (ROR_less(im, 0.0, "org.apache.commons.math3.complex.ComplexFormat.format_201", _mut37957, _mut37958, _mut37959, _mut37960, _mut37961)) {
             toAppendTo.append(" - ");
             imAppendTo = formatImaginary(-im, new StringBuffer(), pos);
             toAppendTo.append(imAppendTo);
             toAppendTo.append(getImaginaryCharacter());
-        } else if (im > 0.0 || Double.isNaN(im)) {
+        } else if ((_mut37967 ? (ROR_greater(im, 0.0, "org.apache.commons.math3.complex.ComplexFormat.format_201", _mut37962, _mut37963, _mut37964, _mut37965, _mut37966) && Double.isNaN(im)) : (ROR_greater(im, 0.0, "org.apache.commons.math3.complex.ComplexFormat.format_201", _mut37962, _mut37963, _mut37964, _mut37965, _mut37966) || Double.isNaN(im)))) {
             toAppendTo.append(" + ");
             imAppendTo = formatImaginary(im, new StringBuffer(), pos);
             toAppendTo.append(imAppendTo);
             toAppendTo.append(getImaginaryCharacter());
         }
-
         return toAppendTo;
     }
 
@@ -234,18 +237,14 @@ public class ComplexFormat {
      * offsets of the alignment field.
      * @return the value passed in as toAppendTo.
      */
-    private StringBuffer formatImaginary(double absIm,
-                                         StringBuffer toAppendTo,
-                                         FieldPosition pos) {
+    private StringBuffer formatImaginary(double absIm, StringBuffer toAppendTo, FieldPosition pos) {
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         CompositeFormat.formatDouble(absIm, getImaginaryFormat(), toAppendTo, pos);
         if (toAppendTo.toString().equals("1")) {
             // Remove the character "1" if it is the only one.
             toAppendTo.setLength(0);
         }
-
         return toAppendTo;
     }
 
@@ -262,22 +261,15 @@ public class ComplexFormat {
      * @see java.text.Format#format(java.lang.Object, java.lang.StringBuffer, java.text.FieldPosition)
      * @throws MathIllegalArgumentException is {@code obj} is not a valid type.
      */
-    public StringBuffer format(Object obj, StringBuffer toAppendTo,
-                               FieldPosition pos)
-        throws MathIllegalArgumentException {
-
+    public StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos) throws MathIllegalArgumentException {
         StringBuffer ret = null;
-
         if (obj instanceof Complex) {
-            ret = format( (Complex)obj, toAppendTo, pos);
+            ret = format((Complex) obj, toAppendTo, pos);
         } else if (obj instanceof Number) {
-            ret = format(new Complex(((Number)obj).doubleValue(), 0.0),
-                         toAppendTo, pos);
+            ret = format(new Complex(((Number) obj).doubleValue(), 0.0), toAppendTo, pos);
         } else {
-            throw new MathIllegalArgumentException(LocalizedFormats.CANNOT_FORMAT_INSTANCE_AS_COMPLEX,
-                                                   obj.getClass().getName());
+            throw new MathIllegalArgumentException(LocalizedFormats.CANNOT_FORMAT_INSTANCE_AS_COMPLEX, obj.getClass().getName());
         }
-
         return ret;
     }
 
@@ -325,8 +317,7 @@ public class ComplexFormat {
      * @throws NoDataException if {@code imaginaryCharacter} is an
      * empty string.
      */
-    public static ComplexFormat getInstance(String imaginaryCharacter, Locale locale)
-        throws NullArgumentException, NoDataException {
+    public static ComplexFormat getInstance(String imaginaryCharacter, Locale locale) throws NullArgumentException, NoDataException {
         NumberFormat f = CompositeFormat.getDefaultNumberFormat(locale);
         return new ComplexFormat(imaginaryCharacter, f);
     }
@@ -348,12 +339,11 @@ public class ComplexFormat {
      * cannot be parsed.
      */
     public Complex parse(String source) throws MathParseException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexFormat.parse_350");
         ParsePosition parsePosition = new ParsePosition(0);
         Complex result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         Complex.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.complex.ComplexFormat.parse_350", _mut37968, _mut37969, _mut37970, _mut37971, _mut37972)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), Complex.class);
         }
         return result;
     }
@@ -366,62 +356,50 @@ public class ComplexFormat {
      * @return the parsed {@link Complex} object.
      */
     public Complex parse(String source, ParsePosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexFormat.parse_368");
         int initialIndex = pos.getIndex();
-
         // parse whitespace
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
-
         // parse real
         Number re = CompositeFormat.parseNumber(source, getRealFormat(), pos);
         if (re == null) {
-            // invalid real number
             // set index back to initial, error index should already be set
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse sign
         int startIndex = pos.getIndex();
         char c = CompositeFormat.parseNextCharacter(source, pos);
         int sign = 0;
-        switch (c) {
-        case 0 :
-            // no sign
-            // return real only complex number
-            return new Complex(re.doubleValue(), 0.0);
-        case '-' :
-            sign = -1;
-            break;
-        case '+' :
-            sign = 1;
-            break;
-        default :
-            // invalid sign
-            // set index back to initial, error index should be the last
-            // character examined.
-            pos.setIndex(initialIndex);
-            pos.setErrorIndex(startIndex);
-            return null;
+        switch(c) {
+            case 0:
+                // return real only complex number
+                return new Complex(re.doubleValue(), 0.0);
+            case '-':
+                sign = -1;
+                break;
+            case '+':
+                sign = 1;
+                break;
+            default:
+                // character examined.
+                pos.setIndex(initialIndex);
+                pos.setErrorIndex(startIndex);
+                return null;
         }
-
         // parse whitespace
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
-
         // parse imaginary
         Number im = CompositeFormat.parseNumber(source, getRealFormat(), pos);
         if (im == null) {
-            // invalid imaginary number
             // set index back to initial, error index should already be set
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse imaginary character
         if (!CompositeFormat.parseFixedstring(source, getImaginaryCharacter(), pos)) {
             return null;
         }
-
-        return new Complex(re.doubleValue(), im.doubleValue() * sign);
-
+        return new Complex(re.doubleValue(), AOR_multiply(im.doubleValue(), sign, "org.apache.commons.math3.complex.ComplexFormat.parse_368", _mut37973, _mut37974, _mut37975, _mut37976));
     }
 }

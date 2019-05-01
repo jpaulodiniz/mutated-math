@@ -18,6 +18,8 @@ package org.apache.commons.math3.distribution;
 
 import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implementation of the chi-squared distribution.
@@ -26,16 +28,29 @@ import org.apache.commons.math3.random.Well19937c;
  * @see <a href="http://mathworld.wolfram.com/Chi-SquaredDistribution.html">Chi-squared Distribution (MathWorld)</a>
  */
 public class ChiSquaredDistribution extends AbstractRealDistribution {
+
+    @Conditional
+    public static boolean _mut53386 = false, _mut53387 = false, _mut53388 = false, _mut53389 = false, _mut53390 = false, _mut53391 = false, _mut53392 = false, _mut53393 = false, _mut53394 = false, _mut53395 = false, _mut53396 = false, _mut53397 = false;
+
     /**
      * Default inverse cumulative probability accuracy
      * @since 2.1
      */
     public static final double DEFAULT_INVERSE_ABSOLUTE_ACCURACY = 1e-9;
-    /** Serializable version identifier */
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -8352658048349159782L;
-    /** Internal Gamma distribution. */
+
+    /**
+     * Internal Gamma distribution.
+     */
     private final GammaDistribution gamma;
-    /** Inverse cumulative probability accuracy */
+
+    /**
+     * Inverse cumulative probability accuracy
+     */
     private final double solverAbsoluteAccuracy;
 
     /**
@@ -64,8 +79,7 @@ public class ChiSquaredDistribution extends AbstractRealDistribution {
      * {@link #DEFAULT_INVERSE_ABSOLUTE_ACCURACY}).
      * @since 2.1
      */
-    public ChiSquaredDistribution(double degreesOfFreedom,
-                                  double inverseCumAccuracy) {
+    public ChiSquaredDistribution(double degreesOfFreedom, double inverseCumAccuracy) {
         this(new Well19937c(), degreesOfFreedom, inverseCumAccuracy);
     }
 
@@ -91,12 +105,10 @@ public class ChiSquaredDistribution extends AbstractRealDistribution {
      * {@link #DEFAULT_INVERSE_ABSOLUTE_ACCURACY}).
      * @since 3.1
      */
-    public ChiSquaredDistribution(RandomGenerator rng,
-                                  double degreesOfFreedom,
-                                  double inverseCumAccuracy) {
+    public ChiSquaredDistribution(RandomGenerator rng, double degreesOfFreedom, double inverseCumAccuracy) {
         super(rng);
-
-        gamma = new GammaDistribution(degreesOfFreedom / 2, 2);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.ChiSquaredDistribution.ChiSquaredDistribution_94");
+        gamma = new GammaDistribution(AOR_divide(degreesOfFreedom, 2, "org.apache.commons.math3.distribution.ChiSquaredDistribution.ChiSquaredDistribution_94", _mut53386, _mut53387, _mut53388, _mut53389), 2);
         solverAbsoluteAccuracy = inverseCumAccuracy;
     }
 
@@ -106,26 +118,35 @@ public class ChiSquaredDistribution extends AbstractRealDistribution {
      * @return the degrees of freedom.
      */
     public double getDegreesOfFreedom() {
-        return gamma.getShape() * 2.0;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.ChiSquaredDistribution.getDegreesOfFreedom_108");
+        return AOR_multiply(gamma.getShape(), 2.0, "org.apache.commons.math3.distribution.ChiSquaredDistribution.getDegreesOfFreedom_108", _mut53390, _mut53391, _mut53392, _mut53393);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double density(double x) {
         return gamma.density(x);
     }
 
-    /** {@inheritDoc} **/
+    /**
+     * {@inheritDoc} *
+     */
     @Override
     public double logDensity(double x) {
         return gamma.logDensity(x);
     }
 
-    /** {@inheritDoc} */
-    public double cumulativeProbability(double x)  {
+    /**
+     * {@inheritDoc}
+     */
+    public double cumulativeProbability(double x) {
         return gamma.cumulativeProbability(x);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected double getSolverAbsoluteAccuracy() {
         return solverAbsoluteAccuracy;
@@ -146,7 +167,8 @@ public class ChiSquaredDistribution extends AbstractRealDistribution {
      * @return {@code 2 * k}, where {@code k} is the number of degrees of freedom.
      */
     public double getNumericalVariance() {
-        return 2 * getDegreesOfFreedom();
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.ChiSquaredDistribution.getNumericalVariance_148");
+        return AOR_multiply(2, getDegreesOfFreedom(), "org.apache.commons.math3.distribution.ChiSquaredDistribution.getNumericalVariance_148", _mut53394, _mut53395, _mut53396, _mut53397);
     }
 
     /**
@@ -173,12 +195,16 @@ public class ChiSquaredDistribution extends AbstractRealDistribution {
         return Double.POSITIVE_INFINITY;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public boolean isSupportLowerBoundInclusive() {
         return true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public boolean isSupportUpperBoundInclusive() {
         return false;
     }

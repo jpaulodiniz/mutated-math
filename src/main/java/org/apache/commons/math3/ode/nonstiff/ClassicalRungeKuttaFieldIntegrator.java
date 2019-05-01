@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.Field;
@@ -22,37 +21,16 @@ import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.ode.FieldEquationsMapper;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements the classical fourth order Runge-Kutta
- * integrator for Ordinary Differential Equations (it is the most
- * often used Runge-Kutta method).
- *
- * <p>This method is an explicit Runge-Kutta method, its Butcher-array
- * is the following one :
- * <pre>
- *    0  |  0    0    0    0
- *   1/2 | 1/2   0    0    0
- *   1/2 |  0   1/2   0    0
- *    1  |  0    0    1    0
- *       |--------------------
- *       | 1/6  1/3  1/3  1/6
- * </pre>
- * </p>
- *
- * @see EulerFieldIntegrator
- * @see GillFieldIntegrator
- * @see MidpointFieldIntegrator
- * @see ThreeEighthesFieldIntegrator
- * @see LutherFieldIntegrator
- * @param <T> the type of the field elements
- * @since 3.6
- */
+public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>> extends RungeKuttaFieldIntegrator<T> {
 
-public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>>
-    extends RungeKuttaFieldIntegrator<T> {
+    @Conditional
+    public static boolean _mut13490 = false, _mut13491 = false, _mut13492 = false, _mut13493 = false, _mut13494 = false, _mut13495 = false, _mut13496 = false, _mut13497 = false, _mut13498 = false;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * Build a fourth-order Runge-Kutta integrator with the given step.
      * @param field field to which the time and state vector elements belong
      * @param step integration step
@@ -61,7 +39,9 @@ public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>>
         super(field, "classical Runge-Kutta", step);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getC() {
         final T[] c = MathArrays.buildArray(getField(), 3);
         c[0] = getField().getOne().multiply(0.5);
@@ -70,11 +50,15 @@ public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>>
         return c;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[][] getA() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaFieldIntegrator.getA_74");
         final T[][] a = MathArrays.buildArray(getField(), 3, -1);
-        for (int i = 0; i < a.length; ++i) {
-            a[i] = MathArrays.buildArray(getField(), i + 1);
+        for (int i = 0; ROR_less(i, a.length, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaFieldIntegrator.getA_74", _mut13494, _mut13495, _mut13496, _mut13497, _mut13498); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaFieldIntegrator.getA_74");
+            a[i] = MathArrays.buildArray(getField(), AOR_plus(i, 1, "org.apache.commons.math3.ode.nonstiff.ClassicalRungeKuttaFieldIntegrator.getA_74", _mut13490, _mut13491, _mut13492, _mut13493));
         }
         a[0][0] = fraction(1, 2);
         a[1][0] = getField().getZero();
@@ -85,7 +69,9 @@ public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>>
         return a;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getB() {
         final T[] b = MathArrays.buildArray(getField(), 4);
         b[0] = fraction(1, 6);
@@ -95,17 +81,11 @@ public class ClassicalRungeKuttaFieldIntegrator<T extends RealFieldElement<T>>
         return b;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected ClassicalRungeKuttaFieldStepInterpolator<T>
-        createInterpolator(final boolean forward, T[][] yDotK,
-                           final FieldODEStateAndDerivative<T> globalPreviousState,
-                           final FieldODEStateAndDerivative<T> globalCurrentState,
-                           final FieldEquationsMapper<T> mapper) {
-        return new ClassicalRungeKuttaFieldStepInterpolator<T>(getField(), forward, yDotK,
-                                                               globalPreviousState, globalCurrentState,
-                                                               globalPreviousState, globalCurrentState,
-                                                               mapper);
+    protected ClassicalRungeKuttaFieldStepInterpolator<T> createInterpolator(final boolean forward, T[][] yDotK, final FieldODEStateAndDerivative<T> globalPreviousState, final FieldODEStateAndDerivative<T> globalCurrentState, final FieldEquationsMapper<T> mapper) {
+        return new ClassicalRungeKuttaFieldStepInterpolator<T>(getField(), forward, yDotK, globalPreviousState, globalCurrentState, globalPreviousState, globalCurrentState, mapper);
     }
-
 }

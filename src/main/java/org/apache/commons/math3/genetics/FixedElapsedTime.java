@@ -17,8 +17,9 @@
 package org.apache.commons.math3.genetics;
 
 import java.util.concurrent.TimeUnit;
-
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Stops after a fixed amount of time has elapsed.
@@ -30,10 +31,18 @@ import org.apache.commons.math3.exception.NumberIsTooSmallException;
  * @since 3.1
  */
 public class FixedElapsedTime implements StoppingCondition {
-    /** Maximum allowed time period (in nanoseconds). */
+
+    @Conditional
+    public static boolean _mut2372 = false, _mut2373 = false, _mut2374 = false, _mut2375 = false, _mut2376 = false, _mut2377 = false, _mut2378 = false, _mut2379 = false, _mut2380 = false, _mut2381 = false, _mut2382 = false, _mut2383 = false, _mut2384 = false, _mut2385 = false, _mut2386 = false, _mut2387 = false, _mut2388 = false, _mut2389 = false, _mut2390 = false;
+
+    /**
+     * Maximum allowed time period (in nanoseconds).
+     */
     private final long maxTimePeriod;
 
-    /** The predetermined termination time (stopping condition). */
+    /**
+     * The predetermined termination time (stopping condition).
+     */
     private long endTime = -1;
 
     /**
@@ -54,7 +63,8 @@ public class FixedElapsedTime implements StoppingCondition {
      * @throws NumberIsTooSmallException if the provided time is &lt; 0
      */
     public FixedElapsedTime(final long maxTime, final TimeUnit unit) throws NumberIsTooSmallException {
-        if (maxTime < 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.FixedElapsedTime.FixedElapsedTime_56");
+        if (ROR_less(maxTime, 0, "org.apache.commons.math3.genetics.FixedElapsedTime.FixedElapsedTime_56", _mut2372, _mut2373, _mut2374, _mut2375, _mut2376)) {
             throw new NumberIsTooSmallException(maxTime, 0, true);
         }
         maxTimePeriod = unit.toNanos(maxTime);
@@ -68,10 +78,10 @@ public class FixedElapsedTime implements StoppingCondition {
      * @return <code>true</code> IFF the maximum allowed time period has elapsed
      */
     public boolean isSatisfied(final Population population) {
-        if (endTime < 0) {
-            endTime = System.nanoTime() + maxTimePeriod;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.FixedElapsedTime.isSatisfied_70");
+        if (ROR_less(endTime, 0, "org.apache.commons.math3.genetics.FixedElapsedTime.isSatisfied_70", _mut2377, _mut2378, _mut2379, _mut2380, _mut2381)) {
+            endTime = AOR_plus(System.nanoTime(), maxTimePeriod, "org.apache.commons.math3.genetics.FixedElapsedTime.isSatisfied_70", _mut2382, _mut2383, _mut2384, _mut2385);
         }
-
-        return System.nanoTime() >= endTime;
+        return ROR_greater_equals(System.nanoTime(), endTime, "org.apache.commons.math3.genetics.FixedElapsedTime.isSatisfied_70", _mut2386, _mut2387, _mut2388, _mut2389, _mut2390);
     }
 }

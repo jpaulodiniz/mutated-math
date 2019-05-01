@@ -31,6 +31,8 @@ import org.apache.commons.math3.optim.PointVectorValuePair;
 import org.apache.commons.math3.optim.nonlinear.vector.Weight;
 import org.apache.commons.math3.optim.nonlinear.vector.JacobianMultivariateVectorOptimizer;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for implementing least-squares optimizers.
@@ -43,11 +45,19 @@ import org.apache.commons.math3.util.FastMath;
  * (cf. MATH-1008).
  */
 @Deprecated
-public abstract class AbstractLeastSquaresOptimizer
-    extends JacobianMultivariateVectorOptimizer {
-    /** Square-root of the weight matrix. */
+public abstract class AbstractLeastSquaresOptimizer extends JacobianMultivariateVectorOptimizer {
+
+    @Conditional
+    public static boolean _mut65773 = false, _mut65774 = false, _mut65775 = false, _mut65776 = false, _mut65777 = false, _mut65778 = false, _mut65779 = false, _mut65780 = false, _mut65781 = false, _mut65782 = false, _mut65783 = false, _mut65784 = false, _mut65785 = false, _mut65786 = false, _mut65787 = false, _mut65788 = false, _mut65789 = false, _mut65790 = false, _mut65791 = false, _mut65792 = false, _mut65793 = false, _mut65794 = false, _mut65795 = false, _mut65796 = false, _mut65797 = false, _mut65798 = false, _mut65799 = false, _mut65800 = false, _mut65801 = false, _mut65802 = false, _mut65803 = false, _mut65804 = false;
+
+    /**
+     * Square-root of the weight matrix.
+     */
     private RealMatrix weightMatrixSqrt;
-    /** Cost value (square root of the sum of the residuals). */
+
+    /**
+     * Cost value (square root of the sum of the residuals).
+     */
     private double cost;
 
     /**
@@ -93,7 +103,8 @@ public abstract class AbstractLeastSquaresOptimizer
      * @return the RMS value.
      */
     public double getRMS() {
-        return FastMath.sqrt(getChiSquare() / getTargetSize());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.getRMS_95");
+        return FastMath.sqrt(AOR_divide(getChiSquare(), getTargetSize(), "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.getRMS_95", _mut65773, _mut65774, _mut65775, _mut65776));
     }
 
     /**
@@ -103,7 +114,8 @@ public abstract class AbstractLeastSquaresOptimizer
      * @return chi-square value
      */
     public double getChiSquare() {
-        return cost * cost;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.getChiSquare_105");
+        return AOR_multiply(cost, cost, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.getChiSquare_105", _mut65777, _mut65778, _mut65779, _mut65780);
     }
 
     /**
@@ -140,17 +152,13 @@ public abstract class AbstractLeastSquaresOptimizer
      * @throws org.apache.commons.math3.linear.SingularMatrixException
      * if the covariance matrix cannot be computed (singular problem).
      */
-    public double[][] computeCovariances(double[] params,
-                                         double threshold) {
+    public double[][] computeCovariances(double[] params, double threshold) {
         // Set up the Jacobian.
         final RealMatrix j = computeWeightedJacobian(params);
-
         // Compute transpose(J)J.
         final RealMatrix jTj = j.transpose().multiply(j);
-
         // Compute the covariances matrix.
-        final DecompositionSolver solver
-            = new QRDecomposition(jTj, threshold).getSolver();
+        final DecompositionSolver solver = new QRDecomposition(jTj, threshold).getSolver();
         return solver.getInverse().getData();
     }
 
@@ -168,12 +176,13 @@ public abstract class AbstractLeastSquaresOptimizer
      * @throws org.apache.commons.math3.linear.SingularMatrixException
      * if the covariance matrix cannot be computed.
      */
-    public double[] computeSigma(double[] params,
-                                 double covarianceSingularityThreshold) {
+    public double[] computeSigma(double[] params, double covarianceSingularityThreshold) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeSigma_171");
         final int nC = params.length;
         final double[] sig = new double[nC];
         final double[][] cov = computeCovariances(params, covarianceSingularityThreshold);
-        for (int i = 0; i < nC; ++i) {
+        for (int i = 0; ROR_less(i, nC, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeSigma_171", _mut65781, _mut65782, _mut65783, _mut65784, _mut65785); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeSigma_171");
             sig[i] = FastMath.sqrt(cov[i][i]);
         }
         return sig;
@@ -195,8 +204,7 @@ public abstract class AbstractLeastSquaresOptimizer
      * arguments have inconsistent dimensions.
      */
     @Override
-    public PointVectorValuePair optimize(OptimizationData... optData)
-        throws TooManyEvaluationsException {
+    public PointVectorValuePair optimize(OptimizationData... optData) throws TooManyEvaluationsException {
         // Set up base class and perform computation.
         return super.optimize(optData);
     }
@@ -217,17 +225,16 @@ public abstract class AbstractLeastSquaresOptimizer
      * length.
      */
     protected double[] computeResiduals(double[] objectiveValue) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeResiduals_219");
         final double[] target = getTarget();
-        if (objectiveValue.length != target.length) {
-            throw new DimensionMismatchException(target.length,
-                                                 objectiveValue.length);
+        if (ROR_not_equals(objectiveValue.length, target.length, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeResiduals_219", _mut65786, _mut65787, _mut65788, _mut65789, _mut65790)) {
+            throw new DimensionMismatchException(target.length, objectiveValue.length);
         }
-
         final double[] residuals = new double[target.length];
-        for (int i = 0; i < target.length; i++) {
-            residuals[i] = target[i] - objectiveValue[i];
+        for (int i = 0; ROR_less(i, target.length, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeResiduals_219", _mut65795, _mut65796, _mut65797, _mut65798, _mut65799); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeResiduals_219");
+            residuals[i] = AOR_minus(target[i], objectiveValue[i], "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.computeResiduals_219", _mut65791, _mut65792, _mut65793, _mut65794);
         }
-
         return residuals;
     }
 
@@ -246,13 +253,11 @@ public abstract class AbstractLeastSquaresOptimizer
     protected void parseOptimizationData(OptimizationData... optData) {
         // Allow base class to register its own data.
         super.parseOptimizationData(optData);
-
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.parseOptimizationData_245");
             if (data instanceof Weight) {
                 weightMatrixSqrt = squareRoot(((Weight) data).getWeight());
-                // If more data must be parsed, this statement _must_ be
                 // changed to "continue".
                 break;
             }
@@ -266,10 +271,12 @@ public abstract class AbstractLeastSquaresOptimizer
      * @return the square-root of the weight matrix.
      */
     private RealMatrix squareRoot(RealMatrix m) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.squareRoot_268");
         if (m instanceof DiagonalMatrix) {
             final int dim = m.getRowDimension();
             final RealMatrix sqrtM = new DiagonalMatrix(dim);
-            for (int i = 0; i < dim; i++) {
+            for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.squareRoot_268", _mut65800, _mut65801, _mut65802, _mut65803, _mut65804); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.jacobian.AbstractLeastSquaresOptimizer.squareRoot_268");
                 sqrtM.setEntry(i, i, FastMath.sqrt(m.getEntry(i, i)));
             }
             return sqrtM;

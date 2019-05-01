@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.clustering;
 
 import java.util.Collection;
 import java.util.List;
-
 import org.apache.commons.math3.exception.ConvergenceException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator;
 import org.apache.commons.math3.ml.clustering.evaluation.SumOfClusterVariances;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * A wrapper around a k-means++ clustering algorithm which performs multiple trials
@@ -33,33 +33,41 @@ import org.apache.commons.math3.ml.clustering.evaluation.SumOfClusterVariances;
  */
 public class MultiKMeansPlusPlusClusterer<T extends Clusterable> extends Clusterer<T> {
 
-    /** The underlying k-means clusterer. */
+    @Conditional
+    public static boolean _mut102674 = false, _mut102675 = false, _mut102676 = false, _mut102677 = false, _mut102678 = false;
+
+    /**
+     * The underlying k-means clusterer.
+     */
     private final KMeansPlusPlusClusterer<T> clusterer;
 
-    /** The number of trial runs. */
+    /**
+     * The number of trial runs.
+     */
     private final int numTrials;
 
-    /** The cluster evaluator to use. */
+    /**
+     * The cluster evaluator to use.
+     */
     private final ClusterEvaluator<T> evaluator;
 
-    /** Build a clusterer.
+    /**
+     * Build a clusterer.
      * @param clusterer the k-means clusterer to use
      * @param numTrials number of trial runs
      */
-    public MultiKMeansPlusPlusClusterer(final KMeansPlusPlusClusterer<T> clusterer,
-                                        final int numTrials) {
+    public MultiKMeansPlusPlusClusterer(final KMeansPlusPlusClusterer<T> clusterer, final int numTrials) {
         this(clusterer, numTrials, new SumOfClusterVariances<T>(clusterer.getDistanceMeasure()));
     }
 
-    /** Build a clusterer.
+    /**
+     * Build a clusterer.
      * @param clusterer the k-means clusterer to use
      * @param numTrials number of trial runs
      * @param evaluator the cluster evaluator to use
      * @since 3.3
      */
-    public MultiKMeansPlusPlusClusterer(final KMeansPlusPlusClusterer<T> clusterer,
-                                        final int numTrials,
-                                        final ClusterEvaluator<T> evaluator) {
+    public MultiKMeansPlusPlusClusterer(final KMeansPlusPlusClusterer<T> clusterer, final int numTrials, final ClusterEvaluator<T> evaluator) {
         super(clusterer.getDistanceMeasure());
         this.clusterer = clusterer;
         this.numTrials = numTrials;
@@ -88,7 +96,7 @@ public class MultiKMeansPlusPlusClusterer<T extends Clusterable> extends Cluster
      * @since 3.3
      */
     public ClusterEvaluator<T> getClusterEvaluator() {
-       return evaluator;
+        return evaluator;
     }
 
     /**
@@ -103,33 +111,25 @@ public class MultiKMeansPlusPlusClusterer<T extends Clusterable> extends Cluster
      *   {@link KMeansPlusPlusClusterer.EmptyClusterStrategy} is set to {@code ERROR}.
      */
     @Override
-    public List<CentroidCluster<T>> cluster(final Collection<T> points)
-        throws MathIllegalArgumentException, ConvergenceException {
-
+    public List<CentroidCluster<T>> cluster(final Collection<T> points) throws MathIllegalArgumentException, ConvergenceException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.MultiKMeansPlusPlusClusterer.cluster_105");
         // at first, we have not found any clusters list yet
         List<CentroidCluster<T>> best = null;
         double bestVarianceSum = Double.POSITIVE_INFINITY;
-
         // do several clustering trials
-        for (int i = 0; i < numTrials; ++i) {
-
+        for (int i = 0; ROR_less(i, numTrials, "org.apache.commons.math3.ml.clustering.MultiKMeansPlusPlusClusterer.cluster_105", _mut102674, _mut102675, _mut102676, _mut102677, _mut102678); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.MultiKMeansPlusPlusClusterer.cluster_105");
             // compute a clusters list
             List<CentroidCluster<T>> clusters = clusterer.cluster(points);
-
             // compute the variance of the current list
             final double varianceSum = evaluator.score(clusters);
-
             if (evaluator.isBetterScore(varianceSum, bestVarianceSum)) {
                 // this one is the best we have found so far, remember it
-                best            = clusters;
+                best = clusters;
                 bestVarianceSum = varianceSum;
             }
-
         }
-
         // return the best clusters list found
         return best;
-
     }
-
 }

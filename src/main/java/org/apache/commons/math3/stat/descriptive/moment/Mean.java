@@ -17,13 +17,14 @@
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.WeightedEvaluation;
 import org.apache.commons.math3.stat.descriptive.summary.Sum;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>Computes the arithmetic mean of a set of values. Uses the definitional
@@ -58,15 +59,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.
- *
  */
-public class Mean extends AbstractStorelessUnivariateStatistic
-    implements Serializable, WeightedEvaluation {
+public class Mean extends AbstractStorelessUnivariateStatistic implements Serializable, WeightedEvaluation {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut2774 = false, _mut2775 = false, _mut2776 = false, _mut2777 = false, _mut2778 = false, _mut2779 = false, _mut2780 = false, _mut2781 = false, _mut2782 = false, _mut2783 = false, _mut2784 = false, _mut2785 = false, _mut2786 = false, _mut2787 = false, _mut2788 = false, _mut2789 = false, _mut2790 = false, _mut2791 = false, _mut2792 = false, _mut2793 = false, _mut2794 = false, _mut2795 = false, _mut2796 = false, _mut2797 = false, _mut2798 = false, _mut2799 = false, _mut2800 = false, _mut2801 = false, _mut2802 = false, _mut2803 = false, _mut2804 = false, _mut2805 = false, _mut2806 = false, _mut2807 = false, _mut2808 = false, _mut2809 = false, _mut2810 = false, _mut2811 = false, _mut2812 = false, _mut2813 = false, _mut2814 = false, _mut2815 = false, _mut2816 = false, _mut2817 = false, _mut2818 = false, _mut2819 = false, _mut2820 = false, _mut2821 = false, _mut2822 = false, _mut2823 = false, _mut2824 = false, _mut2825 = false, _mut2826 = false, _mut2827 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -1296043746617791564L;
 
-    /** First moment on which this statistic is based. */
+    /**
+     * First moment on which this statistic is based.
+     */
     protected FirstMoment moment;
 
     /**
@@ -77,7 +83,9 @@ public class Mean extends AbstractStorelessUnivariateStatistic
      */
     protected boolean incMoment;
 
-    /** Constructs a Mean. */
+    /**
+     * Constructs a Mean.
+     */
     public Mean() {
         incMoment = true;
         moment = new FirstMoment();
@@ -159,21 +167,20 @@ public class Mean extends AbstractStorelessUnivariateStatistic
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values,final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161");
         if (test(values, begin, length)) {
             Sum sum = new Sum();
             double sampleSize = length;
-
             // Compute initial estimate using definitional formula
-            double xbar = sum.evaluate(values, begin, length) / sampleSize;
-
+            double xbar = AOR_divide(sum.evaluate(values, begin, length), sampleSize, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2774, _mut2775, _mut2776, _mut2777);
             // Compute correction factor in second pass
             double correction = 0;
-            for (int i = begin; i < begin + length; i++) {
-                correction += values[i] - xbar;
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2782, _mut2783, _mut2784, _mut2785), "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2786, _mut2787, _mut2788, _mut2789, _mut2790); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161");
+                correction += AOR_minus(values[i], xbar, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2778, _mut2779, _mut2780, _mut2781);
             }
-            return xbar + (correction/sampleSize);
+            return AOR_plus(xbar, (AOR_divide(correction, sampleSize, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2791, _mut2792, _mut2793, _mut2794)), "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_161", _mut2795, _mut2796, _mut2797, _mut2798);
         }
         return Double.NaN;
     }
@@ -207,21 +214,20 @@ public class Mean extends AbstractStorelessUnivariateStatistic
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights,
-                           final int begin, final int length) throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210");
         if (test(values, weights, begin, length)) {
             Sum sum = new Sum();
-
             // Compute initial estimate using definitional formula
-            double sumw = sum.evaluate(weights,begin,length);
-            double xbarw = sum.evaluate(values, weights, begin, length) / sumw;
-
+            double sumw = sum.evaluate(weights, begin, length);
+            double xbarw = AOR_divide(sum.evaluate(values, weights, begin, length), sumw, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2799, _mut2800, _mut2801, _mut2802);
             // Compute correction factor in second pass
             double correction = 0;
-            for (int i = begin; i < begin + length; i++) {
-                correction += weights[i] * (values[i] - xbarw);
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2811, _mut2812, _mut2813, _mut2814), "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2815, _mut2816, _mut2817, _mut2818, _mut2819); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210");
+                correction += AOR_multiply(weights[i], (AOR_minus(values[i], xbarw, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2803, _mut2804, _mut2805, _mut2806)), "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2807, _mut2808, _mut2809, _mut2810);
             }
-            return xbarw + (correction/sumw);
+            return AOR_plus(xbarw, (AOR_divide(correction, sumw, "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2820, _mut2821, _mut2822, _mut2823)), "org.apache.commons.math3.stat.descriptive.moment.Mean.evaluate_210", _mut2824, _mut2825, _mut2826, _mut2827);
         }
         return Double.NaN;
     }
@@ -250,8 +256,7 @@ public class Mean extends AbstractStorelessUnivariateStatistic
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights) throws MathIllegalArgumentException {
         return evaluate(values, weights, 0, values.length);
     }
 
@@ -266,7 +271,6 @@ public class Mean extends AbstractStorelessUnivariateStatistic
         return result;
     }
 
-
     /**
      * Copies source to dest.
      * <p>Neither source nor dest can be null.</p>
@@ -275,8 +279,7 @@ public class Mean extends AbstractStorelessUnivariateStatistic
      * @param dest Mean to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(Mean source, Mean dest)
-        throws NullArgumentException {
+    public static void copy(Mean source, Mean dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

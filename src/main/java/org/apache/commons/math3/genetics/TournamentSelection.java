@@ -18,9 +18,10 @@ package org.apache.commons.math3.genetics;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Tournament selection scheme. Each of the two selected chromosomes is selected
@@ -32,7 +33,12 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  */
 public class TournamentSelection implements SelectionPolicy {
 
-    /** number of chromosomes included in the tournament selections */
+    @Conditional
+    public static boolean _mut2151 = false, _mut2152 = false, _mut2153 = false, _mut2154 = false, _mut2155 = false, _mut2156 = false, _mut2157 = false, _mut2158 = false, _mut2159 = false, _mut2160 = false;
+
+    /**
+     * number of chromosomes included in the tournament selections
+     */
     private int arity;
 
     /**
@@ -55,8 +61,7 @@ public class TournamentSelection implements SelectionPolicy {
      * @throws MathIllegalArgumentException if the tournament arity is bigger than the population size
      */
     public ChromosomePair select(final Population population) throws MathIllegalArgumentException {
-        return new ChromosomePair(tournament((ListPopulation) population),
-                                  tournament((ListPopulation) population));
+        return new ChromosomePair(tournament((ListPopulation) population), tournament((ListPopulation) population));
     }
 
     /**
@@ -68,22 +73,25 @@ public class TournamentSelection implements SelectionPolicy {
      * @throws MathIllegalArgumentException if the tournament arity is bigger than the population size
      */
     private Chromosome tournament(final ListPopulation population) throws MathIllegalArgumentException {
-        if (population.getPopulationSize() < this.arity) {
-            throw new MathIllegalArgumentException(LocalizedFormats.TOO_LARGE_TOURNAMENT_ARITY,
-                                                   arity, population.getPopulationSize());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.TournamentSelection.nextGeneration_78");
+        if (ROR_less(population.getPopulationSize(), this.arity, "org.apache.commons.math3.genetics.TournamentSelection.tournament_70", _mut2151, _mut2152, _mut2153, _mut2154, _mut2155)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.TOO_LARGE_TOURNAMENT_ARITY, arity, population.getPopulationSize());
         }
         // auxiliary population
         ListPopulation tournamentPopulation = new ListPopulation(this.arity) {
-            /** {@inheritDoc} */
+
+            /**
+             * {@inheritDoc}
+             */
             public Population nextGeneration() {
                 // not useful here
                 return null;
             }
         };
-
         // create a copy of the chromosome list
-        List<Chromosome> chromosomes = new ArrayList<Chromosome> (population.getChromosomes());
-        for (int i=0; i<this.arity; i++) {
+        List<Chromosome> chromosomes = new ArrayList<Chromosome>(population.getChromosomes());
+        for (int i = 0; ROR_less(i, this.arity, "org.apache.commons.math3.genetics.TournamentSelection.nextGeneration_78", _mut2156, _mut2157, _mut2158, _mut2159, _mut2160); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.TournamentSelection.nextGeneration_78");
             // select a random individual and add it to the tournament
             int rind = GeneticAlgorithm.getRandomGenerator().nextInt(chromosomes.size());
             tournamentPopulation.addChromosome(chromosomes.get(rind));
@@ -111,5 +119,4 @@ public class TournamentSelection implements SelectionPolicy {
     public void setArity(final int arity) {
         this.arity = arity;
     }
-
 }

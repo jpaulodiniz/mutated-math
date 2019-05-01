@@ -19,11 +19,12 @@ package org.apache.commons.math3.fraction;
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
-
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a Fraction number in proper format.  The number format for each of
@@ -37,10 +38,17 @@ import org.apache.commons.math3.util.MathUtils;
  */
 public class ProperFractionFormat extends FractionFormat {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut672 = false, _mut673 = false, _mut674 = false, _mut675 = false, _mut676 = false, _mut677 = false, _mut678 = false, _mut679 = false, _mut680 = false, _mut681 = false, _mut682 = false, _mut683 = false, _mut684 = false, _mut685 = false, _mut686 = false, _mut687 = false, _mut688 = false, _mut689 = false, _mut690 = false, _mut691 = false, _mut692 = false, _mut693 = false, _mut694 = false, _mut695 = false, _mut696 = false, _mut697 = false, _mut698 = false, _mut699 = false, _mut700 = false, _mut701 = false, _mut702 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 760934726031766749L;
 
-    /** The format used for the whole number. */
+    /**
+     * The format used for the whole number.
+     */
     private NumberFormat wholeFormat;
 
     /**
@@ -58,7 +66,7 @@ public class ProperFractionFormat extends FractionFormat {
      *        denominator.
      */
     public ProperFractionFormat(NumberFormat format) {
-        this(format, (NumberFormat)format.clone(), (NumberFormat)format.clone());
+        this(format, (NumberFormat) format.clone(), (NumberFormat) format.clone());
     }
 
     /**
@@ -68,10 +76,7 @@ public class ProperFractionFormat extends FractionFormat {
      * @param numeratorFormat the custom format for the numerator.
      * @param denominatorFormat the custom format for the denominator.
      */
-    public ProperFractionFormat(NumberFormat wholeFormat,
-            NumberFormat numeratorFormat,
-            NumberFormat denominatorFormat)
-    {
+    public ProperFractionFormat(NumberFormat wholeFormat, NumberFormat numeratorFormat, NumberFormat denominatorFormat) {
         super(numeratorFormat, denominatorFormat);
         setWholeFormat(wholeFormat);
     }
@@ -87,18 +92,15 @@ public class ProperFractionFormat extends FractionFormat {
      * @return the value passed in as toAppendTo.
      */
     @Override
-    public StringBuffer format(Fraction fraction, StringBuffer toAppendTo,
-            FieldPosition pos) {
-
+    public StringBuffer format(Fraction fraction, StringBuffer toAppendTo, FieldPosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fraction.ProperFractionFormat.format_89");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         int num = fraction.getNumerator();
         int den = fraction.getDenominator();
-        int whole = num / den;
+        int whole = AOR_divide(num, den, "org.apache.commons.math3.fraction.ProperFractionFormat.format_89", _mut672, _mut673, _mut674, _mut675);
         num %= den;
-
-        if (whole != 0) {
+        if (ROR_not_equals(whole, 0, "org.apache.commons.math3.fraction.ProperFractionFormat.format_89", _mut676, _mut677, _mut678, _mut679, _mut680)) {
             getWholeFormat().format(whole, toAppendTo, pos);
             toAppendTo.append(' ');
             num = FastMath.abs(num);
@@ -106,7 +108,6 @@ public class ProperFractionFormat extends FractionFormat {
         getNumeratorFormat().format(num, toAppendTo, pos);
         toAppendTo.append(" / ");
         getDenominatorFormat().format(den, toAppendTo, pos);
-
         return toAppendTo;
     }
 
@@ -132,89 +133,70 @@ public class ProperFractionFormat extends FractionFormat {
      */
     @Override
     public Fraction parse(String source, ParsePosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fraction.ProperFractionFormat.parse_133");
         // try to parse improper fraction
         Fraction ret = super.parse(source, pos);
         if (ret != null) {
             return ret;
         }
-
         int initialIndex = pos.getIndex();
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse whole
         Number whole = getWholeFormat().parse(source, pos);
         if (whole == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse numerator
         Number num = getNumeratorFormat().parse(source, pos);
         if (num == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
-        if (num.intValue() < 0) {
+        if (ROR_less(num.intValue(), 0, "org.apache.commons.math3.fraction.ProperFractionFormat.parse_133", _mut681, _mut682, _mut683, _mut684, _mut685)) {
             // minus signs should be leading, invalid expression
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse '/'
         int startIndex = pos.getIndex();
         char c = parseNextCharacter(source, pos);
-        switch (c) {
-        case 0 :
-            // no '/'
-            // return num as a fraction
-            return new Fraction(num.intValue(), 1);
-        case '/' :
-            // found '/', continue parsing denominator
-            break;
-        default :
-            // invalid '/'
-            // set index back to initial, error index should be the last
-            // character examined.
-            pos.setIndex(initialIndex);
-            pos.setErrorIndex(startIndex);
-            return null;
+        switch(c) {
+            case 0:
+                // return num as a fraction
+                return new Fraction(num.intValue(), 1);
+            case '/':
+                // found '/', continue parsing denominator
+                break;
+            default:
+                // character examined.
+                pos.setIndex(initialIndex);
+                pos.setErrorIndex(startIndex);
+                return null;
         }
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse denominator
         Number den = getDenominatorFormat().parse(source, pos);
         if (den == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
-        if (den.intValue() < 0) {
+        if (ROR_less(den.intValue(), 0, "org.apache.commons.math3.fraction.ProperFractionFormat.parse_133", _mut686, _mut687, _mut688, _mut689, _mut690)) {
             // minus signs must be leading, invalid
             pos.setIndex(initialIndex);
             return null;
         }
-
         int w = whole.intValue();
         int n = num.intValue();
         int d = den.intValue();
-        return new Fraction(((FastMath.abs(w) * d) + n) * MathUtils.copySign(1, w), d);
+        return new Fraction(AOR_multiply((AOR_plus((AOR_multiply(FastMath.abs(w), d, "org.apache.commons.math3.fraction.ProperFractionFormat.parse_133", _mut691, _mut692, _mut693, _mut694)), n, "org.apache.commons.math3.fraction.ProperFractionFormat.parse_133", _mut695, _mut696, _mut697, _mut698)), MathUtils.copySign(1, w), "org.apache.commons.math3.fraction.ProperFractionFormat.parse_133", _mut699, _mut700, _mut701, _mut702), d);
     }
 
     /**

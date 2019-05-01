@@ -18,9 +18,9 @@ package org.apache.commons.math3.primes;
 
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
-
 import java.util.List;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Methods related to prime numbers in the range of <code>int</code>:
@@ -33,6 +33,9 @@ import java.util.List;
  * @since 3.2
  */
 public class Primes {
+
+    @Conditional
+    public static boolean _mut220 = false, _mut221 = false, _mut222 = false, _mut223 = false, _mut224 = false, _mut225 = false, _mut226 = false, _mut227 = false, _mut228 = false, _mut229 = false, _mut230 = false, _mut231 = false, _mut232 = false, _mut233 = false, _mut234 = false, _mut235 = false, _mut236 = false, _mut237 = false, _mut238 = false, _mut239 = false, _mut240 = false, _mut241 = false, _mut242 = false, _mut243 = false, _mut244 = false, _mut245 = false, _mut246 = false, _mut247 = false, _mut248 = false, _mut249 = false, _mut250 = false, _mut251 = false, _mut252 = false, _mut253 = false, _mut254 = false, _mut255 = false, _mut256 = false, _mut257 = false, _mut258 = false, _mut259 = false, _mut260 = false, _mut261 = false, _mut262 = false, _mut263 = false, _mut264 = false, _mut265 = false, _mut266 = false, _mut267 = false, _mut268 = false, _mut269 = false, _mut270 = false, _mut271 = false, _mut272 = false;
 
     /**
      * Hide utility class.
@@ -51,13 +54,14 @@ public class Primes {
      * @return true if n is prime. (All numbers &lt; 2 return false).
      */
     public static boolean isPrime(int n) {
-        if (n < 2) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.Primes.isPrime_53");
+        if (ROR_less(n, 2, "org.apache.commons.math3.primes.Primes.isPrime_53", _mut220, _mut221, _mut222, _mut223, _mut224)) {
             return false;
         }
-
         for (int p : SmallPrimes.PRIMES) {
-            if (0 == (n % p)) {
-                return n == p;
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.Primes.isPrime_53");
+            if (ROR_equals(0, (AOR_remainder(n, p, "org.apache.commons.math3.primes.Primes.isPrime_53", _mut225, _mut226, _mut227, _mut228)), "org.apache.commons.math3.primes.Primes.isPrime_53", _mut229, _mut230, _mut231, _mut232, _mut233)) {
+                return ROR_equals(n, p, "org.apache.commons.math3.primes.Primes.isPrime_53", _mut234, _mut235, _mut236, _mut237, _mut238);
             }
         }
         return SmallPrimes.millerRabinPrimeTest(n);
@@ -71,39 +75,43 @@ public class Primes {
      * @throws MathIllegalArgumentException if n &lt; 0.
      */
     public static int nextPrime(int n) {
-        if (n < 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.Primes.nextPrime_73");
+        if (ROR_less(n, 0, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut239, _mut240, _mut241, _mut242, _mut243)) {
             throw new MathIllegalArgumentException(LocalizedFormats.NUMBER_TOO_SMALL, n, 0);
         }
-        if (n == 2) {
+        if (ROR_equals(n, 2, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut244, _mut245, _mut246, _mut247, _mut248)) {
             return 2;
         }
-        n |= 1;//make sure n is odd
-        if (n == 1) {
+        // make sure n is odd
+        n |= 1;
+        if (ROR_equals(n, 1, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut249, _mut250, _mut251, _mut252, _mut253)) {
             return 2;
         }
-
         if (isPrime(n)) {
             return n;
         }
-
-        // prepare entry in the +2, +4 loop:
         // n should not be a multiple of 3
-        final int rem = n % 3;
-        if (0 == rem) { // if n % 3 == 0
-            n += 2; // n % 3 == 2
-        } else if (1 == rem) { // if n % 3 == 1
-            // if (isPrime(n)) return n;
-            n += 4; // n % 3 == 2
+        final int rem = AOR_remainder(n, 3, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut254, _mut255, _mut256, _mut257);
+        if (ROR_equals(0, rem, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut258, _mut259, _mut260, _mut261, _mut262)) {
+            // n % 3 == 2
+            n += 2;
+        } else if (ROR_equals(1, rem, "org.apache.commons.math3.primes.Primes.nextPrime_73", _mut263, _mut264, _mut265, _mut266, _mut267)) {
+            // n % 3 == 2
+            n += 4;
         }
-        while (true) { // this loop skips all multiple of 3
+        while (true) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.Primes.nextPrime_73");
+            // this loop skips all multiple of 3
             if (isPrime(n)) {
                 return n;
             }
-            n += 2; // n % 3 == 1
+            // n % 3 == 1
+            n += 2;
             if (isPrime(n)) {
                 return n;
             }
-            n += 4; // n % 3 == 2
+            // n % 3 == 2
+            n += 4;
         }
     }
 
@@ -115,15 +123,11 @@ public class Primes {
      * @throws MathIllegalArgumentException if n &lt; 2.
      */
     public static List<Integer> primeFactors(int n) {
-
-        if (n < 2) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.Primes.primeFactors_117");
+        if (ROR_less(n, 2, "org.apache.commons.math3.primes.Primes.primeFactors_117", _mut268, _mut269, _mut270, _mut271, _mut272)) {
             throw new MathIllegalArgumentException(LocalizedFormats.NUMBER_TOO_SMALL, n, 2);
         }
-        // slower than trial div unless we do an awful lot of computation
-        // (then it finally gets JIT-compiled efficiently
         // List<Integer> out = PollardRho.primeFactors(n);
         return SmallPrimes.trialDivision(n);
-
     }
-
 }

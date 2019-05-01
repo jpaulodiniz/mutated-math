@@ -17,37 +17,46 @@
 package org.apache.commons.math3.stat.descriptive.rank;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
- * Returns the maximum of the available values.
- * <p>
- * <ul>
- * <li>The result is <code>NaN</code> iff all values are <code>NaN</code>
- * (i.e. <code>NaN</code> values have no impact on the value of the statistic).</li>
- * <li>If any of the values equals <code>Double.POSITIVE_INFINITY</code>,
- * the result is <code>Double.POSITIVE_INFINITY.</code></li>
- * </ul></p>
-* <p>
- * <strong>Note that this implementation is not synchronized.</strong> If
- * multiple threads access an instance of this class concurrently, and at least
- * one of the threads invokes the <code>increment()</code> or
- * <code>clear()</code> method, it must be synchronized externally.</p>
- *
+ *  Returns the maximum of the available values.
+ *  <p>
+ *  <ul>
+ *  <li>The result is <code>NaN</code> iff all values are <code>NaN</code>
+ *  (i.e. <code>NaN</code> values have no impact on the value of the statistic).</li>
+ *  <li>If any of the values equals <code>Double.POSITIVE_INFINITY</code>,
+ *  the result is <code>Double.POSITIVE_INFINITY.</code></li>
+ *  </ul></p>
+ *  <p>
+ *  <strong>Note that this implementation is not synchronized.</strong> If
+ *  multiple threads access an instance of this class concurrently, and at least
+ *  one of the threads invokes the <code>increment()</code> or
+ *  <code>clear()</code> method, it must be synchronized externally.</p>
  */
 public class Max extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut4291 = false, _mut4292 = false, _mut4293 = false, _mut4294 = false, _mut4295 = false, _mut4296 = false, _mut4297 = false, _mut4298 = false, _mut4299 = false, _mut4300 = false, _mut4301 = false, _mut4302 = false, _mut4303 = false, _mut4304 = false, _mut4305 = false, _mut4306 = false, _mut4307 = false, _mut4308 = false, _mut4309 = false, _mut4310 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -5593383832225844641L;
 
-    /** Number of values that have been added */
+    /**
+     * Number of values that have been added
+     */
     private long n;
 
-    /** Current value of the statistic */
+    /**
+     * Current value of the statistic
+     */
     private double value;
 
     /**
@@ -74,7 +83,8 @@ public class Max extends AbstractStorelessUnivariateStatistic implements Seriali
      */
     @Override
     public void increment(final double d) {
-        if (d > value || Double.isNaN(value)) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Max.increment_75");
+        if ((_mut4296 ? (ROR_greater(d, value, "org.apache.commons.math3.stat.descriptive.rank.Max.increment_75", _mut4291, _mut4292, _mut4293, _mut4294, _mut4295) && Double.isNaN(value)) : (ROR_greater(d, value, "org.apache.commons.math3.stat.descriptive.rank.Max.increment_75", _mut4291, _mut4292, _mut4293, _mut4294, _mut4295) || Double.isNaN(value)))) {
             value = d;
         }
         n++;
@@ -127,14 +137,15 @@ public class Max extends AbstractStorelessUnivariateStatistic implements Seriali
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Max.evaluate_129");
         double max = Double.NaN;
         if (test(values, begin, length)) {
             max = values[begin];
-            for (int i = begin; i < begin + length; i++) {
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.rank.Max.evaluate_129", _mut4302, _mut4303, _mut4304, _mut4305), "org.apache.commons.math3.stat.descriptive.rank.Max.evaluate_129", _mut4306, _mut4307, _mut4308, _mut4309, _mut4310); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Max.evaluate_129");
                 if (!Double.isNaN(values[i])) {
-                    max = (max > values[i]) ? max : values[i];
+                    max = (ROR_greater(max, values[i], "org.apache.commons.math3.stat.descriptive.rank.Max.evaluate_129", _mut4297, _mut4298, _mut4299, _mut4300, _mut4301)) ? max : values[i];
                 }
             }
         }
@@ -160,8 +171,7 @@ public class Max extends AbstractStorelessUnivariateStatistic implements Seriali
      * @param dest Max to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(Max source, Max dest)
-        throws NullArgumentException {
+    public static void copy(Max source, Max dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

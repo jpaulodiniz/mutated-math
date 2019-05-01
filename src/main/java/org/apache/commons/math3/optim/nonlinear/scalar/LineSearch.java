@@ -25,6 +25,8 @@ import org.apache.commons.math3.optim.univariate.SearchInterval;
 import org.apache.commons.math3.optim.univariate.UnivariateObjectiveFunction;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.optim.MaxEval;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Class for finding the minimum of the objective function along a given
@@ -33,31 +35,40 @@ import org.apache.commons.math3.optim.MaxEval;
  * @since 3.3
  */
 public class LineSearch {
+
+    @Conditional
+    public static boolean _mut65708 = false, _mut65709 = false, _mut65710 = false, _mut65711 = false, _mut65712 = false, _mut65713 = false, _mut65714 = false, _mut65715 = false, _mut65716 = false, _mut65717 = false, _mut65718 = false, _mut65719 = false, _mut65720 = false;
+
     /**
      * Value that will pass the precondition check for {@link BrentOptimizer}
      * but will not pass the convergence check, so that the custom checker
      * will always decide when to stop the line search.
      */
     private static final double REL_TOL_UNUSED = 1e-15;
+
     /**
      * Value that will pass the precondition check for {@link BrentOptimizer}
      * but will not pass the convergence check, so that the custom checker
      * will always decide when to stop the line search.
      */
     private static final double ABS_TOL_UNUSED = Double.MIN_VALUE;
+
     /**
      * Optimizer used for line search.
      */
     private final UnivariateOptimizer lineOptimizer;
+
     /**
      * Automatic bracketing.
      */
     private final BracketFinder bracket = new BracketFinder();
+
     /**
      * Extent of the initial interval used to find an interval that
      * brackets the optimum.
      */
     private final double initialBracketingRange;
+
     /**
      * Optimizer on behalf of which the line search must be performed.
      */
@@ -86,15 +97,9 @@ public class LineSearch {
      * it may be necessary to provide a value lower than the distance between
      * successive local minima.
      */
-    public LineSearch(MultivariateOptimizer optimizer,
-                      double relativeTolerance,
-                      double absoluteTolerance,
-                      double initialBracketingRange) {
+    public LineSearch(MultivariateOptimizer optimizer, double relativeTolerance, double absoluteTolerance, double initialBracketingRange) {
         mainOptimizer = optimizer;
-        lineOptimizer = new BrentOptimizer(REL_TOL_UNUSED,
-                                           ABS_TOL_UNUSED,
-                                           new SimpleUnivariateValueChecker(relativeTolerance,
-                                                                            absoluteTolerance));
+        lineOptimizer = new BrentOptimizer(REL_TOL_UNUSED, ABS_TOL_UNUSED, new SimpleUnivariateValueChecker(relativeTolerance, absoluteTolerance));
         this.initialBracketingRange = initialBracketingRange;
     }
 
@@ -108,31 +113,28 @@ public class LineSearch {
      * @throws org.apache.commons.math3.exception.TooManyEvaluationsException
      * if the number of evaluations is exceeded.
      */
-    public UnivariatePointValuePair search(final double[] startPoint,
-                                           final double[] direction) {
+    public UnivariatePointValuePair search(final double[] startPoint, final double[] direction) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116");
         final int n = startPoint.length;
         final UnivariateFunction f = new UnivariateFunction() {
-                /** {@inheritDoc} */
-                public double value(double alpha) {
-                    final double[] x = new double[n];
-                    for (int i = 0; i < n; i++) {
-                        x[i] = startPoint[i] + alpha * direction[i];
-                    }
-                    final double obj = mainOptimizer.computeObjectiveValue(x);
-                    return obj;
-                }
-            };
 
+            /**
+             * {@inheritDoc}
+             */
+            public double value(double alpha) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116");
+                final double[] x = new double[n];
+                for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116", _mut65716, _mut65717, _mut65718, _mut65719, _mut65720); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116");
+                    x[i] = AOR_plus(startPoint[i], AOR_multiply(alpha, direction[i], "org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116", _mut65708, _mut65709, _mut65710, _mut65711), "org.apache.commons.math3.optim.nonlinear.scalar.LineSearch.value_116", _mut65712, _mut65713, _mut65714, _mut65715);
+                }
+                final double obj = mainOptimizer.computeObjectiveValue(x);
+                return obj;
+            }
+        };
         final GoalType goal = mainOptimizer.getGoalType();
         bracket.search(f, goal, 0, initialBracketingRange);
-        // Passing "MAX_VALUE" as a dummy value because it is the enclosing
-        // class that counts the number of evaluations (and will eventually
         // generate the exception).
-        return lineOptimizer.optimize(new MaxEval(Integer.MAX_VALUE),
-                                      new UnivariateObjectiveFunction(f),
-                                      goal,
-                                      new SearchInterval(bracket.getLo(),
-                                                         bracket.getHi(),
-                                                         bracket.getMid()));
+        return lineOptimizer.optimize(new MaxEval(Integer.MAX_VALUE), new UnivariateObjectiveFunction(f), goal, new SearchInterval(bracket.getLo(), bracket.getHi(), bracket.getMid()));
     }
 }

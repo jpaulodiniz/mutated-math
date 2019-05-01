@@ -18,6 +18,8 @@ package org.apache.commons.math3.linear;
 
 import org.apache.commons.math3.analysis.function.Sqrt;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements the standard Jacobi (diagonal) preconditioner. For a
@@ -28,7 +30,12 @@ import org.apache.commons.math3.util.MathArrays;
  */
 public class JacobiPreconditioner extends RealLinearOperator {
 
-    /** The diagonal coefficients of the preconditioner. */
+    @Conditional
+    public static boolean _mut22673 = false, _mut22674 = false, _mut22675 = false, _mut22676 = false, _mut22677 = false, _mut22678 = false, _mut22679 = false, _mut22680 = false, _mut22681 = false, _mut22682 = false, _mut22683 = false, _mut22684 = false, _mut22685 = false, _mut22686 = false, _mut22687 = false;
+
+    /**
+     * The diagonal coefficients of the preconditioner.
+     */
     private final ArrayRealVector diag;
 
     /**
@@ -56,21 +63,23 @@ public class JacobiPreconditioner extends RealLinearOperator {
      * coefficients of the specified linear operator
      * @throws NonSquareOperatorException if {@code a} is not square
      */
-    public static JacobiPreconditioner create(final RealLinearOperator a)
-        throws NonSquareOperatorException {
+    public static JacobiPreconditioner create(final RealLinearOperator a) throws NonSquareOperatorException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.JacobiPreconditioner.create_59");
         final int n = a.getColumnDimension();
-        if (a.getRowDimension() != n) {
+        if (ROR_not_equals(a.getRowDimension(), n, "org.apache.commons.math3.linear.JacobiPreconditioner.create_59", _mut22673, _mut22674, _mut22675, _mut22676, _mut22677)) {
             throw new NonSquareOperatorException(a.getRowDimension(), n);
         }
         final double[] diag = new double[n];
         if (a instanceof AbstractRealMatrix) {
             final AbstractRealMatrix m = (AbstractRealMatrix) a;
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.JacobiPreconditioner.create_59", _mut22683, _mut22684, _mut22685, _mut22686, _mut22687); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.JacobiPreconditioner.create_59");
                 diag[i] = m.getEntry(i, i);
             }
         } else {
             final ArrayRealVector x = new ArrayRealVector(n);
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.JacobiPreconditioner.create_59", _mut22678, _mut22679, _mut22680, _mut22681, _mut22682); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.JacobiPreconditioner.create_59");
                 x.set(0.);
                 x.setEntry(i, 1.);
                 diag[i] = a.operate(x).getEntry(i);
@@ -79,25 +88,29 @@ public class JacobiPreconditioner extends RealLinearOperator {
         return new JacobiPreconditioner(diag, false);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnDimension() {
         return diag.getDimension();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRowDimension() {
         return diag.getDimension();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RealVector operate(final RealVector x) {
         // Dimension check is carried out by ebeDivide
-        return new ArrayRealVector(MathArrays.ebeDivide(x.toArray(),
-                                                        diag.toArray()),
-                                   false);
+        return new ArrayRealVector(MathArrays.ebeDivide(x.toArray(), diag.toArray()), false);
     }
 
     /**
@@ -111,21 +124,26 @@ public class JacobiPreconditioner extends RealLinearOperator {
     public RealLinearOperator sqrt() {
         final RealVector sqrtDiag = diag.map(new Sqrt());
         return new RealLinearOperator() {
-            /** {@inheritDoc} */
+
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public RealVector operate(final RealVector x) {
-                return new ArrayRealVector(MathArrays.ebeDivide(x.toArray(),
-                                                                sqrtDiag.toArray()),
-                                           false);
+                return new ArrayRealVector(MathArrays.ebeDivide(x.toArray(), sqrtDiag.toArray()), false);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getRowDimension() {
                 return sqrtDiag.getDimension();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             @Override
             public int getColumnDimension() {
                 return sqrtDiag.getDimension();

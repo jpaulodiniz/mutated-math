@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.Field;
@@ -22,37 +21,16 @@ import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.ode.FieldEquationsMapper;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
+public class GillFieldIntegrator<T extends RealFieldElement<T>> extends RungeKuttaFieldIntegrator<T> {
 
-/**
- * This class implements the Gill fourth order Runge-Kutta
- * integrator for Ordinary Differential Equations .
+    @Conditional
+    public static boolean _mut16515 = false, _mut16516 = false, _mut16517 = false, _mut16518 = false, _mut16519 = false, _mut16520 = false, _mut16521 = false, _mut16522 = false, _mut16523 = false;
 
- * <p>This method is an explicit Runge-Kutta method, its Butcher-array
- * is the following one :
- * <pre>
- *    0  |    0        0       0      0
- *   1/2 |   1/2       0       0      0
- *   1/2 | (q-1)/2  (2-q)/2    0      0
- *    1  |    0       -q/2  (2+q)/2   0
- *       |-------------------------------
- *       |   1/6    (2-q)/6 (2+q)/6  1/6
- * </pre>
- * where q = sqrt(2)</p>
- *
- * @see EulerFieldIntegrator
- * @see ClassicalRungeKuttaFieldIntegrator
- * @see MidpointFieldIntegrator
- * @see ThreeEighthesFieldIntegrator
- * @see LutherFieldIntegrator
- * @param <T> the type of the field elements
- * @since 3.6
- */
-
-public class GillFieldIntegrator<T extends RealFieldElement<T>>
-    extends RungeKuttaFieldIntegrator<T> {
-
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * Build a fourth-order Gill integrator with the given step.
      * @param field field to which the time and state vector elements belong
      * @param step integration step
@@ -61,7 +39,9 @@ public class GillFieldIntegrator<T extends RealFieldElement<T>>
         super(field, "Gill", step);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getC() {
         final T[] c = MathArrays.buildArray(getField(), 3);
         c[0] = fraction(1, 2);
@@ -70,15 +50,17 @@ public class GillFieldIntegrator<T extends RealFieldElement<T>>
         return c;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[][] getA() {
-
-        final T two     = getField().getZero().add(2);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.GillFieldIntegrator.getA_74");
+        final T two = getField().getZero().add(2);
         final T sqrtTwo = two.sqrt();
-
         final T[][] a = MathArrays.buildArray(getField(), 3, -1);
-        for (int i = 0; i < a.length; ++i) {
-            a[i] = MathArrays.buildArray(getField(), i + 1);
+        for (int i = 0; ROR_less(i, a.length, "org.apache.commons.math3.ode.nonstiff.GillFieldIntegrator.getA_74", _mut16519, _mut16520, _mut16521, _mut16522, _mut16523); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.GillFieldIntegrator.getA_74");
+            a[i] = MathArrays.buildArray(getField(), AOR_plus(i, 1, "org.apache.commons.math3.ode.nonstiff.GillFieldIntegrator.getA_74", _mut16515, _mut16516, _mut16517, _mut16518));
         }
         a[0][0] = fraction(1, 2);
         a[1][0] = sqrtTwo.subtract(1).multiply(0.5);
@@ -89,33 +71,25 @@ public class GillFieldIntegrator<T extends RealFieldElement<T>>
         return a;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getB() {
-
-        final T two     = getField().getZero().add(2);
+        final T two = getField().getZero().add(2);
         final T sqrtTwo = two.sqrt();
-
         final T[] b = MathArrays.buildArray(getField(), 4);
         b[0] = fraction(1, 6);
         b[1] = sqrtTwo.subtract(2).divide(-6);
         b[2] = sqrtTwo.add(2).divide(6);
         b[3] = b[0];
-
         return b;
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected GillFieldStepInterpolator<T>
-        createInterpolator(final boolean forward, T[][] yDotK,
-                           final FieldODEStateAndDerivative<T> globalPreviousState,
-                           final FieldODEStateAndDerivative<T> globalCurrentState,
-                           final FieldEquationsMapper<T> mapper) {
-        return new GillFieldStepInterpolator<T>(getField(), forward, yDotK,
-                                                globalPreviousState, globalCurrentState,
-                                                globalPreviousState, globalCurrentState,
-                                                mapper);
+    protected GillFieldStepInterpolator<T> createInterpolator(final boolean forward, T[][] yDotK, final FieldODEStateAndDerivative<T> globalPreviousState, final FieldODEStateAndDerivative<T> globalCurrentState, final FieldEquationsMapper<T> mapper) {
+        return new GillFieldStepInterpolator<T>(getField(), forward, yDotK, globalPreviousState, globalCurrentState, globalPreviousState, globalCurrentState, mapper);
     }
-
 }

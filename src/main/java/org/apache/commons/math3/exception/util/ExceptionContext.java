@@ -27,6 +27,8 @@ import java.io.ObjectInputStream;
 import java.util.HashMap;
 import java.text.MessageFormat;
 import java.util.Locale;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Class that contains the actual implementation of the functionality mandated
@@ -36,38 +38,50 @@ import java.util.Locale;
  * @since 3.0
  */
 public class ExceptionContext implements Serializable {
-    /** Serializable version Id. */
+
+    @Conditional
+    public static boolean _mut58764 = false, _mut58765 = false, _mut58766 = false, _mut58767 = false, _mut58768 = false, _mut58769 = false, _mut58770 = false, _mut58771 = false, _mut58772 = false, _mut58773 = false, _mut58774 = false, _mut58775 = false, _mut58776 = false, _mut58777 = false, _mut58778 = false, _mut58779 = false, _mut58780 = false, _mut58781 = false, _mut58782 = false, _mut58783 = false, _mut58784 = false, _mut58785 = false, _mut58786 = false, _mut58787 = false, _mut58788 = false, _mut58789 = false, _mut58790 = false, _mut58791 = false, _mut58792 = false, _mut58793 = false, _mut58794 = false, _mut58795 = false, _mut58796 = false, _mut58797 = false, _mut58798 = false;
+
+    /**
+     * Serializable version Id.
+     */
     private static final long serialVersionUID = -6024911025449780478L;
+
     /**
      * The throwable to which this context refers to.
      */
     private Throwable throwable;
+
     /**
      * Various informations that enrich the informative message.
      */
     private List<Localizable> msgPatterns;
+
     /**
      * Various informations that enrich the informative message.
      * The arguments will replace the corresponding place-holders in
      * {@link #msgPatterns}.
      */
     private List<Object[]> msgArguments;
+
     /**
      * Arbitrary context information.
      */
     private Map<String, Object> context;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param throwable the exception this context refers too
      */
     public ExceptionContext(final Throwable throwable) {
         this.throwable = throwable;
-        msgPatterns    = new ArrayList<Localizable>();
-        msgArguments   = new ArrayList<Object[]>();
-        context        = new HashMap<String, Object>();
+        msgPatterns = new ArrayList<Localizable>();
+        msgArguments = new ArrayList<Object[]>();
+        context = new HashMap<String, Object>();
     }
 
-    /** Get a reference to the exception to which the context relates.
+    /**
+     * Get a reference to the exception to which the context relates.
      * @return a reference to the exception to which the context relates
      */
     public Throwable getThrowable() {
@@ -81,8 +95,7 @@ public class ExceptionContext implements Serializable {
      * @param arguments Values for replacing the placeholders in the message
      * pattern.
      */
-    public void addMessage(Localizable pattern,
-                           Object ... arguments) {
+    public void addMessage(Localizable pattern, Object... arguments) {
         msgPatterns.add(pattern);
         msgArguments.add(ArgUtils.flatten(arguments));
     }
@@ -153,8 +166,7 @@ public class ExceptionContext implements Serializable {
      * @param separator Separator inserted between the message parts.
      * @return the localized message.
      */
-    public String getMessage(final Locale locale,
-                             final String separator) {
+    public String getMessage(final Locale locale, final String separator) {
         return buildMessage(locale, separator);
     }
 
@@ -165,23 +177,22 @@ public class ExceptionContext implements Serializable {
      * @param separator Message separator.
      * @return a localized message string.
      */
-    private String buildMessage(Locale locale,
-                                String separator) {
+    private String buildMessage(Locale locale, String separator) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.buildMessage_168");
         final StringBuilder sb = new StringBuilder();
         int count = 0;
         final int len = msgPatterns.size();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.exception.util.ExceptionContext.buildMessage_168", _mut58769, _mut58770, _mut58771, _mut58772, _mut58773); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.buildMessage_168");
             final Localizable pat = msgPatterns.get(i);
             final Object[] args = msgArguments.get(i);
-            final MessageFormat fmt = new MessageFormat(pat.getLocalizedString(locale),
-                                                        locale);
+            final MessageFormat fmt = new MessageFormat(pat.getLocalizedString(locale), locale);
             sb.append(fmt.format(args));
-            if (++count < len) {
+            if (ROR_less(++count, len, "org.apache.commons.math3.exception.util.ExceptionContext.buildMessage_168", _mut58764, _mut58765, _mut58766, _mut58767, _mut58768)) {
                 // Add a separator if there are other messages.
                 sb.append(separator);
             }
         }
-
         return sb.toString();
     }
 
@@ -191,12 +202,12 @@ public class ExceptionContext implements Serializable {
      * @param out Stream.
      * @throws IOException This should never happen.
      */
-    private void writeObject(ObjectOutputStream out)
-        throws IOException {
+    private void writeObject(ObjectOutputStream out) throws IOException {
         out.writeObject(throwable);
         serializeMessages(out);
         serializeContext(out);
     }
+
     /**
      * Deserialize this object from the given stream.
      *
@@ -204,9 +215,7 @@ public class ExceptionContext implements Serializable {
      * @throws IOException This should never happen.
      * @throws ClassNotFoundException This should never happen.
      */
-    private void readObject(ObjectInputStream in)
-        throws IOException,
-               ClassNotFoundException {
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
         throwable = (Throwable) in.readObject();
         deSerializeMessages(in);
         deSerializeContext(in);
@@ -218,13 +227,14 @@ public class ExceptionContext implements Serializable {
      * @param out Stream.
      * @throws IOException This should never happen.
      */
-    private void serializeMessages(ObjectOutputStream out)
-        throws IOException {
+    private void serializeMessages(ObjectOutputStream out) throws IOException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.serializeMessages_221");
         // Step 1.
         final int len = msgPatterns.size();
         out.writeInt(len);
         // Step 2.
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.exception.util.ExceptionContext.serializeMessages_221", _mut58779, _mut58780, _mut58781, _mut58782, _mut58783); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.serializeMessages_221");
             final Localizable pat = msgPatterns.get(i);
             // Step 3.
             out.writeObject(pat);
@@ -232,7 +242,8 @@ public class ExceptionContext implements Serializable {
             final int aLen = args.length;
             // Step 4.
             out.writeInt(aLen);
-            for (int j = 0; j < aLen; j++) {
+            for (int j = 0; ROR_less(j, aLen, "org.apache.commons.math3.exception.util.ExceptionContext.serializeMessages_221", _mut58774, _mut58775, _mut58776, _mut58777, _mut58778); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.serializeMessages_221");
                 if (args[j] instanceof Serializable) {
                     // Step 5a.
                     out.writeObject(args[j]);
@@ -251,22 +262,23 @@ public class ExceptionContext implements Serializable {
      * @throws IOException This should never happen.
      * @throws ClassNotFoundException This should never happen.
      */
-    private void deSerializeMessages(ObjectInputStream in)
-        throws IOException,
-               ClassNotFoundException {
+    private void deSerializeMessages(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.deSerializeMessages_254");
         // Step 1.
         final int len = in.readInt();
         msgPatterns = new ArrayList<Localizable>(len);
         msgArguments = new ArrayList<Object[]>(len);
         // Step 2.
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.exception.util.ExceptionContext.deSerializeMessages_254", _mut58789, _mut58790, _mut58791, _mut58792, _mut58793); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.deSerializeMessages_254");
             // Step 3.
             final Localizable pat = (Localizable) in.readObject();
             msgPatterns.add(pat);
             // Step 4.
             final int aLen = in.readInt();
             final Object[] args = new Object[aLen];
-            for (int j = 0; j < aLen; j++) {
+            for (int j = 0; ROR_less(j, aLen, "org.apache.commons.math3.exception.util.ExceptionContext.deSerializeMessages_254", _mut58784, _mut58785, _mut58786, _mut58787, _mut58788); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.deSerializeMessages_254");
                 // Step 5.
                 args[j] = in.readObject();
             }
@@ -280,12 +292,12 @@ public class ExceptionContext implements Serializable {
      * @param out Stream.
      * @throws IOException This should never happen.
      */
-    private void serializeContext(ObjectOutputStream out)
-        throws IOException {
+    private void serializeContext(ObjectOutputStream out) throws IOException {
         // Step 1.
         final int len = context.size();
         out.writeInt(len);
         for (Map.Entry<String, Object> entry : context.entrySet()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.serializeContext_283");
             // Step 2.
             out.writeObject(entry.getKey());
             final Object value = entry.getValue();
@@ -306,13 +318,13 @@ public class ExceptionContext implements Serializable {
      * @throws IOException This should never happen.
      * @throws ClassNotFoundException This should never happen.
      */
-    private void deSerializeContext(ObjectInputStream in)
-        throws IOException,
-               ClassNotFoundException {
+    private void deSerializeContext(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.deSerializeContext_309");
         // Step 1.
         final int len = in.readInt();
         context = new HashMap<String, Object>();
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; ROR_less(i, len, "org.apache.commons.math3.exception.util.ExceptionContext.deSerializeContext_309", _mut58794, _mut58795, _mut58796, _mut58797, _mut58798); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.exception.util.ExceptionContext.deSerializeContext_309");
             // Step 2.
             final String key = (String) in.readObject();
             // Step 3.

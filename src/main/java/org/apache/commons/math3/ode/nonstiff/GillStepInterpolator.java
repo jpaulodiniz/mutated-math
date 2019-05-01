@@ -14,138 +14,100 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.ode.sampling.StepInterpolator;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements a step interpolator for the Gill fourth
- * order Runge-Kutta integrator.
- *
- * <p>This interpolator allows to compute dense output inside the last
- * step computed. The interpolation equation is consistent with the
- * integration scheme :
- * <ul>
- *   <li>Using reference point at step start:<br>
- *   y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub>)
- *                    + &theta; (h/6) [ (6 - 9 &theta; + 4 &theta;<sup>2</sup>) y'<sub>1</sub>
- *                                    + (    6 &theta; - 4 &theta;<sup>2</sup>) ((1-1/&radic;2) y'<sub>2</sub> + (1+1/&radic;2)) y'<sub>3</sub>)
- *                                    + (  - 3 &theta; + 4 &theta;<sup>2</sup>) y'<sub>4</sub>
- *                                    ]
- *   </li>
- *   <li>Using reference point at step start:<br>
- *   y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub> + h)
- *                    - (1 - &theta;) (h/6) [ (1 - 5 &theta; + 4 &theta;<sup>2</sup>) y'<sub>1</sub>
- *                                          + (2 + 2 &theta; - 4 &theta;<sup>2</sup>) ((1-1/&radic;2) y'<sub>2</sub> + (1+1/&radic;2)) y'<sub>3</sub>)
- *                                          + (1 +   &theta; + 4 &theta;<sup>2</sup>) y'<sub>4</sub>
- *                                          ]
- *   </li>
- * </ul>
- * </p>
- * where &theta; belongs to [0 ; 1] and where y'<sub>1</sub> to y'<sub>4</sub>
- * are the four evaluations of the derivatives already computed during
- * the step.</p>
- *
- * @see GillIntegrator
- * @since 1.2
- */
+class GillStepInterpolator extends RungeKuttaStepInterpolator {
 
-class GillStepInterpolator
-  extends RungeKuttaStepInterpolator {
+    @Conditional
+    public static boolean _mut13836 = false, _mut13837 = false, _mut13838 = false, _mut13839 = false, _mut13840 = false, _mut13841 = false, _mut13842 = false, _mut13843 = false, _mut13844 = false, _mut13845 = false, _mut13846 = false, _mut13847 = false, _mut13848 = false, _mut13849 = false, _mut13850 = false, _mut13851 = false, _mut13852 = false, _mut13853 = false, _mut13854 = false, _mut13855 = false, _mut13856 = false, _mut13857 = false, _mut13858 = false, _mut13859 = false, _mut13860 = false, _mut13861 = false, _mut13862 = false, _mut13863 = false, _mut13864 = false, _mut13865 = false, _mut13866 = false, _mut13867 = false, _mut13868 = false, _mut13869 = false, _mut13870 = false, _mut13871 = false, _mut13872 = false, _mut13873 = false, _mut13874 = false, _mut13875 = false, _mut13876 = false, _mut13877 = false, _mut13878 = false, _mut13879 = false, _mut13880 = false, _mut13881 = false, _mut13882 = false, _mut13883 = false, _mut13884 = false, _mut13885 = false, _mut13886 = false, _mut13887 = false, _mut13888 = false, _mut13889 = false, _mut13890 = false, _mut13891 = false, _mut13892 = false, _mut13893 = false, _mut13894 = false, _mut13895 = false, _mut13896 = false, _mut13897 = false, _mut13898 = false, _mut13899 = false, _mut13900 = false, _mut13901 = false, _mut13902 = false, _mut13903 = false, _mut13904 = false, _mut13905 = false, _mut13906 = false, _mut13907 = false, _mut13908 = false, _mut13909 = false, _mut13910 = false, _mut13911 = false, _mut13912 = false, _mut13913 = false, _mut13914 = false, _mut13915 = false, _mut13916 = false, _mut13917 = false, _mut13918 = false, _mut13919 = false, _mut13920 = false, _mut13921 = false, _mut13922 = false, _mut13923 = false, _mut13924 = false, _mut13925 = false, _mut13926 = false, _mut13927 = false, _mut13928 = false, _mut13929 = false, _mut13930 = false, _mut13931 = false, _mut13932 = false, _mut13933 = false, _mut13934 = false, _mut13935 = false, _mut13936 = false, _mut13937 = false, _mut13938 = false, _mut13939 = false, _mut13940 = false, _mut13941 = false, _mut13942 = false, _mut13943 = false, _mut13944 = false, _mut13945 = false, _mut13946 = false, _mut13947 = false, _mut13948 = false, _mut13949 = false, _mut13950 = false, _mut13951 = false, _mut13952 = false, _mut13953 = false, _mut13954 = false, _mut13955 = false, _mut13956 = false, _mut13957 = false, _mut13958 = false, _mut13959 = false, _mut13960 = false, _mut13961 = false, _mut13962 = false, _mut13963 = false, _mut13964 = false, _mut13965 = false, _mut13966 = false, _mut13967 = false, _mut13968 = false, _mut13969 = false, _mut13970 = false, _mut13971 = false, _mut13972 = false, _mut13973 = false, _mut13974 = false, _mut13975 = false, _mut13976 = false, _mut13977 = false, _mut13978 = false, _mut13979 = false, _mut13980 = false, _mut13981 = false, _mut13982 = false, _mut13983 = false, _mut13984 = false, _mut13985 = false, _mut13986 = false, _mut13987 = false, _mut13988 = false, _mut13989 = false, _mut13990 = false, _mut13991 = false, _mut13992 = false, _mut13993 = false, _mut13994 = false, _mut13995 = false, _mut13996 = false, _mut13997 = false, _mut13998 = false, _mut13999 = false, _mut14000 = false, _mut14001 = false, _mut14002 = false, _mut14003 = false, _mut14004 = false, _mut14005 = false, _mut14006 = false, _mut14007 = false, _mut14008 = false, _mut14009 = false, _mut14010 = false, _mut14011 = false, _mut14012 = false, _mut14013 = false, _mut14014 = false, _mut14015 = false, _mut14016 = false, _mut14017 = false, _mut14018 = false, _mut14019 = false, _mut14020 = false, _mut14021 = false, _mut14022 = false, _mut14023 = false, _mut14024 = false, _mut14025 = false, _mut14026 = false, _mut14027 = false, _mut14028 = false, _mut14029 = false, _mut14030 = false, _mut14031 = false, _mut14032 = false, _mut14033 = false, _mut14034 = false, _mut14035 = false, _mut14036 = false, _mut14037 = false, _mut14038 = false, _mut14039 = false, _mut14040 = false, _mut14041 = false, _mut14042 = false, _mut14043 = false, _mut14044 = false, _mut14045 = false, _mut14046 = false, _mut14047 = false, _mut14048 = false, _mut14049 = false, _mut14050 = false, _mut14051 = false, _mut14052 = false, _mut14053 = false, _mut14054 = false, _mut14055 = false, _mut14056 = false, _mut14057 = false, _mut14058 = false, _mut14059 = false, _mut14060 = false, _mut14061 = false, _mut14062 = false, _mut14063 = false, _mut14064 = false, _mut14065 = false, _mut14066 = false, _mut14067 = false, _mut14068 = false, _mut14069 = false, _mut14070 = false, _mut14071 = false, _mut14072 = false, _mut14073 = false, _mut14074 = false, _mut14075 = false, _mut14076 = false, _mut14077 = false, _mut14078 = false, _mut14079 = false, _mut14080 = false, _mut14081 = false, _mut14082 = false, _mut14083 = false, _mut14084 = false, _mut14085 = false, _mut14086 = false, _mut14087 = false, _mut14088 = false, _mut14089 = false, _mut14090 = false, _mut14091 = false, _mut14092 = false, _mut14093 = false, _mut14094 = false, _mut14095 = false, _mut14096 = false, _mut14097 = false, _mut14098 = false, _mut14099 = false, _mut14100 = false, _mut14101 = false, _mut14102 = false, _mut14103 = false, _mut14104 = false, _mut14105 = false, _mut14106 = false, _mut14107 = false, _mut14108 = false, _mut14109 = false, _mut14110 = false, _mut14111 = false, _mut14112 = false, _mut14113 = false, _mut14114 = false, _mut14115 = false, _mut14116 = false, _mut14117 = false, _mut14118 = false, _mut14119 = false, _mut14120 = false, _mut14121 = false, _mut14122 = false, _mut14123 = false, _mut14124 = false, _mut14125 = false, _mut14126 = false, _mut14127 = false, _mut14128 = false, _mut14129 = false, _mut14130 = false, _mut14131 = false;
 
-    /** First Gill coefficient. */
-    private static final double ONE_MINUS_INV_SQRT_2 = 1 - FastMath.sqrt(0.5);
+    /**
+     * First Gill coefficient.
+     */
+    private static final double ONE_MINUS_INV_SQRT_2 = AOR_minus(1, FastMath.sqrt(0.5), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.estimateError_383", _mut13836, _mut13837, _mut13838, _mut13839);
 
-    /** Second Gill coefficient. */
-    private static final double ONE_PLUS_INV_SQRT_2 = 1 + FastMath.sqrt(0.5);
+    /**
+     * Second Gill coefficient.
+     */
+    private static final double ONE_PLUS_INV_SQRT_2 = AOR_plus(1, FastMath.sqrt(0.5), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.estimateError_383", _mut13840, _mut13841, _mut13842, _mut13843);
 
-    /** Serializable version identifier. */
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 20111120L;
 
-  /** Simple constructor.
-   * This constructor builds an instance that is not usable yet, the
-   * {@link
-   * org.apache.commons.math3.ode.sampling.AbstractStepInterpolator#reinitialize}
-   * method should be called before using the instance in order to
-   * initialize the internal arrays. This constructor is used only
-   * in order to delay the initialization in some cases. The {@link
-   * RungeKuttaIntegrator} class uses the prototyping design pattern
-   * to create the step interpolators by cloning an uninitialized model
-   * and later initializing the copy.
-   */
-  // CHECKSTYLE: stop RedundantModifier
-  // the public modifier here is needed for serialization
-  public GillStepInterpolator() {
-  }
-  // CHECKSTYLE: resume RedundantModifier
-
-  /** Copy constructor.
-   * @param interpolator interpolator to copy from. The copy is a deep
-   * copy: its arrays are separated from the original arrays of the
-   * instance
-   */
-  GillStepInterpolator(final GillStepInterpolator interpolator) {
-    super(interpolator);
-  }
-
-  /** {@inheritDoc} */
-  @Override
-  protected StepInterpolator doCopy() {
-    return new GillStepInterpolator(this);
-  }
-
-
-  /** {@inheritDoc} */
-  @Override
-  protected void computeInterpolatedStateAndDerivatives(final double theta,
-                                          final double oneMinusThetaH) {
-
-    final double twoTheta   = 2 * theta;
-    final double fourTheta2 = twoTheta * twoTheta;
-    final double coeffDot1  = theta * (twoTheta - 3) + 1;
-    final double cDot23     = twoTheta * (1 - theta);
-    final double coeffDot2  = cDot23  * ONE_MINUS_INV_SQRT_2;
-    final double coeffDot3  = cDot23  * ONE_PLUS_INV_SQRT_2;
-    final double coeffDot4  = theta * (twoTheta - 1);
-
-    if ((previousState != null) && (theta <= 0.5)) {
-        final double s         = theta * h / 6.0;
-        final double c23       = s * (6 * theta - fourTheta2);
-        final double coeff1    = s * (6 - 9 * theta + fourTheta2);
-        final double coeff2    = c23  * ONE_MINUS_INV_SQRT_2;
-        final double coeff3    = c23  * ONE_PLUS_INV_SQRT_2;
-        final double coeff4    = s * (-3 * theta + fourTheta2);
-        for (int i = 0; i < interpolatedState.length; ++i) {
-            final double yDot1 = yDotK[0][i];
-            final double yDot2 = yDotK[1][i];
-            final double yDot3 = yDotK[2][i];
-            final double yDot4 = yDotK[3][i];
-            interpolatedState[i] =
-                    previousState[i] + coeff1 * yDot1 + coeff2 * yDot2 + coeff3 * yDot3 + coeff4 * yDot4;
-            interpolatedDerivatives[i] =
-                    coeffDot1 * yDot1 + coeffDot2 * yDot2 + coeffDot3 * yDot3 + coeffDot4 * yDot4;
-        }
-    } else {
-        final double s      = oneMinusThetaH / 6.0;
-        final double c23    = s * (2 + twoTheta - fourTheta2);
-        final double coeff1 = s * (1 - 5 * theta + fourTheta2);
-        final double coeff2 = c23  * ONE_MINUS_INV_SQRT_2;
-        final double coeff3 = c23  * ONE_PLUS_INV_SQRT_2;
-        final double coeff4 = s * (1 + theta + fourTheta2);
-        for (int i = 0; i < interpolatedState.length; ++i) {
-            final double yDot1 = yDotK[0][i];
-            final double yDot2 = yDotK[1][i];
-            final double yDot3 = yDotK[2][i];
-            final double yDot4 = yDotK[3][i];
-            interpolatedState[i] =
-                    currentState[i] - coeff1 * yDot1 - coeff2 * yDot2 - coeff3 * yDot3 - coeff4 * yDot4;
-            interpolatedDerivatives[i] =
-                    coeffDot1 * yDot1 + coeffDot2 * yDot2 + coeffDot3 * yDot3 + coeffDot4 * yDot4;
-        }
+    // the public modifier here is needed for serialization
+    public GillStepInterpolator() {
     }
 
-  }
+    /**
+     * Copy constructor.
+     * @param interpolator interpolator to copy from. The copy is a deep
+     * copy: its arrays are separated from the original arrays of the
+     * instance
+     */
+    GillStepInterpolator(final GillStepInterpolator interpolator) {
+        super(interpolator);
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected StepInterpolator doCopy() {
+        return new GillStepInterpolator(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void computeInterpolatedStateAndDerivatives(final double theta, final double oneMinusThetaH) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101");
+        final double twoTheta = AOR_multiply(2, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13844, _mut13845, _mut13846, _mut13847);
+        final double fourTheta2 = AOR_multiply(twoTheta, twoTheta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13848, _mut13849, _mut13850, _mut13851);
+        final double coeffDot1 = AOR_plus(AOR_multiply(theta, (AOR_minus(twoTheta, 3, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13852, _mut13853, _mut13854, _mut13855)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13856, _mut13857, _mut13858, _mut13859), 1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13860, _mut13861, _mut13862, _mut13863);
+        final double cDot23 = AOR_multiply(twoTheta, (AOR_minus(1, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13864, _mut13865, _mut13866, _mut13867)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13868, _mut13869, _mut13870, _mut13871);
+        final double coeffDot2 = AOR_multiply(cDot23, ONE_MINUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13872, _mut13873, _mut13874, _mut13875);
+        final double coeffDot3 = AOR_multiply(cDot23, ONE_PLUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13876, _mut13877, _mut13878, _mut13879);
+        final double coeffDot4 = AOR_multiply(theta, (AOR_minus(twoTheta, 1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13880, _mut13881, _mut13882, _mut13883)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13884, _mut13885, _mut13886, _mut13887);
+        if ((_mut13893 ? ((previousState != null) || (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13888, _mut13889, _mut13890, _mut13891, _mut13892))) : ((previousState != null) && (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13888, _mut13889, _mut13890, _mut13891, _mut13892))))) {
+            final double s = AOR_divide(AOR_multiply(theta, h, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14011, _mut14012, _mut14013, _mut14014), 6.0, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14015, _mut14016, _mut14017, _mut14018);
+            final double c23 = AOR_multiply(s, (AOR_minus(AOR_multiply(6, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14019, _mut14020, _mut14021, _mut14022), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14023, _mut14024, _mut14025, _mut14026)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14027, _mut14028, _mut14029, _mut14030);
+            final double coeff1 = AOR_multiply(s, (AOR_plus(AOR_minus(6, AOR_multiply(9, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14031, _mut14032, _mut14033, _mut14034), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14035, _mut14036, _mut14037, _mut14038), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14039, _mut14040, _mut14041, _mut14042)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14043, _mut14044, _mut14045, _mut14046);
+            final double coeff2 = AOR_multiply(c23, ONE_MINUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14047, _mut14048, _mut14049, _mut14050);
+            final double coeff3 = AOR_multiply(c23, ONE_PLUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14051, _mut14052, _mut14053, _mut14054);
+            final double coeff4 = AOR_multiply(s, (AOR_plus(AOR_multiply(-3, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14055, _mut14056, _mut14057, _mut14058), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14059, _mut14060, _mut14061, _mut14062)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14063, _mut14064, _mut14065, _mut14066);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14127, _mut14128, _mut14129, _mut14130, _mut14131); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101");
+                final double yDot1 = yDotK[0][i];
+                final double yDot2 = yDotK[1][i];
+                final double yDot3 = yDotK[2][i];
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_plus(AOR_plus(AOR_plus(AOR_plus(previousState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14067, _mut14068, _mut14069, _mut14070), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14071, _mut14072, _mut14073, _mut14074), AOR_multiply(coeff2, yDot2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14075, _mut14076, _mut14077, _mut14078), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14079, _mut14080, _mut14081, _mut14082), AOR_multiply(coeff3, yDot3, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14083, _mut14084, _mut14085, _mut14086), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14087, _mut14088, _mut14089, _mut14090), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14091, _mut14092, _mut14093, _mut14094), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14095, _mut14096, _mut14097, _mut14098);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14099, _mut14100, _mut14101, _mut14102), AOR_multiply(coeffDot2, yDot2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14103, _mut14104, _mut14105, _mut14106), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14107, _mut14108, _mut14109, _mut14110), AOR_multiply(coeffDot3, yDot3, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14111, _mut14112, _mut14113, _mut14114), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14115, _mut14116, _mut14117, _mut14118), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14119, _mut14120, _mut14121, _mut14122), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14123, _mut14124, _mut14125, _mut14126);
+            }
+        } else {
+            final double s = AOR_divide(oneMinusThetaH, 6.0, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13894, _mut13895, _mut13896, _mut13897);
+            final double c23 = AOR_multiply(s, (AOR_minus(AOR_plus(2, twoTheta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13898, _mut13899, _mut13900, _mut13901), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13902, _mut13903, _mut13904, _mut13905)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13906, _mut13907, _mut13908, _mut13909);
+            final double coeff1 = AOR_multiply(s, (AOR_plus(AOR_minus(1, AOR_multiply(5, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13910, _mut13911, _mut13912, _mut13913), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13914, _mut13915, _mut13916, _mut13917), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13918, _mut13919, _mut13920, _mut13921)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13922, _mut13923, _mut13924, _mut13925);
+            final double coeff2 = AOR_multiply(c23, ONE_MINUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13926, _mut13927, _mut13928, _mut13929);
+            final double coeff3 = AOR_multiply(c23, ONE_PLUS_INV_SQRT_2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13930, _mut13931, _mut13932, _mut13933);
+            final double coeff4 = AOR_multiply(s, (AOR_plus(AOR_plus(1, theta, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13934, _mut13935, _mut13936, _mut13937), fourTheta2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13938, _mut13939, _mut13940, _mut13941)), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13942, _mut13943, _mut13944, _mut13945);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14006, _mut14007, _mut14008, _mut14009, _mut14010); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101");
+                final double yDot1 = yDotK[0][i];
+                final double yDot2 = yDotK[1][i];
+                final double yDot3 = yDotK[2][i];
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_minus(AOR_minus(AOR_minus(AOR_minus(currentState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13946, _mut13947, _mut13948, _mut13949), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13950, _mut13951, _mut13952, _mut13953), AOR_multiply(coeff2, yDot2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13954, _mut13955, _mut13956, _mut13957), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13958, _mut13959, _mut13960, _mut13961), AOR_multiply(coeff3, yDot3, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13962, _mut13963, _mut13964, _mut13965), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13966, _mut13967, _mut13968, _mut13969), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13970, _mut13971, _mut13972, _mut13973), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13974, _mut13975, _mut13976, _mut13977);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13978, _mut13979, _mut13980, _mut13981), AOR_multiply(coeffDot2, yDot2, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13982, _mut13983, _mut13984, _mut13985), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13986, _mut13987, _mut13988, _mut13989), AOR_multiply(coeffDot3, yDot3, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13990, _mut13991, _mut13992, _mut13993), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13994, _mut13995, _mut13996, _mut13997), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut13998, _mut13999, _mut14000, _mut14001), "org.apache.commons.math3.ode.nonstiff.GillStepInterpolator.computeInterpolatedStateAndDerivatives_101", _mut14002, _mut14003, _mut14004, _mut14005);
+            }
+        }
+    }
 }

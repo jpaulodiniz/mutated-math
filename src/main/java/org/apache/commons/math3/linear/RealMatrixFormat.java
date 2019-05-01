@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.linear;
 
 import java.text.FieldPosition;
@@ -23,9 +22,10 @@ import java.text.ParsePosition;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a {@code nxm} matrix in components list format
@@ -53,31 +53,72 @@ import org.apache.commons.math3.util.CompositeFormat;
  */
 public class RealMatrixFormat {
 
-    /** The default prefix: "{". */
+    @Conditional
+    public static boolean _mut33160 = false, _mut33161 = false, _mut33162 = false, _mut33163 = false, _mut33164 = false, _mut33165 = false, _mut33166 = false, _mut33167 = false, _mut33168 = false, _mut33169 = false, _mut33170 = false, _mut33171 = false, _mut33172 = false, _mut33173 = false, _mut33174 = false, _mut33175 = false, _mut33176 = false, _mut33177 = false, _mut33178 = false, _mut33179 = false, _mut33180 = false, _mut33181 = false, _mut33182 = false, _mut33183 = false, _mut33184 = false, _mut33185 = false, _mut33186 = false, _mut33187 = false, _mut33188 = false, _mut33189 = false, _mut33190 = false, _mut33191 = false, _mut33192 = false, _mut33193 = false, _mut33194 = false, _mut33195 = false, _mut33196 = false, _mut33197 = false, _mut33198 = false, _mut33199 = false, _mut33200 = false, _mut33201 = false, _mut33202 = false, _mut33203 = false, _mut33204 = false, _mut33205 = false;
+
+    /**
+     * The default prefix: "{".
+     */
     private static final String DEFAULT_PREFIX = "{";
-    /** The default suffix: "}". */
+
+    /**
+     * The default suffix: "}".
+     */
     private static final String DEFAULT_SUFFIX = "}";
-    /** The default row prefix: "{". */
+
+    /**
+     * The default row prefix: "{".
+     */
     private static final String DEFAULT_ROW_PREFIX = "{";
-    /** The default row suffix: "}". */
+
+    /**
+     * The default row suffix: "}".
+     */
     private static final String DEFAULT_ROW_SUFFIX = "}";
-    /** The default row separator: ",". */
+
+    /**
+     * The default row separator: ",".
+     */
     private static final String DEFAULT_ROW_SEPARATOR = ",";
-    /** The default column separator: ",". */
+
+    /**
+     * The default column separator: ",".
+     */
     private static final String DEFAULT_COLUMN_SEPARATOR = ",";
-    /** Prefix. */
+
+    /**
+     * Prefix.
+     */
     private final String prefix;
-    /** Suffix. */
+
+    /**
+     * Suffix.
+     */
     private final String suffix;
-    /** Row prefix. */
+
+    /**
+     * Row prefix.
+     */
     private final String rowPrefix;
-    /** Row suffix. */
+
+    /**
+     * Row suffix.
+     */
     private final String rowSuffix;
-    /** Row separator. */
+
+    /**
+     * Row separator.
+     */
     private final String rowSeparator;
-    /** Column separator. */
+
+    /**
+     * Column separator.
+     */
     private final String columnSeparator;
-    /** The format used for components. */
+
+    /**
+     * The format used for components.
+     */
     private final NumberFormat format;
 
     /**
@@ -86,8 +127,7 @@ public class RealMatrixFormat {
      * "[", "]", ";" and ", " and the default number format for components.</p>
      */
     public RealMatrixFormat() {
-        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_ROW_PREFIX, DEFAULT_ROW_SUFFIX,
-                DEFAULT_ROW_SEPARATOR, DEFAULT_COLUMN_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
+        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_ROW_PREFIX, DEFAULT_ROW_SUFFIX, DEFAULT_ROW_SEPARATOR, DEFAULT_COLUMN_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -95,8 +135,7 @@ public class RealMatrixFormat {
      * @param format the custom format for components.
      */
     public RealMatrixFormat(final NumberFormat format) {
-        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_ROW_PREFIX, DEFAULT_ROW_SUFFIX,
-                DEFAULT_ROW_SEPARATOR, DEFAULT_COLUMN_SEPARATOR, format);
+        this(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_ROW_PREFIX, DEFAULT_ROW_SUFFIX, DEFAULT_ROW_SEPARATOR, DEFAULT_COLUMN_SEPARATOR, format);
     }
 
     /**
@@ -108,11 +147,8 @@ public class RealMatrixFormat {
      * @param rowSeparator tow separator to use instead of the default ";"
      * @param columnSeparator column separator to use instead of the default ", "
      */
-    public RealMatrixFormat(final String prefix, final String suffix,
-                            final String rowPrefix, final String rowSuffix,
-                            final String rowSeparator, final String columnSeparator) {
-        this(prefix, suffix, rowPrefix, rowSuffix, rowSeparator, columnSeparator,
-                CompositeFormat.getDefaultNumberFormat());
+    public RealMatrixFormat(final String prefix, final String suffix, final String rowPrefix, final String rowSuffix, final String rowSeparator, final String columnSeparator) {
+        this(prefix, suffix, rowPrefix, rowSuffix, rowSeparator, columnSeparator, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -126,17 +162,14 @@ public class RealMatrixFormat {
      * @param columnSeparator column separator to use instead of the default ", "
      * @param format the custom format for components.
      */
-    public RealMatrixFormat(final String prefix, final String suffix,
-                            final String rowPrefix, final String rowSuffix,
-                            final String rowSeparator, final String columnSeparator,
-                            final NumberFormat format) {
-        this.prefix            = prefix;
-        this.suffix            = suffix;
-        this.rowPrefix         = rowPrefix;
-        this.rowSuffix         = rowSuffix;
-        this.rowSeparator      = rowSeparator;
-        this.columnSeparator   = columnSeparator;
-        this.format            = format;
+    public RealMatrixFormat(final String prefix, final String suffix, final String rowPrefix, final String rowSuffix, final String rowSeparator, final String columnSeparator, final NumberFormat format) {
+        this.prefix = prefix;
+        this.suffix = suffix;
+        this.rowPrefix = rowPrefix;
+        this.rowSuffix = rowSuffix;
+        this.rowSeparator = rowSeparator;
+        this.columnSeparator = columnSeparator;
+        this.format = format;
         // disable grouping to prevent parsing problems
         this.format.setGroupingUsed(false);
     }
@@ -241,34 +274,31 @@ public class RealMatrixFormat {
      *            offsets of the alignment field
      * @return the value passed in as toAppendTo.
      */
-    public StringBuffer format(RealMatrix matrix, StringBuffer toAppendTo,
-                               FieldPosition pos) {
-
+    public StringBuffer format(RealMatrix matrix, StringBuffer toAppendTo, FieldPosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.format_244");
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         // format prefix
         toAppendTo.append(prefix);
-
         // format rows
         final int rows = matrix.getRowDimension();
-        for (int i = 0; i < rows; ++i) {
+        for (int i = 0; ROR_less(i, rows, "org.apache.commons.math3.linear.RealMatrixFormat.format_244", _mut33179, _mut33180, _mut33181, _mut33182, _mut33183); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.format_244");
             toAppendTo.append(rowPrefix);
-            for (int j = 0; j < matrix.getColumnDimension(); ++j) {
-                if (j > 0) {
+            for (int j = 0; ROR_less(j, matrix.getColumnDimension(), "org.apache.commons.math3.linear.RealMatrixFormat.format_244", _mut33165, _mut33166, _mut33167, _mut33168, _mut33169); ++j) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.format_244");
+                if (ROR_greater(j, 0, "org.apache.commons.math3.linear.RealMatrixFormat.format_244", _mut33160, _mut33161, _mut33162, _mut33163, _mut33164)) {
                     toAppendTo.append(columnSeparator);
                 }
                 CompositeFormat.formatDouble(matrix.getEntry(i, j), format, toAppendTo, pos);
             }
             toAppendTo.append(rowSuffix);
-            if (i < rows - 1) {
+            if (ROR_less(i, AOR_minus(rows, 1, "org.apache.commons.math3.linear.RealMatrixFormat.format_244", _mut33170, _mut33171, _mut33172, _mut33173), "org.apache.commons.math3.linear.RealMatrixFormat.format_244", _mut33174, _mut33175, _mut33176, _mut33177, _mut33178)) {
                 toAppendTo.append(rowSeparator);
             }
         }
-
         // format suffix
         toAppendTo.append(suffix);
-
         return toAppendTo;
     }
 
@@ -281,12 +311,11 @@ public class RealMatrixFormat {
      * cannot be parsed.
      */
     public RealMatrix parse(String source) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.parse_283");
         final ParsePosition parsePosition = new ParsePosition(0);
         final RealMatrix result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         Array2DRowRealMatrix.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.linear.RealMatrixFormat.parse_283", _mut33184, _mut33185, _mut33186, _mut33187, _mut33188)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), Array2DRowRealMatrix.class);
         }
         return result;
     }
@@ -299,31 +328,28 @@ public class RealMatrixFormat {
      * @return the parsed {@link RealMatrix} object.
      */
     public RealMatrix parse(String source, ParsePosition pos) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.parse_301");
         int initialIndex = pos.getIndex();
-
         final String trimmedPrefix = prefix.trim();
         final String trimmedSuffix = suffix.trim();
         final String trimmedRowPrefix = rowPrefix.trim();
         final String trimmedRowSuffix = rowSuffix.trim();
         final String trimmedColumnSeparator = columnSeparator.trim();
         final String trimmedRowSeparator = rowSeparator.trim();
-
         // parse prefix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedPrefix, pos)) {
             return null;
         }
-
         // parse components
         List<List<Number>> matrix = new ArrayList<List<Number>>();
         List<Number> rowComponents = new ArrayList<Number>();
-        for (boolean loop = true; loop;){
-
+        for (boolean loop = true; loop; ) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.parse_301");
             if (!rowComponents.isEmpty()) {
                 CompositeFormat.parseAndIgnoreWhitespace(source, pos);
                 if (!CompositeFormat.parseFixedstring(source, trimmedColumnSeparator, pos)) {
-                    if (trimmedRowSuffix.length() != 0 &&
-                        !CompositeFormat.parseFixedstring(source, trimmedRowSuffix, pos)) {
+                    if ((_mut33200 ? (ROR_not_equals(trimmedRowSuffix.length(), 0, "org.apache.commons.math3.linear.RealMatrixFormat.parse_301", _mut33195, _mut33196, _mut33197, _mut33198, _mut33199) || !CompositeFormat.parseFixedstring(source, trimmedRowSuffix, pos)) : (ROR_not_equals(trimmedRowSuffix.length(), 0, "org.apache.commons.math3.linear.RealMatrixFormat.parse_301", _mut33195, _mut33196, _mut33197, _mut33198, _mut33199) && !CompositeFormat.parseFixedstring(source, trimmedRowSuffix, pos)))) {
                         return null;
                     } else {
                         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
@@ -338,12 +364,10 @@ public class RealMatrixFormat {
                 }
             } else {
                 CompositeFormat.parseAndIgnoreWhitespace(source, pos);
-                if (trimmedRowPrefix.length() != 0 &&
-                    !CompositeFormat.parseFixedstring(source, trimmedRowPrefix, pos)) {
+                if ((_mut33194 ? (ROR_not_equals(trimmedRowPrefix.length(), 0, "org.apache.commons.math3.linear.RealMatrixFormat.parse_301", _mut33189, _mut33190, _mut33191, _mut33192, _mut33193) || !CompositeFormat.parseFixedstring(source, trimmedRowPrefix, pos)) : (ROR_not_equals(trimmedRowPrefix.length(), 0, "org.apache.commons.math3.linear.RealMatrixFormat.parse_301", _mut33189, _mut33190, _mut33191, _mut33192, _mut33193) && !CompositeFormat.parseFixedstring(source, trimmedRowPrefix, pos)))) {
                     return null;
                 }
             }
-
             if (loop) {
                 CompositeFormat.parseAndIgnoreWhitespace(source, pos);
                 Number component = CompositeFormat.parseNumber(source, format, pos);
@@ -353,38 +377,34 @@ public class RealMatrixFormat {
                     if (rowComponents.isEmpty()) {
                         loop = false;
                     } else {
-                        // invalid component
                         // set index back to initial, error index should already be set
                         pos.setIndex(initialIndex);
                         return null;
                     }
                 }
             }
-
         }
-
         if (!rowComponents.isEmpty()) {
             matrix.add(rowComponents);
         }
-
         // parse suffix
         CompositeFormat.parseAndIgnoreWhitespace(source, pos);
         if (!CompositeFormat.parseFixedstring(source, trimmedSuffix, pos)) {
             return null;
         }
-
         // do not allow an empty matrix
         if (matrix.isEmpty()) {
             pos.setIndex(initialIndex);
             return null;
         }
-
         // build vector
         double[][] data = new double[matrix.size()][];
         int row = 0;
         for (List<Number> rowList : matrix) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.parse_301");
             data[row] = new double[rowList.size()];
-            for (int i = 0; i < rowList.size(); i++) {
+            for (int i = 0; ROR_less(i, rowList.size(), "org.apache.commons.math3.linear.RealMatrixFormat.parse_301", _mut33201, _mut33202, _mut33203, _mut33204, _mut33205); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RealMatrixFormat.parse_301");
                 data[row][i] = rowList.get(i).doubleValue();
             }
             row++;

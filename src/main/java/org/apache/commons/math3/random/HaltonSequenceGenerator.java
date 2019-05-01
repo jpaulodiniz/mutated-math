@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.NotPositiveException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implementation of a Halton sequence.
@@ -53,30 +55,37 @@ import org.apache.commons.math3.util.MathUtils;
  */
 public class HaltonSequenceGenerator implements RandomVectorGenerator {
 
-    /** The first 40 primes. */
-    private static final int[] PRIMES = new int[] {
-        2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67,
-        71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139,
-        149, 151, 157, 163, 167, 173
-    };
+    @Conditional
+    public static boolean _mut52174 = false, _mut52175 = false, _mut52176 = false, _mut52177 = false, _mut52178 = false, _mut52179 = false, _mut52180 = false, _mut52181 = false, _mut52182 = false, _mut52183 = false, _mut52184 = false, _mut52185 = false, _mut52186 = false, _mut52187 = false, _mut52188 = false, _mut52189 = false, _mut52190 = false, _mut52191 = false, _mut52192 = false, _mut52193 = false, _mut52194 = false, _mut52195 = false, _mut52196 = false, _mut52197 = false, _mut52198 = false, _mut52199 = false, _mut52200 = false, _mut52201 = false, _mut52202 = false, _mut52203 = false, _mut52204 = false, _mut52205 = false, _mut52206 = false, _mut52207 = false, _mut52208 = false, _mut52209 = false, _mut52210 = false, _mut52211 = false, _mut52212 = false, _mut52213 = false, _mut52214 = false, _mut52215 = false, _mut52216 = false, _mut52217 = false, _mut52218 = false, _mut52219 = false, _mut52220 = false;
 
-    /** The optimal weights used for scrambling of the first 40 dimension. */
-    private static final int[] WEIGHTS = new int[] {
-        1, 2, 3, 3, 8, 11, 12, 14, 7, 18, 12, 13, 17, 18, 29, 14, 18, 43, 41,
-        44, 40, 30, 47, 65, 71, 28, 40, 60, 79, 89, 56, 50, 52, 61, 108, 56,
-        66, 63, 60, 66
-    };
+    /**
+     * The first 40 primes.
+     */
+    private static final int[] PRIMES = new int[] { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173 };
 
-    /** Space dimension. */
+    /**
+     * The optimal weights used for scrambling of the first 40 dimension.
+     */
+    private static final int[] WEIGHTS = new int[] { 1, 2, 3, 3, 8, 11, 12, 14, 7, 18, 12, 13, 17, 18, 29, 14, 18, 43, 41, 44, 40, 30, 47, 65, 71, 28, 40, 60, 79, 89, 56, 50, 52, 61, 108, 56, 66, 63, 60, 66 };
+
+    /**
+     * Space dimension.
+     */
     private final int dimension;
 
-    /** The current index in the sequence. */
+    /**
+     * The current index in the sequence.
+     */
     private int count = 0;
 
-    /** The base numbers for each component. */
+    /**
+     * The base numbers for each component.
+     */
     private final int[] base;
 
-    /** The scrambling weights for each component. */
+    /**
+     * The scrambling weights for each component.
+     */
     private final int[] weight;
 
     /**
@@ -101,37 +110,38 @@ public class HaltonSequenceGenerator implements RandomVectorGenerator {
      *   len refers to the length of the bases array
      * @throws DimensionMismatchException if weights is non-null and the length of the input arrays differ
      */
-    public HaltonSequenceGenerator(final int dimension, final int[] bases, final int[] weights)
-            throws NullArgumentException, OutOfRangeException, DimensionMismatchException {
-
+    public HaltonSequenceGenerator(final int dimension, final int[] bases, final int[] weights) throws NullArgumentException, OutOfRangeException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104");
         MathUtils.checkNotNull(bases);
-
-        if (dimension < 1 || dimension > bases.length) {
+        if ((_mut52184 ? (ROR_less(dimension, 1, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52174, _mut52175, _mut52176, _mut52177, _mut52178) && ROR_greater(dimension, bases.length, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52179, _mut52180, _mut52181, _mut52182, _mut52183)) : (ROR_less(dimension, 1, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52174, _mut52175, _mut52176, _mut52177, _mut52178) || ROR_greater(dimension, bases.length, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52179, _mut52180, _mut52181, _mut52182, _mut52183)))) {
             throw new OutOfRangeException(dimension, 1, PRIMES.length);
         }
-
-        if (weights != null && weights.length != bases.length) {
+        if ((_mut52190 ? (weights != null || ROR_not_equals(weights.length, bases.length, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52185, _mut52186, _mut52187, _mut52188, _mut52189)) : (weights != null && ROR_not_equals(weights.length, bases.length, "org.apache.commons.math3.random.HaltonSequenceGenerator.HaltonSequenceGenerator_104", _mut52185, _mut52186, _mut52187, _mut52188, _mut52189)))) {
             throw new DimensionMismatchException(weights.length, bases.length);
         }
-
         this.dimension = dimension;
         this.base = bases.clone();
         this.weight = weights == null ? null : weights.clone();
         count = 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double[] nextVector() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124");
         final double[] v = new double[dimension];
-        for (int i = 0; i < dimension; i++) {
+        for (int i = 0; ROR_less(i, dimension, "org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124", _mut52208, _mut52209, _mut52210, _mut52211, _mut52212); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124");
             int index = count;
-            double f = 1.0 / base[i];
-
+            double f = AOR_divide(1.0, base[i], "org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124", _mut52191, _mut52192, _mut52193, _mut52194);
             int j = 0;
-            while (index > 0) {
-                final int digit = scramble(i, j, base[i], index % base[i]);
-                v[i] += f * digit;
-                index /= base[i]; // floor( index / base )
+            while (ROR_greater(index, 0, "org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124", _mut52203, _mut52204, _mut52205, _mut52206, _mut52207)) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124");
+                final int digit = scramble(i, j, base[i], AOR_remainder(index, base[i], "org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124", _mut52195, _mut52196, _mut52197, _mut52198));
+                v[i] += AOR_multiply(f, digit, "org.apache.commons.math3.random.HaltonSequenceGenerator.nextVector_124", _mut52199, _mut52200, _mut52201, _mut52202);
+                // floor( index / base )
+                index /= base[i];
                 f /= base[i];
             }
         }
@@ -153,7 +163,8 @@ public class HaltonSequenceGenerator implements RandomVectorGenerator {
      * @return the scrambled digit
      */
     protected int scramble(final int i, final int j, final int b, final int digit) {
-        return weight != null ? (weight[i] * digit) % b : digit;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.HaltonSequenceGenerator.scramble_155");
+        return weight != null ? AOR_remainder((AOR_multiply(weight[i], digit, "org.apache.commons.math3.random.HaltonSequenceGenerator.scramble_155", _mut52213, _mut52214, _mut52215, _mut52216)), b, "org.apache.commons.math3.random.HaltonSequenceGenerator.scramble_155", _mut52217, _mut52218, _mut52219, _mut52220) : digit;
     }
 
     /**
@@ -179,5 +190,4 @@ public class HaltonSequenceGenerator implements RandomVectorGenerator {
     public int getNextIndex() {
         return count;
     }
-
 }

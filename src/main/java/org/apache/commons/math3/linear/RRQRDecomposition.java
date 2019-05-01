@@ -14,11 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.linear;
 
 import org.apache.commons.math3.util.FastMath;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Calculates the rank-revealing QR-decomposition of a matrix, with column pivoting.
@@ -49,12 +49,18 @@ import org.apache.commons.math3.util.FastMath;
  */
 public class RRQRDecomposition extends QRDecomposition {
 
-    /** An array to record the column pivoting for later creation of P. */
+    @Conditional
+    public static boolean _mut33726 = false, _mut33727 = false, _mut33728 = false, _mut33729 = false, _mut33730 = false, _mut33731 = false, _mut33732 = false, _mut33733 = false, _mut33734 = false, _mut33735 = false, _mut33736 = false, _mut33737 = false, _mut33738 = false, _mut33739 = false, _mut33740 = false, _mut33741 = false, _mut33742 = false, _mut33743 = false, _mut33744 = false, _mut33745 = false, _mut33746 = false, _mut33747 = false, _mut33748 = false, _mut33749 = false, _mut33750 = false, _mut33751 = false, _mut33752 = false, _mut33753 = false, _mut33754 = false, _mut33755 = false, _mut33756 = false, _mut33757 = false, _mut33758 = false, _mut33759 = false, _mut33760 = false, _mut33761 = false, _mut33762 = false, _mut33763 = false, _mut33764 = false, _mut33765 = false, _mut33766 = false, _mut33767 = false, _mut33768 = false, _mut33769 = false, _mut33770 = false, _mut33771 = false, _mut33772 = false, _mut33773 = false, _mut33774 = false, _mut33775 = false, _mut33776 = false, _mut33777 = false, _mut33778 = false, _mut33779 = false, _mut33780 = false, _mut33781 = false, _mut33782 = false, _mut33783 = false, _mut33784 = false, _mut33785 = false, _mut33786 = false, _mut33787 = false, _mut33788 = false, _mut33789 = false, _mut33790 = false, _mut33791 = false;
+
+    /**
+     * An array to record the column pivoting for later creation of P.
+     */
     private int[] p;
 
-    /** Cached value of P. */
+    /**
+     * Cached value of P.
+     */
     private RealMatrix cachedP;
-
 
     /**
      * Calculates the QR-decomposition of the given matrix.
@@ -68,51 +74,57 @@ public class RRQRDecomposition extends QRDecomposition {
         this(matrix, 0d);
     }
 
-   /**
+    /**
      * Calculates the QR-decomposition of the given matrix.
      *
      * @param matrix The matrix to decompose.
      * @param threshold Singularity threshold.
      * @see #RRQRDecomposition(RealMatrix)
      */
-    public RRQRDecomposition(RealMatrix matrix,  double threshold) {
+    public RRQRDecomposition(RealMatrix matrix, double threshold) {
         super(matrix, threshold);
     }
 
-    /** Decompose matrix.
+    /**
+     * Decompose matrix.
      * @param qrt transposed matrix
      */
     @Override
     protected void decompose(double[][] qrt) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.decompose_85");
         p = new int[qrt.length];
-        for (int i = 0; i < p.length; i++) {
+        for (int i = 0; ROR_less(i, p.length, "org.apache.commons.math3.linear.RRQRDecomposition.decompose_85", _mut33726, _mut33727, _mut33728, _mut33729, _mut33730); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.decompose_85");
             p[i] = i;
         }
         super.decompose(qrt);
     }
 
-    /** Perform Householder reflection for a minor A(minor, minor) of A.
+    /**
+     * Perform Householder reflection for a minor A(minor, minor) of A.
      * @param minor minor index
      * @param qrt transposed matrix
      */
     @Override
     protected void performHouseholderReflection(int minor, double[][] qrt) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98");
         double l2NormSquaredMax = 0;
         // Find the unreduced column with the greatest L2-Norm
         int l2NormSquaredMaxIndex = minor;
-        for (int i = minor; i < qrt.length; i++) {
+        for (int i = minor; ROR_less(i, qrt.length, "org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98", _mut33745, _mut33746, _mut33747, _mut33748, _mut33749); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98");
             double l2NormSquared = 0;
-            for (int j = 0; j < qrt[i].length; j++) {
-                l2NormSquared += qrt[i][j] * qrt[i][j];
+            for (int j = 0; ROR_less(j, qrt[i].length, "org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98", _mut33735, _mut33736, _mut33737, _mut33738, _mut33739); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98");
+                l2NormSquared += AOR_multiply(qrt[i][j], qrt[i][j], "org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98", _mut33731, _mut33732, _mut33733, _mut33734);
             }
-            if (l2NormSquared > l2NormSquaredMax) {
+            if (ROR_greater(l2NormSquared, l2NormSquaredMax, "org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98", _mut33740, _mut33741, _mut33742, _mut33743, _mut33744)) {
                 l2NormSquaredMax = l2NormSquared;
                 l2NormSquaredMaxIndex = i;
             }
         }
         // swap the current column with that with the greated L2-Norm and record in p
-        if (l2NormSquaredMaxIndex != minor) {
+        if (ROR_not_equals(l2NormSquaredMaxIndex, minor, "org.apache.commons.math3.linear.RRQRDecomposition.performHouseholderReflection_98", _mut33750, _mut33751, _mut33752, _mut33753, _mut33754)) {
             double[] tmp1 = qrt[minor];
             qrt[minor] = qrt[l2NormSquaredMaxIndex];
             qrt[l2NormSquaredMaxIndex] = tmp1;
@@ -120,11 +132,8 @@ public class RRQRDecomposition extends QRDecomposition {
             p[minor] = p[l2NormSquaredMaxIndex];
             p[l2NormSquaredMaxIndex] = tmp2;
         }
-
         super.performHouseholderReflection(minor, qrt);
-
     }
-
 
     /**
      * Returns the pivot matrix, P, used in the QR Decomposition of matrix A such that AP = QR.
@@ -134,14 +143,16 @@ public class RRQRDecomposition extends QRDecomposition {
      * @return a permutation matrix.
      */
     public RealMatrix getP() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.getP_136");
         if (cachedP == null) {
             int n = p.length;
-            cachedP = MatrixUtils.createRealMatrix(n,n);
-            for (int i = 0; i < n; i++) {
+            cachedP = MatrixUtils.createRealMatrix(n, n);
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.RRQRDecomposition.getP_136", _mut33755, _mut33756, _mut33757, _mut33758, _mut33759); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.getP_136");
                 cachedP.setEntry(p[i], i, 1);
             }
         }
-        return cachedP ;
+        return cachedP;
     }
 
     /**
@@ -164,15 +175,17 @@ public class RRQRDecomposition extends QRDecomposition {
      * @return effective numerical matrix rank
      */
     public int getRank(final double dropThreshold) {
-        RealMatrix r    = getR();
-        int rows        = r.getRowDimension();
-        int columns     = r.getColumnDimension();
-        int rank        = 1;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.getRank_166");
+        RealMatrix r = getR();
+        int rows = r.getRowDimension();
+        int columns = r.getColumnDimension();
+        int rank = 1;
         double lastNorm = r.getFrobeniusNorm();
-        double rNorm    = lastNorm;
-        while (rank < FastMath.min(rows, columns)) {
-            double thisNorm = r.getSubMatrix(rank, rows - 1, rank, columns - 1).getFrobeniusNorm();
-            if (thisNorm == 0 || (thisNorm / lastNorm) * rNorm < dropThreshold) {
+        double rNorm = lastNorm;
+        while (ROR_less(rank, FastMath.min(rows, columns), "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33787, _mut33788, _mut33789, _mut33790, _mut33791)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.RRQRDecomposition.getRank_166");
+            double thisNorm = r.getSubMatrix(rank, AOR_minus(rows, 1, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33760, _mut33761, _mut33762, _mut33763), rank, AOR_minus(columns, 1, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33764, _mut33765, _mut33766, _mut33767)).getFrobeniusNorm();
+            if ((_mut33786 ? (ROR_equals(thisNorm, 0, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33768, _mut33769, _mut33770, _mut33771, _mut33772) && ROR_less(AOR_multiply((AOR_divide(thisNorm, lastNorm, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33773, _mut33774, _mut33775, _mut33776)), rNorm, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33777, _mut33778, _mut33779, _mut33780), dropThreshold, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33781, _mut33782, _mut33783, _mut33784, _mut33785)) : (ROR_equals(thisNorm, 0, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33768, _mut33769, _mut33770, _mut33771, _mut33772) || ROR_less(AOR_multiply((AOR_divide(thisNorm, lastNorm, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33773, _mut33774, _mut33775, _mut33776)), rNorm, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33777, _mut33778, _mut33779, _mut33780), dropThreshold, "org.apache.commons.math3.linear.RRQRDecomposition.getRank_166", _mut33781, _mut33782, _mut33783, _mut33784, _mut33785)))) {
                 break;
             }
             lastNorm = thisNorm;
@@ -198,13 +211,19 @@ public class RRQRDecomposition extends QRDecomposition {
         return new Solver(super.getSolver(), this.getP());
     }
 
-    /** Specialized solver. */
+    /**
+     * Specialized solver.
+     */
     private static class Solver implements DecompositionSolver {
 
-        /** Upper level solver. */
+        /**
+         * Upper level solver.
+         */
         private final DecompositionSolver upper;
 
-        /** A permutation matrix for the pivots used in the QR decomposition */
+        /**
+         * A permutation matrix for the pivots used in the QR decomposition
+         */
         private RealMatrix p;
 
         /**
@@ -215,20 +234,26 @@ public class RRQRDecomposition extends QRDecomposition {
          */
         private Solver(final DecompositionSolver upper, final RealMatrix p) {
             this.upper = upper;
-            this.p     = p;
+            this.p = p;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public boolean isNonSingular() {
             return upper.isNonSingular();
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public RealVector solve(RealVector b) {
             return p.operate(upper.solve(b));
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public RealMatrix solve(RealMatrix b) {
             return p.multiply(upper.solve(b));
         }

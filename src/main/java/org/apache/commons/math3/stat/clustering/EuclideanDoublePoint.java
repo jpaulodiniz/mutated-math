@@ -19,8 +19,9 @@ package org.apache.commons.math3.stat.clustering;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Arrays;
-
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * A simple implementation of {@link Clusterable} for points with double coordinates.
@@ -31,10 +32,17 @@ import org.apache.commons.math3.util.MathArrays;
 @Deprecated
 public class EuclideanDoublePoint implements Clusterable<EuclideanDoublePoint>, Serializable {
 
-    /** Serializable version identifier. */
+    @Conditional
+    public static boolean _mut4883 = false, _mut4884 = false, _mut4885 = false, _mut4886 = false, _mut4887 = false, _mut4888 = false, _mut4889 = false, _mut4890 = false, _mut4891 = false, _mut4892 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 8026472786091227632L;
 
-    /** Point coordinates. */
+    /**
+     * Point coordinates.
+     */
     private final double[] point;
 
     /**
@@ -48,26 +56,36 @@ public class EuclideanDoublePoint implements Clusterable<EuclideanDoublePoint>, 
         this.point = point;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public EuclideanDoublePoint centroidOf(final Collection<EuclideanDoublePoint> points) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52");
         final double[] centroid = new double[getPoint().length];
         for (final EuclideanDoublePoint p : points) {
-            for (int i = 0; i < centroid.length; i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52");
+            for (int i = 0; ROR_less(i, centroid.length, "org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52", _mut4883, _mut4884, _mut4885, _mut4886, _mut4887); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52");
                 centroid[i] += p.getPoint()[i];
             }
         }
-        for (int i = 0; i < centroid.length; i++) {
+        for (int i = 0; ROR_less(i, centroid.length, "org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52", _mut4888, _mut4889, _mut4890, _mut4891, _mut4892); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.clustering.EuclideanDoublePoint.centroidOf_52");
             centroid[i] /= points.size();
         }
         return new EuclideanDoublePoint(centroid);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double distanceFrom(final EuclideanDoublePoint p) {
         return MathArrays.distance(point, p.getPoint());
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(final Object other) {
         if (!(other instanceof EuclideanDoublePoint)) {
@@ -85,16 +103,19 @@ public class EuclideanDoublePoint implements Clusterable<EuclideanDoublePoint>, 
         return point;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Arrays.hashCode(point);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return Arrays.toString(point);
     }
-
 }

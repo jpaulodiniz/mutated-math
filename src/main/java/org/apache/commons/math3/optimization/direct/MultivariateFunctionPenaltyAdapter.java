@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.direct;
 
 import org.apache.commons.math3.analysis.MultivariateFunction;
@@ -22,65 +21,42 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
-
-/**
- * <p>Adapter extending bounded {@link MultivariateFunction} to an unbouded
- * domain using a penalty function.</p>
- *
- * <p>
- * This adapter can be used to wrap functions subject to simple bounds on
- * parameters so they can be used by optimizers that do <em>not</em> directly
- * support simple bounds.
- * </p>
- * <p>
- * The principle is that the user function that will be wrapped will see its
- * parameters bounded as required, i.e when its {@code value} method is called
- * with argument array {@code point}, the elements array will fulfill requirement
- * {@code lower[i] <= point[i] <= upper[i]} for all i. Some of the components
- * may be unbounded or bounded only on one side if the corresponding bound is
- * set to an infinite value. The optimizer will not manage the user function by
- * itself, but it will handle this adapter and it is this adapter that will take
- * care the bounds are fulfilled. The adapter {@link #value(double[])} method will
- * be called by the optimizer with unbound parameters, and the adapter will check
- * if the parameters is within range or not. If it is in range, then the underlying
- * user function will be called, and if it is not the value of a penalty function
- * will be returned instead.
- * </p>
- * <p>
- * This adapter is only a poor man solution to simple bounds optimization constraints
- * that can be used with simple optimizers like {@link SimplexOptimizer} with {@link
- * NelderMeadSimplex} or {@link MultiDirectionalSimplex}. A better solution is to use
- * an optimizer that directly supports simple bounds like {@link CMAESOptimizer} or
- * {@link BOBYQAOptimizer}. One caveat of this poor man solution is that if start point
- * or start simplex is completely outside of the allowed range, only the penalty function
- * is used, and the optimizer may converge without ever entering the range.
- * </p>
- *
- * @see MultivariateFunctionMappingAdapter
- *
- * @deprecated As of 3.1 (to be removed in 4.0).
- * @since 3.0
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 @Deprecated
 public class MultivariateFunctionPenaltyAdapter implements MultivariateFunction {
 
-    /** Underlying bounded function. */
+    @Conditional
+    public static boolean _mut74861 = false, _mut74862 = false, _mut74863 = false, _mut74864 = false, _mut74865 = false, _mut74866 = false, _mut74867 = false, _mut74868 = false, _mut74869 = false, _mut74870 = false, _mut74871 = false, _mut74872 = false, _mut74873 = false, _mut74874 = false, _mut74875 = false, _mut74876 = false, _mut74877 = false, _mut74878 = false, _mut74879 = false, _mut74880 = false, _mut74881 = false, _mut74882 = false, _mut74883 = false, _mut74884 = false, _mut74885 = false, _mut74886 = false, _mut74887 = false, _mut74888 = false, _mut74889 = false, _mut74890 = false, _mut74891 = false, _mut74892 = false, _mut74893 = false, _mut74894 = false, _mut74895 = false, _mut74896 = false, _mut74897 = false, _mut74898 = false, _mut74899 = false, _mut74900 = false, _mut74901 = false, _mut74902 = false, _mut74903 = false, _mut74904 = false, _mut74905 = false, _mut74906 = false, _mut74907 = false, _mut74908 = false, _mut74909 = false, _mut74910 = false, _mut74911 = false, _mut74912 = false, _mut74913 = false, _mut74914 = false, _mut74915 = false, _mut74916 = false, _mut74917 = false, _mut74918 = false, _mut74919 = false, _mut74920 = false, _mut74921 = false, _mut74922 = false, _mut74923 = false, _mut74924 = false, _mut74925 = false, _mut74926 = false, _mut74927 = false, _mut74928 = false, _mut74929 = false, _mut74930 = false, _mut74931 = false;
+
+    /**
+     * Underlying bounded function.
+     */
     private final MultivariateFunction bounded;
 
-    /** Lower bounds. */
+    /**
+     * Lower bounds.
+     */
     private final double[] lower;
 
-    /** Upper bounds. */
+    /**
+     * Upper bounds.
+     */
     private final double[] upper;
 
-    /** Penalty offset. */
+    /**
+     * Penalty offset.
+     */
     private final double offset;
 
-    /** Penalty scales. */
+    /**
+     * Penalty scales.
+     */
     private final double[] scale;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * <p>
      * When the optimizer provided points are out of range, the value of the
      * penalty function will be used instead of the value of the underlying
@@ -121,36 +97,34 @@ public class MultivariateFunctionPenaltyAdapter implements MultivariateFunction 
      * scales are not consistent, either according to dimension or to bounadary
      * values
      */
-    public MultivariateFunctionPenaltyAdapter(final MultivariateFunction bounded,
-                                                  final double[] lower, final double[] upper,
-                                                  final double offset, final double[] scale) {
-
+    public MultivariateFunctionPenaltyAdapter(final MultivariateFunction bounded, final double[] lower, final double[] upper, final double offset, final double[] scale) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124");
         // safety checks
         MathUtils.checkNotNull(lower);
         MathUtils.checkNotNull(upper);
         MathUtils.checkNotNull(scale);
-        if (lower.length != upper.length) {
+        if (ROR_not_equals(lower.length, upper.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124", _mut74861, _mut74862, _mut74863, _mut74864, _mut74865)) {
             throw new DimensionMismatchException(lower.length, upper.length);
         }
-        if (lower.length != scale.length) {
+        if (ROR_not_equals(lower.length, scale.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124", _mut74866, _mut74867, _mut74868, _mut74869, _mut74870)) {
             throw new DimensionMismatchException(lower.length, scale.length);
         }
-        for (int i = 0; i < lower.length; ++i) {
+        for (int i = 0; ROR_less(i, lower.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124", _mut74876, _mut74877, _mut74878, _mut74879, _mut74880); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124");
             // note the following test is written in such a way it also fails for NaN
-            if (!(upper[i] >= lower[i])) {
+            if (!(ROR_greater_equals(upper[i], lower[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.MultivariateFunctionPenaltyAdapter_124", _mut74871, _mut74872, _mut74873, _mut74874, _mut74875))) {
                 throw new NumberIsTooSmallException(upper[i], lower[i], true);
             }
         }
-
         this.bounded = bounded;
-        this.lower   = lower.clone();
-        this.upper   = upper.clone();
-        this.offset  = offset;
-        this.scale   = scale.clone();
-
+        this.lower = lower.clone();
+        this.upper = upper.clone();
+        this.offset = offset;
+        this.scale = scale.clone();
     }
 
-    /** Compute the underlying function value from an unbounded point.
+    /**
+     * Compute the underlying function value from an unbounded point.
      * <p>
      * This method simply returns the value of the underlying function
      * if the unbounded point already fulfills the bounds, and compute
@@ -161,30 +135,28 @@ public class MultivariateFunctionPenaltyAdapter implements MultivariateFunction 
      * @return either underlying function value or penalty function value
      */
     public double value(double[] point) {
-
-        for (int i = 0; i < scale.length; ++i) {
-            if ((point[i] < lower[i]) || (point[i] > upper[i])) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163");
+        for (int i = 0; ROR_less(i, scale.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74927, _mut74928, _mut74929, _mut74930, _mut74931); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163");
+            if ((_mut74891 ? ((ROR_less(point[i], lower[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74881, _mut74882, _mut74883, _mut74884, _mut74885)) && (ROR_greater(point[i], upper[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74886, _mut74887, _mut74888, _mut74889, _mut74890))) : ((ROR_less(point[i], lower[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74881, _mut74882, _mut74883, _mut74884, _mut74885)) || (ROR_greater(point[i], upper[i], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74886, _mut74887, _mut74888, _mut74889, _mut74890))))) {
                 // bound violation starting at this component
                 double sum = 0;
-                for (int j = i; j < scale.length; ++j) {
+                for (int j = i; ROR_less(j, scale.length, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74918, _mut74919, _mut74920, _mut74921, _mut74922); ++j) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163");
                     final double overshoot;
-                    if (point[j] < lower[j]) {
-                        overshoot = scale[j] * (lower[j] - point[j]);
-                    } else if (point[j] > upper[j]) {
-                        overshoot = scale[j] * (point[j] - upper[j]);
+                    if (ROR_less(point[j], lower[j], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74892, _mut74893, _mut74894, _mut74895, _mut74896)) {
+                        overshoot = AOR_multiply(scale[j], (AOR_minus(lower[j], point[j], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74910, _mut74911, _mut74912, _mut74913)), "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74914, _mut74915, _mut74916, _mut74917);
+                    } else if (ROR_greater(point[j], upper[j], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74897, _mut74898, _mut74899, _mut74900, _mut74901)) {
+                        overshoot = AOR_multiply(scale[j], (AOR_minus(point[j], upper[j], "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74902, _mut74903, _mut74904, _mut74905)), "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74906, _mut74907, _mut74908, _mut74909);
                     } else {
                         overshoot = 0;
                     }
                     sum += FastMath.sqrt(overshoot);
                 }
-                return offset + sum;
+                return AOR_plus(offset, sum, "org.apache.commons.math3.optimization.direct.MultivariateFunctionPenaltyAdapter.value_163", _mut74923, _mut74924, _mut74925, _mut74926);
             }
         }
-
-        // all boundaries are fulfilled, we are in the expected
         // domain of the underlying function
         return bounded.value(point);
-
     }
-
 }

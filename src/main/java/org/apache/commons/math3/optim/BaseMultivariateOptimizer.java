@@ -19,6 +19,8 @@ package org.apache.commons.math3.optim;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for implementing optimizers for multivariate functions.
@@ -31,13 +33,24 @@ import org.apache.commons.math3.exception.NumberIsTooLargeException;
  *
  * @since 3.1
  */
-public abstract class BaseMultivariateOptimizer<PAIR>
-    extends BaseOptimizer<PAIR> {
-    /** Initial guess. */
+public abstract class BaseMultivariateOptimizer<PAIR> extends BaseOptimizer<PAIR> {
+
+    @Conditional
+    public static boolean _mut66767 = false, _mut66768 = false, _mut66769 = false, _mut66770 = false, _mut66771 = false, _mut66772 = false, _mut66773 = false, _mut66774 = false, _mut66775 = false, _mut66776 = false, _mut66777 = false, _mut66778 = false, _mut66779 = false, _mut66780 = false, _mut66781 = false, _mut66782 = false, _mut66783 = false, _mut66784 = false, _mut66785 = false, _mut66786 = false, _mut66787 = false, _mut66788 = false, _mut66789 = false, _mut66790 = false, _mut66791 = false, _mut66792 = false, _mut66793 = false, _mut66794 = false, _mut66795 = false, _mut66796 = false;
+
+    /**
+     * Initial guess.
+     */
     private double[] start;
-    /** Lower bounds. */
+
+    /**
+     * Lower bounds.
+     */
     private double[] lowerBound;
-    /** Upper bounds. */
+
+    /**
+     * Upper bounds.
+     */
     private double[] upperBound;
 
     /**
@@ -79,10 +92,9 @@ public abstract class BaseMultivariateOptimizer<PAIR>
     protected void parseOptimizationData(OptimizationData... optData) {
         // Allow base class to register its own data.
         super.parseOptimizationData(optData);
-
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultivariateOptimizer.parseOptimizationData_78");
             if (data instanceof InitialGuess) {
                 start = ((InitialGuess) data).getInitialGuess();
                 continue;
@@ -94,7 +106,6 @@ public abstract class BaseMultivariateOptimizer<PAIR>
                 continue;
             }
         }
-
         // Check input consistency.
         checkParameters();
     }
@@ -107,12 +118,14 @@ public abstract class BaseMultivariateOptimizer<PAIR>
     public double[] getStartPoint() {
         return start == null ? null : start.clone();
     }
+
     /**
      * @return the lower bounds, or {@code null} if not set.
      */
     public double[] getLowerBound() {
         return lowerBound == null ? null : lowerBound.clone();
     }
+
     /**
      * @return the upper bounds, or {@code null} if not set.
      */
@@ -124,28 +137,31 @@ public abstract class BaseMultivariateOptimizer<PAIR>
      * Check parameters consistency.
      */
     private void checkParameters() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126");
         if (start != null) {
             final int dim = start.length;
             if (lowerBound != null) {
-                if (lowerBound.length != dim) {
+                if (ROR_not_equals(lowerBound.length, dim, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66767, _mut66768, _mut66769, _mut66770, _mut66771)) {
                     throw new DimensionMismatchException(lowerBound.length, dim);
                 }
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66777, _mut66778, _mut66779, _mut66780, _mut66781); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126");
                     final double v = start[i];
                     final double lo = lowerBound[i];
-                    if (v < lo) {
+                    if (ROR_less(v, lo, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66772, _mut66773, _mut66774, _mut66775, _mut66776)) {
                         throw new NumberIsTooSmallException(v, lo, true);
                     }
                 }
             }
             if (upperBound != null) {
-                if (upperBound.length != dim) {
+                if (ROR_not_equals(upperBound.length, dim, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66782, _mut66783, _mut66784, _mut66785, _mut66786)) {
                     throw new DimensionMismatchException(upperBound.length, dim);
                 }
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66792, _mut66793, _mut66794, _mut66795, _mut66796); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126");
                     final double v = start[i];
                     final double hi = upperBound[i];
-                    if (v > hi) {
+                    if (ROR_greater(v, hi, "org.apache.commons.math3.optim.BaseMultivariateOptimizer.checkParameters_126", _mut66787, _mut66788, _mut66789, _mut66790, _mut66791)) {
                         throw new NumberIsTooLargeException(v, hi, true);
                     }
                 }

@@ -23,6 +23,8 @@ import org.apache.commons.math3.exception.NotPositiveException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implements binomial test statistics.
@@ -34,6 +36,9 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  * @since 3.3
  */
 public class BinomialTest {
+
+    @Conditional
+    public static boolean _mut7606 = false, _mut7607 = false, _mut7608 = false, _mut7609 = false, _mut7610 = false, _mut7611 = false, _mut7612 = false, _mut7613 = false, _mut7614 = false, _mut7615 = false, _mut7616 = false, _mut7617 = false, _mut7618 = false, _mut7619 = false, _mut7620 = false, _mut7621 = false, _mut7622 = false, _mut7623 = false, _mut7624 = false, _mut7625 = false, _mut7626 = false, _mut7627 = false, _mut7628 = false, _mut7629 = false, _mut7630 = false, _mut7631 = false, _mut7632 = false, _mut7633 = false, _mut7634 = false, _mut7635 = false, _mut7636 = false, _mut7637 = false, _mut7638 = false, _mut7639 = false, _mut7640 = false, _mut7641 = false, _mut7642 = false, _mut7643 = false, _mut7644 = false, _mut7645 = false, _mut7646 = false, _mut7647 = false, _mut7648 = false, _mut7649 = false, _mut7650 = false, _mut7651 = false, _mut7652 = false, _mut7653 = false, _mut7654 = false, _mut7655 = false, _mut7656 = false, _mut7657 = false, _mut7658 = false, _mut7659 = false, _mut7660 = false, _mut7661 = false, _mut7662 = false, _mut7663 = false, _mut7664 = false, _mut7665 = false, _mut7666 = false, _mut7667 = false, _mut7668 = false, _mut7669 = false;
 
     /**
      * Returns whether the null hypothesis can be rejected with the given confidence level.
@@ -58,10 +63,10 @@ public class BinomialTest {
      * if {@code alternateHypothesis} is null.
      * @see AlternativeHypothesis
      */
-    public boolean binomialTest(int numberOfTrials, int numberOfSuccesses, double probability,
-                                AlternativeHypothesis alternativeHypothesis, double alpha) {
+    public boolean binomialTest(int numberOfTrials, int numberOfSuccesses, double probability, AlternativeHypothesis alternativeHypothesis, double alpha) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_61");
         double pValue = binomialTest(numberOfTrials, numberOfSuccesses, probability, alternativeHypothesis);
-        return pValue < alpha;
+        return ROR_less(pValue, alpha, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_61", _mut7606, _mut7607, _mut7608, _mut7609, _mut7610);
     }
 
     /**
@@ -99,62 +104,56 @@ public class BinomialTest {
      * if {@code alternateHypothesis} is null.
      * @see AlternativeHypothesis
      */
-    public double binomialTest(int numberOfTrials, int numberOfSuccesses, double probability,
-                               AlternativeHypothesis alternativeHypothesis) {
-        if (numberOfTrials < 0) {
+    public double binomialTest(int numberOfTrials, int numberOfSuccesses, double probability, AlternativeHypothesis alternativeHypothesis) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102");
+        if (ROR_less(numberOfTrials, 0, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7611, _mut7612, _mut7613, _mut7614, _mut7615)) {
             throw new NotPositiveException(numberOfTrials);
         }
-        if (numberOfSuccesses < 0) {
+        if (ROR_less(numberOfSuccesses, 0, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7616, _mut7617, _mut7618, _mut7619, _mut7620)) {
             throw new NotPositiveException(numberOfSuccesses);
         }
-        if (probability < 0 || probability > 1) {
+        if ((_mut7631 ? (ROR_less(probability, 0, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7621, _mut7622, _mut7623, _mut7624, _mut7625) && ROR_greater(probability, 1, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7626, _mut7627, _mut7628, _mut7629, _mut7630)) : (ROR_less(probability, 0, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7621, _mut7622, _mut7623, _mut7624, _mut7625) || ROR_greater(probability, 1, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7626, _mut7627, _mut7628, _mut7629, _mut7630)))) {
             throw new OutOfRangeException(probability, 0, 1);
         }
-        if (numberOfTrials < numberOfSuccesses) {
-            throw new MathIllegalArgumentException(
-                LocalizedFormats.BINOMIAL_INVALID_PARAMETERS_ORDER,
-                numberOfTrials, numberOfSuccesses);
+        if (ROR_less(numberOfTrials, numberOfSuccesses, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7632, _mut7633, _mut7634, _mut7635, _mut7636)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.BINOMIAL_INVALID_PARAMETERS_ORDER, numberOfTrials, numberOfSuccesses);
         }
         if (alternativeHypothesis == null) {
             throw new NullArgumentException();
         }
-
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
         final BinomialDistribution distribution = new BinomialDistribution(null, numberOfTrials, probability);
-        switch (alternativeHypothesis) {
-        case GREATER_THAN:
-            return 1 - distribution.cumulativeProbability(numberOfSuccesses - 1);
-        case LESS_THAN:
-            return distribution.cumulativeProbability(numberOfSuccesses);
-        case TWO_SIDED:
-            int criticalValueLow = 0;
-            int criticalValueHigh = numberOfTrials;
-            double pTotal = 0;
-
-            while (true) {
-                double pLow = distribution.probability(criticalValueLow);
-                double pHigh = distribution.probability(criticalValueHigh);
-
-                if (pLow == pHigh) {
-                    pTotal += 2 * pLow;
-                    criticalValueLow++;
-                    criticalValueHigh--;
-                } else if (pLow < pHigh) {
-                    pTotal += pLow;
-                    criticalValueLow++;
-                } else {
-                    pTotal += pHigh;
-                    criticalValueHigh--;
+        switch(alternativeHypothesis) {
+            case GREATER_THAN:
+                return AOR_minus(1, distribution.cumulativeProbability(AOR_minus(numberOfSuccesses, 1, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7637, _mut7638, _mut7639, _mut7640)), "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7641, _mut7642, _mut7643, _mut7644);
+            case LESS_THAN:
+                return distribution.cumulativeProbability(numberOfSuccesses);
+            case TWO_SIDED:
+                int criticalValueLow = 0;
+                int criticalValueHigh = numberOfTrials;
+                double pTotal = 0;
+                while (true) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102");
+                    double pLow = distribution.probability(criticalValueLow);
+                    double pHigh = distribution.probability(criticalValueHigh);
+                    if (ROR_equals(pLow, pHigh, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7645, _mut7646, _mut7647, _mut7648, _mut7649)) {
+                        pTotal += AOR_multiply(2, pLow, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7655, _mut7656, _mut7657, _mut7658);
+                        criticalValueLow++;
+                        criticalValueHigh--;
+                    } else if (ROR_less(pLow, pHigh, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7650, _mut7651, _mut7652, _mut7653, _mut7654)) {
+                        pTotal += pLow;
+                        criticalValueLow++;
+                    } else {
+                        pTotal += pHigh;
+                        criticalValueHigh--;
+                    }
+                    if ((_mut7669 ? (ROR_greater(criticalValueLow, numberOfSuccesses, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7659, _mut7660, _mut7661, _mut7662, _mut7663) && ROR_less(criticalValueHigh, numberOfSuccesses, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7664, _mut7665, _mut7666, _mut7667, _mut7668)) : (ROR_greater(criticalValueLow, numberOfSuccesses, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7659, _mut7660, _mut7661, _mut7662, _mut7663) || ROR_less(criticalValueHigh, numberOfSuccesses, "org.apache.commons.math3.stat.inference.BinomialTest.binomialTest_102", _mut7664, _mut7665, _mut7666, _mut7667, _mut7668)))) {
+                        break;
+                    }
                 }
-
-                if (criticalValueLow > numberOfSuccesses || criticalValueHigh < numberOfSuccesses) {
-                    break;
-                }
-            }
-            return pTotal;
-        default:
-            throw new MathInternalError(LocalizedFormats. OUT_OF_RANGE_SIMPLE, alternativeHypothesis,
-                      AlternativeHypothesis.TWO_SIDED, AlternativeHypothesis.LESS_THAN);
+                return pTotal;
+            default:
+                throw new MathInternalError(LocalizedFormats.OUT_OF_RANGE_SIMPLE, alternativeHypothesis, AlternativeHypothesis.TWO_SIDED, AlternativeHypothesis.LESS_THAN);
         }
     }
 }

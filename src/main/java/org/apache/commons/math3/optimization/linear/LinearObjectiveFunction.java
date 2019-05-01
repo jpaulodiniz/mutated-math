@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.linear;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import org.apache.commons.math3.linear.MatrixUtils;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.linear.ArrayRealVector;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * An objective function for a linear optimization problem.
@@ -42,13 +42,22 @@ import org.apache.commons.math3.linear.ArrayRealVector;
 @Deprecated
 public class LinearObjectiveFunction implements Serializable {
 
-    /** Serializable version identifier. */
+    @Conditional
+    public static boolean _mut71505 = false, _mut71506 = false, _mut71507 = false, _mut71508 = false, _mut71509 = false, _mut71510 = false, _mut71511 = false, _mut71512 = false, _mut71513 = false, _mut71514 = false, _mut71515 = false, _mut71516 = false, _mut71517 = false, _mut71518 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = -4531815507568396090L;
 
-    /** Coefficients of the constraint (c<sub>i</sub>). */
+    /**
+     * Coefficients of the constraint (c<sub>i</sub>).
+     */
     private final transient RealVector coefficients;
 
-    /** Constant term of the linear equation. */
+    /**
+     * Constant term of the linear equation.
+     */
     private final double constantTerm;
 
     /**
@@ -90,7 +99,8 @@ public class LinearObjectiveFunction implements Serializable {
      * @return value of the linear equation at the current point
      */
     public double getValue(final double[] point) {
-        return coefficients.dotProduct(new ArrayRealVector(point, false)) + constantTerm;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.getValue_92");
+        return AOR_plus(coefficients.dotProduct(new ArrayRealVector(point, false)), constantTerm, "org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.getValue_92", _mut71505, _mut71506, _mut71507, _mut71508);
     }
 
     /**
@@ -99,26 +109,29 @@ public class LinearObjectiveFunction implements Serializable {
      * @return value of the linear equation at the current point
      */
     public double getValue(final RealVector point) {
-        return coefficients.dotProduct(point) + constantTerm;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.getValue_101");
+        return AOR_plus(coefficients.dotProduct(point), constantTerm, "org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.getValue_101", _mut71509, _mut71510, _mut71511, _mut71512);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object other) {
-
-      if (this == other) {
-        return true;
-      }
-
-      if (other instanceof LinearObjectiveFunction) {
-          LinearObjectiveFunction rhs = (LinearObjectiveFunction) other;
-          return (constantTerm == rhs.constantTerm) && coefficients.equals(rhs.coefficients);
-      }
-
-      return false;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.equals_106");
+        if (this == other) {
+            return true;
+        }
+        if (other instanceof LinearObjectiveFunction) {
+            LinearObjectiveFunction rhs = (LinearObjectiveFunction) other;
+            return (_mut71518 ? ((ROR_equals(constantTerm, rhs.constantTerm, "org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.equals_106", _mut71513, _mut71514, _mut71515, _mut71516, _mut71517)) || coefficients.equals(rhs.coefficients)) : ((ROR_equals(constantTerm, rhs.constantTerm, "org.apache.commons.math3.optimization.linear.LinearObjectiveFunction.equals_106", _mut71513, _mut71514, _mut71515, _mut71516, _mut71517)) && coefficients.equals(rhs.coefficients)));
+        }
+        return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
         return Double.valueOf(constantTerm).hashCode() ^ coefficients.hashCode();
@@ -129,8 +142,7 @@ public class LinearObjectiveFunction implements Serializable {
      * @param oos stream where object should be written
      * @throws IOException if object cannot be written to stream
      */
-    private void writeObject(ObjectOutputStream oos)
-        throws IOException {
+    private void writeObject(ObjectOutputStream oos) throws IOException {
         oos.defaultWriteObject();
         MatrixUtils.serializeRealVector(coefficients, oos);
     }
@@ -141,10 +153,8 @@ public class LinearObjectiveFunction implements Serializable {
      * @throws ClassNotFoundException if a class in the stream cannot be found
      * @throws IOException if object cannot be read from the stream
      */
-    private void readObject(ObjectInputStream ois)
-      throws ClassNotFoundException, IOException {
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
         ois.defaultReadObject();
         MatrixUtils.deserializeRealVector(this, "coefficients", ois);
     }
-
 }

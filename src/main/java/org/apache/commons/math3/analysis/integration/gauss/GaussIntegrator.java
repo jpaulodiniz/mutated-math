@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NonMonotonicSequenceException;
 import org.apache.commons.math3.util.MathArrays;
 import org.apache.commons.math3.util.Pair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Class that implements the Gaussian rule for
@@ -30,9 +32,18 @@ import org.apache.commons.math3.util.Pair;
  * @since 3.1
  */
 public class GaussIntegrator {
-    /** Nodes. */
+
+    @Conditional
+    public static boolean _mut101661 = false, _mut101662 = false, _mut101663 = false, _mut101664 = false, _mut101665 = false, _mut101666 = false, _mut101667 = false, _mut101668 = false, _mut101669 = false, _mut101670 = false, _mut101671 = false, _mut101672 = false, _mut101673 = false, _mut101674 = false, _mut101675 = false, _mut101676 = false, _mut101677 = false, _mut101678 = false, _mut101679 = false, _mut101680 = false, _mut101681 = false, _mut101682 = false, _mut101683 = false, _mut101684 = false, _mut101685 = false, _mut101686 = false, _mut101687 = false, _mut101688 = false, _mut101689 = false, _mut101690 = false;
+
+    /**
+     * Nodes.
+     */
     private final double[] points;
-    /** Nodes weights. */
+
+    /**
+     * Nodes weights.
+     */
     private final double[] weights;
 
     /**
@@ -46,16 +57,12 @@ public class GaussIntegrator {
      * sorted in increasing order.
      * @throws DimensionMismatchException if points and weights don't have the same length
      */
-    public GaussIntegrator(double[] points,
-                           double[] weights)
-        throws NonMonotonicSequenceException, DimensionMismatchException {
-        if (points.length != weights.length) {
-            throw new DimensionMismatchException(points.length,
-                                                 weights.length);
+    public GaussIntegrator(double[] points, double[] weights) throws NonMonotonicSequenceException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.GaussIntegrator_49");
+        if (ROR_not_equals(points.length, weights.length, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.GaussIntegrator_49", _mut101661, _mut101662, _mut101663, _mut101664, _mut101665)) {
+            throw new DimensionMismatchException(points.length, weights.length);
         }
-
         MathArrays.checkOrder(points, MathArrays.OrderDirection.INCREASING, true, true);
-
         this.points = points.clone();
         this.weights = weights.clone();
     }
@@ -70,8 +77,7 @@ public class GaussIntegrator {
      *
      * @see #GaussIntegrator(double[], double[])
      */
-    public GaussIntegrator(Pair<double[], double[]> pointsAndWeights)
-        throws NonMonotonicSequenceException {
+    public GaussIntegrator(Pair<double[], double[]> pointsAndWeights) throws NonMonotonicSequenceException {
         this(pointsAndWeights.getFirst(), pointsAndWeights.getSecond());
     }
 
@@ -86,14 +92,16 @@ public class GaussIntegrator {
      * @return the integral of the weighted function.
      */
     public double integrate(UnivariateFunction f) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88");
         double s = 0;
         double c = 0;
-        for (int i = 0; i < points.length; i++) {
+        for (int i = 0; ROR_less(i, points.length, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101686, _mut101687, _mut101688, _mut101689, _mut101690); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88");
             final double x = points[i];
             final double w = weights[i];
-            final double y = w * f.value(x) - c;
-            final double t = s + y;
-            c = (t - s) - y;
+            final double y = AOR_minus(AOR_multiply(w, f.value(x), "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101666, _mut101667, _mut101668, _mut101669), c, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101670, _mut101671, _mut101672, _mut101673);
+            final double t = AOR_plus(s, y, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101674, _mut101675, _mut101676, _mut101677);
+            c = AOR_minus((AOR_minus(t, s, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101678, _mut101679, _mut101680, _mut101681)), y, "org.apache.commons.math3.analysis.integration.gauss.GaussIntegrator.integrate_88", _mut101682, _mut101683, _mut101684, _mut101685);
             s = t;
         }
         return s;

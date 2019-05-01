@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.fitting;
 
 import org.apache.commons.math3.analysis.polynomials.PolynomialFunction;
 import org.apache.commons.math3.optimization.DifferentiableMultivariateVectorOptimizer;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Polynomial fitting is a very simple case of {@link CurveFitter curve fitting}.
@@ -30,7 +31,12 @@ import org.apache.commons.math3.optimization.DifferentiableMultivariateVectorOpt
  */
 @Deprecated
 public class PolynomialFitter extends CurveFitter<PolynomialFunction.Parametric> {
-    /** Polynomial degree.
+
+    @Conditional
+    public static boolean _mut71996 = false, _mut71997 = false, _mut71998 = false, _mut71999 = false;
+
+    /**
+     * Polynomial degree.
      * @deprecated
      */
     @Deprecated
@@ -60,7 +66,8 @@ public class PolynomialFitter extends CurveFitter<PolynomialFunction.Parametric>
      */
     public PolynomialFitter(DifferentiableMultivariateVectorOptimizer optimizer) {
         super(optimizer);
-        degree = -1; // To avoid compilation error until the instance variable is removed.
+        // To avoid compilation error until the instance variable is removed.
+        degree = -1;
     }
 
     /**
@@ -73,7 +80,8 @@ public class PolynomialFitter extends CurveFitter<PolynomialFunction.Parametric>
      */
     @Deprecated
     public double[] fit() {
-        return fit(new PolynomialFunction.Parametric(), new double[degree + 1]);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.fitting.PolynomialFitter.fit_74");
+        return fit(new PolynomialFunction.Parametric(), new double[AOR_plus(degree, 1, "org.apache.commons.math3.optimization.fitting.PolynomialFitter.fit_74", _mut71996, _mut71997, _mut71998, _mut71999)]);
     }
 
     /**

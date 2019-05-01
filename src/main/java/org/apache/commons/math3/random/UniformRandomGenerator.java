@@ -14,44 +14,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.random;
 
 import org.apache.commons.math3.util.FastMath;
-
-/**
- * This class implements a normalized uniform random generator.
- * <p>Since it is a normalized random generator, it generates values
- * from a uniform distribution with mean equal to 0 and standard
- * deviation equal to 1. Generated values fall in the range
- * [-&#x0221A;3, +&#x0221A;3].</p>
- *
- * @since 1.2
- *
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 public class UniformRandomGenerator implements NormalizedRandomGenerator {
 
-    /** Square root of three. */
+    @Conditional
+    public static boolean _mut51473 = false, _mut51474 = false, _mut51475 = false, _mut51476 = false, _mut51477 = false, _mut51478 = false, _mut51479 = false, _mut51480 = false, _mut51481 = false, _mut51482 = false, _mut51483 = false, _mut51484 = false;
+
+    /**
+     * Square root of three.
+     */
     private static final double SQRT3 = FastMath.sqrt(3.0);
 
-    /** Underlying generator. */
+    /**
+     * Underlying generator.
+     */
     private final RandomGenerator generator;
 
-    /** Create a new generator.
+    /**
+     * Create a new generator.
      * @param generator underlying random generator to use
      */
     public UniformRandomGenerator(RandomGenerator generator) {
         this.generator = generator;
     }
 
-    /** Generate a random scalar with null mean and unit standard deviation.
+    /**
+     * Generate a random scalar with null mean and unit standard deviation.
      * <p>The number generated is uniformly distributed between -&sqrt;(3)
      * and +&sqrt;(3).</p>
      * @return a random scalar with null mean and unit standard deviation
      */
     public double nextNormalizedDouble() {
-        return SQRT3 * (2 * generator.nextDouble() - 1.0);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.UniformRandomGenerator.nextNormalizedDouble_53");
+        return AOR_multiply(SQRT3, (AOR_minus(AOR_multiply(2, generator.nextDouble(), "org.apache.commons.math3.random.UniformRandomGenerator.nextNormalizedDouble_53", _mut51473, _mut51474, _mut51475, _mut51476), 1.0, "org.apache.commons.math3.random.UniformRandomGenerator.nextNormalizedDouble_53", _mut51477, _mut51478, _mut51479, _mut51480)), "org.apache.commons.math3.random.UniformRandomGenerator.nextNormalizedDouble_53", _mut51481, _mut51482, _mut51483, _mut51484);
     }
-
 }

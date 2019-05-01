@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optim.nonlinear.vector;
 
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
@@ -25,6 +24,8 @@ import org.apache.commons.math3.optim.BaseMultivariateOptimizer;
 import org.apache.commons.math3.optim.ConvergenceChecker;
 import org.apache.commons.math3.optim.PointVectorValuePair;
 import org.apache.commons.math3.linear.RealMatrix;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for a multivariate vector function optimizer.
@@ -32,13 +33,24 @@ import org.apache.commons.math3.linear.RealMatrix;
  * @since 3.1
  */
 @Deprecated
-public abstract class MultivariateVectorOptimizer
-    extends BaseMultivariateOptimizer<PointVectorValuePair> {
-    /** Target values for the model function at optimum. */
+public abstract class MultivariateVectorOptimizer extends BaseMultivariateOptimizer<PointVectorValuePair> {
+
+    @Conditional
+    public static boolean _mut66722 = false, _mut66723 = false, _mut66724 = false, _mut66725 = false, _mut66726 = false;
+
+    /**
+     * Target values for the model function at optimum.
+     */
     private double[] target;
-    /** Weight matrix. */
+
+    /**
+     * Weight matrix.
+     */
     private RealMatrix weightMatrix;
-    /** Model function. */
+
+    /**
+     * Model function.
+     */
     private MultivariateVectorFunction model;
 
     /**
@@ -81,9 +93,7 @@ public abstract class MultivariateVectorOptimizer
      * arguments have inconsistent dimensions.
      */
     @Override
-    public PointVectorValuePair optimize(OptimizationData... optData)
-        throws TooManyEvaluationsException,
-               DimensionMismatchException {
+    public PointVectorValuePair optimize(OptimizationData... optData) throws TooManyEvaluationsException, DimensionMismatchException {
         // Set up base class and perform computation.
         return super.optimize(optData);
     }
@@ -96,6 +106,7 @@ public abstract class MultivariateVectorOptimizer
     public RealMatrix getWeight() {
         return weightMatrix.copy();
     }
+
     /**
      * Gets the observed values to be matched by the objective vector
      * function.
@@ -130,10 +141,9 @@ public abstract class MultivariateVectorOptimizer
     protected void parseOptimizationData(OptimizationData... optData) {
         // Allow base class to register its own data.
         super.parseOptimizationData(optData);
-
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.MultivariateVectorOptimizer.parseOptimizationData_129");
             if (data instanceof ModelFunction) {
                 model = ((ModelFunction) data).getModelFunction();
                 continue;
@@ -147,7 +157,6 @@ public abstract class MultivariateVectorOptimizer
                 continue;
             }
         }
-
         // Check input consistency.
         checkParameters();
     }
@@ -159,9 +168,9 @@ public abstract class MultivariateVectorOptimizer
      * {@link #weightMatrix} have inconsistent dimensions.
      */
     private void checkParameters() {
-        if (target.length != weightMatrix.getColumnDimension()) {
-            throw new DimensionMismatchException(target.length,
-                                                 weightMatrix.getColumnDimension());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.vector.MultivariateVectorOptimizer.checkParameters_161");
+        if (ROR_not_equals(target.length, weightMatrix.getColumnDimension(), "org.apache.commons.math3.optim.nonlinear.vector.MultivariateVectorOptimizer.checkParameters_161", _mut66722, _mut66723, _mut66724, _mut66725, _mut66726)) {
+            throw new DimensionMismatchException(target.length, weightMatrix.getColumnDimension());
         }
     }
 }

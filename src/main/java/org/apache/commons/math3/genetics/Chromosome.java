@@ -16,6 +16,9 @@
  */
 package org.apache.commons.math3.genetics;
 
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
+
 /**
  * Individual in a population. Chromosomes are compared based on their fitness.
  * <p>
@@ -24,11 +27,19 @@ package org.apache.commons.math3.genetics;
  *
  * @since 2.0
  */
-public abstract class Chromosome implements Comparable<Chromosome>,Fitness {
-    /** Value assigned when no fitness has been computed yet. */
+public abstract class Chromosome implements Comparable<Chromosome>, Fitness {
+
+    @Conditional
+    public static boolean _mut2060 = false, _mut2061 = false, _mut2062 = false, _mut2063 = false, _mut2064 = false;
+
+    /**
+     * Value assigned when no fitness has been computed yet.
+     */
     private static final double NO_FITNESS = Double.NEGATIVE_INFINITY;
 
-    /** Cached value of the fitness of this chromosome. */
+    /**
+     * Cached value of the fitness of this chromosome.
+     */
     private double fitness = NO_FITNESS;
 
     /**
@@ -39,7 +50,8 @@ public abstract class Chromosome implements Comparable<Chromosome>,Fitness {
      * @return the fitness
      */
     public double getFitness() {
-        if (this.fitness == NO_FITNESS) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.Chromosome.getFitness_41");
+        if (ROR_equals(this.fitness, NO_FITNESS, "org.apache.commons.math3.genetics.Chromosome.getFitness_41", _mut2060, _mut2061, _mut2062, _mut2063, _mut2064)) {
             // no cache - compute the fitness
             this.fitness = fitness();
         }
@@ -81,6 +93,7 @@ public abstract class Chromosome implements Comparable<Chromosome>,Fitness {
      */
     protected Chromosome findSameChromosome(final Population population) {
         for (Chromosome anotherChr : population) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.Chromosome.findSameChromosome_82");
             if (this.isSame(anotherChr)) {
                 return anotherChr;
             }
@@ -100,5 +113,4 @@ public abstract class Chromosome implements Comparable<Chromosome>,Fitness {
             fitness = sameChromosome.getFitness();
         }
     }
-
 }

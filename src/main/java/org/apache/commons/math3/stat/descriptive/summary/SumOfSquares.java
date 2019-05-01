@@ -17,11 +17,12 @@
 package org.apache.commons.math3.stat.descriptive.summary;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Returns the sum of the squares of the available values.
@@ -34,14 +35,19 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class SumOfSquares extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut4521 = false, _mut4522 = false, _mut4523 = false, _mut4524 = false, _mut4525 = false, _mut4526 = false, _mut4527 = false, _mut4528 = false, _mut4529 = false, _mut4530 = false, _mut4531 = false, _mut4532 = false, _mut4533 = false, _mut4534 = false, _mut4535 = false, _mut4536 = false, _mut4537 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 1460986908574398008L;
 
-    /** */
+    /**
+     */
     private long n;
 
     /**
@@ -73,7 +79,8 @@ public class SumOfSquares extends AbstractStorelessUnivariateStatistic implement
      */
     @Override
     public void increment(final double d) {
-        value += d * d;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.increment_74");
+        value += AOR_multiply(d, d, "org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.increment_74", _mut4521, _mut4522, _mut4523, _mut4524);
         n++;
     }
 
@@ -116,13 +123,14 @@ public class SumOfSquares extends AbstractStorelessUnivariateStatistic implement
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values,final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.evaluate_118");
         double sumSq = Double.NaN;
         if (test(values, begin, length, true)) {
             sumSq = 0.0;
-            for (int i = begin; i < begin + length; i++) {
-                sumSq += values[i] * values[i];
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.evaluate_118", _mut4529, _mut4530, _mut4531, _mut4532), "org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.evaluate_118", _mut4533, _mut4534, _mut4535, _mut4536, _mut4537); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.evaluate_118");
+                sumSq += AOR_multiply(values[i], values[i], "org.apache.commons.math3.stat.descriptive.summary.SumOfSquares.evaluate_118", _mut4525, _mut4526, _mut4527, _mut4528);
             }
         }
         return sumSq;
@@ -147,13 +155,11 @@ public class SumOfSquares extends AbstractStorelessUnivariateStatistic implement
      * @param dest SumOfSquares to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(SumOfSquares source, SumOfSquares dest)
-        throws NullArgumentException {
+    public static void copy(SumOfSquares source, SumOfSquares dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());
         dest.n = source.n;
         dest.value = source.value;
     }
-
 }

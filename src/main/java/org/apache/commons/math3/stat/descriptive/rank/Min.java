@@ -17,11 +17,12 @@
 package org.apache.commons.math3.stat.descriptive.rank;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Returns the minimum of the available values.
@@ -37,17 +38,25 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class Min extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut3798 = false, _mut3799 = false, _mut3800 = false, _mut3801 = false, _mut3802 = false, _mut3803 = false, _mut3804 = false, _mut3805 = false, _mut3806 = false, _mut3807 = false, _mut3808 = false, _mut3809 = false, _mut3810 = false, _mut3811 = false, _mut3812 = false, _mut3813 = false, _mut3814 = false, _mut3815 = false, _mut3816 = false, _mut3817 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -2941995784909003131L;
 
-    /**Number of values that have been added */
+    /**
+     * Number of values that have been added
+     */
     private long n;
 
-    /**Current value of the statistic */
+    /**
+     * Current value of the statistic
+     */
     private double value;
 
     /**
@@ -74,7 +83,8 @@ public class Min extends AbstractStorelessUnivariateStatistic implements Seriali
      */
     @Override
     public void increment(final double d) {
-        if (d < value || Double.isNaN(value)) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Min.increment_75");
+        if ((_mut3803 ? (ROR_less(d, value, "org.apache.commons.math3.stat.descriptive.rank.Min.increment_75", _mut3798, _mut3799, _mut3800, _mut3801, _mut3802) && Double.isNaN(value)) : (ROR_less(d, value, "org.apache.commons.math3.stat.descriptive.rank.Min.increment_75", _mut3798, _mut3799, _mut3800, _mut3801, _mut3802) || Double.isNaN(value)))) {
             value = d;
         }
         n++;
@@ -127,14 +137,15 @@ public class Min extends AbstractStorelessUnivariateStatistic implements Seriali
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values,final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Min.evaluate_129");
         double min = Double.NaN;
         if (test(values, begin, length)) {
             min = values[begin];
-            for (int i = begin; i < begin + length; i++) {
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.rank.Min.evaluate_129", _mut3809, _mut3810, _mut3811, _mut3812), "org.apache.commons.math3.stat.descriptive.rank.Min.evaluate_129", _mut3813, _mut3814, _mut3815, _mut3816, _mut3817); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.rank.Min.evaluate_129");
                 if (!Double.isNaN(values[i])) {
-                    min = (min < values[i]) ? min : values[i];
+                    min = (ROR_less(min, values[i], "org.apache.commons.math3.stat.descriptive.rank.Min.evaluate_129", _mut3804, _mut3805, _mut3806, _mut3807, _mut3808)) ? min : values[i];
                 }
             }
         }
@@ -160,8 +171,7 @@ public class Min extends AbstractStorelessUnivariateStatistic implements Seriali
      * @param dest Min to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(Min source, Min dest)
-        throws NullArgumentException {
+    public static void copy(Min source, Min dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

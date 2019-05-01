@@ -23,6 +23,8 @@ import org.apache.commons.math3.exception.util.ExceptionContext;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.IterationManager;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -150,77 +152,10 @@ import org.apache.commons.math3.util.MathUtils;
  *
  * @since 3.0
  */
-public class SymmLQ
-    extends PreconditionedIterativeLinearSolver {
+public class SymmLQ extends PreconditionedIterativeLinearSolver {
 
-    /*
-     * IMPLEMENTATION NOTES
-     * --------------------
-     * The implementation follows as closely as possible the notations of Paige
-     * and Saunders (1975). Attention must be paid to the fact that some
-     * quantities which are relevant to iteration k can only be computed in
-     * iteration (k+1). Therefore, minute attention must be paid to the index of
-     * each state variable of this algorithm.
-     *
-     * 1. Preconditioning
-     *    ---------------
-     * The Lanczos iterations associated with Ahat and bhat read
-     *   beta[1] = ||P * b||
-     *   v[1] = P * b / beta[1]
-     *   beta[k+1] * v[k+1] = Ahat * v[k] - alpha[k] * v[k] - beta[k] * v[k-1]
-     *                      = P * (A - shift * I) * P' * v[k] - alpha[k] * v[k]
-     *                        - beta[k] * v[k-1]
-     * Multiplying both sides by P', we get
-     *   beta[k+1] * (P' * v)[k+1] = M * (A - shift * I) * (P' * v)[k]
-     *                               - alpha[k] * (P' * v)[k]
-     *                               - beta[k] * (P' * v[k-1]),
-     * and
-     *   alpha[k+1] = v[k+1]' * Ahat * v[k+1]
-     *              = v[k+1]' * P * (A - shift * I) * P' * v[k+1]
-     *              = (P' * v)[k+1]' * (A - shift * I) * (P' * v)[k+1].
-     *
-     * In other words, the Lanczos iterations are unchanged, except for the fact
-     * that we really compute (P' * v) instead of v. It can easily be checked
-     * that all other formulas are unchanged. It must be noted that P is never
-     * explicitly used, only matrix-vector products involving are invoked.
-     *
-     * 2. Accounting for the shift parameter
-     *    ----------------------------------
-     * Is trivial: each time A.operate(x) is invoked, one must subtract shift * x
-     * to the result.
-     *
-     * 3. Accounting for the goodb flag
-     *    -----------------------------
-     * When goodb is set to true, the component of xL along b is computed
-     * separately. From Paige and Saunders (1975), equation (5.9), we have
-     *   wbar[k+1] = s[k] * wbar[k] - c[k] * v[k+1],
-     *   wbar[1] = v[1].
-     * Introducing wbar2[k] = wbar[k] - s[1] * ... * s[k-1] * v[1], it can
-     * easily be verified by induction that wbar2 follows the same recursive
-     * relation
-     *   wbar2[k+1] = s[k] * wbar2[k] - c[k] * v[k+1],
-     *   wbar2[1] = 0,
-     * and we then have
-     *   w[k] = c[k] * wbar2[k] + s[k] * v[k+1]
-     *          + s[1] * ... * s[k-1] * c[k] * v[1].
-     * Introducing w2[k] = w[k] - s[1] * ... * s[k-1] * c[k] * v[1], we find,
-     * from (5.10)
-     *   xL[k] = zeta[1] * w[1] + ... + zeta[k] * w[k]
-     *         = zeta[1] * w2[1] + ... + zeta[k] * w2[k]
-     *           + (s[1] * c[2] * zeta[2] + ...
-     *           + s[1] * ... * s[k-1] * c[k] * zeta[k]) * v[1]
-     *         = xL2[k] + bstep[k] * v[1],
-     * where xL2[k] is defined by
-     *   xL2[0] = 0,
-     *   xL2[k+1] = xL2[k] + zeta[k+1] * w2[k+1],
-     * and bstep is defined by
-     *   bstep[1] = 0,
-     *   bstep[k] = bstep[k-1] + s[1] * ... * s[k-1] * c[k] * zeta[k].
-     * We also have, from (5.11)
-     *   xC[k] = xL[k-1] + zbar[k] * wbar[k]
-     *         = xL2[k-1] + zbar[k] * wbar2[k]
-     *           + (bstep[k-1] + s[1] * ... * s[k-1] * zbar[k]) * v[1].
-     */
+    @Conditional
+    public static boolean _mut25361 = false, _mut25362 = false, _mut25363 = false, _mut25364 = false, _mut25365 = false, _mut25366 = false, _mut25367 = false, _mut25368 = false, _mut25369 = false, _mut25370 = false, _mut25371 = false, _mut25372 = false, _mut25373 = false, _mut25374 = false, _mut25375 = false, _mut25376 = false, _mut25377 = false, _mut25378 = false, _mut25379 = false, _mut25380 = false, _mut25381 = false, _mut25382 = false, _mut25383 = false, _mut25384 = false, _mut25385 = false, _mut25386 = false, _mut25387 = false, _mut25388 = false, _mut25389 = false, _mut25390 = false, _mut25391 = false, _mut25392 = false, _mut25393 = false, _mut25394 = false, _mut25395 = false, _mut25396 = false, _mut25397 = false, _mut25398 = false, _mut25399 = false, _mut25400 = false, _mut25401 = false, _mut25402 = false, _mut25403 = false, _mut25404 = false, _mut25405 = false, _mut25406 = false, _mut25407 = false, _mut25408 = false, _mut25409 = false, _mut25410 = false, _mut25411 = false, _mut25412 = false, _mut25413 = false, _mut25414 = false, _mut25415 = false, _mut25416 = false, _mut25417 = false, _mut25418 = false, _mut25419 = false, _mut25420 = false, _mut25421 = false, _mut25422 = false, _mut25423 = false, _mut25424 = false, _mut25425 = false, _mut25426 = false, _mut25427 = false, _mut25428 = false, _mut25429 = false, _mut25430 = false, _mut25431 = false, _mut25432 = false, _mut25433 = false, _mut25434 = false, _mut25435 = false, _mut25436 = false, _mut25437 = false, _mut25438 = false, _mut25439 = false, _mut25440 = false, _mut25441 = false, _mut25442 = false, _mut25443 = false, _mut25444 = false, _mut25445 = false, _mut25446 = false, _mut25447 = false, _mut25448 = false, _mut25449 = false, _mut25450 = false, _mut25451 = false, _mut25452 = false, _mut25453 = false, _mut25454 = false, _mut25455 = false, _mut25456 = false, _mut25457 = false, _mut25458 = false, _mut25459 = false, _mut25460 = false, _mut25461 = false, _mut25462 = false, _mut25463 = false, _mut25464 = false, _mut25465 = false, _mut25466 = false, _mut25467 = false, _mut25468 = false, _mut25469 = false, _mut25470 = false, _mut25471 = false, _mut25472 = false, _mut25473 = false, _mut25474 = false, _mut25475 = false, _mut25476 = false, _mut25477 = false, _mut25478 = false, _mut25479 = false, _mut25480 = false, _mut25481 = false, _mut25482 = false, _mut25483 = false, _mut25484 = false, _mut25485 = false, _mut25486 = false, _mut25487 = false, _mut25488 = false, _mut25489 = false, _mut25490 = false, _mut25491 = false, _mut25492 = false, _mut25493 = false, _mut25494 = false, _mut25495 = false, _mut25496 = false, _mut25497 = false, _mut25498 = false, _mut25499 = false, _mut25500 = false, _mut25501 = false, _mut25502 = false, _mut25503 = false, _mut25504 = false, _mut25505 = false, _mut25506 = false, _mut25507 = false, _mut25508 = false, _mut25509 = false, _mut25510 = false, _mut25511 = false, _mut25512 = false, _mut25513 = false, _mut25514 = false, _mut25515 = false, _mut25516 = false, _mut25517 = false, _mut25518 = false, _mut25519 = false, _mut25520 = false, _mut25521 = false, _mut25522 = false, _mut25523 = false, _mut25524 = false, _mut25525 = false, _mut25526 = false, _mut25527 = false, _mut25528 = false, _mut25529 = false, _mut25530 = false, _mut25531 = false, _mut25532 = false, _mut25533 = false, _mut25534 = false, _mut25535 = false, _mut25536 = false, _mut25537 = false, _mut25538 = false, _mut25539 = false, _mut25540 = false, _mut25541 = false, _mut25542 = false, _mut25543 = false, _mut25544 = false, _mut25545 = false, _mut25546 = false, _mut25547 = false, _mut25548 = false, _mut25549 = false, _mut25550 = false, _mut25551 = false, _mut25552 = false, _mut25553 = false, _mut25554 = false, _mut25555 = false, _mut25556 = false, _mut25557 = false, _mut25558 = false, _mut25559 = false, _mut25560 = false, _mut25561 = false, _mut25562 = false, _mut25563 = false, _mut25564 = false, _mut25565 = false, _mut25566 = false, _mut25567 = false, _mut25568 = false, _mut25569 = false, _mut25570 = false, _mut25571 = false, _mut25572 = false, _mut25573 = false, _mut25574 = false, _mut25575 = false, _mut25576 = false, _mut25577 = false, _mut25578 = false, _mut25579 = false, _mut25580 = false, _mut25581 = false, _mut25582 = false, _mut25583 = false, _mut25584 = false, _mut25585 = false, _mut25586 = false, _mut25587 = false, _mut25588 = false, _mut25589 = false, _mut25590 = false, _mut25591 = false, _mut25592 = false, _mut25593 = false, _mut25594 = false, _mut25595 = false, _mut25596 = false, _mut25597 = false, _mut25598 = false, _mut25599 = false, _mut25600 = false, _mut25601 = false, _mut25602 = false, _mut25603 = false, _mut25604 = false, _mut25605 = false, _mut25606 = false, _mut25607 = false, _mut25608 = false, _mut25609 = false, _mut25610 = false, _mut25611 = false, _mut25612 = false, _mut25613 = false, _mut25614 = false, _mut25615 = false, _mut25616 = false, _mut25617 = false, _mut25618 = false, _mut25619 = false, _mut25620 = false, _mut25621 = false, _mut25622 = false, _mut25623 = false, _mut25624 = false, _mut25625 = false, _mut25626 = false, _mut25627 = false, _mut25628 = false, _mut25629 = false, _mut25630 = false, _mut25631 = false, _mut25632 = false, _mut25633 = false, _mut25634 = false, _mut25635 = false, _mut25636 = false, _mut25637 = false, _mut25638 = false, _mut25639 = false, _mut25640 = false, _mut25641 = false, _mut25642 = false, _mut25643 = false, _mut25644 = false, _mut25645 = false, _mut25646 = false, _mut25647 = false, _mut25648 = false, _mut25649 = false, _mut25650 = false, _mut25651 = false, _mut25652 = false, _mut25653 = false, _mut25654 = false, _mut25655 = false, _mut25656 = false, _mut25657 = false, _mut25658 = false, _mut25659 = false, _mut25660 = false, _mut25661 = false, _mut25662 = false, _mut25663 = false, _mut25664 = false, _mut25665 = false, _mut25666 = false, _mut25667 = false, _mut25668 = false, _mut25669 = false, _mut25670 = false, _mut25671 = false, _mut25672 = false, _mut25673 = false, _mut25674 = false, _mut25675 = false, _mut25676 = false, _mut25677 = false, _mut25678 = false, _mut25679 = false, _mut25680 = false, _mut25681 = false, _mut25682 = false, _mut25683 = false, _mut25684 = false, _mut25685 = false, _mut25686 = false, _mut25687 = false, _mut25688 = false, _mut25689 = false, _mut25690 = false, _mut25691 = false, _mut25692 = false, _mut25693 = false, _mut25694 = false, _mut25695 = false, _mut25696 = false, _mut25697 = false, _mut25698 = false, _mut25699 = false, _mut25700 = false, _mut25701 = false, _mut25702 = false, _mut25703 = false, _mut25704 = false, _mut25705 = false, _mut25706 = false, _mut25707 = false, _mut25708 = false, _mut25709 = false, _mut25710 = false, _mut25711 = false, _mut25712 = false, _mut25713 = false, _mut25714 = false, _mut25715 = false, _mut25716 = false, _mut25717 = false, _mut25718 = false, _mut25719 = false, _mut25720 = false, _mut25721 = false, _mut25722 = false, _mut25723 = false, _mut25724 = false, _mut25725 = false, _mut25726 = false, _mut25727 = false, _mut25728 = false, _mut25729 = false, _mut25730 = false, _mut25731 = false, _mut25732 = false, _mut25733 = false, _mut25734 = false, _mut25735 = false, _mut25736 = false, _mut25737 = false, _mut25738 = false, _mut25739 = false, _mut25740 = false, _mut25741 = false, _mut25742 = false, _mut25743 = false, _mut25744 = false, _mut25745 = false, _mut25746 = false, _mut25747 = false, _mut25748 = false, _mut25749 = false, _mut25750 = false, _mut25751 = false, _mut25752 = false, _mut25753 = false, _mut25754 = false, _mut25755 = false, _mut25756 = false, _mut25757 = false, _mut25758 = false, _mut25759 = false, _mut25760 = false, _mut25761 = false, _mut25762 = false, _mut25763 = false, _mut25764 = false, _mut25765 = false, _mut25766 = false, _mut25767 = false, _mut25768 = false, _mut25769 = false, _mut25770 = false, _mut25771 = false, _mut25772 = false, _mut25773 = false, _mut25774 = false, _mut25775 = false, _mut25776 = false, _mut25777 = false, _mut25778 = false, _mut25779 = false, _mut25780 = false, _mut25781 = false, _mut25782 = false, _mut25783 = false, _mut25784 = false, _mut25785 = false, _mut25786 = false, _mut25787 = false;
 
     /**
      * <p>
@@ -239,19 +174,30 @@ public class SymmLQ
      * </p>
      */
     private static class State {
-        /** The cubic root of {@link #MACH_PREC}. */
+
+        /**
+         * The cubic root of {@link #MACH_PREC}.
+         */
         static final double CBRT_MACH_PREC;
 
-        /** The machine precision. */
+        /**
+         * The machine precision.
+         */
         static final double MACH_PREC;
 
-        /** Reference to the linear operator. */
+        /**
+         * Reference to the linear operator.
+         */
         private final RealLinearOperator a;
 
-        /** Reference to the right-hand side vector. */
+        /**
+         * Reference to the right-hand side vector.
+         */
         private final RealVector b;
 
-        /** {@code true} if symmetry of matrix and conditioner must be checked. */
+        /**
+         * {@code true} if symmetry of matrix and conditioner must be checked.
+         */
         private final boolean check;
 
         /**
@@ -260,19 +206,29 @@ public class SymmLQ
          */
         private final double delta;
 
-        /** The value of beta[k+1]. */
+        /**
+         * The value of beta[k+1].
+         */
         private double beta;
 
-        /** The value of beta[1]. */
+        /**
+         * The value of beta[1].
+         */
         private double beta1;
 
-        /** The value of bstep[k-1]. */
+        /**
+         * The value of bstep[k-1].
+         */
         private double bstep;
 
-        /** The estimate of the norm of P * rC[k]. */
+        /**
+         * The estimate of the norm of P * rC[k].
+         */
         private double cgnorm;
 
-        /** The value of dbar[k+1] = -beta[k+1] * c[k-1]. */
+        /**
+         * The value of dbar[k+1] = -beta[k+1] * c[k-1].
+         */
         private double dbar;
 
         /**
@@ -281,25 +237,39 @@ public class SymmLQ
          */
         private double gammaZeta;
 
-        /** The value of gbar[k]. */
+        /**
+         * The value of gbar[k].
+         */
         private double gbar;
 
-        /** The value of max(|alpha[1]|, gamma[1], ..., gamma[k-1]). */
+        /**
+         * The value of max(|alpha[1]|, gamma[1], ..., gamma[k-1]).
+         */
         private double gmax;
 
-        /** The value of min(|alpha[1]|, gamma[1], ..., gamma[k-1]). */
+        /**
+         * The value of min(|alpha[1]|, gamma[1], ..., gamma[k-1]).
+         */
         private double gmin;
 
-        /** Copy of the {@code goodb} parameter. */
+        /**
+         * Copy of the {@code goodb} parameter.
+         */
         private final boolean goodb;
 
-        /** {@code true} if the default convergence criterion is verified. */
+        /**
+         * {@code true} if the default convergence criterion is verified.
+         */
         private boolean hasConverged;
 
-        /** The estimate of the norm of P * rL[k-1]. */
+        /**
+         * The estimate of the norm of P * rL[k-1].
+         */
         private double lqnorm;
 
-        /** Reference to the preconditioner, M. */
+        /**
+         * Reference to the preconditioner, M.
+         */
         private final RealLinearOperator m;
 
         /**
@@ -308,16 +278,24 @@ public class SymmLQ
          */
         private double minusEpsZeta;
 
-        /** The value of M * b. */
+        /**
+         * The value of M * b.
+         */
         private final RealVector mb;
 
-        /** The value of beta[k]. */
+        /**
+         * The value of beta[k].
+         */
         private double oldb;
 
-        /** The value of beta[k] * M^(-1) * P' * v[k]. */
+        /**
+         * The value of beta[k] * M^(-1) * P' * v[k].
+         */
         private RealVector r1;
 
-        /** The value of beta[k+1] * M^(-1) * P' * v[k+1]. */
+        /**
+         * The value of beta[k+1] * M^(-1) * P' * v[k+1].
+         */
         private RealVector r2;
 
         /**
@@ -326,10 +304,14 @@ public class SymmLQ
          */
         private double rnorm;
 
-        /** Copy of the {@code shift} parameter. */
+        /**
+         * Copy of the {@code shift} parameter.
+         */
         private final double shift;
 
-        /** The value of s[1] * ... * s[k-1]. */
+        /**
+         * The value of s[1] * ... * s[k-1].
+         */
         private double snprod;
 
         /**
@@ -352,13 +334,19 @@ public class SymmLQ
          */
         private final RealVector xL;
 
-        /** The value of beta[k+1] * P' * v[k+1]. */
+        /**
+         * The value of beta[k+1] * P' * v[k+1].
+         */
         private RealVector y;
 
-        /** The value of zeta[1]^2 + ... + zeta[k-1]^2. */
+        /**
+         * The value of zeta[1]^2 + ... + zeta[k-1]^2.
+         */
         private double ynorm2;
 
-        /** The value of {@code b == 0} (exact floating-point equality). */
+        /**
+         * The value of {@code b == 0} (exact floating-point equality).
+         */
         private boolean bIsNull;
 
         static {
@@ -380,13 +368,7 @@ public class SymmLQ
          * @param check {@code true} if self-adjointedness of both matrix and
          * preconditioner should be checked
          */
-        State(final RealLinearOperator a,
-            final RealLinearOperator m,
-            final RealVector b,
-            final boolean goodb,
-            final double shift,
-            final double delta,
-            final boolean check) {
+        State(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final boolean goodb, final double shift, final double delta, final boolean check) {
             this.a = a;
             this.m = m;
             this.b = b;
@@ -412,13 +394,12 @@ public class SymmLQ
          * @param z the vector z = L &middot; y
          * @throws NonSelfAdjointOperatorException when the test fails
          */
-        private static void checkSymmetry(final RealLinearOperator l,
-            final RealVector x, final RealVector y, final RealVector z)
-            throws NonSelfAdjointOperatorException {
+        private static void checkSymmetry(final RealLinearOperator l, final RealVector x, final RealVector y, final RealVector z) throws NonSelfAdjointOperatorException {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.checkSymmetry_415");
             final double s = y.dotProduct(y);
             final double t = x.dotProduct(z);
-            final double epsa = (s + MACH_PREC) * CBRT_MACH_PREC;
-            if (FastMath.abs(s - t) > epsa) {
+            final double epsa = AOR_multiply((AOR_plus(s, MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.checkSymmetry_415", _mut25361, _mut25362, _mut25363, _mut25364)), CBRT_MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.checkSymmetry_415", _mut25365, _mut25366, _mut25367, _mut25368);
+            if (ROR_greater(FastMath.abs(AOR_minus(s, t, "org.apache.commons.math3.linear.SymmLQ.checkSymmetry_415", _mut25369, _mut25370, _mut25371, _mut25372)), epsa, "org.apache.commons.math3.linear.SymmLQ.checkSymmetry_415", _mut25373, _mut25374, _mut25375, _mut25376, _mut25377)) {
                 final NonSelfAdjointOperatorException e;
                 e = new NonSelfAdjointOperatorException();
                 final ExceptionContext context = e.getContext();
@@ -438,8 +419,7 @@ public class SymmLQ
          * @param v the offending vector
          * @throws NonPositiveDefiniteOperatorException in any circumstances
          */
-        private static void throwNPDLOException(final RealLinearOperator l,
-            final RealVector v) throws NonPositiveDefiniteOperatorException {
+        private static void throwNPDLOException(final RealLinearOperator l, final RealVector v) throws NonPositiveDefiniteOperatorException {
             final NonPositiveDefiniteOperatorException e;
             e = new NonPositiveDefiniteOperatorException();
             final ExceptionContext context = e.getContext();
@@ -457,11 +437,12 @@ public class SymmLQ
          * @param x the vector to be added to {@code y}
          * @param y the vector to be incremented
          */
-        private static void daxpy(final double a, final RealVector x,
-            final RealVector y) {
+        private static void daxpy(final double a, final RealVector x, final RealVector y) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.daxpy_460");
             final int n = x.getDimension();
-            for (int i = 0; i < n; i++) {
-                y.setEntry(i, a * x.getEntry(i) + y.getEntry(i));
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.daxpy_460", _mut25386, _mut25387, _mut25388, _mut25389, _mut25390); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.daxpy_460");
+                y.setEntry(i, AOR_plus(AOR_multiply(a, x.getEntry(i), "org.apache.commons.math3.linear.SymmLQ.daxpy_460", _mut25378, _mut25379, _mut25380, _mut25381), y.getEntry(i), "org.apache.commons.math3.linear.SymmLQ.daxpy_460", _mut25382, _mut25383, _mut25384, _mut25385));
             }
         }
 
@@ -476,12 +457,13 @@ public class SymmLQ
          * @param y the second vector to be added to {@code z}
          * @param z the vector to be incremented
          */
-        private static void daxpbypz(final double a, final RealVector x,
-            final double b, final RealVector y, final RealVector z) {
+        private static void daxpbypz(final double a, final RealVector x, final double b, final RealVector y, final RealVector z) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.daxpbypz_479");
             final int n = z.getDimension();
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.daxpbypz_479", _mut25407, _mut25408, _mut25409, _mut25410, _mut25411); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.daxpbypz_479");
                 final double zi;
-                zi = a * x.getEntry(i) + b * y.getEntry(i) + z.getEntry(i);
+                zi = AOR_plus(AOR_plus(AOR_multiply(a, x.getEntry(i), "org.apache.commons.math3.linear.SymmLQ.daxpbypz_479", _mut25391, _mut25392, _mut25393, _mut25394), AOR_multiply(b, y.getEntry(i), "org.apache.commons.math3.linear.SymmLQ.daxpbypz_479", _mut25395, _mut25396, _mut25397, _mut25398), "org.apache.commons.math3.linear.SymmLQ.daxpbypz_479", _mut25399, _mut25400, _mut25401, _mut25402), z.getEntry(i), "org.apache.commons.math3.linear.SymmLQ.daxpbypz_479", _mut25403, _mut25404, _mut25405, _mut25406);
                 z.setEntry(i, zi);
             }
         }
@@ -499,37 +481,41 @@ public class SymmLQ
          *
          * @param x the vector to be updated with the refined value of xL
          */
-         void refineSolution(final RealVector x) {
+        void refineSolution(final RealVector x) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.refineSolution_502");
             final int n = this.xL.getDimension();
-            if (lqnorm < cgnorm) {
+            if (ROR_less(lqnorm, cgnorm, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25412, _mut25413, _mut25414, _mut25415, _mut25416)) {
                 if (!goodb) {
                     x.setSubVector(0, this.xL);
                 } else {
-                    final double step = bstep / beta1;
-                    for (int i = 0; i < n; i++) {
+                    final double step = AOR_divide(bstep, beta1, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25476, _mut25477, _mut25478, _mut25479);
+                    for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25488, _mut25489, _mut25490, _mut25491, _mut25492); i++) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.refineSolution_502");
                         final double bi = mb.getEntry(i);
                         final double xi = this.xL.getEntry(i);
-                        x.setEntry(i, xi + step * bi);
+                        x.setEntry(i, AOR_plus(xi, AOR_multiply(step, bi, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25480, _mut25481, _mut25482, _mut25483), "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25484, _mut25485, _mut25486, _mut25487));
                     }
                 }
             } else {
                 final double anorm = FastMath.sqrt(tnorm);
-                final double diag = gbar == 0. ? anorm * MACH_PREC : gbar;
-                final double zbar = gammaZeta / diag;
-                final double step = (bstep + snprod * zbar) / beta1;
+                final double diag = ROR_equals(gbar, 0., "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25417, _mut25418, _mut25419, _mut25420, _mut25421) ? AOR_multiply(anorm, MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25422, _mut25423, _mut25424, _mut25425) : gbar;
+                final double zbar = AOR_divide(gammaZeta, diag, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25426, _mut25427, _mut25428, _mut25429);
+                final double step = AOR_divide((AOR_plus(bstep, AOR_multiply(snprod, zbar, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25430, _mut25431, _mut25432, _mut25433), "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25434, _mut25435, _mut25436, _mut25437)), beta1, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25438, _mut25439, _mut25440, _mut25441);
                 // ynorm = FastMath.sqrt(ynorm2 + zbar * zbar);
                 if (!goodb) {
-                    for (int i = 0; i < n; i++) {
+                    for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25471, _mut25472, _mut25473, _mut25474, _mut25475); i++) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.refineSolution_502");
                         final double xi = this.xL.getEntry(i);
                         final double wi = wbar.getEntry(i);
-                        x.setEntry(i, xi + zbar * wi);
+                        x.setEntry(i, AOR_plus(xi, AOR_multiply(zbar, wi, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25463, _mut25464, _mut25465, _mut25466), "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25467, _mut25468, _mut25469, _mut25470));
                     }
                 } else {
-                    for (int i = 0; i < n; i++) {
+                    for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25458, _mut25459, _mut25460, _mut25461, _mut25462); i++) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.refineSolution_502");
                         final double xi = this.xL.getEntry(i);
                         final double wi = wbar.getEntry(i);
                         final double bi = mb.getEntry(i);
-                        x.setEntry(i, xi + zbar * wi + step * bi);
+                        x.setEntry(i, AOR_plus(AOR_plus(xi, AOR_multiply(zbar, wi, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25442, _mut25443, _mut25444, _mut25445), "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25446, _mut25447, _mut25448, _mut25449), AOR_multiply(step, bi, "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25450, _mut25451, _mut25452, _mut25453), "org.apache.commons.math3.linear.SymmLQ.refineSolution_502", _mut25454, _mut25455, _mut25456, _mut25457));
                     }
                 }
             }
@@ -540,7 +526,8 @@ public class SymmLQ
          * value of the state variables of {@code this} object correspond to k =
          * 1.
          */
-         void init() {
+        void init() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.init_543");
             this.xL.set(0.);
             /*
              * Set up y for the first Lanczos vector. y and beta1 will be zero
@@ -548,15 +535,14 @@ public class SymmLQ
              */
             this.r1 = this.b.copy();
             this.y = this.m == null ? this.b.copy() : this.m.operate(this.r1);
-            if ((this.m != null) && this.check) {
+            if ((_mut25493 ? ((this.m != null) || this.check) : ((this.m != null) && this.check))) {
                 checkSymmetry(this.m, this.r1, this.y, this.m.operate(this.y));
             }
-
             this.beta1 = this.r1.dotProduct(this.y);
-            if (this.beta1 < 0.) {
+            if (ROR_less(this.beta1, 0., "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25494, _mut25495, _mut25496, _mut25497, _mut25498)) {
                 throwNPDLOException(this.m, this.y);
             }
-            if (this.beta1 == 0.) {
+            if (ROR_equals(this.beta1, 0., "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25499, _mut25500, _mut25501, _mut25502, _mut25503)) {
                 /* If b = 0 exactly, stop with x = 0. */
                 this.bIsNull = true;
                 return;
@@ -568,7 +554,7 @@ public class SymmLQ
              *   y = M * b,
              *   beta1 = beta[1].
              */
-            final RealVector v = this.y.mapMultiply(1. / this.beta1);
+            final RealVector v = this.y.mapMultiply(AOR_divide(1., this.beta1, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25504, _mut25505, _mut25506, _mut25507));
             this.y = this.a.operate(v);
             if (this.check) {
                 checkSymmetry(this.a, v, this.y, this.a.operate(this.y));
@@ -579,23 +565,18 @@ public class SymmLQ
              */
             daxpy(-this.shift, v, this.y);
             final double alpha = v.dotProduct(this.y);
-            daxpy(-alpha / this.beta1, this.r1, this.y);
-            /*
-             * At this point
-             *   alpha = alpha[1]
-             *   y     = beta[2] * M^(-1) * P' * v[2]
-             */
+            daxpy(AOR_divide(-alpha, this.beta1, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25508, _mut25509, _mut25510, _mut25511), this.r1, this.y);
             /* Make sure r2 will be orthogonal to the first v. */
             final double vty = v.dotProduct(this.y);
             final double vtv = v.dotProduct(v);
-            daxpy(-vty / vtv, v, this.y);
+            daxpy(AOR_divide(-vty, vtv, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25512, _mut25513, _mut25514, _mut25515), v, this.y);
             this.r2 = this.y.copy();
             if (this.m != null) {
                 this.y = this.m.operate(this.r2);
             }
             this.oldb = this.beta1;
             this.beta = this.r2.dotProduct(this.y);
-            if (this.beta < 0.) {
+            if (ROR_less(this.beta, 0., "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25516, _mut25517, _mut25518, _mut25519, _mut25520)) {
                 throwNPDLOException(this.m, this.y);
             }
             this.beta = FastMath.sqrt(this.beta);
@@ -613,11 +594,10 @@ public class SymmLQ
             this.minusEpsZeta = 0.;
             this.bstep = 0.;
             this.snprod = 1.;
-            this.tnorm = alpha * alpha + this.beta * this.beta;
+            this.tnorm = AOR_plus(AOR_multiply(alpha, alpha, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25521, _mut25522, _mut25523, _mut25524), AOR_multiply(this.beta, this.beta, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25525, _mut25526, _mut25527, _mut25528), "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25529, _mut25530, _mut25531, _mut25532);
             this.ynorm2 = 0.;
-            this.gmax = FastMath.abs(alpha) + MACH_PREC;
+            this.gmax = AOR_plus(FastMath.abs(alpha), MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.init_543", _mut25533, _mut25534, _mut25535, _mut25536);
             this.gmin = this.gmax;
-
             if (this.goodb) {
                 this.wbar = new ArrayRealVector(this.a.getRowDimension());
                 this.wbar.set(0.);
@@ -634,9 +614,10 @@ public class SymmLQ
          * current iteration count {@code k}.
          */
         void update() {
-            final RealVector v = y.mapMultiply(1. / beta);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.update_636");
+            final RealVector v = y.mapMultiply(AOR_divide(1., beta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25537, _mut25538, _mut25539, _mut25540));
             y = a.operate(v);
-            daxpbypz(-shift, v, -beta / oldb, r1, y);
+            daxpbypz(-shift, v, AOR_divide(-beta, oldb, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25541, _mut25542, _mut25543, _mut25544), r1, y);
             final double alpha = v.dotProduct(y);
             /*
              * At this point
@@ -648,7 +629,7 @@ public class SymmLQ
              *           - beta[k] * v[k]' * v[k-1]
              *         = alpha[k].
              */
-            daxpy(-alpha / beta, r2, y);
+            daxpy(AOR_divide(-alpha, beta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25545, _mut25546, _mut25547, _mut25548), r2, y);
             /*
              * At this point
              *   y = (A - shift * I) * P' * v[k] - alpha[k] * M^(-1) * P' * v[k]
@@ -669,7 +650,7 @@ public class SymmLQ
             }
             oldb = beta;
             beta = r2.dotProduct(y);
-            if (beta < 0.) {
+            if (ROR_less(beta, 0., "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25549, _mut25550, _mut25551, _mut25552, _mut25553)) {
                 throwNPDLOException(m, y);
             }
             beta = FastMath.sqrt(beta);
@@ -681,7 +662,7 @@ public class SymmLQ
              *   oldb = beta[k],
              *   beta = beta[k+1].
              */
-            tnorm += alpha * alpha + oldb * oldb + beta * beta;
+            tnorm += AOR_plus(AOR_plus(AOR_multiply(alpha, alpha, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25554, _mut25555, _mut25556, _mut25557), AOR_multiply(oldb, oldb, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25558, _mut25559, _mut25560, _mut25561), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25562, _mut25563, _mut25564, _mut25565), AOR_multiply(beta, beta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25566, _mut25567, _mut25568, _mut25569), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25570, _mut25571, _mut25572, _mut25573);
             /*
              * Compute the next plane rotation for Q. See Paige and Saunders
              * (1975), equation (5.6), with
@@ -689,9 +670,9 @@ public class SymmLQ
              *   c     = c[k-1],
              *   s     = s[k-1].
              */
-            final double gamma = FastMath.sqrt(gbar * gbar + oldb * oldb);
-            final double c = gbar / gamma;
-            final double s = oldb / gamma;
+            final double gamma = FastMath.sqrt(AOR_plus(AOR_multiply(gbar, gbar, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25574, _mut25575, _mut25576, _mut25577), AOR_multiply(oldb, oldb, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25578, _mut25579, _mut25580, _mut25581), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25582, _mut25583, _mut25584, _mut25585));
+            final double c = AOR_divide(gbar, gamma, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25586, _mut25587, _mut25588, _mut25589);
+            final double s = AOR_divide(oldb, gamma, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25590, _mut25591, _mut25592, _mut25593);
             /*
              * The relations
              *   gbar[k] = s[k-1] * (-c[k-2] * beta[k]) - c[k-1] * alpha[k]
@@ -701,11 +682,11 @@ public class SymmLQ
              * by expanding the (k, k-1) and (k, k) coefficients of the matrix in
              * equation (5.5).
              */
-            final double deltak = c * dbar + s * alpha;
-            gbar = s * dbar - c * alpha;
-            final double eps = s * beta;
-            dbar = -c * beta;
-            final double zeta = gammaZeta / gamma;
+            final double deltak = AOR_plus(AOR_multiply(c, dbar, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25594, _mut25595, _mut25596, _mut25597), AOR_multiply(s, alpha, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25598, _mut25599, _mut25600, _mut25601), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25602, _mut25603, _mut25604, _mut25605);
+            gbar = AOR_minus(AOR_multiply(s, dbar, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25606, _mut25607, _mut25608, _mut25609), AOR_multiply(c, alpha, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25610, _mut25611, _mut25612, _mut25613), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25614, _mut25615, _mut25616, _mut25617);
+            final double eps = AOR_multiply(s, beta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25618, _mut25619, _mut25620, _mut25621);
+            dbar = AOR_multiply(-c, beta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25622, _mut25623, _mut25624, _mut25625);
+            final double zeta = AOR_divide(gammaZeta, gamma, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25626, _mut25627, _mut25628, _mut25629);
             /*
              * At this point
              *   gbar   = gbar[k]
@@ -714,15 +695,16 @@ public class SymmLQ
              *   dbar   = dbar[k+1]
              *   zeta   = zeta[k-1]
              */
-            final double zetaC = zeta * c;
-            final double zetaS = zeta * s;
+            final double zetaC = AOR_multiply(zeta, c, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25630, _mut25631, _mut25632, _mut25633);
+            final double zetaS = AOR_multiply(zeta, s, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25634, _mut25635, _mut25636, _mut25637);
             final int n = xL.getDimension();
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25666, _mut25667, _mut25668, _mut25669, _mut25670); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.update_636");
                 final double xi = xL.getEntry(i);
                 final double vi = v.getEntry(i);
                 final double wi = wbar.getEntry(i);
-                xL.setEntry(i, xi + wi * zetaC + vi * zetaS);
-                wbar.setEntry(i, wi * s - vi * c);
+                xL.setEntry(i, AOR_plus(AOR_plus(xi, AOR_multiply(wi, zetaC, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25638, _mut25639, _mut25640, _mut25641), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25642, _mut25643, _mut25644, _mut25645), AOR_multiply(vi, zetaS, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25646, _mut25647, _mut25648, _mut25649), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25650, _mut25651, _mut25652, _mut25653));
+                wbar.setEntry(i, AOR_minus(AOR_multiply(wi, s, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25654, _mut25655, _mut25656, _mut25657), AOR_multiply(vi, c, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25658, _mut25659, _mut25660, _mut25661), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25662, _mut25663, _mut25664, _mut25665));
             }
             /*
              * At this point
@@ -730,13 +712,13 @@ public class SymmLQ
              *   ptwbar = P' wbar[k],
              * see Paige and Saunders (1975), equations (5.9) and (5.10).
              */
-            bstep += snprod * c * zeta;
+            bstep += AOR_multiply(AOR_multiply(snprod, c, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25671, _mut25672, _mut25673, _mut25674), zeta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25675, _mut25676, _mut25677, _mut25678);
             snprod *= s;
             gmax = FastMath.max(gmax, gamma);
             gmin = FastMath.min(gmin, gamma);
-            ynorm2 += zeta * zeta;
-            gammaZeta = minusEpsZeta - deltak * zeta;
-            minusEpsZeta = -eps * zeta;
+            ynorm2 += AOR_multiply(zeta, zeta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25679, _mut25680, _mut25681, _mut25682);
+            gammaZeta = AOR_minus(minusEpsZeta, AOR_multiply(deltak, zeta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25683, _mut25684, _mut25685, _mut25686), "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25687, _mut25688, _mut25689, _mut25690);
+            minusEpsZeta = AOR_multiply(-eps, zeta, "org.apache.commons.math3.linear.SymmLQ.update_636", _mut25691, _mut25692, _mut25693, _mut25694);
             /*
              * At this point
              *   snprod       = s[1] * ... * s[k-1],
@@ -757,17 +739,16 @@ public class SymmLQ
          * Updates {@link #lqnorm} and {@link #cgnorm}.
          */
         private void updateNorms() {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.updateNorms_759");
             final double anorm = FastMath.sqrt(tnorm);
             final double ynorm = FastMath.sqrt(ynorm2);
-            final double epsa = anorm * MACH_PREC;
-            final double epsx = anorm * ynorm * MACH_PREC;
-            final double epsr = anorm * ynorm * delta;
-            final double diag = gbar == 0. ? epsa : gbar;
-            lqnorm = FastMath.sqrt(gammaZeta * gammaZeta +
-                                   minusEpsZeta * minusEpsZeta);
-            final double qrnorm = snprod * beta1;
-            cgnorm = qrnorm * beta / FastMath.abs(diag);
-
+            final double epsa = AOR_multiply(anorm, MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25695, _mut25696, _mut25697, _mut25698);
+            final double epsx = AOR_multiply(AOR_multiply(anorm, ynorm, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25699, _mut25700, _mut25701, _mut25702), MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25703, _mut25704, _mut25705, _mut25706);
+            final double epsr = AOR_multiply(AOR_multiply(anorm, ynorm, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25707, _mut25708, _mut25709, _mut25710), delta, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25711, _mut25712, _mut25713, _mut25714);
+            final double diag = ROR_equals(gbar, 0., "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25715, _mut25716, _mut25717, _mut25718, _mut25719) ? epsa : gbar;
+            lqnorm = FastMath.sqrt(AOR_plus(AOR_multiply(gammaZeta, gammaZeta, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25720, _mut25721, _mut25722, _mut25723), AOR_multiply(minusEpsZeta, minusEpsZeta, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25724, _mut25725, _mut25726, _mut25727), "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25728, _mut25729, _mut25730, _mut25731));
+            final double qrnorm = AOR_multiply(snprod, beta1, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25732, _mut25733, _mut25734, _mut25735);
+            cgnorm = AOR_divide(AOR_multiply(qrnorm, beta, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25736, _mut25737, _mut25738, _mut25739), FastMath.abs(diag), "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25740, _mut25741, _mut25742, _mut25743);
             /*
              * Estimate cond(A). In this version we look at the diagonals of L
              * in the factorization of the tridiagonal matrix, T = L * Q.
@@ -775,15 +756,15 @@ public class SymmLQ
              * is not, so we must be careful not to overestimate acond.
              */
             final double acond;
-            if (lqnorm <= cgnorm) {
-                acond = gmax / gmin;
+            if (ROR_less_equals(lqnorm, cgnorm, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25744, _mut25745, _mut25746, _mut25747, _mut25748)) {
+                acond = AOR_divide(gmax, gmin, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25753, _mut25754, _mut25755, _mut25756);
             } else {
-                acond = gmax / FastMath.min(gmin, FastMath.abs(diag));
+                acond = AOR_divide(gmax, FastMath.min(gmin, FastMath.abs(diag)), "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25749, _mut25750, _mut25751, _mut25752);
             }
-            if (acond * MACH_PREC >= 0.1) {
+            if (ROR_greater_equals(AOR_multiply(acond, MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25757, _mut25758, _mut25759, _mut25760), 0.1, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25761, _mut25762, _mut25763, _mut25764, _mut25765)) {
                 throw new IllConditionedOperatorException(acond);
             }
-            if (beta1 <= epsx) {
+            if (ROR_less_equals(beta1, epsx, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25766, _mut25767, _mut25768, _mut25769, _mut25770)) {
                 /*
                  * x has converged to an eigenvector of A corresponding to the
                  * eigenvalue shift.
@@ -791,7 +772,7 @@ public class SymmLQ
                 throw new SingularOperatorException();
             }
             rnorm = FastMath.min(cgnorm, lqnorm);
-            hasConverged = (cgnorm <= epsx) || (cgnorm <= epsr);
+            hasConverged = (_mut25781 ? ((ROR_less_equals(cgnorm, epsx, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25771, _mut25772, _mut25773, _mut25774, _mut25775)) && (ROR_less_equals(cgnorm, epsr, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25776, _mut25777, _mut25778, _mut25779, _mut25780))) : ((ROR_less_equals(cgnorm, epsx, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25771, _mut25772, _mut25773, _mut25774, _mut25775)) || (ROR_less_equals(cgnorm, epsr, "org.apache.commons.math3.linear.SymmLQ.updateNorms_759", _mut25776, _mut25777, _mut25778, _mut25779, _mut25780))));
         }
 
         /**
@@ -819,7 +800,8 @@ public class SymmLQ
          * @return {@code true} if {@code beta < }{@link #MACH_PREC}
          */
         boolean betaEqualsZero() {
-            return beta < MACH_PREC;
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.betaEqualsZero_821");
+            return ROR_less(beta, MACH_PREC, "org.apache.commons.math3.linear.SymmLQ.betaEqualsZero_821", _mut25782, _mut25783, _mut25784, _mut25785, _mut25786);
         }
 
         /**
@@ -832,22 +814,34 @@ public class SymmLQ
         }
     }
 
-    /** Key for the exception context. */
+    /**
+     * Key for the exception context.
+     */
     private static final String OPERATOR = "operator";
 
-    /** Key for the exception context. */
+    /**
+     * Key for the exception context.
+     */
     private static final String THRESHOLD = "threshold";
 
-    /** Key for the exception context. */
+    /**
+     * Key for the exception context.
+     */
     private static final String VECTOR = "vector";
 
-    /** Key for the exception context. */
+    /**
+     * Key for the exception context.
+     */
     private static final String VECTOR1 = "vector1";
 
-    /** Key for the exception context. */
+    /**
+     * Key for the exception context.
+     */
     private static final String VECTOR2 = "vector2";
 
-    /** {@code true} if symmetry of matrix and conditioner must be checked. */
+    /**
+     * {@code true} if symmetry of matrix and conditioner must be checked.
+     */
     private final boolean check;
 
     /**
@@ -866,8 +860,7 @@ public class SymmLQ
      * @param check {@code true} if self-adjointedness of both matrix and
      * preconditioner should be checked
      */
-    public SymmLQ(final int maxIterations, final double delta,
-                  final boolean check) {
+    public SymmLQ(final int maxIterations, final double delta, final boolean check) {
         super(maxIterations);
         this.delta = delta;
         this.check = check;
@@ -884,8 +877,7 @@ public class SymmLQ
      * @param check {@code true} if self-adjointedness of both matrix and
      * preconditioner should be checked
      */
-    public SymmLQ(final IterationManager manager, final double delta,
-                  final boolean check) {
+    public SymmLQ(final IterationManager manager, final double delta, final boolean check) {
         super(manager);
         this.delta = delta;
         this.check = check;
@@ -911,12 +903,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solve(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b) throws
-        NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, MaxCountExceededException,
-        NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException,
-        IllConditionedOperatorException {
+    public RealVector solve(final RealLinearOperator a, final RealLinearOperator m, final RealVector b) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException, NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException, IllConditionedOperatorException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         return solveInPlace(a, m, b, x, false, 0.);
@@ -962,12 +949,7 @@ public class SymmLQ
      * positive definite
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
-    public RealVector solve(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b, final boolean goodb,
-        final double shift) throws NullArgumentException,
-        NonSquareOperatorException, DimensionMismatchException,
-        MaxCountExceededException, NonSelfAdjointOperatorException,
-        NonPositiveDefiniteOperatorException, IllConditionedOperatorException {
+    public RealVector solve(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final boolean goodb, final double shift) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException, NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException, IllConditionedOperatorException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         return solveInPlace(a, m, b, x, goodb, shift);
@@ -985,12 +967,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solve(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b, final RealVector x)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, NonSelfAdjointOperatorException,
-        NonPositiveDefiniteOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         MathUtils.checkNotNull(x);
         return solveInPlace(a, m, b, x.copy(), false, 0.);
     }
@@ -1003,10 +980,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solve(final RealLinearOperator a, final RealVector b)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, NonSelfAdjointOperatorException,
-        IllConditionedOperatorException, MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealVector b) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         x.set(0.);
@@ -1048,11 +1022,7 @@ public class SymmLQ
      * {@code true}, and {@code a} is not self-adjoint
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
-    public RealVector solve(final RealLinearOperator a, final RealVector b,
-        final boolean goodb, final double shift) throws NullArgumentException,
-        NonSquareOperatorException, DimensionMismatchException,
-        NonSelfAdjointOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealVector b, final boolean goodb, final double shift) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         MathUtils.checkNotNull(a);
         final RealVector x = new ArrayRealVector(a.getColumnDimension());
         return solveInPlace(a, null, b, x, goodb, shift);
@@ -1068,11 +1038,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solve(final RealLinearOperator a, final RealVector b,
-        final RealVector x) throws NullArgumentException,
-        NonSquareOperatorException, DimensionMismatchException,
-        NonSelfAdjointOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solve(final RealLinearOperator a, final RealVector b, final RealVector x) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         MathUtils.checkNotNull(x);
         return solveInPlace(a, null, b, x.copy(), false, 0.);
     }
@@ -1089,12 +1055,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solveInPlace(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b, final RealVector x)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, NonSelfAdjointOperatorException,
-        NonPositiveDefiniteOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solveInPlace(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         return solveInPlace(a, m, b, x, false, 0.);
     }
 
@@ -1140,30 +1101,19 @@ public class SymmLQ
      * definite
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
-    public RealVector solveInPlace(final RealLinearOperator a,
-        final RealLinearOperator m, final RealVector b,
-        final RealVector x, final boolean goodb, final double shift)
-        throws NullArgumentException, NonSquareOperatorException,
-        DimensionMismatchException, NonSelfAdjointOperatorException,
-        NonPositiveDefiniteOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solveInPlace(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x, final boolean goodb, final double shift) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, NonPositiveDefiniteOperatorException, IllConditionedOperatorException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.solveInPlace_1143");
         checkParameters(a, m, b, x);
-
         final IterationManager manager = getIterationManager();
         /* Initialization counts as an iteration. */
         manager.resetIterationCount();
         manager.incrementIterationCount();
-
         final State state;
         state = new State(a, m, b, goodb, shift, delta, check);
         state.init();
         state.refineSolution(x);
         IterativeLinearSolverEvent event;
-        event = new DefaultIterativeLinearSolverEvent(this,
-                                                      manager.getIterations(),
-                                                      x,
-                                                      b,
-                                                      state.getNormOfResidual());
+        event = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), x, b, state.getNormOfResidual());
         if (state.bEqualsNullVector()) {
             /* If b = 0 exactly, stop with x = 0. */
             manager.fireTerminationEvent(event);
@@ -1171,32 +1121,21 @@ public class SymmLQ
         }
         /* Cause termination if beta is essentially zero. */
         final boolean earlyStop;
-        earlyStop = state.betaEqualsZero() || state.hasConverged();
+        earlyStop = (_mut25787 ? (state.betaEqualsZero() && state.hasConverged()) : (state.betaEqualsZero() || state.hasConverged()));
         manager.fireInitializationEvent(event);
         if (!earlyStop) {
             do {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SymmLQ.solveInPlace_1143");
                 manager.incrementIterationCount();
-                event = new DefaultIterativeLinearSolverEvent(this,
-                                                              manager.getIterations(),
-                                                              x,
-                                                              b,
-                                                              state.getNormOfResidual());
+                event = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), x, b, state.getNormOfResidual());
                 manager.fireIterationStartedEvent(event);
                 state.update();
                 state.refineSolution(x);
-                event = new DefaultIterativeLinearSolverEvent(this,
-                                                              manager.getIterations(),
-                                                              x,
-                                                              b,
-                                                              state.getNormOfResidual());
+                event = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), x, b, state.getNormOfResidual());
                 manager.fireIterationPerformedEvent(event);
             } while (!state.hasConverged());
         }
-        event = new DefaultIterativeLinearSolverEvent(this,
-                                                      manager.getIterations(),
-                                                      x,
-                                                      b,
-                                                      state.getNormOfResidual());
+        event = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), x, b, state.getNormOfResidual());
         manager.fireTerminationEvent(event);
         return x;
     }
@@ -1211,11 +1150,7 @@ public class SymmLQ
      * @throws IllConditionedOperatorException if {@code a} is ill-conditioned
      */
     @Override
-    public RealVector solveInPlace(final RealLinearOperator a,
-        final RealVector b, final RealVector x) throws NullArgumentException,
-        NonSquareOperatorException, DimensionMismatchException,
-        NonSelfAdjointOperatorException, IllConditionedOperatorException,
-        MaxCountExceededException {
+    public RealVector solveInPlace(final RealLinearOperator a, final RealVector b, final RealVector x) throws NullArgumentException, NonSquareOperatorException, DimensionMismatchException, NonSelfAdjointOperatorException, IllConditionedOperatorException, MaxCountExceededException {
         return solveInPlace(a, null, b, x, false, 0.);
     }
 }

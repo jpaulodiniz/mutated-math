@@ -17,7 +17,6 @@
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.NullArgumentException;
@@ -27,6 +26,8 @@ import org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.summary.SumOfLogs;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Returns the <a href="http://www.xycoon.com/geometric_mean.htm">
@@ -48,15 +49,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
- *
  */
 public class GeometricMean extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut3413 = false, _mut3414 = false, _mut3415 = false, _mut3416 = false, _mut3417 = false, _mut3418 = false, _mut3419 = false, _mut3420 = false, _mut3421 = false, _mut3422 = false, _mut3423 = false, _mut3424 = false, _mut3425 = false, _mut3426 = false, _mut3427 = false, _mut3428 = false, _mut3429 = false, _mut3430 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -8178734905303459453L;
 
-    /** Wrapped SumOfLogs instance */
+    /**
+     * Wrapped SumOfLogs instance
+     */
     private StorelessUnivariateStatistic sumOfLogs;
 
     /**
@@ -110,8 +116,9 @@ public class GeometricMean extends AbstractStorelessUnivariateStatistic implemen
      */
     @Override
     public double getResult() {
-        if (sumOfLogs.getN() > 0) {
-            return FastMath.exp(sumOfLogs.getResult() / sumOfLogs.getN());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.GeometricMean.getResult_111");
+        if (ROR_greater(sumOfLogs.getN(), 0, "org.apache.commons.math3.stat.descriptive.moment.GeometricMean.getResult_111", _mut3413, _mut3414, _mut3415, _mut3416, _mut3417)) {
+            return FastMath.exp(AOR_divide(sumOfLogs.getResult(), sumOfLogs.getN(), "org.apache.commons.math3.stat.descriptive.moment.GeometricMean.getResult_111", _mut3418, _mut3419, _mut3420, _mut3421));
         } else {
             return Double.NaN;
         }
@@ -142,11 +149,9 @@ public class GeometricMean extends AbstractStorelessUnivariateStatistic implemen
      * index parameters are not valid
      */
     @Override
-    public double evaluate(
-        final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
-        return FastMath.exp(
-            sumOfLogs.evaluate(values, begin, length) / length);
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.GeometricMean.evaluate_144");
+        return FastMath.exp(AOR_divide(sumOfLogs.evaluate(values, begin, length), length, "org.apache.commons.math3.stat.descriptive.moment.GeometricMean.evaluate_144", _mut3422, _mut3423, _mut3424, _mut3425));
     }
 
     /**
@@ -167,8 +172,7 @@ public class GeometricMean extends AbstractStorelessUnivariateStatistic implemen
      * @throws MathIllegalStateException if data has already been added
      *  (i.e if n > 0)
      */
-    public void setSumLogImpl(StorelessUnivariateStatistic sumLogImpl)
-    throws MathIllegalStateException {
+    public void setSumLogImpl(StorelessUnivariateStatistic sumLogImpl) throws MathIllegalStateException {
         checkEmpty();
         this.sumOfLogs = sumLogImpl;
     }
@@ -190,25 +194,21 @@ public class GeometricMean extends AbstractStorelessUnivariateStatistic implemen
      * @param dest GeometricMean to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(GeometricMean source, GeometricMean dest)
-        throws NullArgumentException {
+    public static void copy(GeometricMean source, GeometricMean dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());
         dest.sumOfLogs = source.sumOfLogs.copy();
     }
 
-
     /**
      * Throws MathIllegalStateException if n > 0.
      * @throws MathIllegalStateException if data has been added to this statistic
      */
     private void checkEmpty() throws MathIllegalStateException {
-        if (getN() > 0) {
-            throw new MathIllegalStateException(
-                    LocalizedFormats.VALUES_ADDED_BEFORE_CONFIGURING_STATISTIC,
-                    getN());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.GeometricMean.checkEmpty_206");
+        if (ROR_greater(getN(), 0, "org.apache.commons.math3.stat.descriptive.moment.GeometricMean.checkEmpty_206", _mut3426, _mut3427, _mut3428, _mut3429, _mut3430)) {
+            throw new MathIllegalStateException(LocalizedFormats.VALUES_ADDED_BEFORE_CONFIGURING_STATISTIC, getN());
         }
     }
-
 }

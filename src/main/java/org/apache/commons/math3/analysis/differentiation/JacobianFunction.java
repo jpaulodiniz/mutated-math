@@ -17,8 +17,11 @@
 package org.apache.commons.math3.analysis.differentiation;
 
 import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/** Class representing the Jacobian of a multivariate vector function.
+/**
+ * Class representing the Jacobian of a multivariate vector function.
  * <p>
  * The rows iterate on the model functions while the columns iterate on the parameters; thus,
  * the numbers of rows is equal to the dimension of the underlying function vector
@@ -29,41 +32,47 @@ import org.apache.commons.math3.analysis.MultivariateMatrixFunction;
  */
 public class JacobianFunction implements MultivariateMatrixFunction {
 
-    /** Underlying vector-valued function. */
+    @Conditional
+    public static boolean _mut96997 = false, _mut96998 = false, _mut96999 = false, _mut97000 = false, _mut97001 = false, _mut97002 = false, _mut97003 = false, _mut97004 = false, _mut97005 = false, _mut97006 = false, _mut97007 = false, _mut97008 = false, _mut97009 = false, _mut97010 = false, _mut97011 = false;
+
+    /**
+     * Underlying vector-valued function.
+     */
     private final MultivariateDifferentiableVectorFunction f;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param f underlying vector-valued function
      */
     public JacobianFunction(final MultivariateDifferentiableVectorFunction f) {
         this.f = f;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double[][] value(double[] point) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43");
         // set up parameters
         final DerivativeStructure[] dsX = new DerivativeStructure[point.length];
-        for (int i = 0; i < point.length; ++i) {
+        for (int i = 0; ROR_less(i, point.length, "org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43", _mut96997, _mut96998, _mut96999, _mut97000, _mut97001); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43");
             dsX[i] = new DerivativeStructure(point.length, 1, i, point[i]);
         }
-
         // compute the derivatives
         final DerivativeStructure[] dsY = f.value(dsX);
-
         // extract the Jacobian
         final double[][] y = new double[dsY.length][point.length];
         final int[] orders = new int[point.length];
-        for (int i = 0; i < dsY.length; ++i) {
-            for (int j = 0; j < point.length; ++j) {
+        for (int i = 0; ROR_less(i, dsY.length, "org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43", _mut97007, _mut97008, _mut97009, _mut97010, _mut97011); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43");
+            for (int j = 0; ROR_less(j, point.length, "org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43", _mut97002, _mut97003, _mut97004, _mut97005, _mut97006); ++j) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.differentiation.JacobianFunction.value_43");
                 orders[j] = 1;
                 y[i][j] = dsY[i].getPartialDerivative(orders);
                 orders[j] = 0;
             }
         }
-
         return y;
-
     }
-
 }

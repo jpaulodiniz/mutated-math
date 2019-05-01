@@ -14,16 +14,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.linear;
 
 import java.util.Collection;
 import java.util.Collections;
-
 import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.optimization.GoalType;
 import org.apache.commons.math3.optimization.PointValuePair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for implementing linear optimizers.
@@ -37,7 +37,12 @@ import org.apache.commons.math3.optimization.PointValuePair;
 @Deprecated
 public abstract class AbstractLinearOptimizer implements LinearOptimizer {
 
-    /** Default maximal number of iterations allowed. */
+    @Conditional
+    public static boolean _mut71519 = false, _mut71520 = false, _mut71521 = false, _mut71522 = false, _mut71523 = false;
+
+    /**
+     * Default maximal number of iterations allowed.
+     */
     public static final int DEFAULT_MAX_ITERATIONS = 100;
 
     /**
@@ -64,10 +69,14 @@ public abstract class AbstractLinearOptimizer implements LinearOptimizer {
      */
     private boolean nonNegative;
 
-    /** Maximal number of iterations allowed. */
+    /**
+     * Maximal number of iterations allowed.
+     */
     private int maxIterations;
 
-    /** Number of iterations already performed. */
+    /**
+     * Number of iterations already performed.
+     */
     private int iterations;
 
     /**
@@ -106,17 +115,23 @@ public abstract class AbstractLinearOptimizer implements LinearOptimizer {
         return Collections.unmodifiableCollection(linearConstraints);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void setMaxIterations(int maxIterations) {
         this.maxIterations = maxIterations;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxIterations() {
         return maxIterations;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getIterations() {
         return iterations;
     }
@@ -125,30 +140,25 @@ public abstract class AbstractLinearOptimizer implements LinearOptimizer {
      * Increment the iterations counter by 1.
      * @exception MaxCountExceededException if the maximal number of iterations is exceeded
      */
-    protected void incrementIterationsCounter()
-        throws MaxCountExceededException {
-        if (++iterations > maxIterations) {
+    protected void incrementIterationsCounter() throws MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.linear.AbstractLinearOptimizer.incrementIterationsCounter_128");
+        if (ROR_greater(++iterations, maxIterations, "org.apache.commons.math3.optimization.linear.AbstractLinearOptimizer.incrementIterationsCounter_128", _mut71519, _mut71520, _mut71521, _mut71522, _mut71523)) {
             throw new MaxCountExceededException(maxIterations);
         }
     }
 
-    /** {@inheritDoc} */
-    public PointValuePair optimize(final LinearObjectiveFunction f,
-                                   final Collection<LinearConstraint> constraints,
-                                   final GoalType goalType, final boolean restrictToNonNegative)
-        throws MathIllegalStateException {
-
+    /**
+     * {@inheritDoc}
+     */
+    public PointValuePair optimize(final LinearObjectiveFunction f, final Collection<LinearConstraint> constraints, final GoalType goalType, final boolean restrictToNonNegative) throws MathIllegalStateException {
         // store linear problem characteristics
-        this.function          = f;
+        this.function = f;
         this.linearConstraints = constraints;
-        this.goal              = goalType;
-        this.nonNegative       = restrictToNonNegative;
-
-        iterations  = 0;
-
+        this.goal = goalType;
+        this.nonNegative = restrictToNonNegative;
+        iterations = 0;
         // solve the problem
         return doOptimize();
-
     }
 
     /**
@@ -158,5 +168,4 @@ public abstract class AbstractLinearOptimizer implements LinearOptimizer {
      * can be found in the allowed number of iterations
      */
     protected abstract PointValuePair doOptimize() throws MathIllegalStateException;
-
 }

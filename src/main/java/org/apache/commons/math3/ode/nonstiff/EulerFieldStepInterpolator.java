@@ -14,42 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.ode.FieldEquationsMapper;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements a linear interpolator for step.
- *
- * <p>This interpolator computes dense output inside the last
- * step computed. The interpolation equation is consistent with the
- * integration scheme :
- * <ul>
- *   <li>Using reference point at step start:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub>) + &theta; h y'
- *   </li>
- *   <li>Using reference point at step end:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub> + h) - (1-&theta;) h y'
- *   </li>
- * </ul>
- * </p>
- *
- * where &theta; belongs to [0 ; 1] and where y' is the evaluation of
- * the derivatives already computed during the step.</p>
- *
- * @see EulerFieldIntegrator
- * @param <T> the type of the field elements
- * @since 3.6
- */
+class EulerFieldStepInterpolator<T extends RealFieldElement<T>> extends RungeKuttaFieldStepInterpolator<T> {
 
-class EulerFieldStepInterpolator<T extends RealFieldElement<T>>
-    extends RungeKuttaFieldStepInterpolator<T> {
+    @Conditional
+    public static boolean _mut21281 = false, _mut21282 = false, _mut21283 = false, _mut21284 = false, _mut21285 = false, _mut21286 = false;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param field field to which the time and state vector elements belong
      * @param forward integration direction indicator
      * @param yDotK slopes at the intermediate points
@@ -59,50 +39,34 @@ class EulerFieldStepInterpolator<T extends RealFieldElement<T>>
      * @param softCurrentState end of the restricted step
      * @param mapper equations mapper for the all equations
      */
-    EulerFieldStepInterpolator(final Field<T> field, final boolean forward,
-                                             final T[][] yDotK,
-                                             final FieldODEStateAndDerivative<T> globalPreviousState,
-                                             final FieldODEStateAndDerivative<T> globalCurrentState,
-                                             final FieldODEStateAndDerivative<T> softPreviousState,
-                                             final FieldODEStateAndDerivative<T> softCurrentState,
-                                             final FieldEquationsMapper<T> mapper) {
-        super(field, forward, yDotK,
-              globalPreviousState, globalCurrentState, softPreviousState, softCurrentState,
-              mapper);
+    EulerFieldStepInterpolator(final Field<T> field, final boolean forward, final T[][] yDotK, final FieldODEStateAndDerivative<T> globalPreviousState, final FieldODEStateAndDerivative<T> globalCurrentState, final FieldODEStateAndDerivative<T> softPreviousState, final FieldODEStateAndDerivative<T> softCurrentState, final FieldEquationsMapper<T> mapper) {
+        super(field, forward, yDotK, globalPreviousState, globalCurrentState, softPreviousState, softCurrentState, mapper);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected EulerFieldStepInterpolator<T> create(final Field<T> newField, final boolean newForward, final T[][] newYDotK,
-                                                                 final FieldODEStateAndDerivative<T> newGlobalPreviousState,
-                                                                 final FieldODEStateAndDerivative<T> newGlobalCurrentState,
-                                                                 final FieldODEStateAndDerivative<T> newSoftPreviousState,
-                                                                 final FieldODEStateAndDerivative<T> newSoftCurrentState,
-                                                                 final FieldEquationsMapper<T> newMapper) {
-        return new EulerFieldStepInterpolator<T>(newField, newForward, newYDotK,
-                                                 newGlobalPreviousState, newGlobalCurrentState,
-                                                 newSoftPreviousState, newSoftCurrentState,
-                                                 newMapper);
+    protected EulerFieldStepInterpolator<T> create(final Field<T> newField, final boolean newForward, final T[][] newYDotK, final FieldODEStateAndDerivative<T> newGlobalPreviousState, final FieldODEStateAndDerivative<T> newGlobalCurrentState, final FieldODEStateAndDerivative<T> newSoftPreviousState, final FieldODEStateAndDerivative<T> newSoftCurrentState, final FieldEquationsMapper<T> newMapper) {
+        return new EulerFieldStepInterpolator<T>(newField, newForward, newYDotK, newGlobalPreviousState, newGlobalCurrentState, newSoftPreviousState, newSoftCurrentState, newMapper);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @SuppressWarnings("unchecked")
     @Override
-    protected FieldODEStateAndDerivative<T> computeInterpolatedStateAndDerivatives(final FieldEquationsMapper<T> mapper,
-                                                                                   final T time, final T theta,
-                                                                                   final T thetaH, final T oneMinusThetaH) {
+    protected FieldODEStateAndDerivative<T> computeInterpolatedStateAndDerivatives(final FieldEquationsMapper<T> mapper, final T time, final T theta, final T thetaH, final T oneMinusThetaH) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.EulerFieldStepInterpolator.computeInterpolatedStateAndDerivatives_89");
         final T[] interpolatedState;
         final T[] interpolatedDerivatives;
-        if (getGlobalPreviousState() != null && theta.getReal() <= 0.5) {
-            interpolatedState       = previousStateLinearCombination(thetaH);
+        if ((_mut21286 ? (getGlobalPreviousState() != null || ROR_less_equals(theta.getReal(), 0.5, "org.apache.commons.math3.ode.nonstiff.EulerFieldStepInterpolator.computeInterpolatedStateAndDerivatives_89", _mut21281, _mut21282, _mut21283, _mut21284, _mut21285)) : (getGlobalPreviousState() != null && ROR_less_equals(theta.getReal(), 0.5, "org.apache.commons.math3.ode.nonstiff.EulerFieldStepInterpolator.computeInterpolatedStateAndDerivatives_89", _mut21281, _mut21282, _mut21283, _mut21284, _mut21285)))) {
+            interpolatedState = previousStateLinearCombination(thetaH);
             interpolatedDerivatives = derivativeLinearCombination(time.getField().getOne());
         } else {
-            interpolatedState       = currentStateLinearCombination(oneMinusThetaH.negate());
+            interpolatedState = currentStateLinearCombination(oneMinusThetaH.negate());
             interpolatedDerivatives = derivativeLinearCombination(time.getField().getOne());
         }
-
         return new FieldODEStateAndDerivative<T>(time, interpolatedState, interpolatedDerivatives);
-
     }
-
 }

@@ -23,6 +23,8 @@ import org.apache.commons.math3.exception.NoDataException;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.random.UnitSphereRandomVectorGenerator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Interpolator that implements the algorithm described in
@@ -34,20 +36,26 @@ import org.apache.commons.math3.random.UnitSphereRandomVectorGenerator;
  * and {@link MicrosphereProjectionInterpolator} instead.
  */
 @Deprecated
-public class MicrosphereInterpolator
-    implements MultivariateInterpolator {
+public class MicrosphereInterpolator implements MultivariateInterpolator {
+
+    @Conditional
+    public static boolean _mut92267 = false, _mut92268 = false, _mut92269 = false, _mut92270 = false, _mut92271 = false, _mut92272 = false, _mut92273 = false, _mut92274 = false, _mut92275 = false, _mut92276 = false;
+
     /**
      * Default number of surface elements that composes the microsphere.
      */
     public static final int DEFAULT_MICROSPHERE_ELEMENTS = 2000;
+
     /**
      * Default exponent used the weights calculation.
      */
     public static final int DEFAULT_BRIGHTNESS_EXPONENT = 2;
+
     /**
      * Number of surface elements of the microsphere.
      */
     private final int microsphereElements;
+
     /**
      * Exponent used in the power law that computes the weights of the
      * sample data.
@@ -65,24 +73,22 @@ public class MicrosphereInterpolator
         this(DEFAULT_MICROSPHERE_ELEMENTS, DEFAULT_BRIGHTNESS_EXPONENT);
     }
 
-    /** Create a microsphere interpolator.
+    /**
+     * Create a microsphere interpolator.
      * @param elements Number of surface elements of the microsphere.
      * @param exponent Exponent used in the power law that computes the
      * weights (distance dimming factor) of the sample data.
      * @throws NotPositiveException if {@code exponent < 0}.
      * @throws NotStrictlyPositiveException if {@code elements <= 0}.
      */
-    public MicrosphereInterpolator(final int elements,
-                                   final int exponent)
-        throws NotPositiveException,
-               NotStrictlyPositiveException {
-        if (exponent < 0) {
+    public MicrosphereInterpolator(final int elements, final int exponent) throws NotPositiveException, NotStrictlyPositiveException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.interpolation.MicrosphereInterpolator.MicrosphereInterpolator_75");
+        if (ROR_less(exponent, 0, "org.apache.commons.math3.analysis.interpolation.MicrosphereInterpolator.MicrosphereInterpolator_75", _mut92267, _mut92268, _mut92269, _mut92270, _mut92271)) {
             throw new NotPositiveException(exponent);
         }
-        if (elements <= 0) {
+        if (ROR_less_equals(elements, 0, "org.apache.commons.math3.analysis.interpolation.MicrosphereInterpolator.MicrosphereInterpolator_75", _mut92272, _mut92273, _mut92274, _mut92275, _mut92276)) {
             throw new NotStrictlyPositiveException(elements);
         }
-
         microsphereElements = elements;
         brightnessExponent = exponent;
     }
@@ -90,16 +96,8 @@ public class MicrosphereInterpolator
     /**
      * {@inheritDoc}
      */
-    public MultivariateFunction interpolate(final double[][] xval,
-                                            final double[] yval)
-        throws DimensionMismatchException,
-               NoDataException,
-               NullArgumentException {
-        final UnitSphereRandomVectorGenerator rand
-            = new UnitSphereRandomVectorGenerator(xval[0].length);
-        return new MicrosphereInterpolatingFunction(xval, yval,
-                                                    brightnessExponent,
-                                                    microsphereElements,
-                                                    rand);
+    public MultivariateFunction interpolate(final double[][] xval, final double[] yval) throws DimensionMismatchException, NoDataException, NullArgumentException {
+        final UnitSphereRandomVectorGenerator rand = new UnitSphereRandomVectorGenerator(xval[0].length);
+        return new MicrosphereInterpolatingFunction(xval, yval, brightnessExponent, microsphereElements, rand);
     }
 }

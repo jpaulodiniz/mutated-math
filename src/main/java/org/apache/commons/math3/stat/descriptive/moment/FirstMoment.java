@@ -17,10 +17,11 @@
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes the first moment (arithmetic mean).  Uses the definitional formula:
@@ -46,19 +47,25 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
-class FirstMoment extends AbstractStorelessUnivariateStatistic
-    implements Serializable {
+class FirstMoment extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut3013 = false, _mut3014 = false, _mut3015 = false, _mut3016 = false, _mut3017 = false, _mut3018 = false, _mut3019 = false, _mut3020 = false, _mut3021 = false, _mut3022 = false, _mut3023 = false, _mut3024 = false, _mut3025 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 6112755307178490473L;
 
-
-    /** Count of values that have been added */
+    /**
+     * Count of values that have been added
+     */
     protected long n;
 
-    /** First moment of values that have been added */
+    /**
+     * First moment of values that have been added
+     */
     protected double m1;
 
     /**
@@ -91,23 +98,24 @@ class FirstMoment extends AbstractStorelessUnivariateStatistic
      * @param original the {@code FirstMoment} instance to copy
      * @throws NullArgumentException if original is null
      */
-     FirstMoment(FirstMoment original) throws NullArgumentException {
-         super();
-         copy(original, this);
-     }
+    FirstMoment(FirstMoment original) throws NullArgumentException {
+        super();
+        copy(original, this);
+    }
 
     /**
      * {@inheritDoc}
      */
-     @Override
+    @Override
     public void increment(final double d) {
-        if (n == 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.FirstMoment.increment_102");
+        if (ROR_equals(n, 0, "org.apache.commons.math3.stat.descriptive.moment.FirstMoment.increment_102", _mut3013, _mut3014, _mut3015, _mut3016, _mut3017)) {
             m1 = 0.0;
         }
         n++;
         double n0 = n;
-        dev = d - m1;
-        nDev = dev / n0;
+        dev = AOR_minus(d, m1, "org.apache.commons.math3.stat.descriptive.moment.FirstMoment.increment_102", _mut3018, _mut3019, _mut3020, _mut3021);
+        nDev = AOR_divide(dev, n0, "org.apache.commons.math3.stat.descriptive.moment.FirstMoment.increment_102", _mut3022, _mut3023, _mut3024, _mut3025);
         m1 += nDev;
     }
 
@@ -156,8 +164,7 @@ class FirstMoment extends AbstractStorelessUnivariateStatistic
      * @param dest FirstMoment to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(FirstMoment source, FirstMoment dest)
-        throws NullArgumentException {
+    public static void copy(FirstMoment source, FirstMoment dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

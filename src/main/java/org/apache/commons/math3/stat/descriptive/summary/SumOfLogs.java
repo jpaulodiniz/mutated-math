@@ -17,12 +17,13 @@
 package org.apache.commons.math3.stat.descriptive.summary;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Returns the sum of the natural logs for this collection of values.
@@ -43,14 +44,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class SumOfLogs extends AbstractStorelessUnivariateStatistic implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut4538 = false, _mut4539 = false, _mut4540 = false, _mut4541 = false, _mut4542 = false, _mut4543 = false, _mut4544 = false, _mut4545 = false, _mut4546 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -370076995648386763L;
 
-    /**Number of values that have been added */
+    /**
+     * Number of values that have been added
+     */
     private int n;
 
     /**
@@ -62,8 +69,8 @@ public class SumOfLogs extends AbstractStorelessUnivariateStatistic implements S
      * Create a SumOfLogs instance
      */
     public SumOfLogs() {
-       value = 0d;
-       n = 0;
+        value = 0d;
+        n = 0;
     }
 
     /**
@@ -128,12 +135,13 @@ public class SumOfLogs extends AbstractStorelessUnivariateStatistic implements S
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.SumOfLogs.evaluate_130");
         double sumLog = Double.NaN;
         if (test(values, begin, length, true)) {
             sumLog = 0.0;
-            for (int i = begin; i < begin + length; i++) {
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.summary.SumOfLogs.evaluate_130", _mut4538, _mut4539, _mut4540, _mut4541), "org.apache.commons.math3.stat.descriptive.summary.SumOfLogs.evaluate_130", _mut4542, _mut4543, _mut4544, _mut4545, _mut4546); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.SumOfLogs.evaluate_130");
                 sumLog += FastMath.log(values[i]);
             }
         }
@@ -159,8 +167,7 @@ public class SumOfLogs extends AbstractStorelessUnivariateStatistic implements S
      * @param dest SumOfLogs to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(SumOfLogs source, SumOfLogs dest)
-        throws NullArgumentException {
+    public static void copy(SumOfLogs source, SumOfLogs dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.clustering.evaluation;
 
 import java.util.List;
-
 import org.apache.commons.math3.ml.clustering.CentroidCluster;
 import org.apache.commons.math3.ml.clustering.Cluster;
 import org.apache.commons.math3.ml.clustering.Clusterable;
 import org.apache.commons.math3.ml.clustering.DoublePoint;
 import org.apache.commons.math3.ml.distance.DistanceMeasure;
 import org.apache.commons.math3.ml.distance.EuclideanDistance;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for cluster evaluation methods.
@@ -34,7 +34,12 @@ import org.apache.commons.math3.ml.distance.EuclideanDistance;
  */
 public abstract class ClusterEvaluator<T extends Clusterable> {
 
-    /** The distance measure to use when evaluating the cluster. */
+    @Conditional
+    public static boolean _mut102659 = false, _mut102660 = false, _mut102661 = false, _mut102662 = false, _mut102663 = false, _mut102664 = false, _mut102665 = false, _mut102666 = false, _mut102667 = false, _mut102668 = false, _mut102669 = false, _mut102670 = false, _mut102671 = false, _mut102672 = false, _mut102673 = false;
+
+    /**
+     * The distance measure to use when evaluating the cluster.
+     */
     private final DistanceMeasure measure;
 
     /**
@@ -72,7 +77,8 @@ public abstract class ClusterEvaluator<T extends Clusterable> {
      * @return {@code true} if the first score is considered to be better, {@code false} otherwise
      */
     public boolean isBetterScore(double score1, double score2) {
-        return score1 < score2;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.isBetterScore_74");
+        return ROR_less(score1, score2, "org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.isBetterScore_74", _mut102659, _mut102660, _mut102661, _mut102662, _mut102663);
     }
 
     /**
@@ -95,28 +101,29 @@ public abstract class ClusterEvaluator<T extends Clusterable> {
      * or {@code null} if the cluster does not contain any points
      */
     protected Clusterable centroidOf(final Cluster<T> cluster) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97");
         final List<T> points = cluster.getPoints();
         if (points.isEmpty()) {
             return null;
         }
-
         // in case the cluster is of type CentroidCluster, no need to compute the centroid
         if (cluster instanceof CentroidCluster) {
             return ((CentroidCluster<T>) cluster).getCenter();
         }
-
         final int dimension = points.get(0).getPoint().length;
         final double[] centroid = new double[dimension];
         for (final T p : points) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97");
             final double[] point = p.getPoint();
-            for (int i = 0; i < centroid.length; i++) {
+            for (int i = 0; ROR_less(i, centroid.length, "org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97", _mut102664, _mut102665, _mut102666, _mut102667, _mut102668); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97");
                 centroid[i] += point[i];
             }
         }
-        for (int i = 0; i < centroid.length; i++) {
+        for (int i = 0; ROR_less(i, centroid.length, "org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97", _mut102669, _mut102670, _mut102671, _mut102672, _mut102673); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.clustering.evaluation.ClusterEvaluator.centroidOf_97");
             centroid[i] /= points.size();
         }
         return new DoublePoint(centroid);
     }
-
 }

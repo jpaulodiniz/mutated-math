@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optim.nonlinear.scalar.gradient;
 
 import org.apache.commons.math3.analysis.solvers.UnivariateSolver;
@@ -28,7 +27,8 @@ import org.apache.commons.math3.optim.ConvergenceChecker;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
 import org.apache.commons.math3.optim.nonlinear.scalar.GradientMultivariateOptimizer;
 import org.apache.commons.math3.optim.nonlinear.scalar.LineSearch;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Non-linear conjugate gradient optimizer.
@@ -43,13 +43,24 @@ import org.apache.commons.math3.optim.nonlinear.scalar.LineSearch;
  *
  * @since 2.0
  */
-public class NonLinearConjugateGradientOptimizer
-    extends GradientMultivariateOptimizer {
-    /** Update formula for the beta parameter. */
+public class NonLinearConjugateGradientOptimizer extends GradientMultivariateOptimizer {
+
+    @Conditional
+    public static boolean _mut60052 = false, _mut60053 = false, _mut60054 = false, _mut60055 = false, _mut60056 = false, _mut60057 = false, _mut60058 = false, _mut60059 = false, _mut60060 = false, _mut60061 = false, _mut60062 = false, _mut60063 = false, _mut60064 = false, _mut60065 = false, _mut60066 = false, _mut60067 = false, _mut60068 = false, _mut60069 = false, _mut60070 = false, _mut60071 = false, _mut60072 = false, _mut60073 = false, _mut60074 = false, _mut60075 = false, _mut60076 = false, _mut60077 = false, _mut60078 = false, _mut60079 = false, _mut60080 = false, _mut60081 = false, _mut60082 = false, _mut60083 = false, _mut60084 = false, _mut60085 = false, _mut60086 = false, _mut60087 = false, _mut60088 = false, _mut60089 = false, _mut60090 = false, _mut60091 = false, _mut60092 = false, _mut60093 = false, _mut60094 = false, _mut60095 = false, _mut60096 = false, _mut60097 = false, _mut60098 = false, _mut60099 = false, _mut60100 = false, _mut60101 = false, _mut60102 = false, _mut60103 = false, _mut60104 = false, _mut60105 = false, _mut60106 = false, _mut60107 = false, _mut60108 = false, _mut60109 = false, _mut60110 = false, _mut60111 = false, _mut60112 = false, _mut60113 = false, _mut60114 = false, _mut60115 = false, _mut60116 = false, _mut60117 = false, _mut60118 = false, _mut60119 = false, _mut60120 = false, _mut60121 = false, _mut60122 = false, _mut60123 = false, _mut60124 = false, _mut60125 = false, _mut60126 = false, _mut60127 = false, _mut60128 = false, _mut60129 = false, _mut60130 = false, _mut60131 = false, _mut60132 = false, _mut60133 = false, _mut60134 = false, _mut60135 = false, _mut60136 = false, _mut60137 = false, _mut60138 = false, _mut60139 = false;
+
+    /**
+     * Update formula for the beta parameter.
+     */
     private final Formula updateFormula;
-    /** Preconditioner (may be null). */
+
+    /**
+     * Preconditioner (may be null).
+     */
     private final Preconditioner preconditioner;
-    /** Line search algorithm. */
+
+    /**
+     * Line search algorithm.
+     */
     private final LineSearch line;
 
     /**
@@ -71,9 +82,14 @@ public class NonLinearConjugateGradientOptimizer
      * @since 2.0
      */
     public enum Formula {
-        /** Fletcher-Reeves formula. */
+
+        /**
+         * Fletcher-Reeves formula.
+         */
         FLETCHER_REEVES,
-        /** Polak-Ribière formula. */
+        /**
+         * Polak-Ribière formula.
+         */
         POLAK_RIBIERE
     }
 
@@ -91,7 +107,10 @@ public class NonLinearConjugateGradientOptimizer
      */
     @Deprecated
     public static class BracketingStep implements OptimizationData {
-        /** Initial step. */
+
+        /**
+         * Initial step.
+         */
         private final double initialStep;
 
         /**
@@ -120,14 +139,8 @@ public class NonLinearConjugateGradientOptimizer
      * {@link Formula#POLAK_RIBIERE}.
      * @param checker Convergence checker.
      */
-    public NonLinearConjugateGradientOptimizer(final Formula updateFormula,
-                                               ConvergenceChecker<PointValuePair> checker) {
-        this(updateFormula,
-             checker,
-             1e-8,
-             1e-8,
-             1e-8,
-             new IdentityPreconditioner());
+    public NonLinearConjugateGradientOptimizer(final Formula updateFormula, ConvergenceChecker<PointValuePair> checker) {
+        this(updateFormula, checker, 1e-8, 1e-8, 1e-8, new IdentityPreconditioner());
     }
 
     /**
@@ -142,13 +155,8 @@ public class NonLinearConjugateGradientOptimizer
      * {@link #NonLinearConjugateGradientOptimizer(Formula,ConvergenceChecker,double,double,double)} instead.
      */
     @Deprecated
-    public NonLinearConjugateGradientOptimizer(final Formula updateFormula,
-                                               ConvergenceChecker<PointValuePair> checker,
-                                               final UnivariateSolver lineSearchSolver) {
-        this(updateFormula,
-             checker,
-             lineSearchSolver,
-             new IdentityPreconditioner());
+    public NonLinearConjugateGradientOptimizer(final Formula updateFormula, ConvergenceChecker<PointValuePair> checker, final UnivariateSolver lineSearchSolver) {
+        this(updateFormula, checker, lineSearchSolver, new IdentityPreconditioner());
     }
 
     /**
@@ -167,17 +175,8 @@ public class NonLinearConjugateGradientOptimizer
      * @see LineSearch#LineSearch(MultivariateOptimizer,double,double,double)
      * @since 3.3
      */
-    public NonLinearConjugateGradientOptimizer(final Formula updateFormula,
-                                               ConvergenceChecker<PointValuePair> checker,
-                                               double relativeTolerance,
-                                               double absoluteTolerance,
-                                               double initialBracketingRange) {
-        this(updateFormula,
-             checker,
-             relativeTolerance,
-             absoluteTolerance,
-             initialBracketingRange,
-             new IdentityPreconditioner());
+    public NonLinearConjugateGradientOptimizer(final Formula updateFormula, ConvergenceChecker<PointValuePair> checker, double relativeTolerance, double absoluteTolerance, double initialBracketingRange) {
+        this(updateFormula, checker, relativeTolerance, absoluteTolerance, initialBracketingRange, new IdentityPreconditioner());
     }
 
     /**
@@ -191,16 +190,8 @@ public class NonLinearConjugateGradientOptimizer
      * {@link #NonLinearConjugateGradientOptimizer(Formula,ConvergenceChecker,double,double,double,Preconditioner)} instead.
      */
     @Deprecated
-    public NonLinearConjugateGradientOptimizer(final Formula updateFormula,
-                                               ConvergenceChecker<PointValuePair> checker,
-                                               final UnivariateSolver lineSearchSolver,
-                                               final Preconditioner preconditioner) {
-        this(updateFormula,
-             checker,
-             lineSearchSolver.getRelativeAccuracy(),
-             lineSearchSolver.getAbsoluteAccuracy(),
-             lineSearchSolver.getAbsoluteAccuracy(),
-             preconditioner);
+    public NonLinearConjugateGradientOptimizer(final Formula updateFormula, ConvergenceChecker<PointValuePair> checker, final UnivariateSolver lineSearchSolver, final Preconditioner preconditioner) {
+        this(updateFormula, checker, lineSearchSolver.getRelativeAccuracy(), lineSearchSolver.getAbsoluteAccuracy(), lineSearchSolver.getAbsoluteAccuracy(), preconditioner);
     }
 
     /**
@@ -218,116 +209,106 @@ public class NonLinearConjugateGradientOptimizer
      * @see LineSearch#LineSearch(MultivariateOptimizer,double,double,double)
      * @since 3.3
      */
-    public NonLinearConjugateGradientOptimizer(final Formula updateFormula,
-                                               ConvergenceChecker<PointValuePair> checker,
-                                               double relativeTolerance,
-                                               double absoluteTolerance,
-                                               double initialBracketingRange,
-                                               final Preconditioner preconditioner) {
+    public NonLinearConjugateGradientOptimizer(final Formula updateFormula, ConvergenceChecker<PointValuePair> checker, double relativeTolerance, double absoluteTolerance, double initialBracketingRange, final Preconditioner preconditioner) {
         super(checker);
-
         this.updateFormula = updateFormula;
         this.preconditioner = preconditioner;
-        line = new LineSearch(this,
-                              relativeTolerance,
-                              absoluteTolerance,
-                              initialBracketingRange);
+        line = new LineSearch(this, relativeTolerance, absoluteTolerance, initialBracketingRange);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public PointValuePair optimize(OptimizationData... optData)
-        throws TooManyEvaluationsException {
+    public PointValuePair optimize(OptimizationData... optData) throws TooManyEvaluationsException {
         // Set up base class and perform computation.
         return super.optimize(optData);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PointValuePair doOptimize() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
         final ConvergenceChecker<PointValuePair> checker = getConvergenceChecker();
         final double[] point = getStartPoint();
         final GoalType goal = getGoalType();
         final int n = point.length;
         double[] r = computeObjectiveGradient(point);
         if (goal == GoalType.MINIMIZE) {
-            for (int i = 0; i < n; i++) {
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60052, _mut60053, _mut60054, _mut60055, _mut60056); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
                 r[i] = -r[i];
             }
         }
-
         // Initial search direction.
         double[] steepestDescent = preconditioner.precondition(point, r);
         double[] searchDirection = steepestDescent.clone();
-
         double delta = 0;
-        for (int i = 0; i < n; ++i) {
-            delta += r[i] * searchDirection[i];
+        for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60061, _mut60062, _mut60063, _mut60064, _mut60065); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
+            delta += AOR_multiply(r[i], searchDirection[i], "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60057, _mut60058, _mut60059, _mut60060);
         }
-
         PointValuePair current = null;
         while (true) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
             incrementIterationCount();
-
             final double objective = computeObjectiveValue(point);
             PointValuePair previous = current;
             current = new PointValuePair(point, objective);
-            if (previous != null && checker.converged(getIterations(), previous, current)) {
+            if ((_mut60066 ? (previous != null || checker.converged(getIterations(), previous, current)) : (previous != null && checker.converged(getIterations(), previous, current)))) {
                 // We have found an optimum.
                 return current;
             }
-
             final double step = line.search(point, searchDirection).getPoint();
-
             // Validate new point.
-            for (int i = 0; i < point.length; ++i) {
-                point[i] += step * searchDirection[i];
+            for (int i = 0; ROR_less(i, point.length, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60071, _mut60072, _mut60073, _mut60074, _mut60075); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
+                point[i] += AOR_multiply(step, searchDirection[i], "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60067, _mut60068, _mut60069, _mut60070);
             }
-
             r = computeObjectiveGradient(point);
             if (goal == GoalType.MINIMIZE) {
-                for (int i = 0; i < n; ++i) {
+                for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60076, _mut60077, _mut60078, _mut60079, _mut60080); ++i) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
                     r[i] = -r[i];
                 }
             }
-
             // Compute beta.
             final double deltaOld = delta;
             final double[] newSteepestDescent = preconditioner.precondition(point, r);
             delta = 0;
-            for (int i = 0; i < n; ++i) {
-                delta += r[i] * newSteepestDescent[i];
+            for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60085, _mut60086, _mut60087, _mut60088, _mut60089); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
+                delta += AOR_multiply(r[i], newSteepestDescent[i], "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60081, _mut60082, _mut60083, _mut60084);
             }
-
             final double beta;
-            switch (updateFormula) {
-            case FLETCHER_REEVES:
-                beta = delta / deltaOld;
-                break;
-            case POLAK_RIBIERE:
-                double deltaMid = 0;
-                for (int i = 0; i < r.length; ++i) {
-                    deltaMid += r[i] * steepestDescent[i];
-                }
-                beta = (delta - deltaMid) / deltaOld;
-                break;
-            default:
-                // Should never happen.
-                throw new MathInternalError();
+            switch(updateFormula) {
+                case FLETCHER_REEVES:
+                    beta = AOR_divide(delta, deltaOld, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60090, _mut60091, _mut60092, _mut60093);
+                    break;
+                case POLAK_RIBIERE:
+                    double deltaMid = 0;
+                    for (int i = 0; ROR_less(i, r.length, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60098, _mut60099, _mut60100, _mut60101, _mut60102); ++i) {
+                        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
+                        deltaMid += AOR_multiply(r[i], steepestDescent[i], "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60094, _mut60095, _mut60096, _mut60097);
+                    }
+                    beta = AOR_divide((AOR_minus(delta, deltaMid, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60103, _mut60104, _mut60105, _mut60106)), deltaOld, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60107, _mut60108, _mut60109, _mut60110);
+                    break;
+                default:
+                    // Should never happen.
+                    throw new MathInternalError();
             }
             steepestDescent = newSteepestDescent;
-
             // Compute conjugate search direction.
-            if (getIterations() % n == 0 ||
-                beta < 0) {
+            if ((_mut60125 ? (ROR_equals(AOR_remainder(getIterations(), n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60111, _mut60112, _mut60113, _mut60114), 0, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60115, _mut60116, _mut60117, _mut60118, _mut60119) && ROR_less(beta, 0, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60120, _mut60121, _mut60122, _mut60123, _mut60124)) : (ROR_equals(AOR_remainder(getIterations(), n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60111, _mut60112, _mut60113, _mut60114), 0, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60115, _mut60116, _mut60117, _mut60118, _mut60119) || ROR_less(beta, 0, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60120, _mut60121, _mut60122, _mut60123, _mut60124)))) {
                 // Break conjugation: reset search direction.
                 searchDirection = steepestDescent.clone();
             } else {
                 // Compute new conjugate search direction.
-                for (int i = 0; i < n; ++i) {
-                    searchDirection[i] = steepestDescent[i] + beta * searchDirection[i];
+                for (int i = 0; ROR_less(i, n, "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60134, _mut60135, _mut60136, _mut60137, _mut60138); ++i) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248");
+                    searchDirection[i] = AOR_plus(steepestDescent[i], AOR_multiply(beta, searchDirection[i], "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60126, _mut60127, _mut60128, _mut60129), "org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.doOptimize_248", _mut60130, _mut60131, _mut60132, _mut60133);
                 }
             }
         }
@@ -340,75 +321,29 @@ public class NonLinearConjugateGradientOptimizer
     protected void parseOptimizationData(OptimizationData... optData) {
         // Allow base class to register its own data.
         super.parseOptimizationData(optData);
-
         checkParameters();
     }
 
-    /** Default identity preconditioner. */
+    /**
+     * Default identity preconditioner.
+     */
     public static class IdentityPreconditioner implements Preconditioner {
-        /** {@inheritDoc} */
+
+        /**
+         * {@inheritDoc}
+         */
         public double[] precondition(double[] variables, double[] r) {
             return r.clone();
         }
     }
-
-    // Class is not used anymore (cf. MATH-1092). However, it might
-    // be interesting to create a class similar to "LineSearch", but
-    // that will take advantage that the model's gradient is available.
-//     /**
-//      * Internal class for line search.
-//      * <p>
-//      * The function represented by this class is the dot product of
-//      * the objective function gradient and the search direction. Its
-//      * value is zero when the gradient is orthogonal to the search
-//      * direction, i.e. when the objective function value is a local
-//      * extremum along the search direction.
-//      * </p>
-//      */
-//     private class LineSearchFunction implements UnivariateFunction {
-//         /** Current point. */
-//         private final double[] currentPoint;
-//         /** Search direction. */
-//         private final double[] searchDirection;
-
-//         /**
-//          * @param point Current point.
-//          * @param direction Search direction.
-//          */
-//         public LineSearchFunction(double[] point,
-//                                   double[] direction) {
-//             currentPoint = point.clone();
-//             searchDirection = direction.clone();
-//         }
-
-//         /** {@inheritDoc} */
-//         public double value(double x) {
-//             // current point in the search direction
-//             final double[] shiftedPoint = currentPoint.clone();
-//             for (int i = 0; i < shiftedPoint.length; ++i) {
-//                 shiftedPoint[i] += x * searchDirection[i];
-//             }
-
-//             // gradient of the objective function
-//             final double[] gradient = computeObjectiveGradient(shiftedPoint);
-
-//             // dot product with the search direction
-//             double dotProduct = 0;
-//             for (int i = 0; i < gradient.length; ++i) {
-//                 dotProduct += gradient[i] * searchDirection[i];
-//             }
-
-//             return dotProduct;
-//         }
-//     }
 
     /**
      * @throws MathUnsupportedOperationException if bounds were passed to the
      * {@link #optimize(OptimizationData[]) optimize} method.
      */
     private void checkParameters() {
-        if (getLowerBound() != null ||
-            getUpperBound() != null) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.gradient.NonLinearConjugateGradientOptimizer.checkParameters_409");
+        if ((_mut60139 ? (getLowerBound() != null && getUpperBound() != null) : (getLowerBound() != null || getUpperBound() != null))) {
             throw new MathUnsupportedOperationException(LocalizedFormats.CONSTRAINT);
         }
     }

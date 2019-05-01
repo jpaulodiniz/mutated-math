@@ -14,24 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.complex;
 
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Static implementations of common
  * {@link org.apache.commons.math3.complex.Complex} utilities functions.
- *
  */
 public class ComplexUtils {
+
+    @Conditional
+    public static boolean _mut37486 = false, _mut37487 = false, _mut37488 = false, _mut37489 = false, _mut37490 = false, _mut37491 = false, _mut37492 = false, _mut37493 = false, _mut37494 = false, _mut37495 = false, _mut37496 = false, _mut37497 = false, _mut37498 = false, _mut37499 = false, _mut37500 = false, _mut37501 = false, _mut37502 = false, _mut37503 = false;
 
     /**
      * Default constructor.
      */
-    private ComplexUtils() {}
+    private ComplexUtils() {
+    }
 
     /**
      * Creates a complex number from the given polar representation.
@@ -59,11 +63,11 @@ public class ComplexUtils {
      * @since 1.1
      */
     public static Complex polar2Complex(double r, double theta) throws MathIllegalArgumentException {
-        if (r < 0) {
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.NEGATIVE_COMPLEX_MODULE, r);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexUtils.polar2Complex_61");
+        if (ROR_less(r, 0, "org.apache.commons.math3.complex.ComplexUtils.polar2Complex_61", _mut37486, _mut37487, _mut37488, _mut37489, _mut37490)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.NEGATIVE_COMPLEX_MODULE, r);
         }
-        return new Complex(r * FastMath.cos(theta), r * FastMath.sin(theta));
+        return new Complex(AOR_multiply(r, FastMath.cos(theta), "org.apache.commons.math3.complex.ComplexUtils.polar2Complex_61", _mut37491, _mut37492, _mut37493, _mut37494), AOR_multiply(r, FastMath.sin(theta), "org.apache.commons.math3.complex.ComplexUtils.polar2Complex_61", _mut37495, _mut37496, _mut37497, _mut37498));
     }
 
     /**
@@ -76,11 +80,12 @@ public class ComplexUtils {
      * @since 3.1
      */
     public static Complex[] convertToComplex(double[] real) {
-        final Complex c[] = new Complex[real.length];
-        for (int i = 0; i < real.length; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexUtils.convertToComplex_78");
+        final Complex[] c = new Complex[real.length];
+        for (int i = 0; ROR_less(i, real.length, "org.apache.commons.math3.complex.ComplexUtils.convertToComplex_78", _mut37499, _mut37500, _mut37501, _mut37502, _mut37503); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.complex.ComplexUtils.convertToComplex_78");
             c[i] = new Complex(real[i], 0);
         }
-
         return c;
     }
 }

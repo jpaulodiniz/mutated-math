@@ -20,6 +20,8 @@ import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealVector;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * The GLS implementation of multiple linear regression.
@@ -41,13 +43,21 @@ import org.apache.commons.math3.linear.RealVector;
  */
 public class GLSMultipleLinearRegression extends AbstractMultipleLinearRegression {
 
-    /** Covariance matrix. */
+    @Conditional
+    public static boolean _mut7911 = false, _mut7912 = false, _mut7913 = false, _mut7914 = false, _mut7915 = false, _mut7916 = false, _mut7917 = false, _mut7918 = false;
+
+    /**
+     * Covariance matrix.
+     */
     private RealMatrix Omega;
 
-    /** Inverse of covariance matrix. */
+    /**
+     * Inverse of covariance matrix.
+     */
     private RealMatrix OmegaInverse;
 
-    /** Replace sample data, overriding any previous sample.
+    /**
+     * Replace sample data, overriding any previous sample.
      * @param y y values of the sample
      * @param x x values of the sample
      * @param covariance array representing the covariance matrix
@@ -65,7 +75,7 @@ public class GLSMultipleLinearRegression extends AbstractMultipleLinearRegressio
      *
      * @param omega the [n,n] array representing the covariance
      */
-    protected void newCovarianceData(double[][] omega){
+    protected void newCovarianceData(double[][] omega) {
         this.Omega = new Array2DRowRealMatrix(omega);
         this.OmegaInverse = null;
     }
@@ -112,7 +122,6 @@ public class GLSMultipleLinearRegression extends AbstractMultipleLinearRegressio
         return new LUDecomposition(XTOIX).getSolver().getInverse();
     }
 
-
     /**
      * Calculates the estimated variance of the error term using the formula
      * <pre>
@@ -126,10 +135,9 @@ public class GLSMultipleLinearRegression extends AbstractMultipleLinearRegressio
      */
     @Override
     protected double calculateErrorVariance() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.regression.GLSMultipleLinearRegression.calculateErrorVariance_127");
         RealVector residuals = calculateResiduals();
         double t = residuals.dotProduct(getOmegaInverse().operate(residuals));
-        return t / (getX().getRowDimension() - getX().getColumnDimension());
-
+        return AOR_divide(t, (AOR_minus(getX().getRowDimension(), getX().getColumnDimension(), "org.apache.commons.math3.stat.regression.GLSMultipleLinearRegression.calculateErrorVariance_127", _mut7911, _mut7912, _mut7913, _mut7914)), "org.apache.commons.math3.stat.regression.GLSMultipleLinearRegression.calculateErrorVariance_127", _mut7915, _mut7916, _mut7917, _mut7918);
     }
-
 }

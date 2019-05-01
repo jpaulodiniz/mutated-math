@@ -16,18 +16,22 @@
  */
 package org.apache.commons.math3.primes;
 
-
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.apache.commons.math3.util.FastMath;
+import gov.nasa.jpf.annotation.Conditional;
+import br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Utility methods to work on primes within the <code>int</code> range.
  * @since 3.2
  */
 class SmallPrimes {
+
+    @Conditional
+    public static boolean _mut0 = false, _mut1 = false, _mut2 = false, _mut3 = false, _mut4 = false, _mut5 = false, _mut6 = false, _mut7 = false, _mut8 = false, _mut9 = false, _mut10 = false, _mut11 = false, _mut12 = false, _mut13 = false, _mut14 = false, _mut15 = false, _mut16 = false, _mut17 = false, _mut18 = false, _mut19 = false, _mut20 = false, _mut21 = false, _mut22 = false, _mut23 = false, _mut24 = false, _mut25 = false, _mut26 = false, _mut27 = false, _mut28 = false, _mut29 = false, _mut30 = false, _mut31 = false, _mut32 = false, _mut33 = false, _mut34 = false, _mut35 = false, _mut36 = false, _mut37 = false, _mut38 = false, _mut39 = false, _mut40 = false, _mut41 = false, _mut42 = false, _mut43 = false, _mut44 = false, _mut45 = false, _mut46 = false, _mut47 = false, _mut48 = false, _mut49 = false, _mut50 = false, _mut51 = false, _mut52 = false, _mut53 = false, _mut54 = false, _mut55 = false, _mut56 = false, _mut57 = false, _mut58 = false, _mut59 = false, _mut60 = false, _mut61 = false, _mut62 = false, _mut63 = false, _mut64 = false, _mut65 = false, _mut66 = false, _mut67 = false, _mut68 = false, _mut69 = false, _mut70 = false, _mut71 = false, _mut72 = false, _mut73 = false, _mut74 = false, _mut75 = false, _mut76 = false, _mut77 = false, _mut78 = false, _mut79 = false, _mut80 = false, _mut81 = false, _mut82 = false, _mut83 = false, _mut84 = false, _mut85 = false, _mut86 = false, _mut87 = false, _mut88 = false, _mut89 = false, _mut90 = false, _mut91 = false, _mut92 = false, _mut93 = false, _mut94 = false, _mut95 = false, _mut96 = false, _mut97 = false, _mut98 = false, _mut99 = false, _mut100 = false, _mut101 = false, _mut102 = false, _mut103 = false, _mut104 = false, _mut105 = false, _mut106 = false, _mut107 = false, _mut108 = false, _mut109 = false, _mut110 = false, _mut111 = false, _mut112 = false, _mut113 = false, _mut114 = false, _mut115 = false, _mut116 = false, _mut117 = false;
 
     /**
      * The first 512 prime numbers.
@@ -36,36 +40,12 @@ class SmallPrimes {
      * As a result, <code>int</code> numbers which are not reduced by those primes are guaranteed
      * to be either prime or semi prime.
      */
-    public static final int[] PRIMES = {2,
-            3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73,
-            79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179,
-            181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283,
-            293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419,
-            421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547,
-            557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661,
-            673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811,
-            821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947,
-            953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069, 1087,
-            1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151, 1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223, 1229,
-            1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291, 1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373, 1381,
-            1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451, 1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511, 1523,
-            1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583, 1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657, 1663,
-            1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733, 1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811, 1823,
-            1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993,
-            1997, 1999, 2003, 2011, 2017, 2027, 2029, 2039, 2053, 2063, 2069, 2081, 2083, 2087, 2089, 2099, 2111, 2113, 2129, 2131,
-            2137, 2141, 2143, 2153, 2161, 2179, 2203, 2207, 2213, 2221, 2237, 2239, 2243, 2251, 2267, 2269, 2273, 2281, 2287, 2293,
-            2297, 2309, 2311, 2333, 2339, 2341, 2347, 2351, 2357, 2371, 2377, 2381, 2383, 2389, 2393, 2399, 2411, 2417, 2423, 2437,
-            2441, 2447, 2459, 2467, 2473, 2477, 2503, 2521, 2531, 2539, 2543, 2549, 2551, 2557, 2579, 2591, 2593, 2609, 2617, 2621,
-            2633, 2647, 2657, 2659, 2663, 2671, 2677, 2683, 2687, 2689, 2693, 2699, 2707, 2711, 2713, 2719, 2729, 2731, 2741, 2749,
-            2753, 2767, 2777, 2789, 2791, 2797, 2801, 2803, 2819, 2833, 2837, 2843, 2851, 2857, 2861, 2879, 2887, 2897, 2903, 2909,
-            2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999, 3001, 3011, 3019, 3023, 3037, 3041, 3049, 3061, 3067, 3079, 3083,
-            3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181, 3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257, 3259,
-            3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331, 3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413, 3433,
-            3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511, 3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571, 3581,
-            3583, 3593, 3607, 3613, 3617, 3623, 3631, 3637, 3643, 3659, 3671};
+    public static final int[] PRIMES = { 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233, 239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317, 331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419, 421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503, 509, 521, 523, 541, 547, 557, 563, 569, 571, 577, 587, 593, 599, 601, 607, 613, 617, 619, 631, 641, 643, 647, 653, 659, 661, 673, 677, 683, 691, 701, 709, 719, 727, 733, 739, 743, 751, 757, 761, 769, 773, 787, 797, 809, 811, 821, 823, 827, 829, 839, 853, 857, 859, 863, 877, 881, 883, 887, 907, 911, 919, 929, 937, 941, 947, 953, 967, 971, 977, 983, 991, 997, 1009, 1013, 1019, 1021, 1031, 1033, 1039, 1049, 1051, 1061, 1063, 1069, 1087, 1091, 1093, 1097, 1103, 1109, 1117, 1123, 1129, 1151, 1153, 1163, 1171, 1181, 1187, 1193, 1201, 1213, 1217, 1223, 1229, 1231, 1237, 1249, 1259, 1277, 1279, 1283, 1289, 1291, 1297, 1301, 1303, 1307, 1319, 1321, 1327, 1361, 1367, 1373, 1381, 1399, 1409, 1423, 1427, 1429, 1433, 1439, 1447, 1451, 1453, 1459, 1471, 1481, 1483, 1487, 1489, 1493, 1499, 1511, 1523, 1531, 1543, 1549, 1553, 1559, 1567, 1571, 1579, 1583, 1597, 1601, 1607, 1609, 1613, 1619, 1621, 1627, 1637, 1657, 1663, 1667, 1669, 1693, 1697, 1699, 1709, 1721, 1723, 1733, 1741, 1747, 1753, 1759, 1777, 1783, 1787, 1789, 1801, 1811, 1823, 1831, 1847, 1861, 1867, 1871, 1873, 1877, 1879, 1889, 1901, 1907, 1913, 1931, 1933, 1949, 1951, 1973, 1979, 1987, 1993, 1997, 1999, 2003, 2011, 2017, 2027, 2029, 2039, 2053, 2063, 2069, 2081, 2083, 2087, 2089, 2099, 2111, 2113, 2129, 2131, 2137, 2141, 2143, 2153, 2161, 2179, 2203, 2207, 2213, 2221, 2237, 2239, 2243, 2251, 2267, 2269, 2273, 2281, 2287, 2293, 2297, 2309, 2311, 2333, 2339, 2341, 2347, 2351, 2357, 2371, 2377, 2381, 2383, 2389, 2393, 2399, 2411, 2417, 2423, 2437, 2441, 2447, 2459, 2467, 2473, 2477, 2503, 2521, 2531, 2539, 2543, 2549, 2551, 2557, 2579, 2591, 2593, 2609, 2617, 2621, 2633, 2647, 2657, 2659, 2663, 2671, 2677, 2683, 2687, 2689, 2693, 2699, 2707, 2711, 2713, 2719, 2729, 2731, 2741, 2749, 2753, 2767, 2777, 2789, 2791, 2797, 2801, 2803, 2819, 2833, 2837, 2843, 2851, 2857, 2861, 2879, 2887, 2897, 2903, 2909, 2917, 2927, 2939, 2953, 2957, 2963, 2969, 2971, 2999, 3001, 3011, 3019, 3023, 3037, 3041, 3049, 3061, 3067, 3079, 3083, 3089, 3109, 3119, 3121, 3137, 3163, 3167, 3169, 3181, 3187, 3191, 3203, 3209, 3217, 3221, 3229, 3251, 3253, 3257, 3259, 3271, 3299, 3301, 3307, 3313, 3319, 3323, 3329, 3331, 3343, 3347, 3359, 3361, 3371, 3373, 3389, 3391, 3407, 3413, 3433, 3449, 3457, 3461, 3463, 3467, 3469, 3491, 3499, 3511, 3517, 3527, 3529, 3533, 3539, 3541, 3547, 3557, 3559, 3571, 3581, 3583, 3593, 3607, 3613, 3617, 3623, 3631, 3637, 3643, 3659, 3671 };
 
-    /** The last number in PRIMES. */
-    public static final int PRIMES_LAST = PRIMES[PRIMES.length - 1];
+    /**
+     * The last number in PRIMES.
+     */
+    public static final int PRIMES_LAST = PRIMES[AOR_minus(PRIMES.length, 1, "org.apache.commons.math3.primes.SmallPrimes.null", _mut0, _mut1, _mut2, _mut3)];
 
     /**
      * Hide utility class.
@@ -80,8 +60,11 @@ class SmallPrimes {
      * @return the part of n which remains to be factored, it is either a prime or a semi-prime
      */
     public static int smallTrialDivision(int n, final List<Integer> factors) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.smallTrialDivision_82");
         for (int p : PRIMES) {
-            while (0 == n % p) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.smallTrialDivision_82");
+            while (ROR_equals(0, AOR_remainder(n, p, "org.apache.commons.math3.primes.SmallPrimes.smallTrialDivision_82", _mut4, _mut5, _mut6, _mut7), "org.apache.commons.math3.primes.SmallPrimes.smallTrialDivision_82", _mut8, _mut9, _mut10, _mut11, _mut12)) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.smallTrialDivision_82");
                 n /= p;
                 factors.add(p);
             }
@@ -97,23 +80,25 @@ class SmallPrimes {
      * @return  n or 1 if factorization is completed.
      */
     public static int boundedTrialDivision(int n, int maxFactor, List<Integer> factors) {
-        int f = PRIMES_LAST + 2;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99");
+        int f = AOR_plus(PRIMES_LAST, 2, "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut13, _mut14, _mut15, _mut16);
         // no check is done about n >= f
-        while (f <= maxFactor) {
-            if (0 == n % f) {
+        while (ROR_less_equals(f, maxFactor, "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut35, _mut36, _mut37, _mut38, _mut39)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99");
+            if (ROR_equals(0, AOR_remainder(n, f, "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut17, _mut18, _mut19, _mut20), "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut21, _mut22, _mut23, _mut24, _mut25)) {
                 n /= f;
                 factors.add(f);
                 break;
             }
             f += 4;
-            if (0 == n % f) {
+            if (ROR_equals(0, AOR_remainder(n, f, "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut26, _mut27, _mut28, _mut29), "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut30, _mut31, _mut32, _mut33, _mut34)) {
                 n /= f;
                 factors.add(f);
                 break;
             }
             f += 2;
         }
-        if (n != 1) {
+        if (ROR_not_equals(n, 1, "org.apache.commons.math3.primes.SmallPrimes.boundedTrialDivision_99", _mut40, _mut41, _mut42, _mut43, _mut44)) {
             factors.add(n);
         }
         return n;
@@ -124,10 +109,11 @@ class SmallPrimes {
      * @param n the number to factor
      * @return the list of prime factors of n
      */
-    public static List<Integer> trialDivision(int n){
+    public static List<Integer> trialDivision(int n) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.trialDivision_127");
         final List<Integer> factors = new ArrayList<Integer>(32);
         n = smallTrialDivision(n, factors);
-        if (1 == n) {
+        if (ROR_equals(1, n, "org.apache.commons.math3.primes.SmallPrimes.trialDivision_127", _mut45, _mut46, _mut47, _mut48, _mut49)) {
             return factors;
         }
         // here we are sure that n is either a prime or a semi prime
@@ -146,43 +132,47 @@ class SmallPrimes {
      * @return true if n is prime. false if n is definitely composite.
      */
     public static boolean millerRabinPrimeTest(final int n) {
-        final int nMinus1 = n - 1;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148");
+        final int nMinus1 = AOR_minus(n, 1, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut50, _mut51, _mut52, _mut53);
         final int s = Integer.numberOfTrailingZeros(nMinus1);
         final int r = nMinus1 >> s;
-        //r must be odd, it is not checked here
+        // r must be odd, it is not checked here
         int t = 1;
-        if (n >= 2047) {
+        if (ROR_greater_equals(n, 2047, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut54, _mut55, _mut56, _mut57, _mut58)) {
             t = 2;
         }
-        if (n >= 1373653) {
+        if (ROR_greater_equals(n, 1373653, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut59, _mut60, _mut61, _mut62, _mut63)) {
             t = 3;
         }
-        if (n >= 25326001) {
+        if (ROR_greater_equals(n, 25326001, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut64, _mut65, _mut66, _mut67, _mut68)) {
             t = 4;
-        } // works up to 3.2 billion, int range stops at 2.7 so we are safe :-)
+        }
+        // works up to 3.2 billion, int range stops at 2.7 so we are safe :-)
         BigInteger br = BigInteger.valueOf(r);
         BigInteger bn = BigInteger.valueOf(n);
-
-        for (int i = 0; i < t; i++) {
+        for (int i = 0; ROR_less(i, t, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut113, _mut114, _mut115, _mut116, _mut117); i++) {
+            SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148");
             BigInteger a = BigInteger.valueOf(SmallPrimes.PRIMES[i]);
             BigInteger bPow = a.modPow(br, bn);
             int y = bPow.intValue();
-            if ((1 != y) && (y != nMinus1)) {
+            if ((_mut79 ? ((ROR_not_equals(1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut69, _mut70, _mut71, _mut72, _mut73)) || (ROR_not_equals(y, nMinus1, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut74, _mut75, _mut76, _mut77, _mut78))) : ((ROR_not_equals(1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut69, _mut70, _mut71, _mut72, _mut73)) && (ROR_not_equals(y, nMinus1, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut74, _mut75, _mut76, _mut77, _mut78))))) {
                 int j = 1;
-                while ((j <= s - 1) && (nMinus1 != y)) {
-                    long square = ((long) y) * y;
-                    y = (int) (square % n);
-                    if (1 == y) {
+                while ((_mut107 ? ((ROR_less_equals(j, AOR_minus(s, 1, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut93, _mut94, _mut95, _mut96), "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut97, _mut98, _mut99, _mut100, _mut101)) || (ROR_not_equals(nMinus1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut102, _mut103, _mut104, _mut105, _mut106))) : ((ROR_less_equals(j, AOR_minus(s, 1, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut93, _mut94, _mut95, _mut96), "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut97, _mut98, _mut99, _mut100, _mut101)) && (ROR_not_equals(nMinus1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut102, _mut103, _mut104, _mut105, _mut106))))) {
+                    SchemataLibMethods.listener.listen("org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148");
+                    long square = AOR_multiply(((long) y), y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut80, _mut81, _mut82, _mut83);
+                    y = (int) (AOR_remainder(square, n, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut84, _mut85, _mut86, _mut87));
+                    if (ROR_equals(1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut88, _mut89, _mut90, _mut91, _mut92)) {
                         return false;
-                    } // definitely composite
+                    }
+                    // definitely composite
                     j++;
                 }
-                if (nMinus1 != y) {
+                if (ROR_not_equals(nMinus1, y, "org.apache.commons.math3.primes.SmallPrimes.millerRabinPrimeTest_148", _mut108, _mut109, _mut110, _mut111, _mut112)) {
                     return false;
-                } // definitely composite
+                }
             }
         }
-        return true; // definitely prime
+        // definitely prime
+        return true;
     }
 }
-

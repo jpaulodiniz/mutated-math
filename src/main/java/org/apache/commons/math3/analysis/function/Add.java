@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.function;
 
 import org.apache.commons.math3.analysis.BivariateFunction;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Add the two operands.
@@ -25,8 +26,15 @@ import org.apache.commons.math3.analysis.BivariateFunction;
  * @since 3.0
  */
 public class Add implements BivariateFunction {
-    /** {@inheritDoc} */
+
+    @Conditional
+    public static boolean _mut91950 = false, _mut91951 = false, _mut91952 = false, _mut91953 = false;
+
+    /**
+     * {@inheritDoc}
+     */
     public double value(double x, double y) {
-        return x + y;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.Add.value_29");
+        return AOR_plus(x, y, "org.apache.commons.math3.analysis.function.Add.value_29", _mut91950, _mut91951, _mut91952, _mut91953);
     }
 }

@@ -14,14 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.stat.descriptive;
 
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
-
 import org.apache.commons.math3.exception.NullArgumentException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -48,13 +48,15 @@ import org.apache.commons.math3.exception.NullArgumentException;
  * to avoid unnecessary computation and synchronization delays.</p>
  *
  * @since 2.0
- *
  */
-public class AggregateSummaryStatistics implements StatisticalSummary,
-        Serializable {
+public class AggregateSummaryStatistics implements StatisticalSummary, Serializable {
 
+    @Conditional
+    public static boolean _mut2454 = false, _mut2455 = false, _mut2456 = false, _mut2457 = false, _mut2458 = false, _mut2459 = false, _mut2460 = false, _mut2461 = false, _mut2462 = false, _mut2463 = false, _mut2464 = false, _mut2465 = false, _mut2466 = false, _mut2467 = false, _mut2468 = false, _mut2469 = false, _mut2470 = false, _mut2471 = false, _mut2472 = false, _mut2473 = false, _mut2474 = false, _mut2475 = false, _mut2476 = false, _mut2477 = false, _mut2478 = false, _mut2479 = false, _mut2480 = false, _mut2481 = false, _mut2482 = false, _mut2483 = false, _mut2484 = false, _mut2485 = false, _mut2486 = false, _mut2487 = false, _mut2488 = false, _mut2489 = false, _mut2490 = false, _mut2491 = false, _mut2492 = false, _mut2493 = false, _mut2494 = false, _mut2495 = false, _mut2496 = false, _mut2497 = false, _mut2498 = false, _mut2499 = false, _mut2500 = false, _mut2501 = false, _mut2502 = false, _mut2503 = false, _mut2504 = false, _mut2505 = false, _mut2506 = false, _mut2507 = false, _mut2508 = false, _mut2509 = false, _mut2510 = false, _mut2511 = false, _mut2512 = false, _mut2513 = false, _mut2514 = false, _mut2515 = false, _mut2516 = false, _mut2517 = false, _mut2518 = false, _mut2519 = false, _mut2520 = false, _mut2521 = false, _mut2522 = false, _mut2523 = false, _mut2524 = false, _mut2525 = false, _mut2526 = false, _mut2527 = false, _mut2528 = false, _mut2529 = false, _mut2530 = false, _mut2531 = false, _mut2532 = false, _mut2533 = false, _mut2534 = false, _mut2535 = false, _mut2536 = false, _mut2537 = false, _mut2538 = false, _mut2539 = false, _mut2540 = false;
 
-    /** Serializable version identifier */
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -8207112444016386906L;
 
     /**
@@ -71,7 +73,6 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
     /**
      * Initializes a new AggregateSummaryStatistics with default statistics
      * implementations.
-     *
      */
     public AggregateSummaryStatistics() {
         // No try-catch or throws NAE because arg is guaranteed non-null
@@ -96,8 +97,7 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
      * @see #createContributingStatistics()
      */
     public AggregateSummaryStatistics(SummaryStatistics prototypeStatistics) throws NullArgumentException {
-        this(prototypeStatistics,
-             prototypeStatistics == null ? null : new SummaryStatistics(prototypeStatistics));
+        this(prototypeStatistics, prototypeStatistics == null ? null : new SummaryStatistics(prototypeStatistics));
     }
 
     /**
@@ -120,12 +120,9 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
      *      statistics object is used.
      * @see #createContributingStatistics()
      */
-    public AggregateSummaryStatistics(SummaryStatistics prototypeStatistics,
-                                      SummaryStatistics initialStatistics) {
-        this.statisticsPrototype =
-            (prototypeStatistics == null) ? new SummaryStatistics() : prototypeStatistics;
-        this.statistics =
-            (initialStatistics == null) ? new SummaryStatistics() : initialStatistics;
+    public AggregateSummaryStatistics(SummaryStatistics prototypeStatistics, SummaryStatistics initialStatistics) {
+        this.statisticsPrototype = (prototypeStatistics == null) ? new SummaryStatistics() : prototypeStatistics;
+        this.statistics = (initialStatistics == null) ? new SummaryStatistics() : initialStatistics;
     }
 
     /**
@@ -267,8 +264,7 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
      */
     public StatisticalSummary getSummary() {
         synchronized (statistics) {
-            return new StatisticalSummaryValues(getMean(), getVariance(), getN(),
-                    getMax(), getMin(), getSum());
+            return new StatisticalSummaryValues(getMean(), getVariance(), getN(), getMax(), getMin(), getSum());
         }
     }
 
@@ -281,12 +277,9 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
      *      is a copy of the configured prototype statistics.
      */
     public SummaryStatistics createContributingStatistics() {
-        SummaryStatistics contributingStatistics
-                = new AggregatingSummaryStatistics(statistics);
-
+        SummaryStatistics contributingStatistics = new AggregatingSummaryStatistics(statistics);
         // No try - catch or advertising NAE because neither argument will ever be null
         SummaryStatistics.copy(statisticsPrototype, contributingStatistics);
-
         return contributingStatistics;
     }
 
@@ -303,6 +296,7 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
      * @return summary statistics for the combined dataset
      */
     public static StatisticalSummaryValues aggregate(Collection<? extends StatisticalSummary> statistics) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305");
         if (statistics == null) {
             return null;
         }
@@ -316,32 +310,33 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
         double sum = current.getSum();
         double max = current.getMax();
         double var = current.getVariance();
-        double m2 = var * (n - 1d);
+        double m2 = AOR_multiply(var, (AOR_minus(n, 1d, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2454, _mut2455, _mut2456, _mut2457)), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2458, _mut2459, _mut2460, _mut2461);
         double mean = current.getMean();
         while (iterator.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305");
             current = iterator.next();
-            if (current.getMin() < min || Double.isNaN(min)) {
+            if ((_mut2467 ? (ROR_less(current.getMin(), min, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2462, _mut2463, _mut2464, _mut2465, _mut2466) && Double.isNaN(min)) : (ROR_less(current.getMin(), min, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2462, _mut2463, _mut2464, _mut2465, _mut2466) || Double.isNaN(min)))) {
                 min = current.getMin();
             }
-            if (current.getMax() > max || Double.isNaN(max)) {
+            if ((_mut2473 ? (ROR_greater(current.getMax(), max, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2468, _mut2469, _mut2470, _mut2471, _mut2472) && Double.isNaN(max)) : (ROR_greater(current.getMax(), max, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2468, _mut2469, _mut2470, _mut2471, _mut2472) || Double.isNaN(max)))) {
                 max = current.getMax();
             }
             sum += current.getSum();
             final double oldN = n;
             final double curN = current.getN();
             n += curN;
-            final double meanDiff = current.getMean() - mean;
-            mean = sum / n;
-            final double curM2 = current.getVariance() * (curN - 1d);
-            m2 = m2 + curM2 + meanDiff * meanDiff * oldN * curN / n;
+            final double meanDiff = AOR_minus(current.getMean(), mean, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2474, _mut2475, _mut2476, _mut2477);
+            mean = AOR_divide(sum, n, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2478, _mut2479, _mut2480, _mut2481);
+            final double curM2 = AOR_multiply(current.getVariance(), (AOR_minus(curN, 1d, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2482, _mut2483, _mut2484, _mut2485)), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2486, _mut2487, _mut2488, _mut2489);
+            m2 = AOR_plus(AOR_plus(m2, curM2, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2490, _mut2491, _mut2492, _mut2493), AOR_divide(AOR_multiply(AOR_multiply(AOR_multiply(meanDiff, meanDiff, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2494, _mut2495, _mut2496, _mut2497), oldN, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2498, _mut2499, _mut2500, _mut2501), curN, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2502, _mut2503, _mut2504, _mut2505), n, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2506, _mut2507, _mut2508, _mut2509), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2510, _mut2511, _mut2512, _mut2513);
         }
         final double variance;
-        if (n == 0) {
+        if (ROR_equals(n, 0, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2514, _mut2515, _mut2516, _mut2517, _mut2518)) {
             variance = Double.NaN;
-        } else if (n == 1) {
+        } else if (ROR_equals(n, 1, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2519, _mut2520, _mut2521, _mut2522, _mut2523)) {
             variance = 0d;
         } else {
-            variance = m2 / (n - 1);
+            variance = AOR_divide(m2, (AOR_minus(n, 1, "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2524, _mut2525, _mut2526, _mut2527)), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.aggregate_305", _mut2528, _mut2529, _mut2530, _mut2531);
         }
         return new StatisticalSummaryValues(mean, variance, n, max, min, sum);
     }
@@ -399,15 +394,15 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
          */
         @Override
         public boolean equals(Object object) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.equals_400");
             if (object == this) {
                 return true;
             }
             if (object instanceof AggregatingSummaryStatistics == false) {
                 return false;
             }
-            AggregatingSummaryStatistics stat = (AggregatingSummaryStatistics)object;
-            return super.equals(stat) &&
-                   aggregateStatistics.equals(stat.aggregateStatistics);
+            AggregatingSummaryStatistics stat = (AggregatingSummaryStatistics) object;
+            return (_mut2532 ? (super.equals(stat) || aggregateStatistics.equals(stat.aggregateStatistics)) : (super.equals(stat) && aggregateStatistics.equals(stat.aggregateStatistics)));
         }
 
         /**
@@ -416,7 +411,8 @@ public class AggregateSummaryStatistics implements StatisticalSummary,
          */
         @Override
         public int hashCode() {
-            return 123 + super.hashCode() + aggregateStatistics.hashCode();
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.hashCode_417");
+            return AOR_plus(AOR_plus(123, super.hashCode(), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.hashCode_417", _mut2533, _mut2534, _mut2535, _mut2536), aggregateStatistics.hashCode(), "org.apache.commons.math3.stat.descriptive.AggregateSummaryStatistics.hashCode_417", _mut2537, _mut2538, _mut2539, _mut2540);
         }
     }
 }

@@ -27,11 +27,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.SortedMap;
 import java.util.TreeMap;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Maintains a frequency distribution.
@@ -60,14 +61,20 @@ import org.apache.commons.math3.util.MathUtils;
  * <p>
  * The values are ordered using the default (natural order), unless a
  * <code>Comparator</code> is supplied in the constructor.</p>
- *
  */
 public class Frequency implements Serializable {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut5245 = false, _mut5246 = false, _mut5247 = false, _mut5248 = false, _mut5249 = false, _mut5250 = false, _mut5251 = false, _mut5252 = false, _mut5253 = false, _mut5254 = false, _mut5255 = false, _mut5256 = false, _mut5257 = false, _mut5258 = false, _mut5259 = false, _mut5260 = false, _mut5261 = false, _mut5262 = false, _mut5263 = false, _mut5264 = false, _mut5265 = false, _mut5266 = false, _mut5267 = false, _mut5268 = false, _mut5269 = false, _mut5270 = false, _mut5271 = false, _mut5272 = false, _mut5273 = false, _mut5274 = false, _mut5275 = false, _mut5276 = false, _mut5277 = false, _mut5278 = false, _mut5279 = false, _mut5280 = false, _mut5281 = false, _mut5282 = false, _mut5283 = false, _mut5284 = false, _mut5285 = false, _mut5286 = false, _mut5287 = false, _mut5288 = false, _mut5289 = false, _mut5290 = false, _mut5291 = false, _mut5292 = false, _mut5293 = false, _mut5294 = false, _mut5295 = false, _mut5296 = false, _mut5297 = false, _mut5298 = false, _mut5299 = false, _mut5300 = false, _mut5301 = false, _mut5302 = false, _mut5303 = false, _mut5304 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -3845586908418844111L;
 
-    /** underlying collection */
+    /**
+     * underlying collection
+     */
     private final SortedMap<Comparable<?>, Long> freqTable;
 
     /**
@@ -82,7 +89,8 @@ public class Frequency implements Serializable {
      *
      * @param comparator Comparator used to order values
      */
-    @SuppressWarnings("unchecked") // TODO is the cast OK?
+    // TODO is the cast OK?
+    @SuppressWarnings("unchecked")
     public Frequency(Comparator<?> comparator) {
         freqTable = new TreeMap<Comparable<?>, Long>((Comparator<? super Comparable<?>>) comparator);
     }
@@ -99,6 +107,7 @@ public class Frequency implements Serializable {
         outBuffer.append("Value \t Freq. \t Pct. \t Cum Pct. \n");
         Iterator<Comparable<?>> iter = freqTable.keySet().iterator();
         while (iter.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.toString_95");
             Comparable<?> value = iter.next();
             outBuffer.append(value);
             outBuffer.append('\t');
@@ -172,6 +181,7 @@ public class Frequency implements Serializable {
      * @since 3.1
      */
     public void incrementValue(Comparable<?> v, long increment) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.incrementValue_174");
         Comparable<?> obj = v;
         if (v instanceof Integer) {
             obj = Long.valueOf(((Integer) v).longValue());
@@ -181,13 +191,11 @@ public class Frequency implements Serializable {
             if (count == null) {
                 freqTable.put(obj, Long.valueOf(increment));
             } else {
-                freqTable.put(obj, Long.valueOf(count.longValue() + increment));
+                freqTable.put(obj, Long.valueOf(AOR_plus(count.longValue(), increment, "org.apache.commons.math3.stat.Frequency.incrementValue_174", _mut5245, _mut5246, _mut5247, _mut5248)));
             }
         } catch (ClassCastException ex) {
-            //TreeMap will throw ClassCastException if v is not comparable
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.INSTANCES_NOT_COMPARABLE_TO_EXISTING_VALUES,
-                  v.getClass().getName());
+            // TreeMap will throw ClassCastException if v is not comparable
+            throw new MathIllegalArgumentException(LocalizedFormats.INSTANCES_NOT_COMPARABLE_TO_EXISTING_VALUES, v.getClass().getName());
         }
     }
 
@@ -242,7 +250,9 @@ public class Frequency implements Serializable {
         incrementValue(Character.valueOf(v), increment);
     }
 
-    /** Clears the frequency table */
+    /**
+     * Clears the frequency table
+     */
     public void clear() {
         freqTable.clear();
     }
@@ -277,8 +287,6 @@ public class Frequency implements Serializable {
         return freqTable.entrySet().iterator();
     }
 
-    //-------------------------------------------------------------------------
-
     /**
      * Returns the sum of all frequencies.
      *
@@ -287,7 +295,8 @@ public class Frequency implements Serializable {
     public long getSumFreq() {
         long result = 0;
         Iterator<Long> iterator = freqTable.values().iterator();
-        while (iterator.hasNext())  {
+        while (iterator.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getSumFreq_287");
             result += iterator.next().longValue();
         }
         return result;
@@ -306,12 +315,11 @@ public class Frequency implements Serializable {
         }
         long result = 0;
         try {
-            Long count =  freqTable.get(v);
+            Long count = freqTable.get(v);
             if (count != null) {
                 result = count.longValue();
             }
-        } catch (ClassCastException ex) { // NOPMD
-            // ignore and return 0 -- ClassCastException will be thrown if value is not comparable
+        } catch (ClassCastException ex) {
         }
         return result;
     }
@@ -352,7 +360,7 @@ public class Frequency implements Serializable {
      * @return the number of unique values that have been added to the frequency table.
      * @see #valuesIterator()
      */
-    public int getUniqueCount(){
+    public int getUniqueCount() {
         return freqTable.keySet().size();
     }
 
@@ -368,11 +376,12 @@ public class Frequency implements Serializable {
      * @return the proportion of values equal to v
      */
     public double getPct(Comparable<?> v) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getPct_370");
         final long sumFreq = getSumFreq();
-        if (sumFreq == 0) {
+        if (ROR_equals(sumFreq, 0, "org.apache.commons.math3.stat.Frequency.getPct_370", _mut5249, _mut5250, _mut5251, _mut5252, _mut5253)) {
             return Double.NaN;
         }
-        return (double) getCount(v) / (double) sumFreq;
+        return AOR_divide((double) getCount(v), (double) sumFreq, "org.apache.commons.math3.stat.Frequency.getPct_370", _mut5254, _mut5255, _mut5256, _mut5257);
     }
 
     /**
@@ -408,8 +417,6 @@ public class Frequency implements Serializable {
         return getPct(Character.valueOf(v));
     }
 
-    //-----------------------------------------------------------------------------------------
-
     /**
      * Returns the cumulative frequency of values less than or equal to v.
      * <p>
@@ -420,7 +427,8 @@ public class Frequency implements Serializable {
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public long getCumFreq(Comparable<?> v) {
-        if (getSumFreq() == 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getCumFreq_421");
+        if (ROR_equals(getSumFreq(), 0, "org.apache.commons.math3.stat.Frequency.getCumFreq_421", _mut5258, _mut5259, _mut5260, _mut5261, _mut5262)) {
             return 0;
         }
         if (v instanceof Integer) {
@@ -431,28 +439,28 @@ public class Frequency implements Serializable {
             c = new NaturalComparator();
         }
         long result = 0;
-
         try {
             Long value = freqTable.get(v);
             if (value != null) {
                 result = value.longValue();
             }
         } catch (ClassCastException ex) {
-            return result;   // v is not comparable
+            // v is not comparable
+            return result;
         }
-
-        if (c.compare(v, freqTable.firstKey()) < 0) {
-            return 0;  // v is comparable, but less than first value
+        if (ROR_less(c.compare(v, freqTable.firstKey()), 0, "org.apache.commons.math3.stat.Frequency.getCumFreq_421", _mut5263, _mut5264, _mut5265, _mut5266, _mut5267)) {
+            // v is comparable, but less than first value
+            return 0;
         }
-
-        if (c.compare(v, freqTable.lastKey()) >= 0) {
-            return getSumFreq();    // v is comparable, but greater than the last value
+        if (ROR_greater_equals(c.compare(v, freqTable.lastKey()), 0, "org.apache.commons.math3.stat.Frequency.getCumFreq_421", _mut5268, _mut5269, _mut5270, _mut5271, _mut5272)) {
+            // v is comparable, but greater than the last value
+            return getSumFreq();
         }
-
         Iterator<Comparable<?>> values = valuesIterator();
         while (values.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getCumFreq_421");
             Comparable<?> nextValue = values.next();
-            if (c.compare(v, nextValue) > 0) {
+            if (ROR_greater(c.compare(v, nextValue), 0, "org.apache.commons.math3.stat.Frequency.getCumFreq_421", _mut5273, _mut5274, _mut5275, _mut5276, _mut5277)) {
                 result += getCount(nextValue);
             } else {
                 return result;
@@ -461,7 +469,7 @@ public class Frequency implements Serializable {
         return result;
     }
 
-     /**
+    /**
      * Returns the cumulative frequency of values less than or equal to v.
      * <p>
      * Returns 0 if v is not comparable to the values set.</p>
@@ -473,7 +481,7 @@ public class Frequency implements Serializable {
         return getCumFreq(Long.valueOf(v));
     }
 
-     /**
+    /**
      * Returns the cumulative frequency of values less than or equal to v.
      * <p>
      * Returns 0 if v is not comparable to the values set.</p>
@@ -497,8 +505,6 @@ public class Frequency implements Serializable {
         return getCumFreq(Character.valueOf(v));
     }
 
-    //----------------------------------------------------------------------------------------------
-
     /**
      * Returns the cumulative percentage of values less than or equal to v
      * (as a proportion between 0 and 1).
@@ -511,11 +517,12 @@ public class Frequency implements Serializable {
      * @return the proportion of values less than or equal to v
      */
     public double getCumPct(Comparable<?> v) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getCumPct_513");
         final long sumFreq = getSumFreq();
-        if (sumFreq == 0) {
+        if (ROR_equals(sumFreq, 0, "org.apache.commons.math3.stat.Frequency.getCumPct_513", _mut5278, _mut5279, _mut5280, _mut5281, _mut5282)) {
             return Double.NaN;
         }
-        return (double) getCumFreq(v) / (double) sumFreq;
+        return AOR_divide((double) getCumFreq(v), (double) sumFreq, "org.apache.commons.math3.stat.Frequency.getCumPct_513", _mut5283, _mut5284, _mut5285, _mut5286);
     }
 
     /**
@@ -564,27 +571,27 @@ public class Frequency implements Serializable {
      * @since 3.3
      */
     public List<Comparable<?>> getMode() {
-        long mostPopular = 0; // frequencies are always positive
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getMode_566");
+        // frequencies are always positive
+        long mostPopular = 0;
         // Get the max count first, so we avoid having to recreate the List each time
-        for(Long l : freqTable.values()) {
+        for (Long l : freqTable.values()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getMode_566");
             long frequency = l.longValue();
-            if (frequency > mostPopular) {
+            if (ROR_greater(frequency, mostPopular, "org.apache.commons.math3.stat.Frequency.getMode_566", _mut5287, _mut5288, _mut5289, _mut5290, _mut5291)) {
                 mostPopular = frequency;
             }
         }
-
         List<Comparable<?>> modeList = new ArrayList<Comparable<?>>();
         for (Entry<Comparable<?>, Long> ent : freqTable.entrySet()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.getMode_566");
             long frequency = ent.getValue().longValue();
-            if (frequency == mostPopular) {
-               modeList.add(ent.getKey());
+            if (ROR_equals(frequency, mostPopular, "org.apache.commons.math3.stat.Frequency.getMode_566", _mut5292, _mut5293, _mut5294, _mut5295, _mut5296)) {
+                modeList.add(ent.getKey());
             }
         }
         return modeList;
     }
-
-    //----------------------------------------------------------------------------------------------
 
     /**
      * Merge another Frequency object's counts into this instance.
@@ -597,9 +604,9 @@ public class Frequency implements Serializable {
      */
     public void merge(final Frequency other) throws NullArgumentException {
         MathUtils.checkNotNull(other, LocalizedFormats.NULL_NOT_ALLOWED);
-
         final Iterator<Map.Entry<Comparable<?>, Long>> iter = other.entrySetIterator();
         while (iter.hasNext()) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.merge_598");
             final Map.Entry<Comparable<?>, Long> entry = iter.next();
             incrementValue(entry.getKey(), entry.getValue().longValue());
         }
@@ -616,13 +623,11 @@ public class Frequency implements Serializable {
      */
     public void merge(final Collection<Frequency> others) throws NullArgumentException {
         MathUtils.checkNotNull(others, LocalizedFormats.NULL_NOT_ALLOWED);
-
         for (final Frequency freq : others) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.merge_617");
             merge(freq);
         }
     }
-
-    //----------------------------------------------------------------------------------------------
 
     /**
      * A Comparator that compares comparable objects using the
@@ -631,7 +636,9 @@ public class Frequency implements Serializable {
      */
     private static class NaturalComparator<T extends Comparable<T>> implements Comparator<Comparable<T>>, Serializable {
 
-        /** Serializable version identifier */
+        /**
+         * Serializable version identifier
+         */
         private static final long serialVersionUID = -3852193713161395148L;
 
         /**
@@ -647,23 +654,28 @@ public class Frequency implements Serializable {
          * @throws ClassCastException when <i>o1</i> is not a {@link Comparable Comparable},
          *         or when <code>((Comparable)o1).compareTo(o2)</code> does
          */
-        @SuppressWarnings("unchecked") // cast to (T) may throw ClassCastException, see Javadoc
+        // cast to (T) may throw ClassCastException, see Javadoc
+        @SuppressWarnings("unchecked")
         public int compare(Comparable<T> o1, Comparable<T> o2) {
             return o1.compareTo((T) o2);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int hashCode() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.Frequency.hashCode_657");
         final int prime = 31;
         int result = 1;
-        result = prime * result +
-                 ((freqTable == null) ? 0 : freqTable.hashCode());
+        result = AOR_plus(AOR_multiply(prime, result, "org.apache.commons.math3.stat.Frequency.hashCode_657", _mut5297, _mut5298, _mut5299, _mut5300), ((freqTable == null) ? 0 : freqTable.hashCode()), "org.apache.commons.math3.stat.Frequency.hashCode_657", _mut5301, _mut5302, _mut5303, _mut5304);
         return result;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -682,5 +694,4 @@ public class Frequency implements Serializable {
         }
         return true;
     }
-
 }

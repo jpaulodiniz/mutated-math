@@ -18,36 +18,50 @@ package org.apache.commons.math3.geometry.spherical.oned;
 
 import org.apache.commons.math3.geometry.Point;
 import org.apache.commons.math3.geometry.partitioning.Hyperplane;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/** This class represents a 1D oriented hyperplane on the circle.
+/**
+ * This class represents a 1D oriented hyperplane on the circle.
  * <p>An hyperplane on the 1-sphere is an angle with an orientation.</p>
  * <p>Instances of this class are guaranteed to be immutable.</p>
  * @since 3.3
  */
 public class LimitAngle implements Hyperplane<Sphere1D> {
 
-    /** Angle location. */
+    @Conditional
+    public static boolean _mut85659 = false, _mut85660 = false, _mut85661 = false, _mut85662 = false;
+
+    /**
+     * Angle location.
+     */
     private S1Point location;
 
-    /** Orientation. */
+    /**
+     * Orientation.
+     */
     private boolean direct;
 
-    /** Tolerance below which angles are considered identical. */
+    /**
+     * Tolerance below which angles are considered identical.
+     */
     private final double tolerance;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param location location of the hyperplane
      * @param direct if true, the plus side of the hyperplane is towards
      * angles greater than {@code location}
      * @param tolerance tolerance below which angles are considered identical
      */
     public LimitAngle(final S1Point location, final boolean direct, final double tolerance) {
-        this.location  = location;
-        this.direct    = direct;
+        this.location = location;
+        this.direct = direct;
         this.tolerance = tolerance;
     }
 
-    /** Copy the instance.
+    /**
+     * Copy the instance.
      * <p>Since instances are immutable, this method directly returns
      * the instance.</p>
      * @return the instance itself
@@ -56,13 +70,17 @@ public class LimitAngle implements Hyperplane<Sphere1D> {
         return this;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double getOffset(final Point<Sphere1D> point) {
-        final double delta = ((S1Point) point).getAlpha() - location.getAlpha();
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.spherical.oned.LimitAngle.getOffset_60");
+        final double delta = AOR_minus(((S1Point) point).getAlpha(), location.getAlpha(), "org.apache.commons.math3.geometry.spherical.oned.LimitAngle.getOffset_60", _mut85659, _mut85660, _mut85661, _mut85662);
         return direct ? delta : -delta;
     }
 
-    /** Check if the hyperplane orientation is direct.
+    /**
+     * Check if the hyperplane orientation is direct.
      * @return true if the plus side of the hyperplane is towards
      * angles greater than hyperplane location
      */
@@ -70,7 +88,8 @@ public class LimitAngle implements Hyperplane<Sphere1D> {
         return direct;
     }
 
-    /** Get the reverse of the instance.
+    /**
+     * Get the reverse of the instance.
      * <p>Get a limit angle with reversed orientation with respect to the
      * instance. A new object is built, the instance is untouched.</p>
      * @return a new limit angle, with orientation opposite to the instance orientation
@@ -79,7 +98,8 @@ public class LimitAngle implements Hyperplane<Sphere1D> {
         return new LimitAngle(location, !direct, tolerance);
     }
 
-    /** Build a region covering the whole hyperplane.
+    /**
+     * Build a region covering the whole hyperplane.
      * <p>Since this class represent zero dimension spaces which does
      * not have lower dimension sub-spaces, this method returns a dummy
      * implementation of a {@link
@@ -94,7 +114,8 @@ public class LimitAngle implements Hyperplane<Sphere1D> {
         return new SubLimitAngle(this, null);
     }
 
-    /** Build a region covering the whole space.
+    /**
+     * Build a region covering the whole space.
      * @return a region containing the instance (really an {@link
      * ArcsSet IntervalsSet} instance)
      */
@@ -102,26 +123,32 @@ public class LimitAngle implements Hyperplane<Sphere1D> {
         return new ArcsSet(tolerance);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public boolean sameOrientationAs(final Hyperplane<Sphere1D> other) {
         return !(direct ^ ((LimitAngle) other).direct);
     }
 
-    /** Get the hyperplane location on the circle.
+    /**
+     * Get the hyperplane location on the circle.
      * @return the hyperplane location
      */
     public S1Point getLocation() {
         return location;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Point<Sphere1D> project(Point<Sphere1D> point) {
         return location;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double getTolerance() {
         return tolerance;
     }
-
 }

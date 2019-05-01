@@ -19,6 +19,8 @@ package org.apache.commons.math3.util;
 import org.apache.commons.math3.exception.ConvergenceException;
 import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Provides a generic means to evaluate continued fractions.  Subclasses simply
@@ -31,10 +33,15 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  * Continued Fraction</a></li>
  * </ul>
  * </p>
- *
  */
 public abstract class ContinuedFraction {
-    /** Maximum allowed numerical error. */
+
+    @Conditional
+    public static boolean _mut40352 = false, _mut40353 = false, _mut40354 = false, _mut40355 = false, _mut40356 = false, _mut40357 = false, _mut40358 = false, _mut40359 = false, _mut40360 = false, _mut40361 = false, _mut40362 = false, _mut40363 = false, _mut40364 = false, _mut40365 = false, _mut40366 = false, _mut40367 = false, _mut40368 = false, _mut40369 = false, _mut40370 = false, _mut40371 = false, _mut40372 = false, _mut40373 = false, _mut40374 = false, _mut40375 = false, _mut40376 = false, _mut40377 = false, _mut40378 = false, _mut40379 = false, _mut40380 = false, _mut40381 = false, _mut40382 = false, _mut40383 = false, _mut40384 = false, _mut40385 = false, _mut40386 = false, _mut40387 = false, _mut40388 = false, _mut40389 = false, _mut40390 = false, _mut40391 = false, _mut40392 = false, _mut40393 = false, _mut40394 = false, _mut40395 = false, _mut40396 = false, _mut40397 = false, _mut40398 = false;
+
+    /**
+     * Maximum allowed numerical error.
+     */
     private static final double DEFAULT_EPSILON = 10e-9;
 
     /**
@@ -91,8 +98,7 @@ public abstract class ContinuedFraction {
      * @throws ConvergenceException if the algorithm fails to converge.
      * @throws MaxCountExceededException if maximal number of iterations is reached
      */
-    public double evaluate(double x, int maxIterations)
-        throws ConvergenceException, MaxCountExceededException {
+    public double evaluate(double x, int maxIterations) throws ConvergenceException, MaxCountExceededException {
         return evaluate(x, DEFAULT_EPSILON, maxIterations);
     }
 
@@ -119,63 +125,50 @@ public abstract class ContinuedFraction {
      * @throws ConvergenceException if the algorithm fails to converge.
      * @throws MaxCountExceededException if maximal number of iterations is reached
      */
-    public double evaluate(double x, double epsilon, int maxIterations)
-        throws ConvergenceException, MaxCountExceededException {
+    public double evaluate(double x, double epsilon, int maxIterations) throws ConvergenceException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ContinuedFraction.evaluate_122");
         final double small = 1e-50;
         double hPrev = getA(0, x);
-
         // use the value of small as epsilon criteria for zero checks
         if (Precision.equals(hPrev, 0.0, small)) {
             hPrev = small;
         }
-
         int n = 1;
         double dPrev = 0.0;
         double cPrev = hPrev;
         double hN = hPrev;
-
-        while (n < maxIterations) {
+        while (ROR_less(n, maxIterations, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40389, _mut40390, _mut40391, _mut40392, _mut40393)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ContinuedFraction.evaluate_122");
             final double a = getA(n, x);
             final double b = getB(n, x);
-
-            double dN = a + b * dPrev;
+            double dN = AOR_plus(a, AOR_multiply(b, dPrev, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40352, _mut40353, _mut40354, _mut40355), "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40356, _mut40357, _mut40358, _mut40359);
             if (Precision.equals(dN, 0.0, small)) {
                 dN = small;
             }
-            double cN = a + b / cPrev;
+            double cN = AOR_plus(a, AOR_divide(b, cPrev, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40360, _mut40361, _mut40362, _mut40363), "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40364, _mut40365, _mut40366, _mut40367);
             if (Precision.equals(cN, 0.0, small)) {
                 cN = small;
             }
-
-            dN = 1 / dN;
-            final double deltaN = cN * dN;
-            hN = hPrev * deltaN;
-
+            dN = AOR_divide(1, dN, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40368, _mut40369, _mut40370, _mut40371);
+            final double deltaN = AOR_multiply(cN, dN, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40372, _mut40373, _mut40374, _mut40375);
+            hN = AOR_multiply(hPrev, deltaN, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40376, _mut40377, _mut40378, _mut40379);
             if (Double.isInfinite(hN)) {
-                throw new ConvergenceException(LocalizedFormats.CONTINUED_FRACTION_INFINITY_DIVERGENCE,
-                                               x);
+                throw new ConvergenceException(LocalizedFormats.CONTINUED_FRACTION_INFINITY_DIVERGENCE, x);
             }
             if (Double.isNaN(hN)) {
-                throw new ConvergenceException(LocalizedFormats.CONTINUED_FRACTION_NAN_DIVERGENCE,
-                                               x);
+                throw new ConvergenceException(LocalizedFormats.CONTINUED_FRACTION_NAN_DIVERGENCE, x);
             }
-
-            if (FastMath.abs(deltaN - 1.0) < epsilon) {
+            if (ROR_less(FastMath.abs(AOR_minus(deltaN, 1.0, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40380, _mut40381, _mut40382, _mut40383)), epsilon, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40384, _mut40385, _mut40386, _mut40387, _mut40388)) {
                 break;
             }
-
             dPrev = dN;
             cPrev = cN;
             hPrev = hN;
             n++;
         }
-
-        if (n >= maxIterations) {
-            throw new MaxCountExceededException(LocalizedFormats.NON_CONVERGENT_CONTINUED_FRACTION,
-                                                maxIterations, x);
+        if (ROR_greater_equals(n, maxIterations, "org.apache.commons.math3.util.ContinuedFraction.evaluate_122", _mut40394, _mut40395, _mut40396, _mut40397, _mut40398)) {
+            throw new MaxCountExceededException(LocalizedFormats.NON_CONVERGENT_CONTINUED_FRACTION, maxIterations, x);
         }
-
         return hN;
     }
-
 }

@@ -18,7 +18,6 @@ package org.apache.commons.math3.stat.inference;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import org.apache.commons.math3.distribution.FDistribution;
 import org.apache.commons.math3.exception.ConvergenceException;
 import org.apache.commons.math3.exception.DimensionMismatchException;
@@ -28,6 +27,8 @@ import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.stat.descriptive.SummaryStatistics;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implements one-way ANOVA (analysis of variance) statistics.
@@ -50,6 +51,9 @@ import org.apache.commons.math3.util.MathUtils;
  * @since 1.2
  */
 public class OneWayAnova {
+
+    @Conditional
+    public static boolean _mut5633 = false, _mut5634 = false, _mut5635 = false, _mut5636 = false, _mut5637 = false, _mut5638 = false, _mut5639 = false, _mut5640 = false, _mut5641 = false, _mut5642 = false, _mut5643 = false, _mut5644 = false, _mut5645 = false, _mut5646 = false, _mut5647 = false, _mut5648 = false, _mut5649 = false, _mut5650 = false, _mut5651 = false, _mut5652 = false, _mut5653 = false, _mut5654 = false, _mut5655 = false, _mut5656 = false, _mut5657 = false, _mut5658 = false, _mut5659 = false, _mut5660 = false, _mut5661 = false, _mut5662 = false, _mut5663 = false, _mut5664 = false, _mut5665 = false, _mut5666 = false, _mut5667 = false, _mut5668 = false, _mut5669 = false, _mut5670 = false, _mut5671 = false, _mut5672 = false, _mut5673 = false, _mut5674 = false, _mut5675 = false, _mut5676 = false, _mut5677 = false, _mut5678 = false, _mut5679 = false, _mut5680 = false, _mut5681 = false, _mut5682 = false, _mut5683 = false, _mut5684 = false, _mut5685 = false, _mut5686 = false, _mut5687 = false, _mut5688 = false, _mut5689 = false, _mut5690 = false, _mut5691 = false, _mut5692 = false, _mut5693 = false, _mut5694 = false, _mut5695 = false, _mut5696 = false, _mut5697 = false, _mut5698 = false, _mut5699 = false, _mut5700 = false, _mut5701 = false, _mut5702 = false, _mut5703 = false, _mut5704 = false, _mut5705 = false, _mut5706 = false, _mut5707 = false, _mut5708 = false, _mut5709 = false, _mut5710 = false, _mut5711 = false, _mut5712 = false, _mut5713 = false, _mut5714 = false;
 
     /**
      * Default constructor.
@@ -84,12 +88,9 @@ public class OneWayAnova {
      * array is less than 2 or a contained <code>double[]</code> array does not have
      * at least two values
      */
-    public double anovaFValue(final Collection<double[]> categoryData)
-        throws NullArgumentException, DimensionMismatchException {
-
+    public double anovaFValue(final Collection<double[]> categoryData) throws NullArgumentException, DimensionMismatchException {
         AnovaStats a = anovaStats(categoryData);
         return a.F;
-
     }
 
     /**
@@ -120,16 +121,12 @@ public class OneWayAnova {
      * @throws ConvergenceException if the p-value can not be computed due to a convergence error
      * @throws MaxCountExceededException if the maximum number of iterations is exceeded
      */
-    public double anovaPValue(final Collection<double[]> categoryData)
-        throws NullArgumentException, DimensionMismatchException,
-        ConvergenceException, MaxCountExceededException {
-
+    public double anovaPValue(final Collection<double[]> categoryData) throws NullArgumentException, DimensionMismatchException, ConvergenceException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaPValue_123");
         final AnovaStats a = anovaStats(categoryData);
-        // No try-catch or advertised exception because args are valid
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
         final FDistribution fdist = new FDistribution(null, a.dfbg, a.dfwg);
-        return 1.0 - fdist.cumulativeProbability(a.F);
-
+        return AOR_minus(1.0, fdist.cumulativeProbability(a.F), "org.apache.commons.math3.stat.inference.OneWayAnova.anovaPValue_123", _mut5633, _mut5634, _mut5635, _mut5636);
     }
 
     /**
@@ -162,16 +159,12 @@ public class OneWayAnova {
      * @throws MaxCountExceededException if the maximum number of iterations is exceeded
      * @since 3.2
      */
-    public double anovaPValue(final Collection<SummaryStatistics> categoryData,
-                              final boolean allowOneElementData)
-        throws NullArgumentException, DimensionMismatchException,
-               ConvergenceException, MaxCountExceededException {
-
+    public double anovaPValue(final Collection<SummaryStatistics> categoryData, final boolean allowOneElementData) throws NullArgumentException, DimensionMismatchException, ConvergenceException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaPValue_165");
         final AnovaStats a = anovaStats(categoryData, allowOneElementData);
         // pass a null rng to avoid unneeded overhead as we will not sample from this distribution
         final FDistribution fdist = new FDistribution(null, a.dfbg, a.dfwg);
-        return 1.0 - fdist.cumulativeProbability(a.F);
-
+        return AOR_minus(1.0, fdist.cumulativeProbability(a.F), "org.apache.commons.math3.stat.inference.OneWayAnova.anovaPValue_165", _mut5637, _mut5638, _mut5639, _mut5640);
     }
 
     /**
@@ -189,25 +182,20 @@ public class OneWayAnova {
      *             than 2 or a contained <code>double[]</code> array does not
      *             contain at least two values
      */
-    private AnovaStats anovaStats(final Collection<double[]> categoryData)
-        throws NullArgumentException, DimensionMismatchException {
-
+    private AnovaStats anovaStats(final Collection<double[]> categoryData) throws NullArgumentException, DimensionMismatchException {
         MathUtils.checkNotNull(categoryData);
-
-        final Collection<SummaryStatistics> categoryDataSummaryStatistics =
-                new ArrayList<SummaryStatistics>(categoryData.size());
-
+        final Collection<SummaryStatistics> categoryDataSummaryStatistics = new ArrayList<SummaryStatistics>(categoryData.size());
         // convert arrays to SummaryStatistics
         for (final double[] data : categoryData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_192");
             final SummaryStatistics dataSummaryStatistics = new SummaryStatistics();
             categoryDataSummaryStatistics.add(dataSummaryStatistics);
             for (final double val : data) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_192");
                 dataSummaryStatistics.addValue(val);
             }
         }
-
         return anovaStats(categoryDataSummaryStatistics, false);
-
     }
 
     /**
@@ -244,18 +232,12 @@ public class OneWayAnova {
      * @throws ConvergenceException if the p-value can not be computed due to a convergence error
      * @throws MaxCountExceededException if the maximum number of iterations is exceeded
      */
-    public boolean anovaTest(final Collection<double[]> categoryData,
-                             final double alpha)
-        throws NullArgumentException, DimensionMismatchException,
-        OutOfRangeException, ConvergenceException, MaxCountExceededException {
-
-        if ((alpha <= 0) || (alpha > 0.5)) {
-            throw new OutOfRangeException(
-                    LocalizedFormats.OUT_OF_BOUND_SIGNIFICANCE_LEVEL,
-                    alpha, 0, 0.5);
+    public boolean anovaTest(final Collection<double[]> categoryData, final double alpha) throws NullArgumentException, DimensionMismatchException, OutOfRangeException, ConvergenceException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247");
+        if ((_mut5651 ? ((ROR_less_equals(alpha, 0, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247", _mut5641, _mut5642, _mut5643, _mut5644, _mut5645)) && (ROR_greater(alpha, 0.5, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247", _mut5646, _mut5647, _mut5648, _mut5649, _mut5650))) : ((ROR_less_equals(alpha, 0, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247", _mut5641, _mut5642, _mut5643, _mut5644, _mut5645)) || (ROR_greater(alpha, 0.5, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247", _mut5646, _mut5647, _mut5648, _mut5649, _mut5650))))) {
+            throw new OutOfRangeException(LocalizedFormats.OUT_OF_BOUND_SIGNIFICANCE_LEVEL, alpha, 0, 0.5);
         }
-        return anovaPValue(categoryData) < alpha;
-
+        return ROR_less(anovaPValue(categoryData), alpha, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaTest_247", _mut5652, _mut5653, _mut5654, _mut5655, _mut5656);
     }
 
     /**
@@ -271,72 +253,67 @@ public class OneWayAnova {
      * categories is less than 2 or a contained SummaryStatistics does not contain
      * at least two values
      */
-    private AnovaStats anovaStats(final Collection<SummaryStatistics> categoryData,
-                                  final boolean allowOneElementData)
-        throws NullArgumentException, DimensionMismatchException {
-
+    private AnovaStats anovaStats(final Collection<SummaryStatistics> categoryData, final boolean allowOneElementData) throws NullArgumentException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274");
         MathUtils.checkNotNull(categoryData);
-
         if (!allowOneElementData) {
             // check if we have enough categories
-            if (categoryData.size() < 2) {
-                throw new DimensionMismatchException(LocalizedFormats.TWO_OR_MORE_CATEGORIES_REQUIRED,
-                                                     categoryData.size(), 2);
+            if (ROR_less(categoryData.size(), 2, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5657, _mut5658, _mut5659, _mut5660, _mut5661)) {
+                throw new DimensionMismatchException(LocalizedFormats.TWO_OR_MORE_CATEGORIES_REQUIRED, categoryData.size(), 2);
             }
-
             // check if each category has enough data
             for (final SummaryStatistics array : categoryData) {
-                if (array.getN() <= 1) {
-                    throw new DimensionMismatchException(LocalizedFormats.TWO_OR_MORE_VALUES_IN_CATEGORY_REQUIRED,
-                                                         (int) array.getN(), 2);
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274");
+                if (ROR_less_equals(array.getN(), 1, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5662, _mut5663, _mut5664, _mut5665, _mut5666)) {
+                    throw new DimensionMismatchException(LocalizedFormats.TWO_OR_MORE_VALUES_IN_CATEGORY_REQUIRED, (int) array.getN(), 2);
                 }
             }
         }
-
         int dfwg = 0;
         double sswg = 0;
         double totsum = 0;
         double totsumsq = 0;
         int totnum = 0;
-
         for (final SummaryStatistics data : categoryData) {
-
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274");
             final double sum = data.getSum();
             final double sumsq = data.getSumsq();
             final int num = (int) data.getN();
             totnum += num;
             totsum += sum;
             totsumsq += sumsq;
-
-            dfwg += num - 1;
-            final double ss = sumsq - ((sum * sum) / num);
+            dfwg += AOR_minus(num, 1, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5667, _mut5668, _mut5669, _mut5670);
+            final double ss = AOR_minus(sumsq, (AOR_divide((AOR_multiply(sum, sum, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5671, _mut5672, _mut5673, _mut5674)), num, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5675, _mut5676, _mut5677, _mut5678)), "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5679, _mut5680, _mut5681, _mut5682);
             sswg += ss;
         }
-
-        final double sst = totsumsq - ((totsum * totsum) / totnum);
-        final double ssbg = sst - sswg;
-        final int dfbg = categoryData.size() - 1;
-        final double msbg = ssbg / dfbg;
-        final double mswg = sswg / dfwg;
-        final double F = msbg / mswg;
-
+        final double sst = AOR_minus(totsumsq, (AOR_divide((AOR_multiply(totsum, totsum, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5683, _mut5684, _mut5685, _mut5686)), totnum, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5687, _mut5688, _mut5689, _mut5690)), "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5691, _mut5692, _mut5693, _mut5694);
+        final double ssbg = AOR_minus(sst, sswg, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5695, _mut5696, _mut5697, _mut5698);
+        final int dfbg = AOR_minus(categoryData.size(), 1, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5699, _mut5700, _mut5701, _mut5702);
+        final double msbg = AOR_divide(ssbg, dfbg, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5703, _mut5704, _mut5705, _mut5706);
+        final double mswg = AOR_divide(sswg, dfwg, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5707, _mut5708, _mut5709, _mut5710);
+        final double F = AOR_divide(msbg, mswg, "org.apache.commons.math3.stat.inference.OneWayAnova.anovaStats_274", _mut5711, _mut5712, _mut5713, _mut5714);
         return new AnovaStats(dfbg, dfwg, F);
-
     }
 
     /**
-        Convenience class to pass dfbg,dfwg,F values around within OneWayAnova.
-        No get/set methods provided.
-    */
+     *        Convenience class to pass dfbg,dfwg,F values around within OneWayAnova.
+     *        No get/set methods provided.
+     */
     private static class AnovaStats {
 
-        /** Degrees of freedom in numerator (between groups). */
+        /**
+         * Degrees of freedom in numerator (between groups).
+         */
         private final int dfbg;
 
-        /** Degrees of freedom in denominator (within groups). */
+        /**
+         * Degrees of freedom in denominator (within groups).
+         */
         private final int dfwg;
 
-        /** Statistic. */
+        /**
+         * Statistic.
+         */
         private final double F;
 
         /**
@@ -351,5 +328,4 @@ public class OneWayAnova {
             this.F = F;
         }
     }
-
 }

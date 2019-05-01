@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.function;
 
 import java.util.Arrays;
-
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NoDataException;
 import org.apache.commons.math3.exception.NonMonotonicSequenceException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <a href="http://en.wikipedia.org/wiki/Step_function">
@@ -33,9 +33,18 @@ import org.apache.commons.math3.util.MathArrays;
  * @since 3.0
  */
 public class StepFunction implements UnivariateFunction {
-    /** Abscissae. */
+
+    @Conditional
+    public static boolean _mut91374 = false, _mut91375 = false, _mut91376 = false, _mut91377 = false, _mut91378 = false, _mut91379 = false, _mut91380 = false, _mut91381 = false, _mut91382 = false, _mut91383 = false, _mut91384 = false, _mut91385 = false, _mut91386 = false, _mut91387 = false, _mut91388 = false, _mut91389 = false, _mut91390 = false, _mut91391 = false, _mut91392 = false, _mut91393 = false, _mut91394 = false, _mut91395 = false, _mut91396 = false, _mut91397 = false, _mut91398 = false, _mut91399 = false, _mut91400 = false, _mut91401 = false, _mut91402 = false, _mut91403 = false, _mut91404 = false;
+
+    /**
+     * Abscissae.
+     */
     private final double[] abscissa;
-    /** Ordinates. */
+
+    /**
+     * Ordinates.
+     */
     private final double[] ordinate;
 
     /**
@@ -58,44 +67,39 @@ public class StepFunction implements UnivariateFunction {
      * @throws DimensionMismatchException if {@code x} and {@code y} do not
      * have the same length.
      */
-    public StepFunction(double[] x,
-                        double[] y)
-        throws NullArgumentException, NoDataException,
-               DimensionMismatchException, NonMonotonicSequenceException {
-        if (x == null ||
-            y == null) {
+    public StepFunction(double[] x, double[] y) throws NullArgumentException, NoDataException, DimensionMismatchException, NonMonotonicSequenceException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61");
+        if ((_mut91374 ? (x == null && y == null) : (x == null || y == null))) {
             throw new NullArgumentException();
         }
-        if (x.length == 0 ||
-            y.length == 0) {
+        if ((_mut91385 ? (ROR_equals(x.length, 0, "org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61", _mut91375, _mut91376, _mut91377, _mut91378, _mut91379) && ROR_equals(y.length, 0, "org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61", _mut91380, _mut91381, _mut91382, _mut91383, _mut91384)) : (ROR_equals(x.length, 0, "org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61", _mut91375, _mut91376, _mut91377, _mut91378, _mut91379) || ROR_equals(y.length, 0, "org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61", _mut91380, _mut91381, _mut91382, _mut91383, _mut91384)))) {
             throw new NoDataException();
         }
-        if (y.length != x.length) {
+        if (ROR_not_equals(y.length, x.length, "org.apache.commons.math3.analysis.function.StepFunction.StepFunction_61", _mut91386, _mut91387, _mut91388, _mut91389, _mut91390)) {
             throw new DimensionMismatchException(y.length, x.length);
         }
         MathArrays.checkOrder(x);
-
         abscissa = MathArrays.copyOf(x);
         ordinate = MathArrays.copyOf(y);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double value(double x) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.StepFunction.value_83");
         int index = Arrays.binarySearch(abscissa, x);
         double fx = 0;
-
-        if (index < -1) {
+        if (ROR_less(index, -1, "org.apache.commons.math3.analysis.function.StepFunction.value_83", _mut91391, _mut91392, _mut91393, _mut91394, _mut91395)) {
             // "x" is between "abscissa[-index-2]" and "abscissa[-index-1]".
-            fx = ordinate[-index-2];
-        } else if (index >= 0) {
+            fx = ordinate[AOR_minus(-index, 2, "org.apache.commons.math3.analysis.function.StepFunction.value_83", _mut91401, _mut91402, _mut91403, _mut91404)];
+        } else if (ROR_greater_equals(index, 0, "org.apache.commons.math3.analysis.function.StepFunction.value_83", _mut91396, _mut91397, _mut91398, _mut91399, _mut91400)) {
             // "x" is exactly "abscissa[index]".
             fx = ordinate[index];
         } else {
-            // Otherwise, "x" is smaller than the first value in "abscissa"
             // (hence the returned value should be "ordinate[0]").
             fx = ordinate[0];
         }
-
         return fx;
     }
 }

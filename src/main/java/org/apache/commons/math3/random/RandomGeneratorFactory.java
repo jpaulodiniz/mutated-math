@@ -18,6 +18,8 @@ package org.apache.commons.math3.random;
 
 import java.util.Random;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Utilities for creating {@link RandomGenerator} instances.
@@ -25,10 +27,15 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
  * @since 3.3
  */
 public class RandomGeneratorFactory {
+
+    @Conditional
+    public static boolean _mut53089 = false, _mut53090 = false, _mut53091 = false, _mut53092 = false, _mut53093 = false, _mut53094 = false, _mut53095 = false, _mut53096 = false, _mut53097 = false, _mut53098 = false, _mut53099 = false, _mut53100 = false, _mut53101 = false;
+
     /**
      * Class contains only static methods.
      */
-    private RandomGeneratorFactory() {}
+    private RandomGeneratorFactory() {
+    }
 
     /**
      * Creates a {@link RandomDataGenerator} instance that wraps a
@@ -39,61 +46,86 @@ public class RandomGeneratorFactory {
      * @return the given RNG, wrapped in a {@link RandomGenerator}.
      */
     public static RandomGenerator createRandomGenerator(final Random rng) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.RandomGeneratorFactory.nextGaussian_97");
         return new RandomGenerator() {
-            /** {@inheritDoc} */
+
+            /**
+             * {@inheritDoc}
+             */
             public void setSeed(int seed) {
                 rng.setSeed((long) seed);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public void setSeed(int[] seed) {
                 rng.setSeed(convertToLong(seed));
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public void setSeed(long seed) {
                 rng.setSeed(seed);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public void nextBytes(byte[] bytes) {
                 rng.nextBytes(bytes);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public int nextInt() {
                 return rng.nextInt();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public int nextInt(int n) {
-                if (n <= 0) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.RandomGeneratorFactory.nextInt_69");
+                if (ROR_less_equals(n, 0, "org.apache.commons.math3.random.RandomGeneratorFactory.nextInt_69", _mut53089, _mut53090, _mut53091, _mut53092, _mut53093)) {
                     throw new NotStrictlyPositiveException(n);
                 }
                 return rng.nextInt(n);
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public long nextLong() {
                 return rng.nextLong();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public boolean nextBoolean() {
                 return rng.nextBoolean();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public float nextFloat() {
                 return rng.nextFloat();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public double nextDouble() {
                 return rng.nextDouble();
             }
 
-            /** {@inheritDoc} */
+            /**
+             * {@inheritDoc}
+             */
             public double nextGaussian() {
                 return rng.nextGaussian();
             }
@@ -107,15 +139,14 @@ public class RandomGeneratorFactory {
      * @return the converted seed.
      */
     public static long convertToLong(int[] seed) {
-        // The following number is the largest prime that fits
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.RandomGeneratorFactory.convertToLong_109");
         // in 32 bits (i.e. 2^32 - 5).
         final long prime = 4294967291l;
-
         long combined = 0l;
         for (int s : seed) {
-            combined = combined * prime + s;
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.RandomGeneratorFactory.convertToLong_109");
+            combined = AOR_plus(AOR_multiply(combined, prime, "org.apache.commons.math3.random.RandomGeneratorFactory.convertToLong_109", _mut53094, _mut53095, _mut53096, _mut53097), s, "org.apache.commons.math3.random.RandomGeneratorFactory.convertToLong_109", _mut53098, _mut53099, _mut53100, _mut53101);
         }
-
         return combined;
     }
 }

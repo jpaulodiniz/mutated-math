@@ -22,6 +22,8 @@ import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Abstract base class for all implementations of the
@@ -33,12 +35,15 @@ import org.apache.commons.math3.util.MathArrays;
  * <p>
  * Also includes a <code>test</code> method that performs generic parameter
  * validation for the <code>evaluate</code> methods.</p>
- *
  */
-public abstract class AbstractUnivariateStatistic
-    implements UnivariateStatistic {
+public abstract class AbstractUnivariateStatistic implements UnivariateStatistic {
 
-    /** Stored data. */
+    @Conditional
+    public static boolean _mut4587 = false, _mut4588 = false, _mut4589 = false, _mut4590 = false, _mut4591 = false, _mut4592 = false, _mut4593 = false, _mut4594 = false, _mut4595 = false, _mut4596 = false, _mut4597 = false, _mut4598 = false, _mut4599 = false, _mut4600 = false, _mut4601 = false, _mut4602 = false, _mut4603 = false, _mut4604 = false, _mut4605 = false, _mut4606 = false, _mut4607 = false, _mut4608 = false, _mut4609 = false;
+
+    /**
+     * Stored data.
+     */
     private double[] storedData;
 
     /**
@@ -79,23 +84,19 @@ public abstract class AbstractUnivariateStatistic
      * are not valid
      * @see #evaluate()
      */
-    public void setData(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public void setData(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82");
         if (values == null) {
             throw new NullArgumentException(LocalizedFormats.INPUT_ARRAY);
         }
-
-        if (begin < 0) {
+        if (ROR_less(begin, 0, "org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82", _mut4587, _mut4588, _mut4589, _mut4590, _mut4591)) {
             throw new NotPositiveException(LocalizedFormats.START_POSITION, begin);
         }
-
-        if (length < 0) {
+        if (ROR_less(length, 0, "org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82", _mut4592, _mut4593, _mut4594, _mut4595, _mut4596)) {
             throw new NotPositiveException(LocalizedFormats.LENGTH, length);
         }
-
-        if (begin + length > values.length) {
-            throw new NumberIsTooLargeException(LocalizedFormats.SUBARRAY_ENDS_AFTER_ARRAY_END,
-                                                begin + length, values.length, true);
+        if (ROR_greater(AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82", _mut4597, _mut4598, _mut4599, _mut4600), values.length, "org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82", _mut4601, _mut4602, _mut4603, _mut4604, _mut4605)) {
+            throw new NumberIsTooLargeException(LocalizedFormats.SUBARRAY_ENDS_AFTER_ARRAY_END, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.AbstractUnivariateStatistic.setData_82", _mut4606, _mut4607, _mut4608, _mut4609), values.length, true);
         }
         storedData = new double[length];
         System.arraycopy(values, begin, storedData, 0, length);
@@ -124,8 +125,7 @@ public abstract class AbstractUnivariateStatistic
     /**
      * {@inheritDoc}
      */
-    public abstract double evaluate(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException;
+    public abstract double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException;
 
     /**
      * {@inheritDoc}
@@ -151,10 +151,7 @@ public abstract class AbstractUnivariateStatistic
      * @return true if the parameters are valid and designate a subarray of positive length
      * @throws MathIllegalArgumentException if the indices are invalid or the array is null
      */
-    protected boolean test(
-        final double[] values,
-        final int begin,
-        final int length) throws MathIllegalArgumentException {
+    protected boolean test(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
         return MathArrays.verifyValues(values, begin, length, false);
     }
 
@@ -179,8 +176,7 @@ public abstract class AbstractUnivariateStatistic
      * @throws MathIllegalArgumentException if the indices are invalid or the array is null
      * @since 3.0
      */
-    protected boolean test(final double[] values, final int begin,
-            final int length, final boolean allowEmpty) throws MathIllegalArgumentException {
+    protected boolean test(final double[] values, final int begin, final int length, final boolean allowEmpty) throws MathIllegalArgumentException {
         return MathArrays.verifyValues(values, begin, length, allowEmpty);
     }
 
@@ -213,11 +209,7 @@ public abstract class AbstractUnivariateStatistic
      * @throws MathIllegalArgumentException if the indices are invalid or the array is null
      * @since 2.1
      */
-    protected boolean test(
-        final double[] values,
-        final double[] weights,
-        final int begin,
-        final int length) throws MathIllegalArgumentException {
+    protected boolean test(final double[] values, final double[] weights, final int begin, final int length) throws MathIllegalArgumentException {
         return MathArrays.verifyValues(values, weights, begin, length, false);
     }
 
@@ -254,10 +246,7 @@ public abstract class AbstractUnivariateStatistic
      * are no positive weights.
      * @since 3.0
      */
-    protected boolean test(final double[] values, final double[] weights,
-            final int begin, final int length, final boolean allowEmpty) throws MathIllegalArgumentException {
-
+    protected boolean test(final double[] values, final double[] weights, final int begin, final int length, final boolean allowEmpty) throws MathIllegalArgumentException {
         return MathArrays.verifyValues(values, weights, begin, length, allowEmpty);
     }
 }
-

@@ -14,176 +14,130 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.sampling;
 
 import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.Precision;
-
-/**
- * This class wraps an object implementing {@link FixedStepHandler}
- * into a {@link StepHandler}.
-
- * <p>This wrapper allows to use fixed step handlers with general
- * integrators which cannot guaranty their integration steps will
- * remain constant and therefore only accept general step
- * handlers.</p>
- *
- * <p>The stepsize used is selected at construction time. The {@link
- * FixedStepHandler#handleStep handleStep} method of the underlying
- * {@link FixedStepHandler} object is called at normalized times. The
- * normalized times can be influenced by the {@link StepNormalizerMode} and
- * {@link StepNormalizerBounds}.</p>
- *
- * <p>There is no constraint on the integrator, it can use any time step
- * it needs (time steps longer or shorter than the fixed time step and
- * non-integer ratios are all allowed).</p>
- *
- * <p>
- * <table border="1" align="center">
- * <tr BGCOLOR="#CCCCFF"><td colspan=6><font size="+2">Examples (step size = 0.5)</font></td></tr>
- * <tr BGCOLOR="#EEEEFF"><font size="+1"><td>Start time</td><td>End time</td>
- *  <td>Direction</td><td>{@link StepNormalizerMode Mode}</td>
- *  <td>{@link StepNormalizerBounds Bounds}</td><td>Output</td></font></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>0.8, 1.3, 1.8, 2.3, 2.8</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>0.3, 0.8, 1.3, 1.8, 2.3, 2.8</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>0.8, 1.3, 1.8, 2.3, 2.8, 3.1</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>0.3, 0.8, 1.3, 1.8, 2.3, 2.8, 3.1</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>0.3, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.1</td></tr>
- * <tr><td>0.3</td><td>3.1</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>0.3, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.1</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>0.0</td><td>3.0</td><td>forward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>2.6, 2.1, 1.6, 1.1, 0.6</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>3.1, 2.6, 2.1, 1.6, 1.1, 0.6</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>2.6, 2.1, 1.6, 1.1, 0.6, 0.3</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>3.1, 2.6, 2.1, 1.6, 1.1, 0.6, 0.3</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>3.1, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.3</td></tr>
- * <tr><td>3.1</td><td>0.3</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>3.1, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.3</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#INCREMENT INCREMENT}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#NEITHER NEITHER}</td><td>2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#FIRST FIRST}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#LAST LAST}</td><td>2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * <tr><td>3.0</td><td>0.0</td><td>backward</td><td>{@link StepNormalizerMode#MULTIPLES MULTIPLES}</td><td>{@link StepNormalizerBounds#BOTH BOTH}</td><td>3.0, 2.5, 2.0, 1.5, 1.0, 0.5, 0.0</td></tr>
- * </table>
- * </p>
- *
- * @see StepHandler
- * @see FixedStepHandler
- * @see StepNormalizerMode
- * @see StepNormalizerBounds
- * @since 1.2
- */
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 public class StepNormalizer implements StepHandler {
-    /** Fixed time step. */
+
+    @Conditional
+    public static boolean _mut11447 = false, _mut11448 = false, _mut11449 = false, _mut11450 = false, _mut11451 = false, _mut11452 = false, _mut11453 = false, _mut11454 = false, _mut11455 = false, _mut11456 = false, _mut11457 = false, _mut11458 = false, _mut11459 = false, _mut11460 = false, _mut11461 = false, _mut11462 = false, _mut11463 = false, _mut11464 = false, _mut11465 = false, _mut11466 = false, _mut11467 = false, _mut11468 = false, _mut11469 = false, _mut11470 = false, _mut11471 = false, _mut11472 = false, _mut11473 = false, _mut11474 = false, _mut11475 = false, _mut11476 = false, _mut11477 = false, _mut11478 = false, _mut11479 = false, _mut11480 = false, _mut11481 = false, _mut11482 = false, _mut11483 = false, _mut11484 = false, _mut11485 = false, _mut11486 = false, _mut11487 = false, _mut11488 = false, _mut11489 = false, _mut11490 = false;
+
+    /**
+     * Fixed time step.
+     */
     private double h;
 
-    /** Underlying step handler. */
+    /**
+     * Underlying step handler.
+     */
     private final FixedStepHandler handler;
 
-    /** First step time. */
+    /**
+     * First step time.
+     */
     private double firstTime;
 
-    /** Last step time. */
+    /**
+     * Last step time.
+     */
     private double lastTime;
 
-    /** Last state vector. */
+    /**
+     * Last state vector.
+     */
     private double[] lastState;
 
-    /** Last derivatives vector. */
+    /**
+     * Last derivatives vector.
+     */
     private double[] lastDerivatives;
 
-    /** Integration direction indicator. */
+    /**
+     * Integration direction indicator.
+     */
     private boolean forward;
 
-    /** The step normalizer bounds settings to use. */
+    /**
+     * The step normalizer bounds settings to use.
+     */
     private final StepNormalizerBounds bounds;
 
-    /** The step normalizer mode to use. */
+    /**
+     * The step normalizer mode to use.
+     */
     private final StepNormalizerMode mode;
 
-    /** Simple constructor. Uses {@link StepNormalizerMode#INCREMENT INCREMENT}
+    /**
+     * Simple constructor. Uses {@link StepNormalizerMode#INCREMENT INCREMENT}
      * mode, and {@link StepNormalizerBounds#FIRST FIRST} bounds setting, for
      * backwards compatibility.
      * @param h fixed time step (sign is not used)
      * @param handler fixed time step handler to wrap
      */
     public StepNormalizer(final double h, final FixedStepHandler handler) {
-        this(h, handler, StepNormalizerMode.INCREMENT,
-             StepNormalizerBounds.FIRST);
+        this(h, handler, StepNormalizerMode.INCREMENT, StepNormalizerBounds.FIRST);
     }
 
-    /** Simple constructor. Uses {@link StepNormalizerBounds#FIRST FIRST}
+    /**
+     * Simple constructor. Uses {@link StepNormalizerBounds#FIRST FIRST}
      * bounds setting.
      * @param h fixed time step (sign is not used)
      * @param handler fixed time step handler to wrap
      * @param mode step normalizer mode to use
      * @since 3.0
      */
-    public StepNormalizer(final double h, final FixedStepHandler handler,
-                          final StepNormalizerMode mode) {
+    public StepNormalizer(final double h, final FixedStepHandler handler, final StepNormalizerMode mode) {
         this(h, handler, mode, StepNormalizerBounds.FIRST);
     }
 
-    /** Simple constructor. Uses {@link StepNormalizerMode#INCREMENT INCREMENT}
+    /**
+     * Simple constructor. Uses {@link StepNormalizerMode#INCREMENT INCREMENT}
      * mode.
      * @param h fixed time step (sign is not used)
      * @param handler fixed time step handler to wrap
      * @param bounds step normalizer bounds setting to use
      * @since 3.0
      */
-    public StepNormalizer(final double h, final FixedStepHandler handler,
-                          final StepNormalizerBounds bounds) {
+    public StepNormalizer(final double h, final FixedStepHandler handler, final StepNormalizerBounds bounds) {
         this(h, handler, StepNormalizerMode.INCREMENT, bounds);
     }
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * @param h fixed time step (sign is not used)
      * @param handler fixed time step handler to wrap
      * @param mode step normalizer mode to use
      * @param bounds step normalizer bounds setting to use
      * @since 3.0
      */
-    public StepNormalizer(final double h, final FixedStepHandler handler,
-                          final StepNormalizerMode mode,
-                          final StepNormalizerBounds bounds) {
-        this.h          = FastMath.abs(h);
-        this.handler    = handler;
-        this.mode       = mode;
-        this.bounds     = bounds;
-        firstTime       = Double.NaN;
-        lastTime        = Double.NaN;
-        lastState       = null;
+    public StepNormalizer(final double h, final FixedStepHandler handler, final StepNormalizerMode mode, final StepNormalizerBounds bounds) {
+        this.h = FastMath.abs(h);
+        this.handler = handler;
+        this.mode = mode;
+        this.bounds = bounds;
+        firstTime = Double.NaN;
+        lastTime = Double.NaN;
+        lastState = null;
         lastDerivatives = null;
-        forward         = true;
+        forward = true;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public void init(double t0, double[] y0, double t) {
-
-        firstTime       = Double.NaN;
-        lastTime        = Double.NaN;
-        lastState       = null;
+        firstTime = Double.NaN;
+        lastTime = Double.NaN;
+        lastState = null;
         lastDerivatives = null;
-        forward         = true;
-
+        forward = true;
         // initialize the underlying handler
         handler.init(t0, y0, t);
-
     }
 
     /**
@@ -199,8 +153,8 @@ public class StepNormalizer implements StepHandler {
      * @exception MaxCountExceededException if the interpolator throws one because
      * the number of functions evaluations is exceeded
      */
-    public void handleStep(final StepInterpolator interpolator, final boolean isLast)
-        throws MaxCountExceededException {
+    public void handleStep(final StepInterpolator interpolator, final boolean isLast) throws MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202");
         // The first time, update the last state with the start information.
         if (lastState == null) {
             firstTime = interpolator.getPreviousTime();
@@ -208,43 +162,32 @@ public class StepNormalizer implements StepHandler {
             interpolator.setInterpolatedTime(lastTime);
             lastState = interpolator.getInterpolatedState().clone();
             lastDerivatives = interpolator.getInterpolatedDerivatives().clone();
-
             // Take the integration direction into account.
-            forward = interpolator.getCurrentTime() >= lastTime;
+            forward = ROR_greater_equals(interpolator.getCurrentTime(), lastTime, "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11447, _mut11448, _mut11449, _mut11450, _mut11451);
             if (!forward) {
                 h = -h;
             }
         }
-
         // Calculate next normalized step time.
-        double nextTime = (mode == StepNormalizerMode.INCREMENT) ?
-                          lastTime + h :
-                          (FastMath.floor(lastTime / h) + 1) * h;
-        if (mode == StepNormalizerMode.MULTIPLES &&
-            Precision.equals(nextTime, lastTime, 1)) {
+        double nextTime = (mode == StepNormalizerMode.INCREMENT) ? AOR_plus(lastTime, h, "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11464, _mut11465, _mut11466, _mut11467) : AOR_multiply((AOR_plus(FastMath.floor(AOR_divide(lastTime, h, "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11452, _mut11453, _mut11454, _mut11455)), 1, "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11456, _mut11457, _mut11458, _mut11459)), h, "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11460, _mut11461, _mut11462, _mut11463);
+        if ((_mut11468 ? (mode == StepNormalizerMode.MULTIPLES || Precision.equals(nextTime, lastTime, 1)) : (mode == StepNormalizerMode.MULTIPLES && Precision.equals(nextTime, lastTime, 1)))) {
             nextTime += h;
         }
-
         // Process normalized steps as long as they are in the current step.
         boolean nextInStep = isNextInStep(nextTime, interpolator);
         while (nextInStep) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202");
             // Output the stored previous step.
             doNormalizedStep(false);
-
             // Store the next step as last step.
             storeStep(interpolator, nextTime);
-
             // Move on to the next step.
             nextTime += h;
             nextInStep = isNextInStep(nextTime, interpolator);
         }
-
         if (isLast) {
-            // There will be no more steps. The stored one should be given to
-            // the handler. We may have to output one more step. Only the last
             // one of those should be flagged as being the last.
-            boolean addLast = bounds.lastIncluded() &&
-                              lastTime != interpolator.getCurrentTime();
+            boolean addLast = (_mut11474 ? (bounds.lastIncluded() || ROR_not_equals(lastTime, interpolator.getCurrentTime(), "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11469, _mut11470, _mut11471, _mut11472, _mut11473)) : (bounds.lastIncluded() && ROR_not_equals(lastTime, interpolator.getCurrentTime(), "org.apache.commons.math3.ode.sampling.StepNormalizer.handleStep_202", _mut11469, _mut11470, _mut11471, _mut11472, _mut11473)));
             doNormalizedStep(!addLast);
             if (addLast) {
                 storeStep(interpolator, interpolator.getCurrentTime());
@@ -262,11 +205,9 @@ public class StepNormalizer implements StepHandler {
      * @return value indicating whether the next normalized time is in the
      * current step
      */
-    private boolean isNextInStep(double nextTime,
-                                 StepInterpolator interpolator) {
-        return forward ?
-               nextTime <= interpolator.getCurrentTime() :
-               nextTime >= interpolator.getCurrentTime();
+    private boolean isNextInStep(double nextTime, StepInterpolator interpolator) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.sampling.StepNormalizer.isNextInStep_265");
+        return forward ? ROR_less_equals(nextTime, interpolator.getCurrentTime(), "org.apache.commons.math3.ode.sampling.StepNormalizer.isNextInStep_265", _mut11480, _mut11481, _mut11482, _mut11483, _mut11484) : ROR_greater_equals(nextTime, interpolator.getCurrentTime(), "org.apache.commons.math3.ode.sampling.StepNormalizer.isNextInStep_265", _mut11475, _mut11476, _mut11477, _mut11478, _mut11479);
     }
 
     /**
@@ -274,13 +215,15 @@ public class StepNormalizer implements StepHandler {
      * @param isLast true if the step is the last one
      */
     private void doNormalizedStep(boolean isLast) {
-        if (!bounds.firstIncluded() && firstTime == lastTime) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.sampling.StepNormalizer.doNormalizedStep_276");
+        if ((_mut11490 ? (!bounds.firstIncluded() || ROR_equals(firstTime, lastTime, "org.apache.commons.math3.ode.sampling.StepNormalizer.doNormalizedStep_276", _mut11485, _mut11486, _mut11487, _mut11488, _mut11489)) : (!bounds.firstIncluded() && ROR_equals(firstTime, lastTime, "org.apache.commons.math3.ode.sampling.StepNormalizer.doNormalizedStep_276", _mut11485, _mut11486, _mut11487, _mut11488, _mut11489)))) {
             return;
         }
         handler.handleStep(lastTime, lastState, lastDerivatives, isLast);
     }
 
-    /** Stores the interpolated information for the given time in the current
+    /**
+     * Stores the interpolated information for the given time in the current
      * state.
      * @param interpolator interpolator for the last accepted step, to use to
      * get the interpolated information
@@ -288,13 +231,10 @@ public class StepNormalizer implements StepHandler {
      * @exception MaxCountExceededException if the interpolator throws one because
      * the number of functions evaluations is exceeded
      */
-    private void storeStep(StepInterpolator interpolator, double t)
-        throws MaxCountExceededException {
+    private void storeStep(StepInterpolator interpolator, double t) throws MaxCountExceededException {
         lastTime = t;
         interpolator.setInterpolatedTime(lastTime);
-        System.arraycopy(interpolator.getInterpolatedState(), 0,
-                         lastState, 0, lastState.length);
-        System.arraycopy(interpolator.getInterpolatedDerivatives(), 0,
-                         lastDerivatives, 0, lastDerivatives.length);
+        System.arraycopy(interpolator.getInterpolatedState(), 0, lastState, 0, lastState.length);
+        System.arraycopy(interpolator.getInterpolatedDerivatives(), 0, lastDerivatives, 0, lastDerivatives.length);
     }
 }

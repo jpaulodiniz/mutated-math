@@ -17,6 +17,8 @@
 package org.apache.commons.math3.optim;
 
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Maximum number of evaluations of the function to be optimized.
@@ -24,7 +26,13 @@ import org.apache.commons.math3.exception.NotStrictlyPositiveException;
  * @since 3.1
  */
 public class MaxEval implements OptimizationData {
-    /** Allowed number of evalutations. */
+
+    @Conditional
+    public static boolean _mut58799 = false, _mut58800 = false, _mut58801 = false, _mut58802 = false, _mut58803 = false;
+
+    /**
+     * Allowed number of evalutations.
+     */
     private final int maxEval;
 
     /**
@@ -32,10 +40,10 @@ public class MaxEval implements OptimizationData {
      * @throws NotStrictlyPositiveException if {@code max <= 0}.
      */
     public MaxEval(int max) {
-        if (max <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.MaxEval.MaxEval_34");
+        if (ROR_less_equals(max, 0, "org.apache.commons.math3.optim.MaxEval.MaxEval_34", _mut58799, _mut58800, _mut58801, _mut58802, _mut58803)) {
             throw new NotStrictlyPositiveException(max);
         }
-
         maxEval = max;
     }
 

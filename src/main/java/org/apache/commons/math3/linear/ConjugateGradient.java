@@ -21,6 +21,8 @@ import org.apache.commons.math3.exception.MaxCountExceededException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.util.ExceptionContext;
 import org.apache.commons.math3.util.IterationManager;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -75,13 +77,19 @@ import org.apache.commons.math3.util.IterationManager;
  *
  * @since 3.0
  */
-public class ConjugateGradient
-    extends PreconditionedIterativeLinearSolver {
+public class ConjugateGradient extends PreconditionedIterativeLinearSolver {
 
-    /** Key for the <a href="#context">exception context</a>. */
+    @Conditional
+    public static boolean _mut29497 = false, _mut29498 = false, _mut29499 = false, _mut29500 = false, _mut29501 = false, _mut29502 = false, _mut29503 = false, _mut29504 = false, _mut29505 = false, _mut29506 = false, _mut29507 = false, _mut29508 = false, _mut29509 = false, _mut29510 = false, _mut29511 = false, _mut29512 = false, _mut29513 = false, _mut29514 = false, _mut29515 = false, _mut29516 = false, _mut29517 = false, _mut29518 = false, _mut29519 = false, _mut29520 = false, _mut29521 = false, _mut29522 = false, _mut29523 = false, _mut29524 = false, _mut29525 = false, _mut29526 = false, _mut29527 = false, _mut29528 = false, _mut29529 = false, _mut29530 = false, _mut29531 = false, _mut29532 = false, _mut29533 = false, _mut29534 = false, _mut29535 = false;
+
+    /**
+     * Key for the <a href="#context">exception context</a>.
+     */
     public static final String OPERATOR = "operator";
 
-    /** Key for the <a href="#context">exception context</a>. */
+    /**
+     * Key for the <a href="#context">exception context</a>.
+     */
     public static final String VECTOR = "vector";
 
     /**
@@ -90,7 +98,9 @@ public class ConjugateGradient
      */
     private boolean check;
 
-    /** The value of &delta;, for the default stopping criterion. */
+    /**
+     * The value of &delta;, for the default stopping criterion.
+     */
     private final double delta;
 
     /**
@@ -102,8 +112,7 @@ public class ConjugateGradient
      * @param check {@code true} if positive definiteness of both matrix and
      * preconditioner should be checked
      */
-    public ConjugateGradient(final int maxIterations, final double delta,
-                             final boolean check) {
+    public ConjugateGradient(final int maxIterations, final double delta, final boolean check) {
         super(maxIterations);
         this.delta = delta;
         this.check = check;
@@ -119,9 +128,7 @@ public class ConjugateGradient
      * preconditioner should be checked
      * @throws NullArgumentException if {@code manager} is {@code null}
      */
-    public ConjugateGradient(final IterationManager manager,
-                             final double delta, final boolean check)
-        throws NullArgumentException {
+    public ConjugateGradient(final IterationManager manager, final double delta, final boolean check) throws NullArgumentException {
         super(manager);
         this.delta = delta;
         this.check = check;
@@ -144,30 +151,21 @@ public class ConjugateGradient
      * not positive definite
      */
     @Override
-    public RealVector solveInPlace(final RealLinearOperator a,
-                                   final RealLinearOperator m,
-                                   final RealVector b,
-                                   final RealVector x0)
-        throws NullArgumentException, NonPositiveDefiniteOperatorException,
-        NonSquareOperatorException, DimensionMismatchException,
-        MaxCountExceededException {
+    public RealVector solveInPlace(final RealLinearOperator a, final RealLinearOperator m, final RealVector b, final RealVector x0) throws NullArgumentException, NonPositiveDefiniteOperatorException, NonSquareOperatorException, DimensionMismatchException, MaxCountExceededException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146");
         checkParameters(a, m, b, x0);
         final IterationManager manager = getIterationManager();
         // Initialization of default stopping criterion
         manager.resetIterationCount();
-        final double rmax = delta * b.getNorm();
+        final double rmax = AOR_multiply(delta, b.getNorm(), "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29497, _mut29498, _mut29499, _mut29500);
         final RealVector bro = RealVector.unmodifiableRealVector(b);
-
         // Initialization phase counts as one iteration.
         manager.incrementIterationCount();
-        // p and x are constructed as copies of x0, since presumably, the type
-        // of x is optimized for the calculation of the matrix-vector product
         // A.x.
         final RealVector x = x0;
         final RealVector xro = RealVector.unmodifiableRealVector(x);
         final RealVector p = x.copy();
         RealVector q = a.operate(p);
-
         final RealVector r = b.combine(1, -1, q);
         final RealVector rro = RealVector.unmodifiableRealVector(r);
         double rnorm = r.getNorm();
@@ -178,24 +176,23 @@ public class ConjugateGradient
             z = null;
         }
         IterativeLinearSolverEvent evt;
-        evt = new DefaultIterativeLinearSolverEvent(this,
-            manager.getIterations(), xro, bro, rro, rnorm);
+        evt = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), xro, bro, rro, rnorm);
         manager.fireInitializationEvent(evt);
-        if (rnorm <= rmax) {
+        if (ROR_less_equals(rnorm, rmax, "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29501, _mut29502, _mut29503, _mut29504, _mut29505)) {
             manager.fireTerminationEvent(evt);
             return x;
         }
         double rhoPrev = 0.;
         while (true) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146");
             manager.incrementIterationCount();
-            evt = new DefaultIterativeLinearSolverEvent(this,
-                manager.getIterations(), xro, bro, rro, rnorm);
+            evt = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), xro, bro, rro, rnorm);
             manager.fireIterationStartedEvent(evt);
             if (m != null) {
                 z = m.operate(r);
             }
             final double rhoNext = r.dotProduct(z);
-            if (check && (rhoNext <= 0.)) {
+            if ((_mut29511 ? (check || (ROR_less_equals(rhoNext, 0., "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29506, _mut29507, _mut29508, _mut29509, _mut29510))) : (check && (ROR_less_equals(rhoNext, 0., "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29506, _mut29507, _mut29508, _mut29509, _mut29510))))) {
                 final NonPositiveDefiniteOperatorException e;
                 e = new NonPositiveDefiniteOperatorException();
                 final ExceptionContext context = e.getContext();
@@ -203,14 +200,14 @@ public class ConjugateGradient
                 context.setValue(VECTOR, r);
                 throw e;
             }
-            if (manager.getIterations() == 2) {
+            if (ROR_equals(manager.getIterations(), 2, "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29512, _mut29513, _mut29514, _mut29515, _mut29516)) {
                 p.setSubVector(0, z);
             } else {
-                p.combineToSelf(rhoNext / rhoPrev, 1., z);
+                p.combineToSelf(AOR_divide(rhoNext, rhoPrev, "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29517, _mut29518, _mut29519, _mut29520), 1., z);
             }
             q = a.operate(p);
             final double pq = p.dotProduct(q);
-            if (check && (pq <= 0.)) {
+            if ((_mut29526 ? (check || (ROR_less_equals(pq, 0., "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29521, _mut29522, _mut29523, _mut29524, _mut29525))) : (check && (ROR_less_equals(pq, 0., "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29521, _mut29522, _mut29523, _mut29524, _mut29525))))) {
                 final NonPositiveDefiniteOperatorException e;
                 e = new NonPositiveDefiniteOperatorException();
                 final ExceptionContext context = e.getContext();
@@ -218,15 +215,14 @@ public class ConjugateGradient
                 context.setValue(VECTOR, p);
                 throw e;
             }
-            final double alpha = rhoNext / pq;
+            final double alpha = AOR_divide(rhoNext, pq, "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29527, _mut29528, _mut29529, _mut29530);
             x.combineToSelf(1., alpha, p);
             r.combineToSelf(1., -alpha, q);
             rhoPrev = rhoNext;
             rnorm = r.getNorm();
-            evt = new DefaultIterativeLinearSolverEvent(this,
-                manager.getIterations(), xro, bro, rro, rnorm);
+            evt = new DefaultIterativeLinearSolverEvent(this, manager.getIterations(), xro, bro, rro, rnorm);
             manager.fireIterationPerformedEvent(evt);
-            if (rnorm <= rmax) {
+            if (ROR_less_equals(rnorm, rmax, "org.apache.commons.math3.linear.ConjugateGradient.solveInPlace_146", _mut29531, _mut29532, _mut29533, _mut29534, _mut29535)) {
                 manager.fireTerminationEvent(evt);
                 return x;
             }

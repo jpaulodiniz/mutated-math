@@ -19,6 +19,8 @@ package org.apache.commons.math3.fitting.leastsquares;
 import org.apache.commons.math3.fitting.leastsquares.LeastSquaresProblem.Evaluation;
 import org.apache.commons.math3.optim.ConvergenceChecker;
 import org.apache.commons.math3.util.Precision;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Check if an optimization has converged based on the change in computed RMS.
@@ -27,9 +29,17 @@ import org.apache.commons.math3.util.Precision;
  */
 public class EvaluationRmsChecker implements ConvergenceChecker<Evaluation> {
 
-    /** relative tolerance for comparisons. */
+    @Conditional
+    public static boolean _mut38228 = false;
+
+    /**
+     * relative tolerance for comparisons.
+     */
     private final double relTol;
-    /** absolute tolerance for comparisons. */
+
+    /**
+     * absolute tolerance for comparisons.
+     */
     private final double absTol;
 
     /**
@@ -62,14 +72,13 @@ public class EvaluationRmsChecker implements ConvergenceChecker<Evaluation> {
         this.absTol = absTol;
     }
 
-    /** {@inheritDoc} */
-    public boolean converged(final int iteration,
-                             final Evaluation previous,
-                             final Evaluation current) {
+    /**
+     * {@inheritDoc}
+     */
+    public boolean converged(final int iteration, final Evaluation previous, final Evaluation current) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fitting.leastsquares.EvaluationRmsChecker.converged_66");
         final double prevRms = previous.getRMS();
         final double currRms = current.getRMS();
-        return Precision.equals(prevRms, currRms, this.absTol) ||
-                Precision.equalsWithRelativeTolerance(prevRms, currRms, this.relTol);
+        return (_mut38228 ? (Precision.equals(prevRms, currRms, this.absTol) && Precision.equalsWithRelativeTolerance(prevRms, currRms, this.relTol)) : (Precision.equals(prevRms, currRms, this.absTol) || Precision.equalsWithRelativeTolerance(prevRms, currRms, this.relTol)));
     }
-
 }

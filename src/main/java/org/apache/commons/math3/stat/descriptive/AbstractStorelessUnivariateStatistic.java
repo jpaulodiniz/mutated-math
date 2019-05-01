@@ -21,20 +21,21 @@ import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.util.MathUtils;
 import org.apache.commons.math3.util.Precision;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
- *
  * Abstract implementation of the {@link StorelessUnivariateStatistic} interface.
  * <p>
  * Provides default <code>evaluate()</code> and <code>incrementAll(double[])</code>
  * implementations.</p>
  * <p>
  * <strong>Note that these implementations are not synchronized.</strong></p>
- *
  */
-public abstract class AbstractStorelessUnivariateStatistic
-    extends AbstractUnivariateStatistic
-    implements StorelessUnivariateStatistic {
+public abstract class AbstractStorelessUnivariateStatistic extends AbstractUnivariateStatistic implements StorelessUnivariateStatistic {
+
+    @Conditional
+    public static boolean _mut4450 = false, _mut4451 = false, _mut4452 = false, _mut4453 = false, _mut4454 = false, _mut4455 = false, _mut4456 = false, _mut4457 = false, _mut4458 = false, _mut4459 = false, _mut4460 = false, _mut4461 = false, _mut4462 = false, _mut4463 = false, _mut4464 = false, _mut4465 = false, _mut4466 = false, _mut4467 = false, _mut4468 = false, _mut4469 = false, _mut4470 = false, _mut4471 = false;
 
     /**
      * This default implementation calls {@link #clear}, then invokes
@@ -86,8 +87,7 @@ public abstract class AbstractStorelessUnivariateStatistic
      * @see org.apache.commons.math3.stat.descriptive.UnivariateStatistic#evaluate(double[], int, int)
      */
     @Override
-    public double evaluate(final double[] values, final int begin,
-            final int length) throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
         if (test(values, begin, length)) {
             clear();
             incrementAll(values, begin, length);
@@ -146,9 +146,11 @@ public abstract class AbstractStorelessUnivariateStatistic
      * @see org.apache.commons.math3.stat.descriptive.StorelessUnivariateStatistic#incrementAll(double[], int, int)
      */
     public void incrementAll(double[] values, int begin, int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.incrementAll_148");
         if (test(values, begin, length)) {
-            int k = begin + length;
-            for (int i = begin; i < k; i++) {
+            int k = AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.incrementAll_148", _mut4450, _mut4451, _mut4452, _mut4453);
+            for (int i = begin; ROR_less(i, k, "org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.incrementAll_148", _mut4454, _mut4455, _mut4456, _mut4457, _mut4458); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.incrementAll_148");
                 increment(values[i]);
             }
         }
@@ -163,15 +165,15 @@ public abstract class AbstractStorelessUnivariateStatistic
      */
     @Override
     public boolean equals(Object object) {
-        if (object == this ) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.equals_164");
+        if (object == this) {
             return true;
         }
-       if (object instanceof AbstractStorelessUnivariateStatistic == false) {
+        if (object instanceof AbstractStorelessUnivariateStatistic == false) {
             return false;
         }
         AbstractStorelessUnivariateStatistic stat = (AbstractStorelessUnivariateStatistic) object;
-        return Precision.equalsIncludingNaN(stat.getResult(), this.getResult()) &&
-               Precision.equalsIncludingNaN(stat.getN(), this.getN());
+        return (_mut4459 ? (Precision.equalsIncludingNaN(stat.getResult(), this.getResult()) || Precision.equalsIncludingNaN(stat.getN(), this.getN())) : (Precision.equalsIncludingNaN(stat.getResult(), this.getResult()) && Precision.equalsIncludingNaN(stat.getN(), this.getN())));
     }
 
     /**
@@ -181,7 +183,7 @@ public abstract class AbstractStorelessUnivariateStatistic
      */
     @Override
     public int hashCode() {
-        return 31* (31 + MathUtils.hash(getResult())) + MathUtils.hash(getN());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.hashCode_182");
+        return AOR_plus(AOR_multiply(31, (AOR_plus(31, MathUtils.hash(getResult()), "org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.hashCode_182", _mut4460, _mut4461, _mut4462, _mut4463)), "org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.hashCode_182", _mut4464, _mut4465, _mut4466, _mut4467), MathUtils.hash(getN()), "org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic.hashCode_182", _mut4468, _mut4469, _mut4470, _mut4471);
     }
-
 }

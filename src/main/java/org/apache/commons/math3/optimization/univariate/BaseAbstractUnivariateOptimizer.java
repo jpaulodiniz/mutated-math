@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.univariate;
 
 import org.apache.commons.math3.util.Incrementor;
@@ -24,6 +23,8 @@ import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.analysis.UnivariateFunction;
 import org.apache.commons.math3.optimization.GoalType;
 import org.apache.commons.math3.optimization.ConvergenceChecker;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Provide a default implementation for several functions useful to generic
@@ -33,21 +34,44 @@ import org.apache.commons.math3.optimization.ConvergenceChecker;
  * @since 2.0
  */
 @Deprecated
-public abstract class BaseAbstractUnivariateOptimizer
-    implements UnivariateOptimizer {
-    /** Convergence checker. */
+public abstract class BaseAbstractUnivariateOptimizer implements UnivariateOptimizer {
+
+    @Conditional
+    public static boolean _mut70720 = false, _mut70721 = false, _mut70722 = false, _mut70723 = false, _mut70724 = false, _mut70725 = false, _mut70726 = false, _mut70727 = false, _mut70728 = false, _mut70729 = false, _mut70730 = false, _mut70731 = false;
+
+    /**
+     * Convergence checker.
+     */
     private final ConvergenceChecker<UnivariatePointValuePair> checker;
-    /** Evaluations counter. */
+
+    /**
+     * Evaluations counter.
+     */
     private final Incrementor evaluations = new Incrementor();
-    /** Optimization type */
+
+    /**
+     * Optimization type
+     */
     private GoalType goal;
-    /** Lower end of search interval. */
+
+    /**
+     * Lower end of search interval.
+     */
     private double searchMin;
-    /** Higher end of search interval. */
+
+    /**
+     * Higher end of search interval.
+     */
     private double searchMax;
-    /** Initial guess . */
+
+    /**
+     * Initial guess .
+     */
     private double searchStart;
-    /** Function to optimize. */
+
+    /**
+     * Function to optimize.
+     */
     private UnivariateFunction function;
 
     /**
@@ -57,12 +81,16 @@ public abstract class BaseAbstractUnivariateOptimizer
         this.checker = checker;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxEvaluations() {
         return evaluations.getMaximalCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getEvaluations() {
         return evaluations.getCount();
     }
@@ -73,18 +101,21 @@ public abstract class BaseAbstractUnivariateOptimizer
     public GoalType getGoalType() {
         return goal;
     }
+
     /**
      * @return the lower end of the search interval.
      */
     public double getMin() {
         return searchMin;
     }
+
     /**
      * @return the higher end of the search interval.
      */
     public double getMax() {
         return searchMax;
     }
+
     /**
      * @return the initial guess.
      */
@@ -109,11 +140,10 @@ public abstract class BaseAbstractUnivariateOptimizer
         return function.value(point);
     }
 
-    /** {@inheritDoc} */
-    public UnivariatePointValuePair optimize(int maxEval, UnivariateFunction f,
-                                             GoalType goalType,
-                                             double min, double max,
-                                             double startValue) {
+    /**
+     * {@inheritDoc}
+     */
+    public UnivariatePointValuePair optimize(int maxEval, UnivariateFunction f, GoalType goalType, double min, double max, double startValue) {
         // Checks.
         if (f == null) {
             throw new NullArgumentException();
@@ -121,7 +151,6 @@ public abstract class BaseAbstractUnivariateOptimizer
         if (goalType == null) {
             throw new NullArgumentException();
         }
-
         // Reset.
         searchMin = min;
         searchMax = max;
@@ -130,17 +159,16 @@ public abstract class BaseAbstractUnivariateOptimizer
         function = f;
         evaluations.setMaximalCount(maxEval);
         evaluations.resetCount();
-
         // Perform computation.
         return doOptimize();
     }
 
-    /** {@inheritDoc} */
-    public UnivariatePointValuePair optimize(int maxEval,
-                                             UnivariateFunction f,
-                                             GoalType goalType,
-                                             double min, double max){
-        return optimize(maxEval, f, goalType, min, max, min + 0.5 * (max - min));
+    /**
+     * {@inheritDoc}
+     */
+    public UnivariatePointValuePair optimize(int maxEval, UnivariateFunction f, GoalType goalType, double min, double max) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer.optimize_139");
+        return optimize(maxEval, f, goalType, min, max, AOR_plus(min, AOR_multiply(0.5, (AOR_minus(max, min, "org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer.optimize_139", _mut70720, _mut70721, _mut70722, _mut70723)), "org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer.optimize_139", _mut70724, _mut70725, _mut70726, _mut70727), "org.apache.commons.math3.optimization.univariate.BaseAbstractUnivariateOptimizer.optimize_139", _mut70728, _mut70729, _mut70730, _mut70731));
     }
 
     /**

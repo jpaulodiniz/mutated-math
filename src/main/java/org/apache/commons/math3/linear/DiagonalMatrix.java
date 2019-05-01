@@ -17,7 +17,6 @@
 package org.apache.commons.math3.linear;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.NullArgumentException;
@@ -26,17 +25,27 @@ import org.apache.commons.math3.exception.OutOfRangeException;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
 import org.apache.commons.math3.util.Precision;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implementation of a diagonal matrix.
  *
  * @since 3.1.1
  */
-public class DiagonalMatrix extends AbstractRealMatrix
-    implements Serializable {
-    /** Serializable version identifier. */
+public class DiagonalMatrix extends AbstractRealMatrix implements Serializable {
+
+    @Conditional
+    public static boolean _mut32230 = false, _mut32231 = false, _mut32232 = false, _mut32233 = false, _mut32234 = false, _mut32235 = false, _mut32236 = false, _mut32237 = false, _mut32238 = false, _mut32239 = false, _mut32240 = false, _mut32241 = false, _mut32242 = false, _mut32243 = false, _mut32244 = false, _mut32245 = false, _mut32246 = false, _mut32247 = false, _mut32248 = false, _mut32249 = false, _mut32250 = false, _mut32251 = false, _mut32252 = false, _mut32253 = false, _mut32254 = false, _mut32255 = false, _mut32256 = false, _mut32257 = false, _mut32258 = false, _mut32259 = false, _mut32260 = false, _mut32261 = false, _mut32262 = false, _mut32263 = false, _mut32264 = false, _mut32265 = false, _mut32266 = false, _mut32267 = false, _mut32268 = false, _mut32269 = false, _mut32270 = false, _mut32271 = false, _mut32272 = false, _mut32273 = false, _mut32274 = false, _mut32275 = false, _mut32276 = false, _mut32277 = false, _mut32278 = false, _mut32279 = false, _mut32280 = false, _mut32281 = false, _mut32282 = false, _mut32283 = false, _mut32284 = false, _mut32285 = false, _mut32286 = false, _mut32287 = false, _mut32288 = false, _mut32289 = false, _mut32290 = false, _mut32291 = false, _mut32292 = false, _mut32293 = false, _mut32294 = false, _mut32295 = false, _mut32296 = false, _mut32297 = false, _mut32298 = false, _mut32299 = false, _mut32300 = false, _mut32301 = false, _mut32302 = false, _mut32303 = false, _mut32304 = false, _mut32305 = false, _mut32306 = false, _mut32307 = false, _mut32308 = false, _mut32309 = false, _mut32310 = false, _mut32311 = false, _mut32312 = false, _mut32313 = false, _mut32314 = false;
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = 20121229L;
-    /** Entries of the diagonal. */
+
+    /**
+     * Entries of the diagonal.
+     */
     private final double[] data;
 
     /**
@@ -46,8 +55,7 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @throws NotStrictlyPositiveException if the dimension is
      * not positive.
      */
-    public DiagonalMatrix(final int dimension)
-        throws NotStrictlyPositiveException {
+    public DiagonalMatrix(final int dimension) throws NotStrictlyPositiveException {
         super(dimension, dimension);
         data = new double[dimension];
     }
@@ -77,8 +85,7 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * otherwise it will be referenced.
      * @exception NullArgumentException if d is null
      */
-    public DiagonalMatrix(final double[] d, final boolean copyArray)
-        throws NullArgumentException {
+    public DiagonalMatrix(final double[] d, final boolean copyArray) throws NullArgumentException {
         MathUtils.checkNotNull(d);
         data = copyArray ? d.clone() : d;
     }
@@ -89,18 +96,17 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @throws DimensionMismatchException if the requested dimensions are not equal.
      */
     @Override
-    public RealMatrix createMatrix(final int rowDimension,
-                                   final int columnDimension)
-        throws NotStrictlyPositiveException,
-               DimensionMismatchException {
-        if (rowDimension != columnDimension) {
+    public RealMatrix createMatrix(final int rowDimension, final int columnDimension) throws NotStrictlyPositiveException, DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.createMatrix_91");
+        if (ROR_not_equals(rowDimension, columnDimension, "org.apache.commons.math3.linear.DiagonalMatrix.createMatrix_91", _mut32230, _mut32231, _mut32232, _mut32233, _mut32234)) {
             throw new DimensionMismatchException(rowDimension, columnDimension);
         }
-
         return new DiagonalMatrix(rowDimension);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RealMatrix copy() {
         return new DiagonalMatrix(data);
@@ -114,17 +120,16 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @throws MatrixDimensionMismatchException if {@code m} is not the same
      * size as {@code this}.
      */
-    public DiagonalMatrix add(final DiagonalMatrix m)
-        throws MatrixDimensionMismatchException {
+    public DiagonalMatrix add(final DiagonalMatrix m) throws MatrixDimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.add_117");
         // Safety check.
         MatrixUtils.checkAdditionCompatible(this, m);
-
         final int dim = getRowDimension();
         final double[] outData = new double[dim];
-        for (int i = 0; i < dim; i++) {
-            outData[i] = data[i] + m.data[i];
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.DiagonalMatrix.add_117", _mut32239, _mut32240, _mut32241, _mut32242, _mut32243); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.add_117");
+            outData[i] = AOR_plus(data[i], m.data[i], "org.apache.commons.math3.linear.DiagonalMatrix.add_117", _mut32235, _mut32236, _mut32237, _mut32238);
         }
-
         return new DiagonalMatrix(outData, false);
     }
 
@@ -136,16 +141,15 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @throws MatrixDimensionMismatchException if {@code m} is not the same
      * size as {@code this}.
      */
-    public DiagonalMatrix subtract(final DiagonalMatrix m)
-        throws MatrixDimensionMismatchException {
+    public DiagonalMatrix subtract(final DiagonalMatrix m) throws MatrixDimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.subtract_139");
         MatrixUtils.checkSubtractionCompatible(this, m);
-
         final int dim = getRowDimension();
         final double[] outData = new double[dim];
-        for (int i = 0; i < dim; i++) {
-            outData[i] = data[i] - m.data[i];
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.DiagonalMatrix.subtract_139", _mut32248, _mut32249, _mut32250, _mut32251, _mut32252); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.subtract_139");
+            outData[i] = AOR_minus(data[i], m.data[i], "org.apache.commons.math3.linear.DiagonalMatrix.subtract_139", _mut32244, _mut32245, _mut32246, _mut32247);
         }
-
         return new DiagonalMatrix(outData, false);
     }
 
@@ -157,16 +161,15 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @throws DimensionMismatchException if
      * {@code columnDimension(this) != rowDimension(m)}
      */
-    public DiagonalMatrix multiply(final DiagonalMatrix m)
-        throws DimensionMismatchException {
+    public DiagonalMatrix multiply(final DiagonalMatrix m) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiply_160");
         MatrixUtils.checkMultiplicationCompatible(this, m);
-
         final int dim = getRowDimension();
         final double[] outData = new double[dim];
-        for (int i = 0; i < dim; i++) {
-            outData[i] = data[i] * m.data[i];
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.DiagonalMatrix.multiply_160", _mut32257, _mut32258, _mut32259, _mut32260, _mut32261); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiply_160");
+            outData[i] = AOR_multiply(data[i], m.data[i], "org.apache.commons.math3.linear.DiagonalMatrix.multiply_160", _mut32253, _mut32254, _mut32255, _mut32256);
         }
-
         return new DiagonalMatrix(outData, false);
     }
 
@@ -179,8 +182,8 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * {@code columnDimension(this) != rowDimension(m)}
      */
     @Override
-    public RealMatrix multiply(final RealMatrix m)
-        throws DimensionMismatchException {
+    public RealMatrix multiply(final RealMatrix m) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiply_181");
         if (m instanceof DiagonalMatrix) {
             return multiply((DiagonalMatrix) m);
         } else {
@@ -188,25 +191,29 @@ public class DiagonalMatrix extends AbstractRealMatrix
             final int nRows = m.getRowDimension();
             final int nCols = m.getColumnDimension();
             final double[][] product = new double[nRows][nCols];
-            for (int r = 0; r < nRows; r++) {
-                for (int c = 0; c < nCols; c++) {
-                    product[r][c] = data[r] * m.getEntry(r, c);
+            for (int r = 0; ROR_less(r, nRows, "org.apache.commons.math3.linear.DiagonalMatrix.multiply_181", _mut32271, _mut32272, _mut32273, _mut32274, _mut32275); r++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiply_181");
+                for (int c = 0; ROR_less(c, nCols, "org.apache.commons.math3.linear.DiagonalMatrix.multiply_181", _mut32266, _mut32267, _mut32268, _mut32269, _mut32270); c++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiply_181");
+                    product[r][c] = AOR_multiply(data[r], m.getEntry(r, c), "org.apache.commons.math3.linear.DiagonalMatrix.multiply_181", _mut32262, _mut32263, _mut32264, _mut32265);
                 }
             }
             return new Array2DRowRealMatrix(product, false);
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double[][] getData() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.getData_201");
         final int dim = getRowDimension();
         final double[][] out = new double[dim][dim];
-
-        for (int i = 0; i < dim; i++) {
+        for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.linear.DiagonalMatrix.getData_201", _mut32276, _mut32277, _mut32278, _mut32279, _mut32280); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.getData_201");
             out[i][i] = data[i];
         }
-
         return out;
     }
 
@@ -219,21 +226,24 @@ public class DiagonalMatrix extends AbstractRealMatrix
         return data;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double getEntry(final int row, final int column)
-        throws OutOfRangeException {
+    public double getEntry(final int row, final int column) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.getEntry_223");
         MatrixUtils.checkMatrixIndex(this, row, column);
-        return row == column ? data[row] : 0;
+        return ROR_equals(row, column, "org.apache.commons.math3.linear.DiagonalMatrix.getEntry_223", _mut32281, _mut32282, _mut32283, _mut32284, _mut32285) ? data[row] : 0;
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @throws NumberIsTooLargeException if {@code row != column} and value is non-zero.
      */
     @Override
-    public void setEntry(final int row, final int column, final double value)
-        throws OutOfRangeException, NumberIsTooLargeException {
-        if (row == column) {
+    public void setEntry(final int row, final int column, final double value) throws OutOfRangeException, NumberIsTooLargeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.setEntry_233");
+        if (ROR_equals(row, column, "org.apache.commons.math3.linear.DiagonalMatrix.setEntry_233", _mut32286, _mut32287, _mut32288, _mut32289, _mut32290)) {
             MatrixUtils.checkRowIndex(this, row);
             data[row] = value;
         } else {
@@ -241,15 +251,14 @@ public class DiagonalMatrix extends AbstractRealMatrix
         }
     }
 
-    /** {@inheritDoc}
+    /**
+     * {@inheritDoc}
      * @throws NumberIsTooLargeException if {@code row != column} and increment is non-zero.
      */
     @Override
-    public void addToEntry(final int row,
-                           final int column,
-                           final double increment)
-        throws OutOfRangeException, NumberIsTooLargeException {
-        if (row == column) {
+    public void addToEntry(final int row, final int column, final double increment) throws OutOfRangeException, NumberIsTooLargeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.addToEntry_247");
+        if (ROR_equals(row, column, "org.apache.commons.math3.linear.DiagonalMatrix.addToEntry_247", _mut32291, _mut32292, _mut32293, _mut32294, _mut32295)) {
             MatrixUtils.checkRowIndex(this, row);
             data[row] += increment;
         } else {
@@ -257,46 +266,54 @@ public class DiagonalMatrix extends AbstractRealMatrix
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void multiplyEntry(final int row,
-                              final int column,
-                              final double factor)
-        throws OutOfRangeException {
+    public void multiplyEntry(final int row, final int column, final double factor) throws OutOfRangeException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.multiplyEntry_261");
         // we don't care about non-diagonal elements for multiplication
-        if (row == column) {
+        if (ROR_equals(row, column, "org.apache.commons.math3.linear.DiagonalMatrix.multiplyEntry_261", _mut32296, _mut32297, _mut32298, _mut32299, _mut32300)) {
             MatrixUtils.checkRowIndex(this, row);
             data[row] *= factor;
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRowDimension() {
         return data.length;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnDimension() {
         return data.length;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double[] operate(final double[] v)
-        throws DimensionMismatchException {
+    public double[] operate(final double[] v) throws DimensionMismatchException {
         return multiply(new DiagonalMatrix(v, false)).getDataRef();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public double[] preMultiply(final double[] v)
-        throws DimensionMismatchException {
+    public double[] preMultiply(final double[] v) throws DimensionMismatchException {
         return operate(v);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public RealVector preMultiply(final RealVector v) throws DimensionMismatchException {
         final double[] vectorData;
@@ -308,7 +325,8 @@ public class DiagonalMatrix extends AbstractRealMatrix
         return MatrixUtils.createRealVector(preMultiply(vectorData));
     }
 
-    /** Ensure a value is zero.
+    /**
+     * Ensure a value is zero.
      * @param value value to check
      * @exception NumberIsTooLargeException if value is not zero
      */
@@ -341,18 +359,20 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @since 3.3
      */
     public DiagonalMatrix inverse(double threshold) throws SingularMatrixException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.inverse_343");
         if (isSingular(threshold)) {
             throw new SingularMatrixException();
         }
-
         final double[] result = new double[data.length];
-        for (int i = 0; i < data.length; i++) {
-            result[i] = 1.0 / data[i];
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.DiagonalMatrix.inverse_343", _mut32305, _mut32306, _mut32307, _mut32308, _mut32309); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.inverse_343");
+            result[i] = AOR_divide(1.0, data[i], "org.apache.commons.math3.linear.DiagonalMatrix.inverse_343", _mut32301, _mut32302, _mut32303, _mut32304);
         }
         return new DiagonalMatrix(result, false);
     }
 
-    /** Returns whether this diagonal matrix is singular, i.e. any diagonal entry
+    /**
+     * Returns whether this diagonal matrix is singular, i.e. any diagonal entry
      * is equal to {@code 0} within the given threshold.
      *
      * @param threshold Singularity threshold.
@@ -360,7 +380,9 @@ public class DiagonalMatrix extends AbstractRealMatrix
      * @since 3.3
      */
     public boolean isSingular(double threshold) {
-        for (int i = 0; i < data.length; i++) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.isSingular_362");
+        for (int i = 0; ROR_less(i, data.length, "org.apache.commons.math3.linear.DiagonalMatrix.isSingular_362", _mut32310, _mut32311, _mut32312, _mut32313, _mut32314); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.DiagonalMatrix.isSingular_362");
             if (Precision.equals(data[i], 0.0, threshold)) {
                 return true;
             }

@@ -22,6 +22,8 @@ import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.MathUnsupportedOperationException;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.ZeroException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Provides a sequence of integers.
@@ -29,10 +31,15 @@ import org.apache.commons.math3.exception.ZeroException;
  * @since 3.6
  */
 public class IntegerSequence {
+
+    @Conditional
+    public static boolean _mut50349 = false, _mut50350 = false, _mut50351 = false, _mut50352 = false, _mut50353 = false, _mut50354 = false, _mut50355 = false, _mut50356 = false, _mut50357 = false, _mut50358 = false, _mut50359 = false, _mut50360 = false, _mut50361 = false, _mut50362 = false, _mut50363 = false, _mut50364 = false, _mut50365 = false, _mut50366 = false, _mut50367 = false, _mut50368 = false, _mut50369 = false, _mut50370 = false, _mut50371 = false, _mut50372 = false, _mut50373 = false, _mut50374 = false, _mut50375 = false, _mut50376 = false, _mut50377 = false, _mut50378 = false, _mut50379 = false, _mut50380 = false, _mut50381 = false, _mut50382 = false, _mut50383 = false, _mut50384 = false, _mut50385 = false, _mut50386 = false, _mut50387 = false, _mut50388 = false, _mut50389 = false, _mut50390 = false, _mut50391 = false, _mut50392 = false, _mut50393 = false, _mut50394 = false, _mut50395 = false, _mut50396 = false, _mut50397 = false, _mut50398 = false, _mut50399 = false, _mut50400 = false, _mut50401 = false, _mut50402 = false, _mut50403 = false, _mut50404 = false, _mut50405 = false, _mut50406 = false, _mut50407 = false, _mut50408 = false, _mut50409 = false, _mut50410 = false, _mut50411 = false;
+
     /**
      * Utility class contains only static methods.
      */
-    private IntegerSequence() {}
+    private IntegerSequence() {
+    }
 
     /**
      * Creates a sequence {@code [start .. end]}.
@@ -42,8 +49,7 @@ public class IntegerSequence {
      * @param end Last value of the range.
      * @return a range.
      */
-    public static Range range(int start,
-                              int end) {
+    public static Range range(int start, int end) {
         return range(start, end, 1);
     }
 
@@ -58,9 +64,7 @@ public class IntegerSequence {
      * @param step Increment.
      * @return a range.
      */
-    public static Range range(final int start,
-                              final int max,
-                              final int step) {
+    public static Range range(final int start, final int max, final int step) {
         return new Range(start, max, step);
     }
 
@@ -68,13 +72,25 @@ public class IntegerSequence {
      * Generates a sequence of integers.
      */
     public static class Range implements Iterable<Integer> {
-        /** Number of integers contained in this range. */
+
+        /**
+         * Number of integers contained in this range.
+         */
         private final int size;
-        /** First value. */
+
+        /**
+         * First value.
+         */
         private final int start;
-        /** Final value. */
+
+        /**
+         * Final value.
+         */
         private final int max;
-        /** Increment. */
+
+        /**
+         * Increment.
+         */
         private final int step;
 
         /**
@@ -87,15 +103,13 @@ public class IntegerSequence {
          * construction rule.
          * @param step Increment.
          */
-        public Range(int start,
-                     int max,
-                     int step) {
+        public Range(int start, int max, int step) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.IntegerSequence.Range_90");
             this.start = start;
             this.max = max;
             this.step = step;
-
-            final int s = (max - start) / step + 1;
-            this.size = s < 0 ? 0 : s;
+            final int s = AOR_plus(AOR_divide((AOR_minus(max, start, "org.apache.commons.math3.util.IntegerSequence.Range_90", _mut50349, _mut50350, _mut50351, _mut50352)), step, "org.apache.commons.math3.util.IntegerSequence.Range_90", _mut50353, _mut50354, _mut50355, _mut50356), 1, "org.apache.commons.math3.util.IntegerSequence.Range_90", _mut50357, _mut50358, _mut50359, _mut50360);
+            this.size = ROR_less(s, 0, "org.apache.commons.math3.util.IntegerSequence.Range_90", _mut50361, _mut50362, _mut50363, _mut50364, _mut50365) ? 0 : s;
         }
 
         /**
@@ -107,12 +121,12 @@ public class IntegerSequence {
             return size;
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public Iterator<Integer> iterator() {
-            return Incrementor.create()
-                .withStart(start)
-                .withMaximalCount(max + (step > 0 ? 1 : -1))
-                .withIncrement(step);
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.IntegerSequence.iterator_111");
+            return Incrementor.create().withStart(start).withMaximalCount(AOR_plus(max, (ROR_greater(step, 0, "org.apache.commons.math3.util.IntegerSequence.iterator_111", _mut50366, _mut50367, _mut50368, _mut50369, _mut50370) ? 1 : -1), "org.apache.commons.math3.util.IntegerSequence.iterator_111", _mut50371, _mut50372, _mut50373, _mut50374)).withIncrement(step);
         }
     }
 
@@ -125,24 +139,43 @@ public class IntegerSequence {
      * select which exception must be thrown.
      */
     public static class Incrementor implements Iterator<Integer> {
-        /** Default callback. */
-        private static final MaxCountExceededCallback CALLBACK
-            = new MaxCountExceededCallback() {
-                    /** {@inheritDoc} */
-                    public void trigger(int max) throws MaxCountExceededException {
-                        throw new MaxCountExceededException(max);
-                    }
-                };
 
-        /** Initial value the counter. */
+        /**
+         * Default callback.
+         */
+        private static final MaxCountExceededCallback CALLBACK = new MaxCountExceededCallback() {
+
+            /**
+             * {@inheritDoc}
+             */
+            public void trigger(int max) throws MaxCountExceededException {
+                throw new MaxCountExceededException(max);
+            }
+        };
+
+        /**
+         * Initial value the counter.
+         */
         private final int init;
-        /** Upper limit for the counter. */
+
+        /**
+         * Upper limit for the counter.
+         */
         private final int maximalCount;
-        /** Increment. */
+
+        /**
+         * Increment.
+         */
         private final int increment;
-        /** Function called at counter exhaustion. */
+
+        /**
+         * Function called at counter exhaustion.
+         */
         private final MaxCountExceededCallback maxCountCallback;
-        /** Current count. */
+
+        /**
+         * Current count.
+         */
         private int count = 0;
 
         /**
@@ -150,6 +183,7 @@ public class IntegerSequence {
          * The {@link #trigger(int) trigger} method should usually throw an exception.
          */
         public interface MaxCountExceededCallback {
+
             /**
              * Function called when the maximal count has been reached.
              *
@@ -170,11 +204,7 @@ public class IntegerSequence {
          * @param cb Function to be called when the maximal count has been reached.
          * @throws NullArgumentException if {@code cb} is {@code null}.
          */
-        private Incrementor(int start,
-                            int max,
-                            int step,
-                            MaxCountExceededCallback cb)
-            throws NullArgumentException {
+        private Incrementor(int start, int max, int step, MaxCountExceededCallback cb) throws NullArgumentException {
             if (cb == null) {
                 throw new NullArgumentException();
             }
@@ -205,10 +235,7 @@ public class IntegerSequence {
          * @return a new instance.
          */
         public Incrementor withStart(int start) {
-            return new Incrementor(start,
-                                   this.maximalCount,
-                                   this.increment,
-                                   this.maxCountCallback);
+            return new Incrementor(start, this.maximalCount, this.increment, this.maxCountCallback);
         }
 
         /**
@@ -219,10 +246,7 @@ public class IntegerSequence {
          * @return a new instance.
          */
         public Incrementor withMaximalCount(int max) {
-            return new Incrementor(this.init,
-                                   max,
-                                   this.increment,
-                                   this.maxCountCallback);
+            return new Incrementor(this.init, max, this.increment, this.maxCountCallback);
         }
 
         /**
@@ -233,13 +257,11 @@ public class IntegerSequence {
          * @return a new instance.
          */
         public Incrementor withIncrement(int step) {
-            if (step == 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.IntegerSequence.withIncrement_235");
+            if (ROR_equals(step, 0, "org.apache.commons.math3.util.IntegerSequence.withIncrement_235", _mut50375, _mut50376, _mut50377, _mut50378, _mut50379)) {
                 throw new ZeroException();
             }
-            return new Incrementor(this.init,
-                                   this.maximalCount,
-                                   step,
-                                   this.maxCountCallback);
+            return new Incrementor(this.init, this.maximalCount, step, this.maxCountCallback);
         }
 
         /**
@@ -250,10 +272,7 @@ public class IntegerSequence {
          * @return a new instance.
          */
         public Incrementor withCallback(MaxCountExceededCallback cb) {
-            return new Incrementor(this.init,
-                                   this.maximalCount,
-                                   this.increment,
-                                   cb);
+            return new Incrementor(this.init, this.maximalCount, this.increment, cb);
         }
 
         /**
@@ -294,10 +313,9 @@ public class IntegerSequence {
          * {@code true} otherwise.
          */
         public boolean canIncrement(int nTimes) {
-            final int finalCount = count + nTimes * increment;
-            return increment < 0 ?
-                finalCount > maximalCount :
-                finalCount < maximalCount;
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.IntegerSequence.canIncrement_296");
+            final int finalCount = AOR_plus(count, AOR_multiply(nTimes, increment, "org.apache.commons.math3.util.IntegerSequence.canIncrement_296", _mut50380, _mut50381, _mut50382, _mut50383), "org.apache.commons.math3.util.IntegerSequence.canIncrement_296", _mut50384, _mut50385, _mut50386, _mut50387);
+            return ROR_less(increment, 0, "org.apache.commons.math3.util.IntegerSequence.canIncrement_296", _mut50388, _mut50389, _mut50390, _mut50391, _mut50392) ? ROR_greater(finalCount, maximalCount, "org.apache.commons.math3.util.IntegerSequence.canIncrement_296", _mut50398, _mut50399, _mut50400, _mut50401, _mut50402) : ROR_less(finalCount, maximalCount, "org.apache.commons.math3.util.IntegerSequence.canIncrement_296", _mut50393, _mut50394, _mut50395, _mut50396, _mut50397);
         }
 
         /**
@@ -310,14 +328,14 @@ public class IntegerSequence {
          * @see #increment()
          */
         public void increment(int nTimes) throws MaxCountExceededException {
-            if (nTimes <= 0) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.IntegerSequence.increment_312");
+            if (ROR_less_equals(nTimes, 0, "org.apache.commons.math3.util.IntegerSequence.increment_312", _mut50403, _mut50404, _mut50405, _mut50406, _mut50407)) {
                 throw new NotStrictlyPositiveException(nTimes);
             }
-
             if (!canIncrement(0)) {
                 maxCountCallback.trigger(maximalCount);
             }
-            count += nTimes * increment;
+            count += AOR_multiply(nTimes, increment, "org.apache.commons.math3.util.IntegerSequence.increment_312", _mut50408, _mut50409, _mut50410, _mut50411);
         }
 
         /**
@@ -338,12 +356,16 @@ public class IntegerSequence {
             increment(1);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public boolean hasNext() {
             return canIncrement(0);
         }
 
-        /** {@inheritDoc} */
+        /**
+         * {@inheritDoc}
+         */
         public Integer next() {
             final int value = count;
             increment();

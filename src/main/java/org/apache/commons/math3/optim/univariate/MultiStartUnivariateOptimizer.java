@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optim.univariate;
 
 import java.util.Arrays;
@@ -26,6 +25,8 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.optim.MaxEval;
 import org.apache.commons.math3.optim.nonlinear.scalar.GoalType;
 import org.apache.commons.math3.optim.OptimizationData;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Special implementation of the {@link UnivariateOptimizer} interface
@@ -37,25 +38,47 @@ import org.apache.commons.math3.optim.OptimizationData;
  *
  * @since 3.0
  */
-public class MultiStartUnivariateOptimizer
-    extends UnivariateOptimizer {
-    /** Underlying classical optimizer. */
+public class MultiStartUnivariateOptimizer extends UnivariateOptimizer {
+
+    @Conditional
+    public static boolean _mut58839 = false, _mut58840 = false, _mut58841 = false, _mut58842 = false, _mut58843 = false, _mut58844 = false, _mut58845 = false, _mut58846 = false, _mut58847 = false, _mut58848 = false, _mut58849 = false, _mut58850 = false, _mut58851 = false, _mut58852 = false, _mut58853 = false, _mut58854 = false, _mut58855 = false, _mut58856 = false, _mut58857 = false, _mut58858 = false, _mut58859 = false, _mut58860 = false, _mut58861 = false, _mut58862 = false, _mut58863 = false, _mut58864 = false, _mut58865 = false, _mut58866 = false, _mut58867 = false, _mut58868 = false, _mut58869 = false, _mut58870 = false, _mut58871 = false, _mut58872 = false, _mut58873 = false, _mut58874 = false, _mut58875 = false, _mut58876 = false, _mut58877 = false, _mut58878 = false, _mut58879 = false, _mut58880 = false, _mut58881 = false, _mut58882 = false, _mut58883 = false, _mut58884 = false;
+
+    /**
+     * Underlying classical optimizer.
+     */
     private final UnivariateOptimizer optimizer;
-    /** Number of evaluations already performed for all starts. */
+
+    /**
+     * Number of evaluations already performed for all starts.
+     */
     private int totalEvaluations;
-    /** Number of starts to go. */
+
+    /**
+     * Number of starts to go.
+     */
     private int starts;
-    /** Random generator for multi-start. */
+
+    /**
+     * Random generator for multi-start.
+     */
     private RandomGenerator generator;
-    /** Found optima. */
+
+    /**
+     * Found optima.
+     */
     private UnivariatePointValuePair[] optima;
-    /** Optimization data. */
+
+    /**
+     * Optimization data.
+     */
     private OptimizationData[] optimData;
+
     /**
      * Location in {@link #optimData} where the updated maximum
      * number of evaluations will be stored.
      */
     private int maxEvalIndex = -1;
+
     /**
      * Location in {@link #optimData} where the updated start value
      * will be stored.
@@ -72,21 +95,20 @@ public class MultiStartUnivariateOptimizer
      * @param generator Random generator to use for restarts.
      * @throws NotStrictlyPositiveException if {@code starts < 1}.
      */
-    public MultiStartUnivariateOptimizer(final UnivariateOptimizer optimizer,
-                                         final int starts,
-                                         final RandomGenerator generator) {
+    public MultiStartUnivariateOptimizer(final UnivariateOptimizer optimizer, final int starts, final RandomGenerator generator) {
         super(optimizer.getConvergenceChecker());
-
-        if (starts < 1) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.MultiStartUnivariateOptimizer_75");
+        if (ROR_less(starts, 1, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.MultiStartUnivariateOptimizer_75", _mut58839, _mut58840, _mut58841, _mut58842, _mut58843)) {
             throw new NotStrictlyPositiveException(starts);
         }
-
         this.optimizer = optimizer;
         this.starts = starts;
         this.generator = generator;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getEvaluations() {
         return totalEvaluations;
@@ -130,20 +152,20 @@ public class MultiStartUnivariateOptimizer
     @Override
     public UnivariatePointValuePair optimize(OptimizationData... optData) {
         // Store arguments in order to pass them to the internal optimizer.
-       optimData = optData;
+        optimData = optData;
         // Set up base class and perform computations.
         return super.optimize(optData);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected UnivariatePointValuePair doOptimize() {
-        // Remove all instances of "MaxEval" and "SearchInterval" from the
-        // array that will be passed to the internal optimizer.
-        // The former is to enforce smaller numbers of allowed evaluations
-        // (according to how many have been used up already), and the latter
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139");
         // to impose a different start value for each start.
-        for (int i = 0; i < optimData.length; i++) {
+        for (int i = 0; ROR_less(i, optimData.length, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58844, _mut58845, _mut58846, _mut58847, _mut58848); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139");
             if (optimData[i] instanceof MaxEval) {
                 optimData[i] = null;
                 maxEvalIndex = i;
@@ -155,32 +177,28 @@ public class MultiStartUnivariateOptimizer
                 continue;
             }
         }
-        if (maxEvalIndex == -1) {
+        if (ROR_equals(maxEvalIndex, -1, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58849, _mut58850, _mut58851, _mut58852, _mut58853)) {
             throw new MathIllegalStateException();
         }
-        if (searchIntervalIndex == -1) {
+        if (ROR_equals(searchIntervalIndex, -1, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58854, _mut58855, _mut58856, _mut58857, _mut58858)) {
             throw new MathIllegalStateException();
         }
-
         RuntimeException lastException = null;
         optima = new UnivariatePointValuePair[starts];
         totalEvaluations = 0;
-
         final int maxEval = getMaxEvaluations();
         final double min = getMin();
         final double max = getMax();
         final double startValue = getStartValue();
-
         // Multi-start loop.
-        for (int i = 0; i < starts; i++) {
+        for (int i = 0; ROR_less(i, starts, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58880, _mut58881, _mut58882, _mut58883, _mut58884); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139");
             // CHECKSTYLE: stop IllegalCatch
             try {
                 // Decrease number of allowed evaluations.
-                optimData[maxEvalIndex] = new MaxEval(maxEval - totalEvaluations);
+                optimData[maxEvalIndex] = new MaxEval(AOR_minus(maxEval, totalEvaluations, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58859, _mut58860, _mut58861, _mut58862));
                 // New start value.
-                final double s = (i == 0) ?
-                    startValue :
-                    min + generator.nextDouble() * (max - min);
+                final double s = (ROR_equals(i, 0, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58863, _mut58864, _mut58865, _mut58866, _mut58867)) ? startValue : AOR_plus(min, AOR_multiply(generator.nextDouble(), (AOR_minus(max, min, "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58868, _mut58869, _mut58870, _mut58871)), "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58872, _mut58873, _mut58874, _mut58875), "org.apache.commons.math3.optim.univariate.MultiStartUnivariateOptimizer.doOptimize_139", _mut58876, _mut58877, _mut58878, _mut58879);
                 optimData[searchIntervalIndex] = new SearchInterval(min, max, s);
                 // Optimize.
                 optima[i] = optimizer.optimize(optimData);
@@ -188,17 +206,13 @@ public class MultiStartUnivariateOptimizer
                 lastException = mue;
                 optima[i] = null;
             }
-            // CHECKSTYLE: resume IllegalCatch
-
             totalEvaluations += optimizer.getEvaluations();
         }
-
         sortPairs(getGoalType());
-
         if (optima[0] == null) {
-            throw lastException; // Cannot be null if starts >= 1.
+            // Cannot be null if starts >= 1.
+            throw lastException;
         }
-
         // Return the point with the best objective function value.
         return optima[0];
     }
@@ -210,19 +224,20 @@ public class MultiStartUnivariateOptimizer
      */
     private void sortPairs(final GoalType goal) {
         Arrays.sort(optima, new Comparator<UnivariatePointValuePair>() {
-                /** {@inheritDoc} */
-                public int compare(final UnivariatePointValuePair o1,
-                                   final UnivariatePointValuePair o2) {
-                    if (o1 == null) {
-                        return (o2 == null) ? 0 : 1;
-                    } else if (o2 == null) {
-                        return -1;
-                    }
-                    final double v1 = o1.getValue();
-                    final double v2 = o2.getValue();
-                    return (goal == GoalType.MINIMIZE) ?
-                        Double.compare(v1, v2) : Double.compare(v2, v1);
+
+            /**
+             * {@inheritDoc}
+             */
+            public int compare(final UnivariatePointValuePair o1, final UnivariatePointValuePair o2) {
+                if (o1 == null) {
+                    return (o2 == null) ? 0 : 1;
+                } else if (o2 == null) {
+                    return -1;
                 }
-            });
+                final double v1 = o1.getValue();
+                final double v2 = o2.getValue();
+                return (goal == GoalType.MINIMIZE) ? Double.compare(v1, v2) : Double.compare(v2, v1);
+            }
+        });
     }
 }

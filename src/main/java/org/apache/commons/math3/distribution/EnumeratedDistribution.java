@@ -21,7 +21,6 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.apache.commons.math3.exception.MathArithmeticException;
 import org.apache.commons.math3.exception.NotANumberException;
 import org.apache.commons.math3.exception.NotFiniteNumberException;
@@ -33,6 +32,8 @@ import org.apache.commons.math3.random.RandomGenerator;
 import org.apache.commons.math3.random.Well19937c;
 import org.apache.commons.math3.util.MathArrays;
 import org.apache.commons.math3.util.Pair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>A generic implementation of a
@@ -53,7 +54,12 @@ import org.apache.commons.math3.util.Pair;
  */
 public class EnumeratedDistribution<T> implements Serializable {
 
-    /** Serializable UID. */
+    @Conditional
+    public static boolean _mut56974 = false, _mut56975 = false, _mut56976 = false, _mut56977 = false, _mut56978 = false, _mut56979 = false, _mut56980 = false, _mut56981 = false, _mut56982 = false, _mut56983 = false, _mut56984 = false, _mut56985 = false, _mut56986 = false, _mut56987 = false, _mut56988 = false, _mut56989 = false, _mut56990 = false, _mut56991 = false, _mut56992 = false, _mut56993 = false, _mut56994 = false, _mut56995 = false, _mut56996 = false, _mut56997 = false, _mut56998 = false, _mut56999 = false, _mut57000 = false, _mut57001 = false, _mut57002 = false, _mut57003 = false, _mut57004 = false, _mut57005 = false, _mut57006 = false, _mut57007 = false, _mut57008 = false, _mut57009 = false, _mut57010 = false, _mut57011 = false, _mut57012 = false, _mut57013 = false, _mut57014 = false, _mut57015 = false, _mut57016 = false, _mut57017 = false, _mut57018 = false, _mut57019 = false, _mut57020 = false, _mut57021 = false, _mut57022 = false, _mut57023 = false, _mut57024 = false, _mut57025 = false, _mut57026 = false, _mut57027 = false, _mut57028 = false, _mut57029 = false, _mut57030 = false, _mut57031 = false, _mut57032 = false, _mut57033 = false, _mut57034 = false, _mut57035 = false, _mut57036 = false, _mut57037 = false, _mut57038 = false, _mut57039 = false, _mut57040 = false, _mut57041 = false, _mut57042 = false, _mut57043 = false, _mut57044 = false, _mut57045 = false, _mut57046 = false, _mut57047 = false, _mut57048 = false, _mut57049 = false, _mut57050 = false, _mut57051 = false, _mut57052 = false, _mut57053 = false, _mut57054 = false, _mut57055 = false, _mut57056 = false;
+
+    /**
+     * Serializable UID.
+     */
     private static final long serialVersionUID = 20123308L;
 
     /**
@@ -96,8 +102,7 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @throws NotANumberException if any of the probabilities are NaN.
      * @throws MathArithmeticException all of the probabilities are 0.
      */
-    public EnumeratedDistribution(final List<Pair<T, Double>> pmf)
-        throws NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
+    public EnumeratedDistribution(final List<Pair<T, Double>> pmf) throws NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
         this(new Well19937c(), pmf);
     }
 
@@ -113,18 +118,17 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @throws NotANumberException if any of the probabilities are NaN.
      * @throws MathArithmeticException all of the probabilities are 0.
      */
-    public EnumeratedDistribution(final RandomGenerator rng, final List<Pair<T, Double>> pmf)
-        throws NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
+    public EnumeratedDistribution(final RandomGenerator rng, final List<Pair<T, Double>> pmf) throws NotPositiveException, MathArithmeticException, NotFiniteNumberException, NotANumberException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116");
         random = rng;
-
         singletons = new ArrayList<T>(pmf.size());
         final double[] probs = new double[pmf.size()];
-
-        for (int i = 0; i < pmf.size(); i++) {
+        for (int i = 0; ROR_less(i, pmf.size(), "org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116", _mut56979, _mut56980, _mut56981, _mut56982, _mut56983); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116");
             final Pair<T, Double> sample = pmf.get(i);
             singletons.add(sample.getKey());
             final double p = sample.getValue();
-            if (p < 0) {
+            if (ROR_less(p, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116", _mut56974, _mut56975, _mut56976, _mut56977, _mut56978)) {
                 throw new NotPositiveException(sample.getValue());
             }
             if (Double.isInfinite(p)) {
@@ -135,12 +139,11 @@ public class EnumeratedDistribution<T> implements Serializable {
             }
             probs[i] = p;
         }
-
         probabilities = MathArrays.normalizeArray(probs, 1.0);
-
         cumulativeProbabilities = new double[probabilities.length];
         double sum = 0;
-        for (int i = 0; i < probabilities.length; i++) {
+        for (int i = 0; ROR_less(i, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116", _mut56984, _mut56985, _mut56986, _mut56987, _mut56988); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.EnumeratedDistribution_116");
             sum += probabilities[i];
             cumulativeProbabilities[i] = sum;
         }
@@ -168,15 +171,14 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @return the value of the probability mass function at {@code x}
      */
     double probability(final T x) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.probability_170");
         double probability = 0;
-
-        for (int i = 0; i < probabilities.length; i++) {
-            if ((x == null && singletons.get(i) == null) ||
-                (x != null && x.equals(singletons.get(i)))) {
+        for (int i = 0; ROR_less(i, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.probability_170", _mut56992, _mut56993, _mut56994, _mut56995, _mut56996); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.probability_170");
+            if ((_mut56991 ? (((_mut56989 ? (x == null || singletons.get(i) == null) : (x == null && singletons.get(i) == null))) && ((_mut56990 ? (x != null || x.equals(singletons.get(i))) : (x != null && x.equals(singletons.get(i)))))) : (((_mut56989 ? (x == null || singletons.get(i) == null) : (x == null && singletons.get(i) == null))) || ((_mut56990 ? (x != null || x.equals(singletons.get(i))) : (x != null && x.equals(singletons.get(i)))))))) {
                 probability += probabilities[i];
             }
         }
-
         return probability;
     }
 
@@ -191,12 +193,12 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @return the probability mass function.
      */
     public List<Pair<T, Double>> getPmf() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.getPmf_193");
         final List<Pair<T, Double>> samples = new ArrayList<Pair<T, Double>>(probabilities.length);
-
-        for (int i = 0; i < probabilities.length; i++) {
+        for (int i = 0; ROR_less(i, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.getPmf_193", _mut56997, _mut56998, _mut56999, _mut57000, _mut57001); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.getPmf_193");
             samples.add(new Pair<T, Double>(singletons.get(i), probabilities[i]));
         }
-
         return samples;
     }
 
@@ -206,23 +208,19 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @return a random value.
      */
     public T sample() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208");
         final double randomValue = random.nextDouble();
-
         int index = Arrays.binarySearch(cumulativeProbabilities, randomValue);
-        if (index < 0) {
-            index = -index-1;
+        if (ROR_less(index, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57002, _mut57003, _mut57004, _mut57005, _mut57006)) {
+            index = AOR_minus(-index, 1, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57007, _mut57008, _mut57009, _mut57010);
         }
-
-        if (index >= 0 &&
-            index < probabilities.length &&
-            randomValue < cumulativeProbabilities[index]) {
+        if ((_mut57027 ? ((_mut57021 ? (ROR_greater_equals(index, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57011, _mut57012, _mut57013, _mut57014, _mut57015) || ROR_less(index, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57016, _mut57017, _mut57018, _mut57019, _mut57020)) : (ROR_greater_equals(index, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57011, _mut57012, _mut57013, _mut57014, _mut57015) && ROR_less(index, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57016, _mut57017, _mut57018, _mut57019, _mut57020))) || ROR_less(randomValue, cumulativeProbabilities[index], "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57022, _mut57023, _mut57024, _mut57025, _mut57026)) : ((_mut57021 ? (ROR_greater_equals(index, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57011, _mut57012, _mut57013, _mut57014, _mut57015) || ROR_less(index, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57016, _mut57017, _mut57018, _mut57019, _mut57020)) : (ROR_greater_equals(index, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57011, _mut57012, _mut57013, _mut57014, _mut57015) && ROR_less(index, probabilities.length, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57016, _mut57017, _mut57018, _mut57019, _mut57020))) && ROR_less(randomValue, cumulativeProbabilities[index], "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57022, _mut57023, _mut57024, _mut57025, _mut57026)))) {
             return singletons.get(index);
         }
-
         /* This should never happen, but it ensures we will return a correct
          * object in case there is some floating point inequality problem
          * wrt the cumulative probabilities. */
-        return singletons.get(singletons.size() - 1);
+        return singletons.get(AOR_minus(singletons.size(), 1, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_208", _mut57028, _mut57029, _mut57030, _mut57031));
     }
 
     /**
@@ -234,19 +232,16 @@ public class EnumeratedDistribution<T> implements Serializable {
      * positive.
      */
     public Object[] sample(int sampleSize) throws NotStrictlyPositiveException {
-        if (sampleSize <= 0) {
-            throw new NotStrictlyPositiveException(LocalizedFormats.NUMBER_OF_SAMPLES,
-                    sampleSize);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.sample_236");
+        if (ROR_less_equals(sampleSize, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_236", _mut57032, _mut57033, _mut57034, _mut57035, _mut57036)) {
+            throw new NotStrictlyPositiveException(LocalizedFormats.NUMBER_OF_SAMPLES, sampleSize);
         }
-
         final Object[] out = new Object[sampleSize];
-
-        for (int i = 0; i < sampleSize; i++) {
+        for (int i = 0; ROR_less(i, sampleSize, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_236", _mut57037, _mut57038, _mut57039, _mut57040, _mut57041); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.sample_236");
             out[i] = sample();
         }
-
         return out;
-
     }
 
     /**
@@ -263,29 +258,26 @@ public class EnumeratedDistribution<T> implements Serializable {
      * @throws NullArgumentException if {@code array} is null
      */
     public T[] sample(int sampleSize, final T[] array) throws NotStrictlyPositiveException {
-        if (sampleSize <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.sample_265");
+        if (ROR_less_equals(sampleSize, 0, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_265", _mut57042, _mut57043, _mut57044, _mut57045, _mut57046)) {
             throw new NotStrictlyPositiveException(LocalizedFormats.NUMBER_OF_SAMPLES, sampleSize);
         }
-
         if (array == null) {
             throw new NullArgumentException(LocalizedFormats.INPUT_ARRAY);
         }
-
         T[] out;
-        if (array.length < sampleSize) {
-            @SuppressWarnings("unchecked") // safe as both are of type T
+        if (ROR_less(array.length, sampleSize, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_265", _mut57047, _mut57048, _mut57049, _mut57050, _mut57051)) {
+            // safe as both are of type T
+            @SuppressWarnings("unchecked")
             final T[] unchecked = (T[]) Array.newInstance(array.getClass().getComponentType(), sampleSize);
             out = unchecked;
         } else {
             out = array;
         }
-
-        for (int i = 0; i < sampleSize; i++) {
+        for (int i = 0; ROR_less(i, sampleSize, "org.apache.commons.math3.distribution.EnumeratedDistribution.sample_265", _mut57052, _mut57053, _mut57054, _mut57055, _mut57056); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.distribution.EnumeratedDistribution.sample_265");
             out[i] = sample();
         }
-
         return out;
-
     }
-
 }

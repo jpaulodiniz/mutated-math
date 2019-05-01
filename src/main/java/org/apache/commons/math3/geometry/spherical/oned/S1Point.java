@@ -21,47 +21,61 @@ import org.apache.commons.math3.geometry.Space;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/** This class represents a point on the 1-sphere.
+/**
+ * This class represents a point on the 1-sphere.
  * <p>Instances of this class are guaranteed to be immutable.</p>
  * @since 3.3
  */
 public class S1Point implements Point<Sphere1D> {
 
-   // CHECKSTYLE: stop ConstantName
-    /** A vector with all coordinates set to NaN. */
-    public static final S1Point NaN = new S1Point(Double.NaN, Vector2D.NaN);
-    // CHECKSTYLE: resume ConstantName
+    @Conditional
+    public static boolean _mut85645 = false, _mut85646 = false, _mut85647 = false, _mut85648 = false, _mut85649 = false, _mut85650 = false, _mut85651 = false, _mut85652 = false, _mut85653 = false;
 
-    /** Serializable UID. */
+    /**
+     * A vector with all coordinates set to NaN.
+     */
+    public static final S1Point NaN = new S1Point(Double.NaN, Vector2D.NaN);
+
+    /**
+     * Serializable UID.
+     */
     private static final long serialVersionUID = 20131218L;
 
-    /** Azimuthal angle \( \alpha \). */
+    /**
+     * Azimuthal angle \( \alpha \).
+     */
     private final double alpha;
 
-    /** Corresponding 2D normalized vector. */
+    /**
+     * Corresponding 2D normalized vector.
+     */
     private final Vector2D vector;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * Build a vector from its coordinates
      * @param alpha azimuthal angle \( \alpha \)
      * @see #getAlpha()
      */
     public S1Point(final double alpha) {
-        this(MathUtils.normalizeAngle(alpha, FastMath.PI),
-             new Vector2D(FastMath.cos(alpha), FastMath.sin(alpha)));
+        this(MathUtils.normalizeAngle(alpha, FastMath.PI), new Vector2D(FastMath.cos(alpha), FastMath.sin(alpha)));
     }
 
-    /** Build a point from its internal components.
+    /**
+     * Build a point from its internal components.
      * @param alpha azimuthal angle \( \alpha \)
      * @param vector corresponding vector
      */
     private S1Point(final double alpha, final Vector2D vector) {
-        this.alpha  = alpha;
+        this.alpha = alpha;
         this.vector = vector;
     }
 
-    /** Get the azimuthal angle \( \alpha \).
+    /**
+     * Get the azimuthal angle \( \alpha \).
      * @return azimuthal angle \( \alpha \)
      * @see #S1Point(double)
      */
@@ -69,29 +83,37 @@ public class S1Point implements Point<Sphere1D> {
         return alpha;
     }
 
-    /** Get the corresponding normalized vector in the 2D euclidean space.
+    /**
+     * Get the corresponding normalized vector in the 2D euclidean space.
      * @return normalized vector
      */
     public Vector2D getVector() {
         return vector;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public Space getSpace() {
         return Sphere1D.getInstance();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public boolean isNaN() {
         return Double.isNaN(alpha);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public double distance(final Point<Sphere1D> point) {
         return distance(this, (S1Point) point);
     }
 
-    /** Compute the distance (angular separation) between two points.
+    /**
+     * Compute the distance (angular separation) between two points.
      * @param p1 first vector
      * @param p2 second vector
      * @return the angular separation between p1 and p2
@@ -117,26 +139,21 @@ public class S1Point implements Point<Sphere1D> {
      * @return true if two points on the 2-sphere objects are equal, false if
      *         object is null, not an instance of S2Point, or
      *         not equal to this S2Point instance
-     *
      */
     @Override
     public boolean equals(Object other) {
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.spherical.oned.S1Point.equals_122");
         if (this == other) {
             return true;
         }
-
         if (other instanceof S1Point) {
             final S1Point rhs = (S1Point) other;
             if (rhs.isNaN()) {
                 return this.isNaN();
             }
-
-            return alpha == rhs.alpha;
+            return ROR_equals(alpha, rhs.alpha, "org.apache.commons.math3.geometry.spherical.oned.S1Point.equals_122", _mut85645, _mut85646, _mut85647, _mut85648, _mut85649);
         }
-
         return false;
-
     }
 
     /**
@@ -148,10 +165,10 @@ public class S1Point implements Point<Sphere1D> {
      */
     @Override
     public int hashCode() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.spherical.oned.S1Point.hashCode_149");
         if (isNaN()) {
             return 542;
         }
-        return 1759 * MathUtils.hash(alpha);
+        return AOR_multiply(1759, MathUtils.hash(alpha), "org.apache.commons.math3.geometry.spherical.oned.S1Point.hashCode_149", _mut85650, _mut85651, _mut85652, _mut85653);
     }
-
 }

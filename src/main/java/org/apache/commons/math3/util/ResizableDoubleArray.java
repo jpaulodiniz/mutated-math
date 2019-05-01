@@ -18,7 +18,6 @@ package org.apache.commons.math3.util;
 
 import java.io.Serializable;
 import java.util.Arrays;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.MathInternalError;
@@ -26,6 +25,8 @@ import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * <p>
@@ -81,23 +82,39 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  * </p>
  */
 public class ResizableDoubleArray implements DoubleArray, Serializable {
-    /** Additive expansion mode.
+
+    @Conditional
+    public static boolean _mut39914 = false, _mut39915 = false, _mut39916 = false, _mut39917 = false, _mut39918 = false, _mut39919 = false, _mut39920 = false, _mut39921 = false, _mut39922 = false, _mut39923 = false, _mut39924 = false, _mut39925 = false, _mut39926 = false, _mut39927 = false, _mut39928 = false, _mut39929 = false, _mut39930 = false, _mut39931 = false, _mut39932 = false, _mut39933 = false, _mut39934 = false, _mut39935 = false, _mut39936 = false, _mut39937 = false, _mut39938 = false, _mut39939 = false, _mut39940 = false, _mut39941 = false, _mut39942 = false, _mut39943 = false, _mut39944 = false, _mut39945 = false, _mut39946 = false, _mut39947 = false, _mut39948 = false, _mut39949 = false, _mut39950 = false, _mut39951 = false, _mut39952 = false, _mut39953 = false, _mut39954 = false, _mut39955 = false, _mut39956 = false, _mut39957 = false, _mut39958 = false, _mut39959 = false, _mut39960 = false, _mut39961 = false, _mut39962 = false, _mut39963 = false, _mut39964 = false, _mut39965 = false, _mut39966 = false, _mut39967 = false, _mut39968 = false, _mut39969 = false, _mut39970 = false, _mut39971 = false, _mut39972 = false, _mut39973 = false, _mut39974 = false, _mut39975 = false, _mut39976 = false, _mut39977 = false, _mut39978 = false, _mut39979 = false, _mut39980 = false, _mut39981 = false, _mut39982 = false, _mut39983 = false, _mut39984 = false, _mut39985 = false, _mut39986 = false, _mut39987 = false, _mut39988 = false, _mut39989 = false, _mut39990 = false, _mut39991 = false, _mut39992 = false, _mut39993 = false, _mut39994 = false, _mut39995 = false, _mut39996 = false, _mut39997 = false, _mut39998 = false, _mut39999 = false, _mut40000 = false, _mut40001 = false, _mut40002 = false, _mut40003 = false, _mut40004 = false, _mut40005 = false, _mut40006 = false, _mut40007 = false, _mut40008 = false, _mut40009 = false, _mut40010 = false, _mut40011 = false, _mut40012 = false, _mut40013 = false, _mut40014 = false, _mut40015 = false, _mut40016 = false, _mut40017 = false, _mut40018 = false, _mut40019 = false, _mut40020 = false, _mut40021 = false, _mut40022 = false, _mut40023 = false, _mut40024 = false, _mut40025 = false, _mut40026 = false, _mut40027 = false, _mut40028 = false, _mut40029 = false, _mut40030 = false, _mut40031 = false, _mut40032 = false, _mut40033 = false, _mut40034 = false, _mut40035 = false, _mut40036 = false, _mut40037 = false, _mut40038 = false, _mut40039 = false, _mut40040 = false, _mut40041 = false, _mut40042 = false, _mut40043 = false, _mut40044 = false, _mut40045 = false, _mut40046 = false, _mut40047 = false, _mut40048 = false, _mut40049 = false, _mut40050 = false, _mut40051 = false, _mut40052 = false, _mut40053 = false, _mut40054 = false, _mut40055 = false, _mut40056 = false, _mut40057 = false, _mut40058 = false, _mut40059 = false, _mut40060 = false, _mut40061 = false, _mut40062 = false, _mut40063 = false, _mut40064 = false, _mut40065 = false, _mut40066 = false, _mut40067 = false, _mut40068 = false, _mut40069 = false, _mut40070 = false, _mut40071 = false, _mut40072 = false, _mut40073 = false, _mut40074 = false, _mut40075 = false, _mut40076 = false, _mut40077 = false, _mut40078 = false, _mut40079 = false, _mut40080 = false, _mut40081 = false, _mut40082 = false, _mut40083 = false, _mut40084 = false, _mut40085 = false, _mut40086 = false, _mut40087 = false, _mut40088 = false, _mut40089 = false, _mut40090 = false, _mut40091 = false, _mut40092 = false, _mut40093 = false, _mut40094 = false, _mut40095 = false, _mut40096 = false, _mut40097 = false, _mut40098 = false, _mut40099 = false, _mut40100 = false, _mut40101 = false, _mut40102 = false, _mut40103 = false, _mut40104 = false, _mut40105 = false, _mut40106 = false, _mut40107 = false, _mut40108 = false, _mut40109 = false, _mut40110 = false, _mut40111 = false, _mut40112 = false, _mut40113 = false, _mut40114 = false, _mut40115 = false, _mut40116 = false, _mut40117 = false, _mut40118 = false, _mut40119 = false, _mut40120 = false, _mut40121 = false, _mut40122 = false, _mut40123 = false, _mut40124 = false, _mut40125 = false, _mut40126 = false, _mut40127 = false, _mut40128 = false, _mut40129 = false, _mut40130 = false, _mut40131 = false, _mut40132 = false, _mut40133 = false, _mut40134 = false, _mut40135 = false, _mut40136 = false, _mut40137 = false, _mut40138 = false, _mut40139 = false, _mut40140 = false, _mut40141 = false, _mut40142 = false, _mut40143 = false, _mut40144 = false, _mut40145 = false, _mut40146 = false, _mut40147 = false, _mut40148 = false, _mut40149 = false, _mut40150 = false, _mut40151 = false, _mut40152 = false, _mut40153 = false, _mut40154 = false, _mut40155 = false, _mut40156 = false, _mut40157 = false, _mut40158 = false, _mut40159 = false, _mut40160 = false;
+
+    /**
+     * Additive expansion mode.
      * @deprecated As of 3.1. Please use {@link ExpansionMode#ADDITIVE} instead.
      */
     @Deprecated
     public static final int ADDITIVE_MODE = 1;
-    /** Multiplicative expansion mode.
+
+    /**
+     * Multiplicative expansion mode.
      * @deprecated As of 3.1. Please use {@link ExpansionMode#MULTIPLICATIVE} instead.
      */
     @Deprecated
     public static final int MULTIPLICATIVE_MODE = 0;
-    /** Serializable version identifier. */
+
+    /**
+     * Serializable version identifier.
+     */
     private static final long serialVersionUID = -3485529955529426875L;
 
-    /** Default value for initial capacity. */
+    /**
+     * Default value for initial capacity.
+     */
     private static final int DEFAULT_INITIAL_CAPACITY = 16;
-    /** Default value for array size modifier. */
+
+    /**
+     * Default value for array size modifier.
+     */
     private static final double DEFAULT_EXPANSION_FACTOR = 2.0;
+
     /**
      * Default value for the difference between {@link #contractionCriterion}
      * and {@link #expansionFactor}.
@@ -150,9 +167,14 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @since 3.1
      */
     public enum ExpansionMode {
-        /** Multiplicative expansion mode. */
+
+        /**
+         * Multiplicative expansion mode.
+         */
         MULTIPLICATIVE,
-        /** Additive expansion mode. */
+        /**
+         * Additive expansion mode.
+         */
         ADDITIVE
     }
 
@@ -180,8 +202,7 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @param initialCapacity Initial size of the internal storage array.
      * @throws MathIllegalArgumentException if {@code initialCapacity <= 0}.
      */
-    public ResizableDoubleArray(int initialCapacity)
-        throws MathIllegalArgumentException {
+    public ResizableDoubleArray(int initialCapacity) throws MathIllegalArgumentException {
         this(initialCapacity, DEFAULT_EXPANSION_FACTOR);
     }
 
@@ -204,11 +225,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @since 2.2
      */
     public ResizableDoubleArray(double[] initialArray) {
-        this(DEFAULT_INITIAL_CAPACITY,
-             DEFAULT_EXPANSION_FACTOR,
-             DEFAULT_CONTRACTION_DELTA + DEFAULT_EXPANSION_FACTOR,
-             ExpansionMode.MULTIPLICATIVE,
-             initialArray);
+        this(DEFAULT_INITIAL_CAPACITY, DEFAULT_EXPANSION_FACTOR, AOR_plus(DEFAULT_CONTRACTION_DELTA, DEFAULT_EXPANSION_FACTOR, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_206", _mut39914, _mut39915, _mut39916, _mut39917), ExpansionMode.MULTIPLICATIVE, initialArray);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_206");
     }
 
     /**
@@ -235,11 +253,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * {@link #ResizableDoubleArray(int,double)} instead.
      */
     @Deprecated
-    public ResizableDoubleArray(int initialCapacity,
-                                float expansionFactor)
-        throws MathIllegalArgumentException {
-        this(initialCapacity,
-             (double) expansionFactor);
+    public ResizableDoubleArray(int initialCapacity, float expansionFactor) throws MathIllegalArgumentException {
+        this(initialCapacity, (double) expansionFactor);
     }
 
     /**
@@ -264,12 +279,9 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalArgumentException if parameters are not valid.
      * @since 3.1
      */
-    public ResizableDoubleArray(int initialCapacity,
-                                double expansionFactor)
-        throws MathIllegalArgumentException {
-        this(initialCapacity,
-             expansionFactor,
-             DEFAULT_CONTRACTION_DELTA + expansionFactor);
+    public ResizableDoubleArray(int initialCapacity, double expansionFactor) throws MathIllegalArgumentException {
+        this(initialCapacity, expansionFactor, AOR_plus(DEFAULT_CONTRACTION_DELTA, expansionFactor, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_267", _mut39918, _mut39919, _mut39920, _mut39921));
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_267");
     }
 
     /**
@@ -294,13 +306,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * {@link #ResizableDoubleArray(int,double,double)} instead.
      */
     @Deprecated
-    public ResizableDoubleArray(int initialCapacity,
-                                float expansionFactor,
-                                float contractionCriteria)
-        throws MathIllegalArgumentException {
-        this(initialCapacity,
-             (double) expansionFactor,
-             (double) contractionCriteria);
+    public ResizableDoubleArray(int initialCapacity, float expansionFactor, float contractionCriteria) throws MathIllegalArgumentException {
+        this(initialCapacity, (double) expansionFactor, (double) contractionCriteria);
     }
 
     /**
@@ -323,15 +330,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalArgumentException if the parameters are not valid.
      * @since 3.1
      */
-    public ResizableDoubleArray(int initialCapacity,
-                                double expansionFactor,
-                                double contractionCriterion)
-        throws MathIllegalArgumentException {
-        this(initialCapacity,
-             expansionFactor,
-             contractionCriterion,
-             ExpansionMode.MULTIPLICATIVE,
-             null);
+    public ResizableDoubleArray(int initialCapacity, double expansionFactor, double contractionCriterion) throws MathIllegalArgumentException {
+        this(initialCapacity, expansionFactor, contractionCriterion, ExpansionMode.MULTIPLICATIVE, null);
     }
 
     /**
@@ -359,16 +359,9 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * instead.
      */
     @Deprecated
-    public ResizableDoubleArray(int initialCapacity, float expansionFactor,
-            float contractionCriteria, int expansionMode) throws MathIllegalArgumentException {
-        this(initialCapacity,
-             expansionFactor,
-             contractionCriteria,
-             expansionMode == ADDITIVE_MODE ?
-             ExpansionMode.ADDITIVE :
-             ExpansionMode.MULTIPLICATIVE,
-             null);
-        // XXX Just ot retain the expected failure in a unit test.
+    public ResizableDoubleArray(int initialCapacity, float expansionFactor, float contractionCriteria, int expansionMode) throws MathIllegalArgumentException {
+        this(initialCapacity, expansionFactor, contractionCriteria, ROR_equals(expansionMode, ADDITIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_361", _mut39922, _mut39923, _mut39924, _mut39925, _mut39926) ? ExpansionMode.ADDITIVE : ExpansionMode.MULTIPLICATIVE, null);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_361");
         // With the new "enum", that test will become obsolete.
         setExpansionMode(expansionMode);
     }
@@ -392,26 +385,19 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @param data Initial contents of the array.
      * @throws MathIllegalArgumentException if the parameters are not valid.
      */
-    public ResizableDoubleArray(int initialCapacity,
-                                double expansionFactor,
-                                double contractionCriterion,
-                                ExpansionMode expansionMode,
-                                double ... data)
-        throws MathIllegalArgumentException {
-        if (initialCapacity <= 0) {
-            throw new NotStrictlyPositiveException(LocalizedFormats.INITIAL_CAPACITY_NOT_POSITIVE,
-                                                   initialCapacity);
+    public ResizableDoubleArray(int initialCapacity, double expansionFactor, double contractionCriterion, ExpansionMode expansionMode, double... data) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_395");
+        if (ROR_less_equals(initialCapacity, 0, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_395", _mut39927, _mut39928, _mut39929, _mut39930, _mut39931)) {
+            throw new NotStrictlyPositiveException(LocalizedFormats.INITIAL_CAPACITY_NOT_POSITIVE, initialCapacity);
         }
         checkContractExpand(contractionCriterion, expansionFactor);
-
         this.expansionFactor = expansionFactor;
         this.contractionCriterion = contractionCriterion;
         this.expansionMode = expansionMode;
         internalArray = new double[initialCapacity];
         numElements = 0;
         startIndex = 0;
-
-        if (data != null && data.length > 0) {
+        if ((_mut39937 ? (data != null || ROR_greater(data.length, 0, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_395", _mut39932, _mut39933, _mut39934, _mut39935, _mut39936)) : (data != null && ROR_greater(data.length, 0, "org.apache.commons.math3.util.ResizableDoubleArray.ResizableDoubleArray_395", _mut39932, _mut39933, _mut39934, _mut39935, _mut39936)))) {
             addElements(data);
         }
     }
@@ -426,8 +412,7 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @exception NullArgumentException if original is null
      * @since 2.0
      */
-    public ResizableDoubleArray(ResizableDoubleArray original)
-        throws NullArgumentException {
+    public ResizableDoubleArray(ResizableDoubleArray original) throws NullArgumentException {
         MathUtils.checkNotNull(original);
         copy(original, this);
     }
@@ -438,10 +423,11 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @param value Value to be added to end of array.
      */
     public synchronized void addElement(double value) {
-        if (internalArray.length <= startIndex + numElements) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.addElement_440");
+        if (ROR_less_equals(internalArray.length, AOR_plus(startIndex, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.addElement_440", _mut39938, _mut39939, _mut39940, _mut39941), "org.apache.commons.math3.util.ResizableDoubleArray.addElement_440", _mut39942, _mut39943, _mut39944, _mut39945, _mut39946)) {
             expand();
         }
-        internalArray[startIndex + numElements++] = value;
+        internalArray[AOR_plus(startIndex, numElements++, "org.apache.commons.math3.util.ResizableDoubleArray.addElement_440", _mut39947, _mut39948, _mut39949, _mut39950)] = value;
     }
 
     /**
@@ -451,7 +437,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @since 2.2
      */
     public synchronized void addElements(double[] values) {
-        final double[] tempArray = new double[numElements + values.length + 1];
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.addElements_453");
+        final double[] tempArray = new double[AOR_plus(AOR_plus(numElements, values.length, "org.apache.commons.math3.util.ResizableDoubleArray.addElements_453", _mut39951, _mut39952, _mut39953, _mut39954), 1, "org.apache.commons.math3.util.ResizableDoubleArray.addElements_453", _mut39955, _mut39956, _mut39957, _mut39958)];
         System.arraycopy(internalArray, startIndex, tempArray, 0, numElements);
         System.arraycopy(values, 0, tempArray, numElements, values.length);
         internalArray = tempArray;
@@ -476,17 +463,15 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * by this rolling insert.
      */
     public synchronized double addElementRolling(double value) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478");
         double discarded = internalArray[startIndex];
-
-        if ((startIndex + (numElements + 1)) > internalArray.length) {
+        if (ROR_greater((AOR_plus(startIndex, (AOR_plus(numElements, 1, "org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478", _mut39959, _mut39960, _mut39961, _mut39962)), "org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478", _mut39963, _mut39964, _mut39965, _mut39966)), internalArray.length, "org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478", _mut39967, _mut39968, _mut39969, _mut39970, _mut39971)) {
             expand();
         }
         // Increment the start index
         startIndex += 1;
-
         // Add the new value
-        internalArray[startIndex + (numElements - 1)] = value;
-
+        internalArray[AOR_plus(startIndex, (AOR_minus(numElements, 1, "org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478", _mut39972, _mut39973, _mut39974, _mut39975)), "org.apache.commons.math3.util.ResizableDoubleArray.addElementRolling_478", _mut39976, _mut39977, _mut39978, _mut39979)] = value;
         // Check the contraction criterion.
         if (shouldContract()) {
             contract();
@@ -504,18 +489,14 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalStateException if the array is empty
      * @since 2.0
      */
-    public synchronized double substituteMostRecentElement(double value)
-        throws MathIllegalStateException {
-        if (numElements < 1) {
-            throw new MathIllegalStateException(
-                    LocalizedFormats.CANNOT_SUBSTITUTE_ELEMENT_FROM_EMPTY_ARRAY);
+    public synchronized double substituteMostRecentElement(double value) throws MathIllegalStateException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.substituteMostRecentElement_507");
+        if (ROR_less(numElements, 1, "org.apache.commons.math3.util.ResizableDoubleArray.substituteMostRecentElement_507", _mut39980, _mut39981, _mut39982, _mut39983, _mut39984)) {
+            throw new MathIllegalStateException(LocalizedFormats.CANNOT_SUBSTITUTE_ELEMENT_FROM_EMPTY_ARRAY);
         }
-
-        final int substIndex = startIndex + (numElements - 1);
+        final int substIndex = AOR_plus(startIndex, (AOR_minus(numElements, 1, "org.apache.commons.math3.util.ResizableDoubleArray.substituteMostRecentElement_507", _mut39985, _mut39986, _mut39987, _mut39988)), "org.apache.commons.math3.util.ResizableDoubleArray.substituteMostRecentElement_507", _mut39989, _mut39990, _mut39991, _mut39992);
         final double discarded = internalArray[substIndex];
-
         internalArray[substIndex] = value;
-
         return discarded;
     }
 
@@ -532,10 +513,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * {@link #checkContractExpand(double,double)} instead.
      */
     @Deprecated
-    protected void checkContractExpand(float contraction, float expansion)
-        throws MathIllegalArgumentException {
-        checkContractExpand((double) contraction,
-                            (double) expansion);
+    protected void checkContractExpand(float contraction, float expansion) throws MathIllegalArgumentException {
+        checkContractExpand((double) contraction, (double) expansion);
     }
 
     /**
@@ -550,27 +529,21 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws NumberIsTooSmallException if {@code expansion <= 1 }.
      * @since 3.1
      */
-    protected void checkContractExpand(double contraction,
-                                       double expansion)
-        throws NumberIsTooSmallException {
-        if (contraction < expansion) {
+    protected void checkContractExpand(double contraction, double expansion) throws NumberIsTooSmallException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.checkContractExpand_553");
+        if (ROR_less(contraction, expansion, "org.apache.commons.math3.util.ResizableDoubleArray.checkContractExpand_553", _mut39993, _mut39994, _mut39995, _mut39996, _mut39997)) {
             final NumberIsTooSmallException e = new NumberIsTooSmallException(contraction, 1, true);
-            e.getContext().addMessage(LocalizedFormats.CONTRACTION_CRITERIA_SMALLER_THAN_EXPANSION_FACTOR,
-                                      contraction, expansion);
+            e.getContext().addMessage(LocalizedFormats.CONTRACTION_CRITERIA_SMALLER_THAN_EXPANSION_FACTOR, contraction, expansion);
             throw e;
         }
-
-        if (contraction <= 1) {
+        if (ROR_less_equals(contraction, 1, "org.apache.commons.math3.util.ResizableDoubleArray.checkContractExpand_553", _mut39998, _mut39999, _mut40000, _mut40001, _mut40002)) {
             final NumberIsTooSmallException e = new NumberIsTooSmallException(contraction, 1, false);
-            e.getContext().addMessage(LocalizedFormats.CONTRACTION_CRITERIA_SMALLER_THAN_ONE,
-                                      contraction);
+            e.getContext().addMessage(LocalizedFormats.CONTRACTION_CRITERIA_SMALLER_THAN_ONE, contraction);
             throw e;
         }
-
-        if (expansion <= 1) {
+        if (ROR_less_equals(expansion, 1, "org.apache.commons.math3.util.ResizableDoubleArray.checkContractExpand_553", _mut40003, _mut40004, _mut40005, _mut40006, _mut40007)) {
             final NumberIsTooSmallException e = new NumberIsTooSmallException(contraction, 1, false);
-            e.getContext().addMessage(LocalizedFormats.EXPANSION_FACTOR_SMALLER_THAN_ONE,
-                                      expansion);
+            e.getContext().addMessage(LocalizedFormats.EXPANSION_FACTOR_SMALLER_THAN_ONE, expansion);
             throw e;
         }
     }
@@ -589,12 +562,11 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * zero.
      */
     public synchronized void contract() {
-        final double[] tempArray = new double[numElements + 1];
-
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.contract_591");
+        final double[] tempArray = new double[AOR_plus(numElements, 1, "org.apache.commons.math3.util.ResizableDoubleArray.contract_591", _mut40008, _mut40009, _mut40010, _mut40011)];
         // Copy and swap - copy only the element array from the src array.
         System.arraycopy(internalArray, startIndex, tempArray, 0, numElements);
         internalArray = tempArray;
-
         // Reset the start index to zero
         startIndex = 0;
     }
@@ -610,9 +582,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalArgumentException if i is greater than numElements.
      * @since 2.0
      */
-    public synchronized void discardFrontElements(int i)
-        throws MathIllegalArgumentException {
-        discardExtremeElements(i,true);
+    public synchronized void discardFrontElements(int i) throws MathIllegalArgumentException {
+        discardExtremeElements(i, true);
     }
 
     /**
@@ -626,9 +597,8 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalArgumentException if i is greater than numElements.
      * @since 2.0
      */
-    public synchronized void discardMostRecentElements(int i)
-        throws MathIllegalArgumentException {
-        discardExtremeElements(i,false);
+    public synchronized void discardMostRecentElements(int i) throws MathIllegalArgumentException {
+        discardExtremeElements(i, false);
     }
 
     /**
@@ -650,17 +620,12 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws MathIllegalArgumentException if i is greater than numElements.
      * @since 2.0
      */
-    private synchronized void discardExtremeElements(int i,
-                                                     boolean front)
-        throws MathIllegalArgumentException {
-        if (i > numElements) {
-            throw new MathIllegalArgumentException(
-                    LocalizedFormats.TOO_MANY_ELEMENTS_TO_DISCARD_FROM_ARRAY,
-                    i, numElements);
-       } else if (i < 0) {
-           throw new MathIllegalArgumentException(
-                   LocalizedFormats.CANNOT_DISCARD_NEGATIVE_NUMBER_OF_ELEMENTS,
-                   i);
+    private synchronized void discardExtremeElements(int i, boolean front) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.discardExtremeElements_653");
+        if (ROR_greater(i, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.discardExtremeElements_653", _mut40012, _mut40013, _mut40014, _mut40015, _mut40016)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.TOO_MANY_ELEMENTS_TO_DISCARD_FROM_ARRAY, i, numElements);
+        } else if (ROR_less(i, 0, "org.apache.commons.math3.util.ResizableDoubleArray.discardExtremeElements_653", _mut40017, _mut40018, _mut40019, _mut40020, _mut40021)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.CANNOT_DISCARD_NEGATIVE_NUMBER_OF_ELEMENTS, i);
         } else {
             // "Subtract" this number of discarded from numElements
             numElements -= i;
@@ -683,19 +648,15 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * </p>
      */
     protected synchronized void expand() {
-        // notice the use of FastMath.ceil(), this guarantees that we will always
-        // have an array of at least currentSize + 1.   Assume that the
-        // current initial capacity is 1 and the expansion factor
-        // is 1.000000000000000001.  The newly calculated size will be
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.expand_685");
         // rounded up to 2 after the multiplication is performed.
         int newSize = 0;
         if (expansionMode == ExpansionMode.MULTIPLICATIVE) {
-            newSize = (int) FastMath.ceil(internalArray.length * expansionFactor);
+            newSize = (int) FastMath.ceil(AOR_multiply(internalArray.length, expansionFactor, "org.apache.commons.math3.util.ResizableDoubleArray.expand_685", _mut40026, _mut40027, _mut40028, _mut40029));
         } else {
-            newSize = (int) (internalArray.length + FastMath.round(expansionFactor));
+            newSize = (int) (AOR_plus(internalArray.length, FastMath.round(expansionFactor), "org.apache.commons.math3.util.ResizableDoubleArray.expand_685", _mut40022, _mut40023, _mut40024, _mut40025));
         }
         final double[] tempArray = new double[newSize];
-
         // Copy and swap
         System.arraycopy(internalArray, 0, tempArray, 0, internalArray.length);
         internalArray = tempArray;
@@ -758,16 +719,17 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * zero or is greater than <code>getNumElements() - 1</code>.
      */
     public synchronized double getElement(int index) {
-        if (index >= numElements) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.getElement_760");
+        if (ROR_greater_equals(index, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.getElement_760", _mut40030, _mut40031, _mut40032, _mut40033, _mut40034)) {
             throw new ArrayIndexOutOfBoundsException(index);
-        } else if (index >= 0) {
-            return internalArray[startIndex + index];
+        } else if (ROR_greater_equals(index, 0, "org.apache.commons.math3.util.ResizableDoubleArray.getElement_760", _mut40035, _mut40036, _mut40037, _mut40038, _mut40039)) {
+            return internalArray[AOR_plus(startIndex, index, "org.apache.commons.math3.util.ResizableDoubleArray.getElement_760", _mut40040, _mut40041, _mut40042, _mut40043)];
         } else {
             throw new ArrayIndexOutOfBoundsException(index);
         }
     }
 
-     /**
+    /**
      * Returns a double array containing the elements of this
      * <code>ResizableArray</code>.  This method returns a copy, not a
      * reference to the underlying array, so that changes made to the returned
@@ -809,13 +771,14 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
     @Deprecated
     public int getExpansionMode() {
         synchronized (this) {
-            switch (expansionMode) {
+            switch(expansionMode) {
                 case MULTIPLICATIVE:
                     return MULTIPLICATIVE_MODE;
                 case ADDITIVE:
                     return ADDITIVE_MODE;
                 default:
-                    throw new MathInternalError(); // Should never happen.
+                    // Should never happen.
+                    throw new MathInternalError();
             }
         }
     }
@@ -864,7 +827,6 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * required (available via the {@link #start} method).  This method should
      * only be used in cases where copying the internal array is not practical.
      * The {@link #getElements} method should be used in all other cases.
-     *
      *
      * @return the internal storage array used by this object
      * @since 2.0
@@ -922,10 +884,9 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @deprecated As of 3.1 (to be removed in 4.0 as field will become "final").
      */
     @Deprecated
-    public void setContractionCriteria(float contractionCriteria)
-        throws MathIllegalArgumentException {
+    public void setContractionCriteria(float contractionCriteria) throws MathIllegalArgumentException {
         checkContractExpand(contractionCriteria, getExpansionFactor());
-        synchronized(this) {
+        synchronized (this) {
             this.contractionCriterion = contractionCriteria;
         }
     }
@@ -941,10 +902,10 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
         final double[] array;
         final int start;
         final int num;
-        synchronized(this) {
+        synchronized (this) {
             array = internalArray;
             start = startIndex;
-            num   = numElements;
+            num = numElements;
         }
         return f.evaluate(array, start, num);
     }
@@ -961,16 +922,17 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @throws ArrayIndexOutOfBoundsException if {@code index < 0}.
      */
     public synchronized void setElement(int index, double value) {
-        if (index < 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.setElement_963");
+        if (ROR_less(index, 0, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40044, _mut40045, _mut40046, _mut40047, _mut40048)) {
             throw new ArrayIndexOutOfBoundsException(index);
         }
-        if (index + 1 > numElements) {
-            numElements = index + 1;
+        if (ROR_greater(AOR_plus(index, 1, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40049, _mut40050, _mut40051, _mut40052), numElements, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40053, _mut40054, _mut40055, _mut40056, _mut40057)) {
+            numElements = AOR_plus(index, 1, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40058, _mut40059, _mut40060, _mut40061);
         }
-        if ((startIndex + index) >= internalArray.length) {
-            expandTo(startIndex + (index + 1));
+        if (ROR_greater_equals((AOR_plus(startIndex, index, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40062, _mut40063, _mut40064, _mut40065)), internalArray.length, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40066, _mut40067, _mut40068, _mut40069, _mut40070)) {
+            expandTo(AOR_plus(startIndex, (AOR_plus(index, 1, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40071, _mut40072, _mut40073, _mut40074)), "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40075, _mut40076, _mut40077, _mut40078));
         }
-        internalArray[startIndex + index] = value;
+        internalArray[AOR_plus(startIndex, index, "org.apache.commons.math3.util.ResizableDoubleArray.setElement_963", _mut40079, _mut40080, _mut40081, _mut40082)] = value;
     }
 
     /**
@@ -989,7 +951,7 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
     public void setExpansionFactor(float expansionFactor) throws MathIllegalArgumentException {
         checkContractExpand(getContractionCriterion(), expansionFactor);
         // The check above verifies that the expansion factor is > 1.0;
-        synchronized(this) {
+        synchronized (this) {
             this.expansionFactor = expansionFactor;
         }
     }
@@ -1003,18 +965,15 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @deprecated As of 3.1. Please use {@link #setExpansionMode(ExpansionMode)} instead.
      */
     @Deprecated
-    public void setExpansionMode(int expansionMode)
-        throws MathIllegalArgumentException {
-        if (expansionMode != MULTIPLICATIVE_MODE &&
-            expansionMode != ADDITIVE_MODE) {
-            throw new MathIllegalArgumentException(LocalizedFormats.UNSUPPORTED_EXPANSION_MODE, expansionMode,
-                                                   MULTIPLICATIVE_MODE, "MULTIPLICATIVE_MODE",
-                                                   ADDITIVE_MODE, "ADDITIVE_MODE");
+    public void setExpansionMode(int expansionMode) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005");
+        if ((_mut40093 ? (ROR_not_equals(expansionMode, MULTIPLICATIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40083, _mut40084, _mut40085, _mut40086, _mut40087) || ROR_not_equals(expansionMode, ADDITIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40088, _mut40089, _mut40090, _mut40091, _mut40092)) : (ROR_not_equals(expansionMode, MULTIPLICATIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40083, _mut40084, _mut40085, _mut40086, _mut40087) && ROR_not_equals(expansionMode, ADDITIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40088, _mut40089, _mut40090, _mut40091, _mut40092)))) {
+            throw new MathIllegalArgumentException(LocalizedFormats.UNSUPPORTED_EXPANSION_MODE, expansionMode, MULTIPLICATIVE_MODE, "MULTIPLICATIVE_MODE", ADDITIVE_MODE, "ADDITIVE_MODE");
         }
-        synchronized(this) {
-            if (expansionMode == MULTIPLICATIVE_MODE) {
+        synchronized (this) {
+            if (ROR_equals(expansionMode, MULTIPLICATIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40094, _mut40095, _mut40096, _mut40097, _mut40098)) {
                 setExpansionMode(ExpansionMode.MULTIPLICATIVE);
-            } else if (expansionMode == ADDITIVE_MODE) {
+            } else if (ROR_equals(expansionMode, ADDITIVE_MODE, "org.apache.commons.math3.util.ResizableDoubleArray.setExpansionMode_1005", _mut40099, _mut40100, _mut40101, _mut40102, _mut40103)) {
                 setExpansionMode(ExpansionMode.ADDITIVE);
             }
         }
@@ -1028,7 +987,7 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      */
     @Deprecated
     public void setExpansionMode(ExpansionMode expansionMode) {
-        synchronized(this) {
+        synchronized (this) {
             this.expansionMode = expansionMode;
         }
     }
@@ -1042,9 +1001,7 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @deprecated As of 3.1, this is a no-op.
      */
     @Deprecated
-    protected void setInitialCapacity(int initialCapacity)
-        throws MathIllegalArgumentException {
-        // Body removed in 3.1.
+    protected void setInitialCapacity(int initialCapacity) throws MathIllegalArgumentException {
     }
 
     /**
@@ -1055,22 +1012,17 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @param i a new number of elements
      * @throws MathIllegalArgumentException if <code>i</code> is negative.
      */
-    public synchronized void setNumElements(int i)
-        throws MathIllegalArgumentException {
+    public synchronized void setNumElements(int i) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.setNumElements_1058");
         // If index is negative thrown an error.
-        if (i < 0) {
-            throw new MathIllegalArgumentException(
-                    LocalizedFormats.INDEX_NOT_POSITIVE,
-                    i);
+        if (ROR_less(i, 0, "org.apache.commons.math3.util.ResizableDoubleArray.setNumElements_1058", _mut40104, _mut40105, _mut40106, _mut40107, _mut40108)) {
+            throw new MathIllegalArgumentException(LocalizedFormats.INDEX_NOT_POSITIVE, i);
         }
-
-        // Test the new num elements, check to see if the array needs to be
         // expanded to accommodate this new number of elements.
-        final int newSize = startIndex + i;
-        if (newSize > internalArray.length) {
+        final int newSize = AOR_plus(startIndex, i, "org.apache.commons.math3.util.ResizableDoubleArray.setNumElements_1058", _mut40109, _mut40110, _mut40111, _mut40112);
+        if (ROR_greater(newSize, internalArray.length, "org.apache.commons.math3.util.ResizableDoubleArray.setNumElements_1058", _mut40113, _mut40114, _mut40115, _mut40116, _mut40117)) {
             expandTo(newSize);
         }
-
         // Set the new number of elements to new value.
         numElements = i;
     }
@@ -1082,10 +1034,11 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @return true if array satisfies the contraction criteria
      */
     private synchronized boolean shouldContract() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.shouldContract_1084");
         if (expansionMode == ExpansionMode.MULTIPLICATIVE) {
-            return (internalArray.length / ((float) numElements)) > contractionCriterion;
+            return ROR_greater((AOR_divide(internalArray.length, ((float) numElements), "org.apache.commons.math3.util.ResizableDoubleArray.shouldContract_1084", _mut40127, _mut40128, _mut40129, _mut40130)), contractionCriterion, "org.apache.commons.math3.util.ResizableDoubleArray.shouldContract_1084", _mut40131, _mut40132, _mut40133, _mut40134, _mut40135);
         } else {
-            return (internalArray.length - numElements) > contractionCriterion;
+            return ROR_greater((AOR_minus(internalArray.length, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.shouldContract_1084", _mut40118, _mut40119, _mut40120, _mut40121)), contractionCriterion, "org.apache.commons.math3.util.ResizableDoubleArray.shouldContract_1084", _mut40122, _mut40123, _mut40124, _mut40125, _mut40126);
         }
     }
 
@@ -1119,25 +1072,21 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      * @param dest ResizableArray to replace with a copy of the source array
      * @exception NullArgumentException if either source or dest is null
      * @since 2.0
-     *
      */
-    public static void copy(ResizableDoubleArray source,
-                            ResizableDoubleArray dest)
-        throws NullArgumentException {
+    public static void copy(ResizableDoubleArray source, ResizableDoubleArray dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
-        synchronized(source) {
-           synchronized(dest) {
-               dest.contractionCriterion = source.contractionCriterion;
-               dest.expansionFactor = source.expansionFactor;
-               dest.expansionMode = source.expansionMode;
-               dest.internalArray = new double[source.internalArray.length];
-               System.arraycopy(source.internalArray, 0, dest.internalArray,
-                       0, dest.internalArray.length);
-               dest.numElements = source.numElements;
-               dest.startIndex = source.startIndex;
-           }
-       }
+        synchronized (source) {
+            synchronized (dest) {
+                dest.contractionCriterion = source.contractionCriterion;
+                dest.expansionFactor = source.expansionFactor;
+                dest.expansionMode = source.expansionMode;
+                dest.internalArray = new double[source.internalArray.length];
+                System.arraycopy(source.internalArray, 0, dest.internalArray, 0, dest.internalArray.length);
+                dest.numElements = source.numElements;
+                dest.startIndex = source.startIndex;
+            }
+        }
     }
 
     /**
@@ -1165,21 +1114,22 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
      */
     @Override
     public boolean equals(Object object) {
-        if (object == this ) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.util.ResizableDoubleArray.equals_1166");
+        if (object == this) {
             return true;
         }
         if (object instanceof ResizableDoubleArray == false) {
             return false;
         }
-        synchronized(this) {
-            synchronized(object) {
+        synchronized (this) {
+            synchronized (object) {
                 boolean result = true;
                 final ResizableDoubleArray other = (ResizableDoubleArray) object;
-                result = result && (other.contractionCriterion == contractionCriterion);
-                result = result && (other.expansionFactor == expansionFactor);
-                result = result && (other.expansionMode == expansionMode);
-                result = result && (other.numElements == numElements);
-                result = result && (other.startIndex == startIndex);
+                result = (_mut40141 ? (result || (ROR_equals(other.contractionCriterion, contractionCriterion, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40136, _mut40137, _mut40138, _mut40139, _mut40140))) : (result && (ROR_equals(other.contractionCriterion, contractionCriterion, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40136, _mut40137, _mut40138, _mut40139, _mut40140))));
+                result = (_mut40147 ? (result || (ROR_equals(other.expansionFactor, expansionFactor, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40142, _mut40143, _mut40144, _mut40145, _mut40146))) : (result && (ROR_equals(other.expansionFactor, expansionFactor, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40142, _mut40143, _mut40144, _mut40145, _mut40146))));
+                result = (_mut40148 ? (result || (other.expansionMode == expansionMode)) : (result && (other.expansionMode == expansionMode)));
+                result = (_mut40154 ? (result || (ROR_equals(other.numElements, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40149, _mut40150, _mut40151, _mut40152, _mut40153))) : (result && (ROR_equals(other.numElements, numElements, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40149, _mut40150, _mut40151, _mut40152, _mut40153))));
+                result = (_mut40160 ? (result || (ROR_equals(other.startIndex, startIndex, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40155, _mut40156, _mut40157, _mut40158, _mut40159))) : (result && (ROR_equals(other.startIndex, startIndex, "org.apache.commons.math3.util.ResizableDoubleArray.equals_1166", _mut40155, _mut40156, _mut40157, _mut40158, _mut40159))));
                 if (!result) {
                     return false;
                 } else {
@@ -1206,5 +1156,4 @@ public class ResizableDoubleArray implements DoubleArray, Serializable {
         hashData[5] = startIndex;
         return Arrays.hashCode(hashData);
     }
-
 }

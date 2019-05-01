@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.Field;
@@ -22,36 +21,16 @@ import org.apache.commons.math3.RealFieldElement;
 import org.apache.commons.math3.ode.FieldEquationsMapper;
 import org.apache.commons.math3.ode.FieldODEStateAndDerivative;
 import org.apache.commons.math3.util.MathArrays;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements the 3/8 fourth order Runge-Kutta
- * integrator for Ordinary Differential Equations.
- *
- * <p>This method is an explicit Runge-Kutta method, its Butcher-array
- * is the following one :
- * <pre>
- *    0  |  0    0    0    0
- *   1/3 | 1/3   0    0    0
- *   2/3 |-1/3   1    0    0
- *    1  |  1   -1    1    0
- *       |--------------------
- *       | 1/8  3/8  3/8  1/8
- * </pre>
- * </p>
- *
- * @see EulerFieldIntegrator
- * @see ClassicalRungeKuttaFieldIntegrator
- * @see GillFieldIntegrator
- * @see MidpointFieldIntegrator
- * @see LutherFieldIntegrator
- * @param <T> the type of the field elements
- * @since 3.6
- */
+public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>> extends RungeKuttaFieldIntegrator<T> {
 
-public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>>
-    extends RungeKuttaFieldIntegrator<T> {
+    @Conditional
+    public static boolean _mut13445 = false, _mut13446 = false, _mut13447 = false, _mut13448 = false, _mut13449 = false, _mut13450 = false, _mut13451 = false, _mut13452 = false, _mut13453 = false;
 
-    /** Simple constructor.
+    /**
+     * Simple constructor.
      * Build a 3/8 integrator with the given step.
      * @param field field to which the time and state vector elements belong
      * @param step integration step
@@ -60,7 +39,9 @@ public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>>
         super(field, "3/8", step);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getC() {
         final T[] c = MathArrays.buildArray(getField(), 3);
         c[0] = fraction(1, 3);
@@ -69,11 +50,15 @@ public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>>
         return c;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[][] getA() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ThreeEighthesFieldIntegrator.getA_73");
         final T[][] a = MathArrays.buildArray(getField(), 3, -1);
-        for (int i = 0; i < a.length; ++i) {
-            a[i] = MathArrays.buildArray(getField(), i + 1);
+        for (int i = 0; ROR_less(i, a.length, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesFieldIntegrator.getA_73", _mut13449, _mut13450, _mut13451, _mut13452, _mut13453); ++i) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ThreeEighthesFieldIntegrator.getA_73");
+            a[i] = MathArrays.buildArray(getField(), AOR_plus(i, 1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesFieldIntegrator.getA_73", _mut13445, _mut13446, _mut13447, _mut13448));
         }
         a[0][0] = fraction(1, 3);
         a[1][0] = a[0][0].negate();
@@ -84,7 +69,9 @@ public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>>
         return a;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public T[] getB() {
         final T[] b = MathArrays.buildArray(getField(), 4);
         b[0] = fraction(1, 8);
@@ -94,17 +81,11 @@ public class ThreeEighthesFieldIntegrator<T extends RealFieldElement<T>>
         return b;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected ThreeEighthesFieldStepInterpolator<T>
-        createInterpolator(final boolean forward, T[][] yDotK,
-                           final FieldODEStateAndDerivative<T> globalPreviousState,
-                           final FieldODEStateAndDerivative<T> globalCurrentState,
-                           final FieldEquationsMapper<T> mapper) {
-        return new ThreeEighthesFieldStepInterpolator<T>(getField(), forward, yDotK,
-                                                         globalPreviousState, globalCurrentState,
-                                                         globalPreviousState, globalCurrentState,
-                                                         mapper);
+    protected ThreeEighthesFieldStepInterpolator<T> createInterpolator(final boolean forward, T[][] yDotK, final FieldODEStateAndDerivative<T> globalPreviousState, final FieldODEStateAndDerivative<T> globalCurrentState, final FieldEquationsMapper<T> mapper) {
+        return new ThreeEighthesFieldStepInterpolator<T>(getField(), forward, yDotK, globalPreviousState, globalCurrentState, globalPreviousState, globalCurrentState, mapper);
     }
-
 }

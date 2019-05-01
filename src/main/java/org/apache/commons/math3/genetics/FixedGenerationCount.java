@@ -17,6 +17,8 @@
 package org.apache.commons.math3.genetics;
 
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Stops after a fixed number of generations. Each time {@link #isSatisfied(Population)} is invoked, a generation
@@ -26,10 +28,18 @@ import org.apache.commons.math3.exception.NumberIsTooSmallException;
  * @since 2.0
  */
 public class FixedGenerationCount implements StoppingCondition {
-    /** Number of generations that have passed */
+
+    @Conditional
+    public static boolean _mut2444 = false, _mut2445 = false, _mut2446 = false, _mut2447 = false, _mut2448 = false, _mut2449 = false, _mut2450 = false, _mut2451 = false, _mut2452 = false, _mut2453 = false;
+
+    /**
+     * Number of generations that have passed
+     */
     private int numGenerations = 0;
 
-    /** Maximum number of generations (stopping criteria) */
+    /**
+     * Maximum number of generations (stopping criteria)
+     */
     private final int maxGenerations;
 
     /**
@@ -39,7 +49,8 @@ public class FixedGenerationCount implements StoppingCondition {
      * @throws NumberIsTooSmallException if the number of generations is &lt; 1
      */
     public FixedGenerationCount(final int maxGenerations) throws NumberIsTooSmallException {
-        if (maxGenerations <= 0) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.FixedGenerationCount.FixedGenerationCount_41");
+        if (ROR_less_equals(maxGenerations, 0, "org.apache.commons.math3.genetics.FixedGenerationCount.FixedGenerationCount_41", _mut2444, _mut2445, _mut2446, _mut2447, _mut2448)) {
             throw new NumberIsTooSmallException(maxGenerations, 1, true);
         }
         this.maxGenerations = maxGenerations;
@@ -53,7 +64,8 @@ public class FixedGenerationCount implements StoppingCondition {
      * @return <code>true</code> IFF the maximum number of generations has been exceeded
      */
     public boolean isSatisfied(final Population population) {
-        if (this.numGenerations < this.maxGenerations) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.FixedGenerationCount.isSatisfied_55");
+        if (ROR_less(this.numGenerations, this.maxGenerations, "org.apache.commons.math3.genetics.FixedGenerationCount.isSatisfied_55", _mut2449, _mut2450, _mut2451, _mut2452, _mut2453)) {
             numGenerations++;
             return false;
         }
@@ -67,5 +79,4 @@ public class FixedGenerationCount implements StoppingCondition {
     public int getNumGenerations() {
         return numGenerations;
     }
-
 }

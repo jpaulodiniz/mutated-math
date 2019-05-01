@@ -14,19 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.random;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.MathIllegalStateException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.ZeroException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Generates values for use in simulation applications.
@@ -45,53 +46,80 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  *                       mean = <code>mu</code> and
  *                       standard deviation = <code>sigma</code></li>
  * <li> CONSTANT_MODE -- returns <code>mu</code> every time.</li></ul></p>
- *
- *
  */
 public class ValueServer {
 
-    /** Use empirical distribution.  */
+    @Conditional
+    public static boolean _mut51431 = false, _mut51432 = false, _mut51433 = false, _mut51434 = false, _mut51435 = false, _mut51436 = false, _mut51437 = false, _mut51438 = false, _mut51439 = false, _mut51440 = false, _mut51441 = false, _mut51442 = false, _mut51443 = false, _mut51444 = false, _mut51445 = false, _mut51446 = false, _mut51447 = false, _mut51448 = false, _mut51449 = false, _mut51450 = false;
+
+    /**
+     * Use empirical distribution.
+     */
     public static final int DIGEST_MODE = 0;
 
-    /** Replay data from valuesFilePath. */
+    /**
+     * Replay data from valuesFilePath.
+     */
     public static final int REPLAY_MODE = 1;
 
-    /** Uniform random deviates with mean = &mu;. */
+    /**
+     * Uniform random deviates with mean = &mu;.
+     */
     public static final int UNIFORM_MODE = 2;
 
-    /** Exponential random deviates with mean = &mu;. */
+    /**
+     * Exponential random deviates with mean = &mu;.
+     */
     public static final int EXPONENTIAL_MODE = 3;
 
-    /** Gaussian random deviates with mean = &mu;, std dev = &sigma;. */
+    /**
+     * Gaussian random deviates with mean = &mu;, std dev = &sigma;.
+     */
     public static final int GAUSSIAN_MODE = 4;
 
-    /** Always return mu */
+    /**
+     * Always return mu
+     */
     public static final int CONSTANT_MODE = 5;
 
-    /** mode determines how values are generated. */
+    /**
+     * mode determines how values are generated.
+     */
     private int mode = 5;
 
-    /** URI to raw data values. */
+    /**
+     * URI to raw data values.
+     */
     private URL valuesFileURL = null;
 
-    /** Mean for use with non-data-driven modes. */
+    /**
+     * Mean for use with non-data-driven modes.
+     */
     private double mu = 0.0;
 
-    /** Standard deviation for use with GAUSSIAN_MODE. */
+    /**
+     * Standard deviation for use with GAUSSIAN_MODE.
+     */
     private double sigma = 0.0;
 
-    /** Empirical probability distribution for use with DIGEST_MODE. */
+    /**
+     * Empirical probability distribution for use with DIGEST_MODE.
+     */
     private EmpiricalDistribution empiricalDistribution = null;
 
-    /** File pointer for REPLAY_MODE. */
+    /**
+     * File pointer for REPLAY_MODE.
+     */
     private BufferedReader filePointer = null;
 
-    /** RandomDataImpl to use for random data generation. */
+    /**
+     * RandomDataImpl to use for random data generation.
+     */
     private final RandomDataGenerator randomData;
 
-    // Data generation modes ======================================
-
-    /** Creates new ValueServer */
+    /**
+     * Creates new ValueServer
+     */
     public ValueServer() {
         randomData = new RandomDataGenerator();
     }
@@ -130,19 +158,21 @@ public class ValueServer {
      * @throws MathIllegalArgumentException if the underlying random generator thwrows one
      */
     public double getNext() throws IOException, MathIllegalStateException, MathIllegalArgumentException {
-        switch (mode) {
-            case DIGEST_MODE: return getNextDigest();
-            case REPLAY_MODE: return getNextReplay();
-            case UNIFORM_MODE: return getNextUniform();
-            case EXPONENTIAL_MODE: return getNextExponential();
-            case GAUSSIAN_MODE: return getNextGaussian();
-            case CONSTANT_MODE: return mu;
-            default: throw new MathIllegalStateException(
-                    LocalizedFormats.UNKNOWN_MODE,
-                    mode,
-                    "DIGEST_MODE",   DIGEST_MODE,   "REPLAY_MODE",      REPLAY_MODE,
-                    "UNIFORM_MODE",  UNIFORM_MODE,  "EXPONENTIAL_MODE", EXPONENTIAL_MODE,
-                    "GAUSSIAN_MODE", GAUSSIAN_MODE, "CONSTANT_MODE",    CONSTANT_MODE);
+        switch(mode) {
+            case DIGEST_MODE:
+                return getNextDigest();
+            case REPLAY_MODE:
+                return getNextReplay();
+            case UNIFORM_MODE:
+                return getNextUniform();
+            case EXPONENTIAL_MODE:
+                return getNextExponential();
+            case GAUSSIAN_MODE:
+                return getNextGaussian();
+            case CONSTANT_MODE:
+                return mu;
+            default:
+                throw new MathIllegalStateException(LocalizedFormats.UNKNOWN_MODE, mode, "DIGEST_MODE", DIGEST_MODE, "REPLAY_MODE", REPLAY_MODE, "UNIFORM_MODE", UNIFORM_MODE, "EXPONENTIAL_MODE", EXPONENTIAL_MODE, "GAUSSIAN_MODE", GAUSSIAN_MODE, "CONSTANT_MODE", CONSTANT_MODE);
         }
     }
 
@@ -154,9 +184,10 @@ public class ValueServer {
      * @throws MathIllegalStateException if mode is not recognized
      * @throws MathIllegalArgumentException if the underlying random generator thwrows one
      */
-    public void fill(double[] values)
-        throws IOException, MathIllegalStateException, MathIllegalArgumentException {
-        for (int i = 0; i < values.length; i++) {
+    public void fill(double[] values) throws IOException, MathIllegalStateException, MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.fill_157");
+        for (int i = 0; ROR_less(i, values.length, "org.apache.commons.math3.random.ValueServer.fill_157", _mut51431, _mut51432, _mut51433, _mut51434, _mut51435); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.fill_157");
             values[i] = getNext();
         }
     }
@@ -171,10 +202,11 @@ public class ValueServer {
      * @throws MathIllegalStateException if mode is not recognized
      * @throws MathIllegalArgumentException if the underlying random generator thwrows one
      */
-    public double[] fill(int length)
-        throws IOException, MathIllegalStateException, MathIllegalArgumentException {
+    public double[] fill(int length) throws IOException, MathIllegalStateException, MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.fill_174");
         double[] out = new double[length];
-        for (int i = 0; i < length; i++) {
+        for (int i = 0; ROR_less(i, length, "org.apache.commons.math3.random.ValueServer.fill_174", _mut51436, _mut51437, _mut51438, _mut51439, _mut51440); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.fill_174");
             out[i] = getNext();
         }
         return out;
@@ -293,8 +325,7 @@ public class ValueServer {
             try {
                 filePointer.close();
                 filePointer = null;
-            } catch (IOException ex) { //NOPMD
-                // ignore
+            } catch (IOException ex) {
             }
         }
         filePointer = new BufferedReader(new InputStreamReader(valuesFileURL.openStream(), "UTF-8"));
@@ -367,8 +398,6 @@ public class ValueServer {
         randomData.reSeed(seed);
     }
 
-    //------------- private methods ---------------------------------
-
     /**
      * Gets a random value in DIGEST_MODE.
      * <p>
@@ -381,8 +410,8 @@ public class ValueServer {
      * @throws MathIllegalStateException if digest has not been initialized
      */
     private double getNextDigest() throws MathIllegalStateException {
-        if ((empiricalDistribution == null) ||
-            (empiricalDistribution.getBinStats().size() == 0)) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.getNextDigest_383");
+        if ((_mut51446 ? ((empiricalDistribution == null) && (ROR_equals(empiricalDistribution.getBinStats().size(), 0, "org.apache.commons.math3.random.ValueServer.getNextDigest_383", _mut51441, _mut51442, _mut51443, _mut51444, _mut51445))) : ((empiricalDistribution == null) || (ROR_equals(empiricalDistribution.getBinStats().size(), 0, "org.apache.commons.math3.random.ValueServer.getNextDigest_383", _mut51441, _mut51442, _mut51443, _mut51444, _mut51445))))) {
             throw new MathIllegalStateException(LocalizedFormats.DIGEST_NOT_INITIALIZED);
         }
         return empiricalDistribution.getNextValue();
@@ -417,8 +446,7 @@ public class ValueServer {
             closeReplayFile();
             resetReplayFile();
             if ((str = filePointer.readLine()) == null) {
-                throw new MathIllegalStateException(LocalizedFormats.URL_CONTAINS_NO_DATA,
-                                                    valuesFileURL);
+                throw new MathIllegalStateException(LocalizedFormats.URL_CONTAINS_NO_DATA, valuesFileURL);
             }
         }
         return Double.parseDouble(str);
@@ -431,7 +459,8 @@ public class ValueServer {
      * @throws MathIllegalArgumentException if the underlying random generator thwrows one
      */
     private double getNextUniform() throws MathIllegalArgumentException {
-        return randomData.nextUniform(0, 2 * mu);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.random.ValueServer.getNextUniform_433");
+        return randomData.nextUniform(0, AOR_multiply(2, mu, "org.apache.commons.math3.random.ValueServer.getNextUniform_433", _mut51447, _mut51448, _mut51449, _mut51450));
     }
 
     /**
@@ -454,5 +483,4 @@ public class ValueServer {
     private double getNextGaussian() throws MathIllegalArgumentException {
         return randomData.nextGaussian(mu, sigma);
     }
-
 }

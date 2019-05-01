@@ -19,7 +19,6 @@ package org.apache.commons.math3.stat.descriptive;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.MathIllegalStateException;
@@ -37,7 +36,8 @@ import org.apache.commons.math3.stat.descriptive.summary.SumOfSquares;
 import org.apache.commons.math3.util.MathUtils;
 import org.apache.commons.math3.util.ResizableDoubleArray;
 import org.apache.commons.math3.util.FastMath;
-
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Maintains a dataset of values of a single variable and computes descriptive
@@ -55,9 +55,11 @@ import org.apache.commons.math3.util.FastMath;
  * <p>Note: this class is not threadsafe.  Use
  * {@link SynchronizedDescriptiveStatistics} if concurrent access from multiple
  * threads is required.</p>
- *
  */
 public class DescriptiveStatistics implements StatisticalSummary, Serializable {
+
+    @Conditional
+    public static boolean _mut3431 = false, _mut3432 = false, _mut3433 = false, _mut3434 = false, _mut3435 = false, _mut3436 = false, _mut3437 = false, _mut3438 = false, _mut3439 = false, _mut3440 = false, _mut3441 = false, _mut3442 = false, _mut3443 = false, _mut3444 = false, _mut3445 = false, _mut3446 = false, _mut3447 = false, _mut3448 = false, _mut3449 = false, _mut3450 = false, _mut3451 = false, _mut3452 = false, _mut3453 = false, _mut3454 = false, _mut3455 = false, _mut3456 = false, _mut3457 = false, _mut3458 = false, _mut3459 = false, _mut3460 = false, _mut3461 = false, _mut3462 = false, _mut3463 = false, _mut3464 = false, _mut3465 = false, _mut3466 = false, _mut3467 = false, _mut3468 = false, _mut3469 = false, _mut3470 = false, _mut3471 = false, _mut3472 = false, _mut3473 = false, _mut3474 = false, _mut3475 = false, _mut3476 = false, _mut3477 = false, _mut3478 = false, _mut3479 = false, _mut3480 = false, _mut3481 = false, _mut3482 = false, _mut3483 = false, _mut3484 = false, _mut3485 = false, _mut3486 = false, _mut3487 = false, _mut3488 = false, _mut3489 = false, _mut3490 = false;
 
     /**
      * Represents an infinite window size.  When the {@link #getWindowSize()}
@@ -66,13 +68,19 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      */
     public static final int INFINITE_WINDOW = -1;
 
-    /** Serialization UID */
+    /**
+     * Serialization UID
+     */
     private static final long serialVersionUID = 4133067267405273064L;
 
-    /** Name of the setQuantile method. */
+    /**
+     * Name of the setQuantile method.
+     */
     private static final String SET_QUANTILE_METHOD_NAME = "setQuantile";
 
-    /** hold the window size **/
+    /**
+     * hold the window size *
+     */
     protected int windowSize = INFINITE_WINDOW;
 
     /**
@@ -80,34 +88,54 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      */
     private ResizableDoubleArray eDA = new ResizableDoubleArray();
 
-    /** Mean statistic implementation - can be reset by setter. */
+    /**
+     * Mean statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic meanImpl = new Mean();
 
-    /** Geometric mean statistic implementation - can be reset by setter. */
+    /**
+     * Geometric mean statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic geometricMeanImpl = new GeometricMean();
 
-    /** Kurtosis statistic implementation - can be reset by setter. */
+    /**
+     * Kurtosis statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic kurtosisImpl = new Kurtosis();
 
-    /** Maximum statistic implementation - can be reset by setter. */
+    /**
+     * Maximum statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic maxImpl = new Max();
 
-    /** Minimum statistic implementation - can be reset by setter. */
+    /**
+     * Minimum statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic minImpl = new Min();
 
-    /** Percentile statistic implementation - can be reset by setter. */
+    /**
+     * Percentile statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic percentileImpl = new Percentile();
 
-    /** Skewness statistic implementation - can be reset by setter. */
+    /**
+     * Skewness statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic skewnessImpl = new Skewness();
 
-    /** Variance statistic implementation - can be reset by setter. */
+    /**
+     * Variance statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic varianceImpl = new Variance();
 
-    /** Sum of squares statistic implementation - can be reset by setter. */
+    /**
+     * Sum of squares statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic sumsqImpl = new SumOfSquares();
 
-    /** Sum statistic implementation - can be reset by setter. */
+    /**
+     * Sum statistic implementation - can be reset by setter.
+     */
     private UnivariateStatistic sumImpl = new Sum();
 
     /**
@@ -161,10 +189,11 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * @param v the value to be added
      */
     public void addValue(double v) {
-        if (windowSize != INFINITE_WINDOW) {
-            if (getN() == windowSize) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.addValue_163");
+        if (ROR_not_equals(windowSize, INFINITE_WINDOW, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.addValue_163", _mut3431, _mut3432, _mut3433, _mut3434, _mut3435)) {
+            if (ROR_equals(getN(), windowSize, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.addValue_163", _mut3436, _mut3437, _mut3438, _mut3439, _mut3440)) {
                 eDA.addElementRolling(v);
-            } else if (getN() < windowSize) {
+            } else if (ROR_less(getN(), windowSize, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.addValue_163", _mut3441, _mut3442, _mut3443, _mut3444, _mut3445)) {
                 eDA.addElement(v);
             }
         } else {
@@ -250,9 +279,10 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * or 0.0 for a single value set.
      */
     public double getStandardDeviation() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getStandardDeviation_252");
         double stdDev = Double.NaN;
-        if (getN() > 0) {
-            if (getN() > 1) {
+        if (ROR_greater(getN(), 0, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getStandardDeviation_252", _mut3446, _mut3447, _mut3448, _mut3449, _mut3450)) {
+            if (ROR_greater(getN(), 1, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getStandardDeviation_252", _mut3451, _mut3452, _mut3453, _mut3454, _mut3455)) {
                 stdDev = FastMath.sqrt(getVariance());
             } else {
                 stdDev = 0.0;
@@ -269,8 +299,9 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * have been added.
      */
     public double getQuadraticMean() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getQuadraticMean_271");
         final long n = getN();
-        return n > 0 ? FastMath.sqrt(getSumsq() / n) : Double.NaN;
+        return ROR_greater(n, 0, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getQuadraticMean_271", _mut3456, _mut3457, _mut3458, _mut3459, _mut3460) ? FastMath.sqrt(AOR_divide(getSumsq(), n, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.getQuadraticMean_271", _mut3461, _mut3462, _mut3463, _mut3464)) : Double.NaN;
     }
 
     /**
@@ -302,9 +333,9 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
     }
 
     /**
-    * Returns the minimum of the available values
-    * @return The min or Double.NaN if no values have been added.
-    */
+     * Returns the minimum of the available values
+     * @return The min or Double.NaN if no values have been added.
+     */
     public double getMin() {
         return apply(minImpl);
     }
@@ -341,7 +372,6 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
         eDA.clear();
     }
 
-
     /**
      * Returns the maximum number of values that can be stored in the
      * dataset, or INFINITE_WINDOW (-1) if there is no limit.
@@ -367,18 +397,14 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * not equal to {@link #INFINITE_WINDOW}
      */
     public void setWindowSize(int windowSize) throws MathIllegalArgumentException {
-        if (windowSize < 1 && windowSize != INFINITE_WINDOW) {
-            throw new MathIllegalArgumentException(
-                    LocalizedFormats.NOT_POSITIVE_WINDOW_SIZE, windowSize);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369");
+        if ((_mut3475 ? (ROR_less(windowSize, 1, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3465, _mut3466, _mut3467, _mut3468, _mut3469) || ROR_not_equals(windowSize, INFINITE_WINDOW, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3470, _mut3471, _mut3472, _mut3473, _mut3474)) : (ROR_less(windowSize, 1, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3465, _mut3466, _mut3467, _mut3468, _mut3469) && ROR_not_equals(windowSize, INFINITE_WINDOW, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3470, _mut3471, _mut3472, _mut3473, _mut3474)))) {
+            throw new MathIllegalArgumentException(LocalizedFormats.NOT_POSITIVE_WINDOW_SIZE, windowSize);
         }
-
         this.windowSize = windowSize;
-
-        // We need to check to see if we need to discard elements
-        // from the front of the array.  If the windowSize is less than
         // the current number of elements.
-        if (windowSize != INFINITE_WINDOW && windowSize < eDA.getNumElements()) {
-            eDA.discardFrontElements(eDA.getNumElements() - windowSize);
+        if ((_mut3486 ? (ROR_not_equals(windowSize, INFINITE_WINDOW, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3476, _mut3477, _mut3478, _mut3479, _mut3480) || ROR_less(windowSize, eDA.getNumElements(), "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3481, _mut3482, _mut3483, _mut3484, _mut3485)) : (ROR_not_equals(windowSize, INFINITE_WINDOW, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3476, _mut3477, _mut3478, _mut3479, _mut3480) && ROR_less(windowSize, eDA.getNumElements(), "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3481, _mut3482, _mut3483, _mut3484, _mut3485)))) {
+            eDA.discardFrontElements(AOR_minus(eDA.getNumElements(), windowSize, "org.apache.commons.math3.stat.descriptive.DescriptiveStatistics.setWindowSize_369", _mut3487, _mut3488, _mut3489, _mut3490));
         }
     }
 
@@ -442,17 +468,12 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
             ((Percentile) percentileImpl).setQuantile(p);
         } else {
             try {
-                percentileImpl.getClass().getMethod(SET_QUANTILE_METHOD_NAME,
-                        new Class[] {Double.TYPE}).invoke(percentileImpl,
-                                new Object[] {Double.valueOf(p)});
-            } catch (NoSuchMethodException e1) { // Setter guard should prevent
-                throw new MathIllegalStateException(
-                      LocalizedFormats.PERCENTILE_IMPLEMENTATION_UNSUPPORTED_METHOD,
-                      percentileImpl.getClass().getName(), SET_QUANTILE_METHOD_NAME);
+                percentileImpl.getClass().getMethod(SET_QUANTILE_METHOD_NAME, new Class[] { Double.TYPE }).invoke(percentileImpl, new Object[] { Double.valueOf(p) });
+            } catch (NoSuchMethodException e1) {
+                // Setter guard should prevent
+                throw new MathIllegalStateException(LocalizedFormats.PERCENTILE_IMPLEMENTATION_UNSUPPORTED_METHOD, percentileImpl.getClass().getName(), SET_QUANTILE_METHOD_NAME);
             } catch (IllegalAccessException e2) {
-                throw new MathIllegalStateException(
-                      LocalizedFormats.PERCENTILE_IMPLEMENTATION_CANNOT_ACCESS_METHOD,
-                      SET_QUANTILE_METHOD_NAME, percentileImpl.getClass().getName());
+                throw new MathIllegalStateException(LocalizedFormats.PERCENTILE_IMPLEMENTATION_CANNOT_ACCESS_METHOD, SET_QUANTILE_METHOD_NAME, percentileImpl.getClass().getName());
             } catch (InvocationTargetException e3) {
                 throw new IllegalStateException(e3.getCause());
             }
@@ -476,8 +497,7 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
         outBuffer.append("min: ").append(getMin()).append(endl);
         outBuffer.append("max: ").append(getMax()).append(endl);
         outBuffer.append("mean: ").append(getMean()).append(endl);
-        outBuffer.append("std dev: ").append(getStandardDeviation())
-            .append(endl);
+        outBuffer.append("std dev: ").append(getStandardDeviation()).append(endl);
         try {
             // No catch for MIAE because actual parameter is valid below
             outBuffer.append("median: ").append(getPercentile(50)).append(endl);
@@ -498,8 +518,6 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
         // No try-catch or advertised exception here because arguments are guaranteed valid
         return eDA.compute(stat);
     }
-
-    // Implementation getters and setter
 
     /**
      * Returns the currently configured mean implementation.
@@ -539,8 +557,7 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * for computing the geometric mean
      * @since 1.2
      */
-    public synchronized void setGeometricMeanImpl(
-            UnivariateStatistic geometricMeanImpl) {
+    public synchronized void setGeometricMeanImpl(UnivariateStatistic geometricMeanImpl) {
         this.geometricMeanImpl = geometricMeanImpl;
     }
 
@@ -628,20 +645,13 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      *  provide a <code>setQuantile</code> method
      * @since 1.2
      */
-    public synchronized void setPercentileImpl(UnivariateStatistic percentileImpl)
-    throws MathIllegalArgumentException {
+    public synchronized void setPercentileImpl(UnivariateStatistic percentileImpl) throws MathIllegalArgumentException {
         try {
-            percentileImpl.getClass().getMethod(SET_QUANTILE_METHOD_NAME,
-                    new Class[] {Double.TYPE}).invoke(percentileImpl,
-                            new Object[] {Double.valueOf(50.0d)});
+            percentileImpl.getClass().getMethod(SET_QUANTILE_METHOD_NAME, new Class[] { Double.TYPE }).invoke(percentileImpl, new Object[] { Double.valueOf(50.0d) });
         } catch (NoSuchMethodException e1) {
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.PERCENTILE_IMPLEMENTATION_UNSUPPORTED_METHOD,
-                  percentileImpl.getClass().getName(), SET_QUANTILE_METHOD_NAME);
+            throw new MathIllegalArgumentException(LocalizedFormats.PERCENTILE_IMPLEMENTATION_UNSUPPORTED_METHOD, percentileImpl.getClass().getName(), SET_QUANTILE_METHOD_NAME);
         } catch (IllegalAccessException e2) {
-            throw new MathIllegalArgumentException(
-                  LocalizedFormats.PERCENTILE_IMPLEMENTATION_CANNOT_ACCESS_METHOD,
-                  SET_QUANTILE_METHOD_NAME, percentileImpl.getClass().getName());
+            throw new MathIllegalArgumentException(LocalizedFormats.PERCENTILE_IMPLEMENTATION_CANNOT_ACCESS_METHOD, SET_QUANTILE_METHOD_NAME, percentileImpl.getClass().getName());
         } catch (InvocationTargetException e3) {
             throw new IllegalArgumentException(e3.getCause());
         }
@@ -665,8 +675,7 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * for computing the skewness
      * @since 1.2
      */
-    public synchronized void setSkewnessImpl(
-            UnivariateStatistic skewnessImpl) {
+    public synchronized void setSkewnessImpl(UnivariateStatistic skewnessImpl) {
         this.skewnessImpl = skewnessImpl;
     }
 
@@ -687,8 +696,7 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * for computing the variance
      * @since 1.2
      */
-    public synchronized void setVarianceImpl(
-            UnivariateStatistic varianceImpl) {
+    public synchronized void setVarianceImpl(UnivariateStatistic varianceImpl) {
         this.varianceImpl = varianceImpl;
     }
 
@@ -754,14 +762,12 @@ public class DescriptiveStatistics implements StatisticalSummary, Serializable {
      * @param dest DescriptiveStatistics to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(DescriptiveStatistics source, DescriptiveStatistics dest)
-        throws NullArgumentException {
+    public static void copy(DescriptiveStatistics source, DescriptiveStatistics dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         // Copy data and window size
         dest.eDA = source.eDA.copy();
         dest.windowSize = source.windowSize;
-
         // Copy implementations
         dest.maxImpl = source.maxImpl.copy();
         dest.meanImpl = source.meanImpl.copy();

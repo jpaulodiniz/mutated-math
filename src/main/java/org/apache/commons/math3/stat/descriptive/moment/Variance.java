@@ -17,13 +17,14 @@
 package org.apache.commons.math3.stat.descriptive.moment;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
 import org.apache.commons.math3.stat.descriptive.WeightedEvaluation;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Computes the variance of the available values.  By default, the unbiased
@@ -64,14 +65,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class Variance extends AbstractStorelessUnivariateStatistic implements Serializable, WeightedEvaluation {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut2828 = false, _mut2829 = false, _mut2830 = false, _mut2831 = false, _mut2832 = false, _mut2833 = false, _mut2834 = false, _mut2835 = false, _mut2836 = false, _mut2837 = false, _mut2838 = false, _mut2839 = false, _mut2840 = false, _mut2841 = false, _mut2842 = false, _mut2843 = false, _mut2844 = false, _mut2845 = false, _mut2846 = false, _mut2847 = false, _mut2848 = false, _mut2849 = false, _mut2850 = false, _mut2851 = false, _mut2852 = false, _mut2853 = false, _mut2854 = false, _mut2855 = false, _mut2856 = false, _mut2857 = false, _mut2858 = false, _mut2859 = false, _mut2860 = false, _mut2861 = false, _mut2862 = false, _mut2863 = false, _mut2864 = false, _mut2865 = false, _mut2866 = false, _mut2867 = false, _mut2868 = false, _mut2869 = false, _mut2870 = false, _mut2871 = false, _mut2872 = false, _mut2873 = false, _mut2874 = false, _mut2875 = false, _mut2876 = false, _mut2877 = false, _mut2878 = false, _mut2879 = false, _mut2880 = false, _mut2881 = false, _mut2882 = false, _mut2883 = false, _mut2884 = false, _mut2885 = false, _mut2886 = false, _mut2887 = false, _mut2888 = false, _mut2889 = false, _mut2890 = false, _mut2891 = false, _mut2892 = false, _mut2893 = false, _mut2894 = false, _mut2895 = false, _mut2896 = false, _mut2897 = false, _mut2898 = false, _mut2899 = false, _mut2900 = false, _mut2901 = false, _mut2902 = false, _mut2903 = false, _mut2904 = false, _mut2905 = false, _mut2906 = false, _mut2907 = false, _mut2908 = false, _mut2909 = false, _mut2910 = false, _mut2911 = false, _mut2912 = false, _mut2913 = false, _mut2914 = false, _mut2915 = false, _mut2916 = false, _mut2917 = false, _mut2918 = false, _mut2919 = false, _mut2920 = false, _mut2921 = false, _mut2922 = false, _mut2923 = false, _mut2924 = false, _mut2925 = false, _mut2926 = false, _mut2927 = false, _mut2928 = false, _mut2929 = false, _mut2930 = false, _mut2931 = false, _mut2932 = false, _mut2933 = false, _mut2934 = false, _mut2935 = false, _mut2936 = false, _mut2937 = false, _mut2938 = false, _mut2939 = false, _mut2940 = false, _mut2941 = false, _mut2942 = false, _mut2943 = false, _mut2944 = false, _mut2945 = false, _mut2946 = false, _mut2947 = false, _mut2948 = false, _mut2949 = false, _mut2950 = false, _mut2951 = false, _mut2952 = false, _mut2953 = false, _mut2954 = false, _mut2955 = false, _mut2956 = false, _mut2957 = false, _mut2958 = false, _mut2959 = false, _mut2960 = false, _mut2961 = false, _mut2962 = false, _mut2963 = false, _mut2964 = false, _mut2965 = false, _mut2966 = false, _mut2967 = false, _mut2968 = false, _mut2969 = false, _mut2970 = false, _mut2971 = false, _mut2972 = false, _mut2973 = false, _mut2974 = false, _mut2975 = false, _mut2976 = false, _mut2977 = false, _mut2978 = false, _mut2979 = false, _mut2980 = false, _mut2981 = false, _mut2982 = false, _mut2983 = false, _mut2984 = false, _mut2985 = false, _mut2986 = false, _mut2987 = false, _mut2988 = false, _mut2989 = false, _mut2990 = false, _mut2991 = false, _mut2992 = false, _mut2993 = false, _mut2994 = false, _mut2995 = false, _mut2996 = false, _mut2997 = false, _mut2998 = false, _mut2999 = false, _mut3000 = false, _mut3001 = false, _mut3002 = false, _mut3003 = false, _mut3004 = false, _mut3005 = false, _mut3006 = false, _mut3007 = false, _mut3008 = false, _mut3009 = false, _mut3010 = false, _mut3011 = false, _mut3012 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = -9111962718267217978L;
 
-    /** SecondMoment is used in incremental calculation of Variance*/
+    /**
+     * SecondMoment is used in incremental calculation of Variance
+     */
     protected SecondMoment moment = null;
 
     /**
@@ -177,17 +184,18 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      */
     @Override
     public double getResult() {
-            if (moment.n == 0) {
-                return Double.NaN;
-            } else if (moment.n == 1) {
-                return 0d;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178");
+        if (ROR_equals(moment.n, 0, "org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178", _mut2828, _mut2829, _mut2830, _mut2831, _mut2832)) {
+            return Double.NaN;
+        } else if (ROR_equals(moment.n, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178", _mut2833, _mut2834, _mut2835, _mut2836, _mut2837)) {
+            return 0d;
+        } else {
+            if (isBiasCorrected) {
+                return AOR_divide(moment.m2, (AOR_minus(moment.n, 1d, "org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178", _mut2842, _mut2843, _mut2844, _mut2845)), "org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178", _mut2846, _mut2847, _mut2848, _mut2849);
             } else {
-                if (isBiasCorrected) {
-                    return moment.m2 / (moment.n - 1d);
-                } else {
-                    return moment.m2 / (moment.n);
-                }
+                return AOR_divide(moment.m2, (moment.n), "org.apache.commons.math3.stat.descriptive.moment.Variance.getResult_178", _mut2838, _mut2839, _mut2840, _mut2841);
             }
+        }
     }
 
     /**
@@ -253,16 +261,14 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
-
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_255");
         double var = Double.NaN;
-
         if (test(values, begin, length)) {
             clear();
-            if (length == 1) {
+            if (ROR_equals(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_255", _mut2850, _mut2851, _mut2852, _mut2853, _mut2854)) {
                 var = 0.0;
-            } else if (length > 1) {
+            } else if (ROR_greater(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_255", _mut2855, _mut2856, _mut2857, _mut2858, _mut2859)) {
                 Mean mean = new Mean();
                 double m = mean.evaluate(values, begin, length);
                 var = evaluate(values, m, begin, length);
@@ -313,16 +319,14 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights,
-                           final int begin, final int length) throws MathIllegalArgumentException {
-
+    public double evaluate(final double[] values, final double[] weights, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_316");
         double var = Double.NaN;
-
-        if (test(values, weights,begin, length)) {
+        if (test(values, weights, begin, length)) {
             clear();
-            if (length == 1) {
+            if (ROR_equals(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_316", _mut2860, _mut2861, _mut2862, _mut2863, _mut2864)) {
                 var = 0.0;
-            } else if (length > 1) {
+            } else if (ROR_greater(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_316", _mut2865, _mut2866, _mut2867, _mut2868, _mut2869)) {
                 Mean mean = new Mean();
                 double m = mean.evaluate(values, weights, begin, length);
                 var = evaluate(values, weights, m, begin, length);
@@ -369,8 +373,7 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights) throws MathIllegalArgumentException {
         return evaluate(values, weights, 0, values.length);
     }
 
@@ -400,28 +403,27 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @throws MathIllegalArgumentException if the array is null or the array index
      *  parameters are not valid
      */
-    public double evaluate(final double[] values, final double mean,
-            final int begin, final int length) throws MathIllegalArgumentException {
-
+    public double evaluate(final double[] values, final double mean, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403");
         double var = Double.NaN;
-
         if (test(values, begin, length)) {
-            if (length == 1) {
+            if (ROR_equals(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2870, _mut2871, _mut2872, _mut2873, _mut2874)) {
                 var = 0.0;
-            } else if (length > 1) {
+            } else if (ROR_greater(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2875, _mut2876, _mut2877, _mut2878, _mut2879)) {
                 double accum = 0.0;
                 double dev = 0.0;
                 double accum2 = 0.0;
-                for (int i = begin; i < begin + length; i++) {
-                    dev = values[i] - mean;
-                    accum += dev * dev;
+                for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2888, _mut2889, _mut2890, _mut2891), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2892, _mut2893, _mut2894, _mut2895, _mut2896); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403");
+                    dev = AOR_minus(values[i], mean, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2880, _mut2881, _mut2882, _mut2883);
+                    accum += AOR_multiply(dev, dev, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2884, _mut2885, _mut2886, _mut2887);
                     accum2 += dev;
                 }
                 double len = length;
                 if (isBiasCorrected) {
-                    var = (accum - (accum2 * accum2 / len)) / (len - 1.0);
+                    var = AOR_divide((AOR_minus(accum, (AOR_divide(AOR_multiply(accum2, accum2, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2913, _mut2914, _mut2915, _mut2916), len, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2917, _mut2918, _mut2919, _mut2920)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2921, _mut2922, _mut2923, _mut2924)), (AOR_minus(len, 1.0, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2925, _mut2926, _mut2927, _mut2928)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2929, _mut2930, _mut2931, _mut2932);
                 } else {
-                    var = (accum - (accum2 * accum2 / len)) / len;
+                    var = AOR_divide((AOR_minus(accum, (AOR_divide(AOR_multiply(accum2, accum2, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2897, _mut2898, _mut2899, _mut2900), len, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2901, _mut2902, _mut2903, _mut2904)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2905, _mut2906, _mut2907, _mut2908)), len, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_403", _mut2909, _mut2910, _mut2911, _mut2912);
                 }
             }
         }
@@ -502,34 +504,31 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights,
-    final double mean, final int begin, final int length)
-    throws MathIllegalArgumentException {
-
+    public double evaluate(final double[] values, final double[] weights, final double mean, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505");
         double var = Double.NaN;
-
         if (test(values, weights, begin, length)) {
-            if (length == 1) {
+            if (ROR_equals(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2933, _mut2934, _mut2935, _mut2936, _mut2937)) {
                 var = 0.0;
-            } else if (length > 1) {
+            } else if (ROR_greater(length, 1, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2938, _mut2939, _mut2940, _mut2941, _mut2942)) {
                 double accum = 0.0;
                 double dev = 0.0;
                 double accum2 = 0.0;
-                for (int i = begin; i < begin + length; i++) {
-                    dev = values[i] - mean;
-                    accum += weights[i] * (dev * dev);
-                    accum2 += weights[i] * dev;
+                for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2959, _mut2960, _mut2961, _mut2962), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2963, _mut2964, _mut2965, _mut2966, _mut2967); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505");
+                    dev = AOR_minus(values[i], mean, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2943, _mut2944, _mut2945, _mut2946);
+                    accum += AOR_multiply(weights[i], (AOR_multiply(dev, dev, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2947, _mut2948, _mut2949, _mut2950)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2951, _mut2952, _mut2953, _mut2954);
+                    accum2 += AOR_multiply(weights[i], dev, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2955, _mut2956, _mut2957, _mut2958);
                 }
-
                 double sumWts = 0;
-                for (int i = begin; i < begin + length; i++) {
+                for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2968, _mut2969, _mut2970, _mut2971), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2972, _mut2973, _mut2974, _mut2975, _mut2976); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505");
                     sumWts += weights[i];
                 }
-
                 if (isBiasCorrected) {
-                    var = (accum - (accum2 * accum2 / sumWts)) / (sumWts - 1.0);
+                    var = AOR_divide((AOR_minus(accum, (AOR_divide(AOR_multiply(accum2, accum2, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2993, _mut2994, _mut2995, _mut2996), sumWts, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2997, _mut2998, _mut2999, _mut3000)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut3001, _mut3002, _mut3003, _mut3004)), (AOR_minus(sumWts, 1.0, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut3005, _mut3006, _mut3007, _mut3008)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut3009, _mut3010, _mut3011, _mut3012);
                 } else {
-                    var = (accum - (accum2 * accum2 / sumWts)) / sumWts;
+                    var = AOR_divide((AOR_minus(accum, (AOR_divide(AOR_multiply(accum2, accum2, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2977, _mut2978, _mut2979, _mut2980), sumWts, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2981, _mut2982, _mut2983, _mut2984)), "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2985, _mut2986, _mut2987, _mut2988)), sumWts, "org.apache.commons.math3.stat.descriptive.moment.Variance.evaluate_505", _mut2989, _mut2990, _mut2991, _mut2992);
                 }
             }
         }
@@ -577,8 +576,7 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights, final double mean)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights, final double mean) throws MathIllegalArgumentException {
         return evaluate(values, weights, mean, 0, values.length);
     }
 
@@ -615,8 +613,7 @@ public class Variance extends AbstractStorelessUnivariateStatistic implements Se
      * @param dest Variance to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(Variance source, Variance dest)
-        throws NullArgumentException {
+    public static void copy(Variance source, Variance dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());

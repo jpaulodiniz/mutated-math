@@ -14,17 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.fraction;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a Fraction number in proper format or improper format.  The number
@@ -35,7 +35,12 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  */
 public class FractionFormat extends AbstractFormat {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut273 = false, _mut274 = false, _mut275 = false, _mut276 = false, _mut277 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 3008655719530972611L;
 
     /**
@@ -60,8 +65,7 @@ public class FractionFormat extends AbstractFormat {
      * @param numeratorFormat the custom format for the numerator.
      * @param denominatorFormat the custom format for the denominator.
      */
-    public FractionFormat(final NumberFormat numeratorFormat,
-                          final NumberFormat denominatorFormat) {
+    public FractionFormat(final NumberFormat numeratorFormat, final NumberFormat denominatorFormat) {
         super(numeratorFormat, denominatorFormat);
     }
 
@@ -139,17 +143,12 @@ public class FractionFormat extends AbstractFormat {
      *            offsets of the alignment field
      * @return the value passed in as toAppendTo.
      */
-    public StringBuffer format(final Fraction fraction,
-                               final StringBuffer toAppendTo, final FieldPosition pos) {
-
+    public StringBuffer format(final Fraction fraction, final StringBuffer toAppendTo, final FieldPosition pos) {
         pos.setBeginIndex(0);
         pos.setEndIndex(0);
-
         getNumeratorFormat().format(fraction.getNumerator(), toAppendTo, pos);
         toAppendTo.append(" / ");
-        getDenominatorFormat().format(fraction.getDenominator(), toAppendTo,
-            pos);
-
+        getDenominatorFormat().format(fraction.getDenominator(), toAppendTo, pos);
         return toAppendTo;
     }
 
@@ -168,11 +167,8 @@ public class FractionFormat extends AbstractFormat {
      * @throws MathIllegalArgumentException if <code>obj</code> is not a valid type.
      */
     @Override
-    public StringBuffer format(final Object obj,
-                               final StringBuffer toAppendTo, final FieldPosition pos)
-        throws FractionConversionException, MathIllegalArgumentException {
+    public StringBuffer format(final Object obj, final StringBuffer toAppendTo, final FieldPosition pos) throws FractionConversionException, MathIllegalArgumentException {
         StringBuffer ret = null;
-
         if (obj instanceof Fraction) {
             ret = format((Fraction) obj, toAppendTo, pos);
         } else if (obj instanceof Number) {
@@ -180,7 +176,6 @@ public class FractionFormat extends AbstractFormat {
         } else {
             throw new MathIllegalArgumentException(LocalizedFormats.CANNOT_FORMAT_OBJECT_TO_FRACTION);
         }
-
         return ret;
     }
 
@@ -193,9 +188,10 @@ public class FractionFormat extends AbstractFormat {
      */
     @Override
     public Fraction parse(final String source) throws MathParseException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.fraction.FractionFormat.parse_194");
         final ParsePosition parsePosition = new ParsePosition(0);
         final Fraction result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.fraction.FractionFormat.parse_194", _mut273, _mut274, _mut275, _mut276, _mut277)) {
             throw new MathParseException(source, parsePosition.getErrorIndex(), Fraction.class);
         }
         return result;
@@ -211,54 +207,40 @@ public class FractionFormat extends AbstractFormat {
     @Override
     public Fraction parse(final String source, final ParsePosition pos) {
         final int initialIndex = pos.getIndex();
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse numerator
         final Number num = getNumeratorFormat().parse(source, pos);
         if (num == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
         // parse '/'
         final int startIndex = pos.getIndex();
         final char c = parseNextCharacter(source, pos);
-        switch (c) {
-        case 0 :
-            // no '/'
-            // return num as a fraction
-            return new Fraction(num.intValue(), 1);
-        case '/' :
-            // found '/', continue parsing denominator
-            break;
-        default :
-            // invalid '/'
-            // set index back to initial, error index should be the last
-            // character examined.
-            pos.setIndex(initialIndex);
-            pos.setErrorIndex(startIndex);
-            return null;
+        switch(c) {
+            case 0:
+                // return num as a fraction
+                return new Fraction(num.intValue(), 1);
+            case '/':
+                // found '/', continue parsing denominator
+                break;
+            default:
+                // character examined.
+                pos.setIndex(initialIndex);
+                pos.setErrorIndex(startIndex);
+                return null;
         }
-
         // parse whitespace
         parseAndIgnoreWhitespace(source, pos);
-
         // parse denominator
         final Number den = getDenominatorFormat().parse(source, pos);
         if (den == null) {
-            // invalid integer number
-            // set index back to initial, error index should already be set
             // character examined.
             pos.setIndex(initialIndex);
             return null;
         }
-
         return new Fraction(num.intValue(), den.intValue());
     }
-
 }

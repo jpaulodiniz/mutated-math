@@ -19,8 +19,11 @@ package org.apache.commons.math3.geometry.euclidean.oned;
 import org.apache.commons.math3.geometry.partitioning.AbstractSubHyperplane;
 import org.apache.commons.math3.geometry.partitioning.Hyperplane;
 import org.apache.commons.math3.geometry.partitioning.Region;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/** This class represents sub-hyperplane for {@link OrientedPoint}.
+/**
+ * This class represents sub-hyperplane for {@link OrientedPoint}.
  * <p>An hyperplane in 1D is a simple point, its orientation being a
  * boolean.</p>
  * <p>Instances of this class are guaranteed to be immutable.</p>
@@ -28,45 +31,55 @@ import org.apache.commons.math3.geometry.partitioning.Region;
  */
 public class SubOrientedPoint extends AbstractSubHyperplane<Euclidean1D, Euclidean1D> {
 
-    /** Simple constructor.
+    @Conditional
+    public static boolean _mut84169 = false, _mut84170 = false, _mut84171 = false, _mut84172 = false, _mut84173 = false, _mut84174 = false, _mut84175 = false, _mut84176 = false, _mut84177 = false, _mut84178 = false;
+
+    /**
+     * Simple constructor.
      * @param hyperplane underlying hyperplane
      * @param remainingRegion remaining region of the hyperplane
      */
-    public SubOrientedPoint(final Hyperplane<Euclidean1D> hyperplane,
-                            final Region<Euclidean1D> remainingRegion) {
+    public SubOrientedPoint(final Hyperplane<Euclidean1D> hyperplane, final Region<Euclidean1D> remainingRegion) {
         super(hyperplane, remainingRegion);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSize() {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected AbstractSubHyperplane<Euclidean1D, Euclidean1D> buildNew(final Hyperplane<Euclidean1D> hyperplane,
-                                                                       final Region<Euclidean1D> remainingRegion) {
+    protected AbstractSubHyperplane<Euclidean1D, Euclidean1D> buildNew(final Hyperplane<Euclidean1D> hyperplane, final Region<Euclidean1D> remainingRegion) {
         return new SubOrientedPoint(hyperplane, remainingRegion);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SplitSubHyperplane<Euclidean1D> split(final Hyperplane<Euclidean1D> hyperplane) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.euclidean.oned.SubOrientedPoint.split_60");
         final double global = hyperplane.getOffset(((OrientedPoint) getHyperplane()).getLocation());
-        if (global < -1.0e-10) {
+        if (ROR_less(global, -1.0e-10, "org.apache.commons.math3.geometry.euclidean.oned.SubOrientedPoint.split_60", _mut84169, _mut84170, _mut84171, _mut84172, _mut84173)) {
             return new SplitSubHyperplane<Euclidean1D>(null, this);
-        } else if (global > 1.0e-10) {
+        } else if (ROR_greater(global, 1.0e-10, "org.apache.commons.math3.geometry.euclidean.oned.SubOrientedPoint.split_60", _mut84174, _mut84175, _mut84176, _mut84177, _mut84178)) {
             return new SplitSubHyperplane<Euclidean1D>(this, null);
         } else {
             return new SplitSubHyperplane<Euclidean1D>(null, null);
         }
     }
-
 }

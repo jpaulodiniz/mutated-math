@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ml.neuralnet.sofm.util;
 
 import org.apache.commons.math3.exception.NotStrictlyPositiveException;
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
 import org.apache.commons.math3.analysis.function.Logistic;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Decay function whose shape is similar to a sigmoid.
@@ -29,9 +30,18 @@ import org.apache.commons.math3.analysis.function.Logistic;
  * @since 3.3
  */
 public class QuasiSigmoidDecayFunction {
-    /** Sigmoid. */
+
+    @Conditional
+    public static boolean _mut103596 = false, _mut103597 = false, _mut103598 = false, _mut103599 = false, _mut103600 = false, _mut103601 = false, _mut103602 = false, _mut103603 = false, _mut103604 = false, _mut103605 = false, _mut103606 = false, _mut103607 = false, _mut103608 = false, _mut103609 = false, _mut103610 = false, _mut103611 = false, _mut103612 = false, _mut103613 = false, _mut103614 = false, _mut103615 = false, _mut103616 = false, _mut103617 = false, _mut103618 = false, _mut103619 = false, _mut103620 = false, _mut103621 = false, _mut103622 = false, _mut103623 = false, _mut103624 = false, _mut103625 = false, _mut103626 = false;
+
+    /**
+     * Sigmoid.
+     */
     private final Logistic sigmoid;
-    /** See {@link #value(long)}. */
+
+    /**
+     * See {@link #value(long)}.
+     */
     private final double scale;
 
     /**
@@ -50,29 +60,26 @@ public class QuasiSigmoidDecayFunction {
      * @throws NumberIsTooLargeException if {@code slope >= 0}.
      * @throws NotStrictlyPositiveException if {@code numCall <= 0}.
      */
-    public QuasiSigmoidDecayFunction(double initValue,
-                                     double slope,
-                                     long numCall) {
-        if (initValue <= 0) {
+    public QuasiSigmoidDecayFunction(double initValue, double slope, long numCall) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53");
+        if (ROR_less_equals(initValue, 0, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103596, _mut103597, _mut103598, _mut103599, _mut103600)) {
             throw new NotStrictlyPositiveException(initValue);
         }
-        if (slope >= 0) {
+        if (ROR_greater_equals(slope, 0, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103601, _mut103602, _mut103603, _mut103604, _mut103605)) {
             throw new NumberIsTooLargeException(slope, 0, false);
         }
-        if (numCall <= 1) {
+        if (ROR_less_equals(numCall, 1, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103606, _mut103607, _mut103608, _mut103609, _mut103610)) {
             throw new NotStrictlyPositiveException(numCall);
         }
-
         final double k = initValue;
         final double m = numCall;
-        final double b = 4 * slope / initValue;
+        final double b = AOR_divide(AOR_multiply(4, slope, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103611, _mut103612, _mut103613, _mut103614), initValue, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103615, _mut103616, _mut103617, _mut103618);
         final double q = 1;
         final double a = 0;
         final double n = 1;
         sigmoid = new Logistic(k, m, b, q, a, n);
-
         final double y0 = sigmoid.value(0);
-        scale = k / y0;
+        scale = AOR_divide(k, y0, "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.QuasiSigmoidDecayFunction_53", _mut103619, _mut103620, _mut103621, _mut103622);
     }
 
     /**
@@ -82,6 +89,7 @@ public class QuasiSigmoidDecayFunction {
      * @return the value of the function at {@code numCall}.
      */
     public double value(long numCall) {
-        return scale * sigmoid.value(numCall);
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.value_84");
+        return AOR_multiply(scale, sigmoid.value(numCall), "org.apache.commons.math3.ml.neuralnet.sofm.util.QuasiSigmoidDecayFunction.value_84", _mut103623, _mut103624, _mut103625, _mut103626);
     }
 }

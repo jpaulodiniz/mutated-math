@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization;
 
 import org.apache.commons.math3.util.Precision;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for all convergence checker implementations.
@@ -28,26 +29,32 @@ import org.apache.commons.math3.util.Precision;
  * @since 3.0
  */
 @Deprecated
-public abstract class AbstractConvergenceChecker<PAIR>
-    implements ConvergenceChecker<PAIR> {
+public abstract class AbstractConvergenceChecker<PAIR> implements ConvergenceChecker<PAIR> {
+
+    @Conditional
+    public static boolean _mut71030 = false, _mut71031 = false, _mut71032 = false, _mut71033 = false, _mut71034 = false, _mut71035 = false, _mut71036 = false, _mut71037 = false;
+
     /**
      * Default relative threshold.
      * @deprecated in 3.1 (to be removed in 4.0) because this value is too small
      * to be useful as a default (cf. MATH-798).
      */
     @Deprecated
-    private static final double DEFAULT_RELATIVE_THRESHOLD = 100 * Precision.EPSILON;
+    private static final double DEFAULT_RELATIVE_THRESHOLD = AOR_multiply(100, Precision.EPSILON, "org.apache.commons.math3.optimization.AbstractConvergenceChecker.getUpper_60", _mut71030, _mut71031, _mut71032, _mut71033);
+
     /**
      * Default absolute threshold.
      * @deprecated in 3.1 (to be removed in 4.0) because this value is too small
      * to be useful as a default (cf. MATH-798).
      */
     @Deprecated
-    private static final double DEFAULT_ABSOLUTE_THRESHOLD = 100 * Precision.SAFE_MIN;
+    private static final double DEFAULT_ABSOLUTE_THRESHOLD = AOR_multiply(100, Precision.SAFE_MIN, "org.apache.commons.math3.optimization.AbstractConvergenceChecker.getUpper_60", _mut71034, _mut71035, _mut71036, _mut71037);
+
     /**
      * Relative tolerance threshold.
      */
     private final double relativeThreshold;
+
     /**
      * Absolute tolerance threshold.
      */
@@ -73,8 +80,7 @@ public abstract class AbstractConvergenceChecker<PAIR>
      * @param relativeThreshold relative tolerance threshold
      * @param absoluteThreshold absolute tolerance threshold
      */
-    public AbstractConvergenceChecker(final double relativeThreshold,
-                                      final double absoluteThreshold) {
+    public AbstractConvergenceChecker(final double relativeThreshold, final double absoluteThreshold) {
         this.relativeThreshold = relativeThreshold;
         this.absoluteThreshold = absoluteThreshold;
     }
@@ -96,7 +102,5 @@ public abstract class AbstractConvergenceChecker<PAIR>
     /**
      * {@inheritDoc}
      */
-    public abstract boolean converged(int iteration,
-                                      PAIR previous,
-                                      PAIR current);
+    public abstract boolean converged(int iteration, PAIR previous, PAIR current);
 }

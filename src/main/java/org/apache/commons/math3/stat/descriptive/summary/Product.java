@@ -17,13 +17,14 @@
 package org.apache.commons.math3.stat.descriptive.summary;
 
 import java.io.Serializable;
-
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.NullArgumentException;
 import org.apache.commons.math3.stat.descriptive.AbstractStorelessUnivariateStatistic;
 import org.apache.commons.math3.stat.descriptive.WeightedEvaluation;
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.util.MathUtils;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Returns the product of the available values.
@@ -36,14 +37,20 @@ import org.apache.commons.math3.util.MathUtils;
  * multiple threads access an instance of this class concurrently, and at least
  * one of the threads invokes the <code>increment()</code> or
  * <code>clear()</code> method, it must be synchronized externally.</p>
- *
  */
 public class Product extends AbstractStorelessUnivariateStatistic implements Serializable, WeightedEvaluation {
 
-    /** Serializable version identifier */
+    @Conditional
+    public static boolean _mut4547 = false, _mut4548 = false, _mut4549 = false, _mut4550 = false, _mut4551 = false, _mut4552 = false, _mut4553 = false, _mut4554 = false, _mut4555 = false, _mut4556 = false, _mut4557 = false, _mut4558 = false, _mut4559 = false, _mut4560 = false, _mut4561 = false, _mut4562 = false, _mut4563 = false, _mut4564 = false;
+
+    /**
+     * Serializable version identifier
+     */
     private static final long serialVersionUID = 2824226005990582538L;
 
-    /**The number of values that have been added */
+    /**
+     * The number of values that have been added
+     */
     private long n;
 
     /**
@@ -118,12 +125,13 @@ public class Product extends AbstractStorelessUnivariateStatistic implements Ser
      *  parameters are not valid
      */
     @Override
-    public double evaluate(final double[] values, final int begin, final int length)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_120");
         double product = Double.NaN;
         if (test(values, begin, length, true)) {
             product = 1.0;
-            for (int i = begin; i < begin + length; i++) {
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_120", _mut4547, _mut4548, _mut4549, _mut4550), "org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_120", _mut4551, _mut4552, _mut4553, _mut4554, _mut4555); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_120");
                 product *= values[i];
             }
         }
@@ -158,12 +166,13 @@ public class Product extends AbstractStorelessUnivariateStatistic implements Ser
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights,
-        final int begin, final int length) throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights, final int begin, final int length) throws MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_161");
         double product = Double.NaN;
         if (test(values, weights, begin, length, true)) {
             product = 1.0;
-            for (int i = begin; i < begin + length; i++) {
+            for (int i = begin; ROR_less(i, AOR_plus(begin, length, "org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_161", _mut4556, _mut4557, _mut4558, _mut4559), "org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_161", _mut4560, _mut4561, _mut4562, _mut4563, _mut4564); i++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.stat.descriptive.summary.Product.evaluate_161");
                 product *= FastMath.pow(values[i], weights[i]);
             }
         }
@@ -193,11 +202,9 @@ public class Product extends AbstractStorelessUnivariateStatistic implements Ser
      * @throws MathIllegalArgumentException if the parameters are not valid
      * @since 2.1
      */
-    public double evaluate(final double[] values, final double[] weights)
-    throws MathIllegalArgumentException {
+    public double evaluate(final double[] values, final double[] weights) throws MathIllegalArgumentException {
         return evaluate(values, weights, 0, values.length);
     }
-
 
     /**
      * {@inheritDoc}
@@ -218,13 +225,11 @@ public class Product extends AbstractStorelessUnivariateStatistic implements Ser
      * @param dest Product to copy to
      * @throws NullArgumentException if either source or dest is null
      */
-    public static void copy(Product source, Product dest)
-        throws NullArgumentException {
+    public static void copy(Product source, Product dest) throws NullArgumentException {
         MathUtils.checkNotNull(source);
         MathUtils.checkNotNull(dest);
         dest.setData(source.getDataRef());
         dest.n = source.n;
         dest.value = source.value;
     }
-
 }

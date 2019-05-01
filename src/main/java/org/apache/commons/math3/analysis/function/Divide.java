@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.function;
 
 import org.apache.commons.math3.analysis.BivariateFunction;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Divide the first operand by the second.
@@ -25,8 +26,15 @@ import org.apache.commons.math3.analysis.BivariateFunction;
  * @since 3.0
  */
 public class Divide implements BivariateFunction {
-    /** {@inheritDoc} */
+
+    @Conditional
+    public static boolean _mut91405 = false, _mut91406 = false, _mut91407 = false, _mut91408 = false;
+
+    /**
+     * {@inheritDoc}
+     */
     public double value(double x, double y) {
-        return x / y;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.function.Divide.value_29");
+        return AOR_divide(x, y, "org.apache.commons.math3.analysis.function.Divide.value_29", _mut91405, _mut91406, _mut91407, _mut91408);
     }
 }

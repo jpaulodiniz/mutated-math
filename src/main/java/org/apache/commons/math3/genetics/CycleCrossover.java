@@ -20,10 +20,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.MathIllegalArgumentException;
 import org.apache.commons.math3.exception.util.LocalizedFormats;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Cycle Crossover [CX] builds offspring from <b>ordered</b> chromosomes by identifying cycles
@@ -64,7 +65,12 @@ import org.apache.commons.math3.exception.util.LocalizedFormats;
  */
 public class CycleCrossover<T> implements CrossoverPolicy {
 
-    /** If the start index shall be chosen randomly. */
+    @Conditional
+    public static boolean _mut2065 = false, _mut2066 = false, _mut2067 = false, _mut2068 = false, _mut2069 = false, _mut2070 = false, _mut2071 = false, _mut2072 = false, _mut2073 = false, _mut2074 = false, _mut2075 = false, _mut2076 = false, _mut2077 = false, _mut2078 = false, _mut2079 = false, _mut2080 = false, _mut2081 = false, _mut2082 = false, _mut2083 = false, _mut2084 = false, _mut2085 = false, _mut2086 = false, _mut2087 = false, _mut2088 = false, _mut2089 = false, _mut2090 = false, _mut2091 = false, _mut2092 = false, _mut2093 = false, _mut2094 = false, _mut2095 = false, _mut2096 = false, _mut2097 = false, _mut2098 = false, _mut2099 = false, _mut2100 = false, _mut2101 = false, _mut2102 = false, _mut2103 = false, _mut2104 = false, _mut2105 = false, _mut2106 = false, _mut2107 = false, _mut2108 = false;
+
+    /**
+     * If the start index shall be chosen randomly.
+     */
     private final boolean randomStart;
 
     /**
@@ -99,10 +105,9 @@ public class CycleCrossover<T> implements CrossoverPolicy {
      * @throws DimensionMismatchException if the length of the two chromosomes is different
      */
     @SuppressWarnings("unchecked")
-    public ChromosomePair crossover(final Chromosome first, final Chromosome second)
-        throws DimensionMismatchException, MathIllegalArgumentException {
-
-        if (!(first instanceof AbstractListChromosome<?> && second instanceof AbstractListChromosome<?>)) {
+    public ChromosomePair crossover(final Chromosome first, final Chromosome second) throws DimensionMismatchException, MathIllegalArgumentException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.crossover_101");
+        if (!((_mut2065 ? (first instanceof AbstractListChromosome<?> || second instanceof AbstractListChromosome<?>) : (first instanceof AbstractListChromosome<?> && second instanceof AbstractListChromosome<?>)))) {
             throw new MathIllegalArgumentException(LocalizedFormats.INVALID_FIXED_LENGTH_CHROMOSOME);
         }
         return mate((AbstractListChromosome<T>) first, (AbstractListChromosome<T>) second);
@@ -116,37 +121,32 @@ public class CycleCrossover<T> implements CrossoverPolicy {
      * @return the pair of new chromosomes that resulted from the crossover
      * @throws DimensionMismatchException if the length of the two chromosomes is different
      */
-    protected ChromosomePair mate(final AbstractListChromosome<T> first, final AbstractListChromosome<T> second)
-        throws DimensionMismatchException {
-
+    protected ChromosomePair mate(final AbstractListChromosome<T> first, final AbstractListChromosome<T> second) throws DimensionMismatchException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.mate_119");
         final int length = first.getLength();
-        if (length != second.getLength()) {
+        if (ROR_not_equals(length, second.getLength(), "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2066, _mut2067, _mut2068, _mut2069, _mut2070)) {
             throw new DimensionMismatchException(second.getLength(), length);
         }
-
         // array representations of the parents
         final List<T> parent1Rep = first.getRepresentation();
         final List<T> parent2Rep = second.getRepresentation();
         // and of the children: do a crossover copy to simplify the later processing
         final List<T> child1Rep = new ArrayList<T>(second.getRepresentation());
         final List<T> child2Rep = new ArrayList<T>(first.getRepresentation());
-
         // the set of all visited indices so far
         final Set<Integer> visitedIndices = new HashSet<Integer>(length);
         // the indices of the current cycle
         final List<Integer> indices = new ArrayList<Integer>(length);
-
         // determine the starting index
         int idx = randomStart ? GeneticAlgorithm.getRandomGenerator().nextInt(length) : 0;
         int cycle = 1;
-
-        while (visitedIndices.size() < length) {
+        while (ROR_less(visitedIndices.size(), length, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2104, _mut2105, _mut2106, _mut2107, _mut2108)) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.mate_119");
             indices.add(idx);
-
             T item = parent2Rep.get(idx);
             idx = parent1Rep.indexOf(item);
-
-            while (idx != indices.get(0)) {
+            while (ROR_not_equals(idx, indices.get(0), "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2071, _mut2072, _mut2073, _mut2074, _mut2075)) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.mate_119");
                 // add that index to the cycle indices
                 indices.add(idx);
                 // get the item in the second parent at that index
@@ -154,29 +154,27 @@ public class CycleCrossover<T> implements CrossoverPolicy {
                 // get the index of that item in the first parent
                 idx = parent1Rep.indexOf(item);
             }
-
             // for even cycles: swap the child elements on the indices found in this cycle
-            if (cycle++ % 2 != 0) {
+            if (ROR_not_equals(AOR_remainder(cycle++, 2, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2076, _mut2077, _mut2078, _mut2079), 0, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2080, _mut2081, _mut2082, _mut2083, _mut2084)) {
                 for (int i : indices) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.mate_119");
                     T tmp = child1Rep.get(i);
                     child1Rep.set(i, child2Rep.get(i));
                     child2Rep.set(i, tmp);
                 }
             }
-
             visitedIndices.addAll(indices);
             // find next starting index: last one + 1 until we find an unvisited index
-            idx = (indices.get(0) + 1) % length;
-            while (visitedIndices.contains(idx) && visitedIndices.size() < length) {
+            idx = AOR_remainder((AOR_plus(indices.get(0), 1, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2085, _mut2086, _mut2087, _mut2088)), length, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2089, _mut2090, _mut2091, _mut2092);
+            while ((_mut2103 ? (visitedIndices.contains(idx) || ROR_less(visitedIndices.size(), length, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2098, _mut2099, _mut2100, _mut2101, _mut2102)) : (visitedIndices.contains(idx) && ROR_less(visitedIndices.size(), length, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2098, _mut2099, _mut2100, _mut2101, _mut2102)))) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.genetics.CycleCrossover.mate_119");
                 idx++;
-                if (idx >= length) {
+                if (ROR_greater_equals(idx, length, "org.apache.commons.math3.genetics.CycleCrossover.mate_119", _mut2093, _mut2094, _mut2095, _mut2096, _mut2097)) {
                     idx = 0;
                 }
             }
             indices.clear();
         }
-
-        return new ChromosomePair(first.newFixedLengthChromosome(child1Rep),
-                                  second.newFixedLengthChromosome(child2Rep));
+        return new ChromosomePair(first.newFixedLengthChromosome(child1Rep), second.newFixedLengthChromosome(child2Rep));
     }
 }

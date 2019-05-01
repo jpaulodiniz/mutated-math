@@ -19,48 +19,59 @@ package org.apache.commons.math3.geometry.spherical.oned;
 import org.apache.commons.math3.geometry.partitioning.AbstractSubHyperplane;
 import org.apache.commons.math3.geometry.partitioning.Hyperplane;
 import org.apache.commons.math3.geometry.partitioning.Region;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/** This class represents sub-hyperplane for {@link LimitAngle}.
+/**
+ * This class represents sub-hyperplane for {@link LimitAngle}.
  * <p>Instances of this class are guaranteed to be immutable.</p>
  * @since 3.3
  */
 public class SubLimitAngle extends AbstractSubHyperplane<Sphere1D, Sphere1D> {
 
-    /** Simple constructor.
+    @Conditional
+    public static boolean _mut85654 = false, _mut85655 = false, _mut85656 = false, _mut85657 = false, _mut85658 = false;
+
+    /**
+     * Simple constructor.
      * @param hyperplane underlying hyperplane
      * @param remainingRegion remaining region of the hyperplane
      */
-    public SubLimitAngle(final Hyperplane<Sphere1D> hyperplane,
-                         final Region<Sphere1D> remainingRegion) {
+    public SubLimitAngle(final Hyperplane<Sphere1D> hyperplane, final Region<Sphere1D> remainingRegion) {
         super(hyperplane, remainingRegion);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public double getSize() {
         return 0;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isEmpty() {
         return false;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected AbstractSubHyperplane<Sphere1D, Sphere1D> buildNew(final Hyperplane<Sphere1D> hyperplane,
-                                                                 final Region<Sphere1D> remainingRegion) {
+    protected AbstractSubHyperplane<Sphere1D, Sphere1D> buildNew(final Hyperplane<Sphere1D> hyperplane, final Region<Sphere1D> remainingRegion) {
         return new SubLimitAngle(hyperplane, remainingRegion);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public SplitSubHyperplane<Sphere1D> split(final Hyperplane<Sphere1D> hyperplane) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.spherical.oned.SubLimitAngle.split_58");
         final double global = hyperplane.getOffset(((LimitAngle) getHyperplane()).getLocation());
-        return (global < -1.0e-10) ?
-                                    new SplitSubHyperplane<Sphere1D>(null, this) :
-                                    new SplitSubHyperplane<Sphere1D>(this, null);
+        return (ROR_less(global, -1.0e-10, "org.apache.commons.math3.geometry.spherical.oned.SubLimitAngle.split_58", _mut85654, _mut85655, _mut85656, _mut85657, _mut85658)) ? new SplitSubHyperplane<Sphere1D>(null, this) : new SplitSubHyperplane<Sphere1D>(this, null);
     }
-
 }

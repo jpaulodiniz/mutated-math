@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.optimization.direct;
 
 import org.apache.commons.math3.util.Incrementor;
@@ -32,6 +31,8 @@ import org.apache.commons.math3.optimization.SimpleValueChecker;
 import org.apache.commons.math3.exception.DimensionMismatchException;
 import org.apache.commons.math3.exception.NumberIsTooSmallException;
 import org.apache.commons.math3.exception.NumberIsTooLargeException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Base class for implementing optimizers for multivariate scalar functions.
@@ -44,21 +45,44 @@ import org.apache.commons.math3.exception.NumberIsTooLargeException;
  * @since 2.2
  */
 @Deprecated
-public abstract class BaseAbstractMultivariateOptimizer<FUNC extends MultivariateFunction>
-    implements BaseMultivariateOptimizer<FUNC> {
-    /** Evaluations counter. */
+public abstract class BaseAbstractMultivariateOptimizer<FUNC extends MultivariateFunction> implements BaseMultivariateOptimizer<FUNC> {
+
+    @Conditional
+    public static boolean _mut75105 = false, _mut75106 = false, _mut75107 = false, _mut75108 = false, _mut75109 = false, _mut75110 = false, _mut75111 = false, _mut75112 = false, _mut75113 = false, _mut75114 = false, _mut75115 = false, _mut75116 = false, _mut75117 = false, _mut75118 = false, _mut75119 = false, _mut75120 = false, _mut75121 = false, _mut75122 = false, _mut75123 = false, _mut75124 = false, _mut75125 = false, _mut75126 = false, _mut75127 = false, _mut75128 = false, _mut75129 = false, _mut75130 = false, _mut75131 = false, _mut75132 = false, _mut75133 = false, _mut75134 = false, _mut75135 = false, _mut75136 = false, _mut75137 = false, _mut75138 = false, _mut75139 = false, _mut75140 = false, _mut75141 = false, _mut75142 = false, _mut75143 = false, _mut75144 = false;
+
+    /**
+     * Evaluations counter.
+     */
     protected final Incrementor evaluations = new Incrementor();
-    /** Convergence checker. */
+
+    /**
+     * Convergence checker.
+     */
     private ConvergenceChecker<PointValuePair> checker;
-    /** Type of optimization. */
+
+    /**
+     * Type of optimization.
+     */
     private GoalType goal;
-    /** Initial guess. */
+
+    /**
+     * Initial guess.
+     */
     private double[] start;
-    /** Lower bounds. */
+
+    /**
+     * Lower bounds.
+     */
     private double[] lowerBound;
-    /** Upper bounds. */
+
+    /**
+     * Upper bounds.
+     */
     private double[] upperBound;
-    /** Objective function. */
+
+    /**
+     * Objective function.
+     */
     private MultivariateFunction function;
 
     /**
@@ -70,6 +94,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
     protected BaseAbstractMultivariateOptimizer() {
         this(new SimpleValueChecker());
     }
+
     /**
      * @param checker Convergence checker.
      */
@@ -77,17 +102,23 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
         this.checker = checker;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getMaxEvaluations() {
         return evaluations.getMaximalCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public int getEvaluations() {
         return evaluations.getCount();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     public ConvergenceChecker<PointValuePair> getConvergenceChecker() {
         return checker;
     }
@@ -117,8 +148,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * instead.
      */
     @Deprecated
-    public PointValuePair optimize(int maxEval, FUNC f, GoalType goalType,
-                                   double[] startPoint) {
+    public PointValuePair optimize(int maxEval, FUNC f, GoalType goalType, double[] startPoint) {
         return optimizeInternal(maxEval, f, goalType, new InitialGuess(startPoint));
     }
 
@@ -137,10 +167,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * function.
      * @since 3.1
      */
-    public PointValuePair optimize(int maxEval,
-                                   FUNC f,
-                                   GoalType goalType,
-                                   OptimizationData... optData) {
+    public PointValuePair optimize(int maxEval, FUNC f, GoalType goalType, OptimizationData... optData) {
         return optimizeInternal(maxEval, f, goalType, optData);
     }
 
@@ -165,8 +192,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * instead.
      */
     @Deprecated
-    protected PointValuePair optimizeInternal(int maxEval, FUNC f, GoalType goalType,
-                                              double[] startPoint) {
+    protected PointValuePair optimizeInternal(int maxEval, FUNC f, GoalType goalType, double[] startPoint) {
         return optimizeInternal(maxEval, f, goalType, new InitialGuess(startPoint));
     }
 
@@ -187,11 +213,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * evaluations is exceeded.
      * @since 3.1
      */
-    protected PointValuePair optimizeInternal(int maxEval,
-                                              FUNC f,
-                                              GoalType goalType,
-                                              OptimizationData... optData)
-        throws TooManyEvaluationsException {
+    protected PointValuePair optimizeInternal(int maxEval, FUNC f, GoalType goalType, OptimizationData... optData) throws TooManyEvaluationsException {
         // Set internal state.
         evaluations.setMaximalCount(maxEval);
         evaluations.resetCount();
@@ -216,9 +238,9 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * </ul>
      */
     private void parseOptimizationData(OptimizationData... optData) {
-        // The existing values (as set by the previous call) are reused if
         // not provided in the argument list.
         for (OptimizationData data : optData) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.parseOptimizationData_218");
             if (data instanceof InitialGuess) {
                 start = ((InitialGuess) data).getInitialGuess();
                 continue;
@@ -245,6 +267,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
     public double[] getStartPoint() {
         return start == null ? null : start.clone();
     }
+
     /**
      * @return the lower bounds.
      * @since 3.1
@@ -252,6 +275,7 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
     public double[] getLowerBound() {
         return lowerBound == null ? null : lowerBound.clone();
     }
+
     /**
      * @return the upper bounds.
      * @since 3.1
@@ -272,44 +296,47 @@ public abstract class BaseAbstractMultivariateOptimizer<FUNC extends Multivariat
      * Check parameters consistency.
      */
     private void checkParameters() {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274");
         if (start != null) {
             final int dim = start.length;
             if (lowerBound != null) {
-                if (lowerBound.length != dim) {
+                if (ROR_not_equals(lowerBound.length, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75105, _mut75106, _mut75107, _mut75108, _mut75109)) {
                     throw new DimensionMismatchException(lowerBound.length, dim);
                 }
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75115, _mut75116, _mut75117, _mut75118, _mut75119); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274");
                     final double v = start[i];
                     final double lo = lowerBound[i];
-                    if (v < lo) {
+                    if (ROR_less(v, lo, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75110, _mut75111, _mut75112, _mut75113, _mut75114)) {
                         throw new NumberIsTooSmallException(v, lo, true);
                     }
                 }
             }
             if (upperBound != null) {
-                if (upperBound.length != dim) {
+                if (ROR_not_equals(upperBound.length, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75120, _mut75121, _mut75122, _mut75123, _mut75124)) {
                     throw new DimensionMismatchException(upperBound.length, dim);
                 }
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75130, _mut75131, _mut75132, _mut75133, _mut75134); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274");
                     final double v = start[i];
                     final double hi = upperBound[i];
-                    if (v > hi) {
+                    if (ROR_greater(v, hi, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75125, _mut75126, _mut75127, _mut75128, _mut75129)) {
                         throw new NumberIsTooLargeException(v, hi, true);
                     }
                 }
             }
-
-            // If the bounds were not specified, the allowed interval is
             // assumed to be [-inf, +inf].
             if (lowerBound == null) {
                 lowerBound = new double[dim];
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75135, _mut75136, _mut75137, _mut75138, _mut75139); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274");
                     lowerBound[i] = Double.NEGATIVE_INFINITY;
                 }
             }
             if (upperBound == null) {
                 upperBound = new double[dim];
-                for (int i = 0; i < dim; i++) {
+                for (int i = 0; ROR_less(i, dim, "org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274", _mut75140, _mut75141, _mut75142, _mut75143, _mut75144); i++) {
+                    br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optimization.direct.BaseAbstractMultivariateOptimizer.checkParameters_274");
                     upperBound[i] = Double.POSITIVE_INFINITY;
                 }
             }

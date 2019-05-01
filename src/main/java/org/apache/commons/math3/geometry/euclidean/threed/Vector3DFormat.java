@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.geometry.euclidean.threed;
 
 import java.text.FieldPosition;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
 import java.util.Locale;
-
 import org.apache.commons.math3.exception.MathParseException;
 import org.apache.commons.math3.geometry.Vector;
 import org.apache.commons.math3.geometry.VectorFormat;
 import org.apache.commons.math3.util.CompositeFormat;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Formats a 3D vector in components list format "{x; y; z}".
@@ -40,9 +40,11 @@ import org.apache.commons.math3.util.CompositeFormat;
  * <p><b>Note:</b> using "," as a separator may interfere with the grouping separator
  * of the default {@link NumberFormat} for the current locale. Thus it is advised
  * to use a {@link NumberFormat} instance with disabled grouping in such a case.</p>
- *
  */
 public class Vector3DFormat extends VectorFormat<Euclidean3D> {
+
+    @Conditional
+    public static boolean _mut79796 = false, _mut79797 = false, _mut79798 = false, _mut79799 = false, _mut79800 = false;
 
     /**
      * Create an instance with default settings.
@@ -50,8 +52,7 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
      * "{", "}", and "; " and the default number format for components.</p>
      */
     public Vector3DFormat() {
-        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR,
-              CompositeFormat.getDefaultNumberFormat());
+        super(DEFAULT_PREFIX, DEFAULT_SUFFIX, DEFAULT_SEPARATOR, CompositeFormat.getDefaultNumberFormat());
     }
 
     /**
@@ -68,8 +69,7 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
      * @param suffix suffix to use instead of the default "}"
      * @param separator separator to use instead of the default "; "
      */
-    public Vector3DFormat(final String prefix, final String suffix,
-                         final String separator) {
+    public Vector3DFormat(final String prefix, final String suffix, final String separator) {
         super(prefix, suffix, separator, CompositeFormat.getDefaultNumberFormat());
     }
 
@@ -81,8 +81,7 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
      * @param separator separator to use instead of the default "; "
      * @param format the custom format for components.
      */
-    public Vector3DFormat(final String prefix, final String suffix,
-                         final String separator, final NumberFormat format) {
+    public Vector3DFormat(final String prefix, final String suffix, final String separator, final NumberFormat format) {
         super(prefix, suffix, separator, format);
     }
 
@@ -112,8 +111,7 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
      * @return the value passed in as toAppendTo.
      */
     @Override
-    public StringBuffer format(final Vector<Euclidean3D> vector, final StringBuffer toAppendTo,
-                               final FieldPosition pos) {
+    public StringBuffer format(final Vector<Euclidean3D> vector, final StringBuffer toAppendTo, final FieldPosition pos) {
         final Vector3D v3 = (Vector3D) vector;
         return format(toAppendTo, pos, v3.getX(), v3.getY(), v3.getZ());
     }
@@ -127,12 +125,11 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
      */
     @Override
     public Vector3D parse(final String source) throws MathParseException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.geometry.euclidean.threed.Vector3DFormat.parse_128");
         ParsePosition parsePosition = new ParsePosition(0);
         Vector3D result = parse(source, parsePosition);
-        if (parsePosition.getIndex() == 0) {
-            throw new MathParseException(source,
-                                         parsePosition.getErrorIndex(),
-                                         Vector3D.class);
+        if (ROR_equals(parsePosition.getIndex(), 0, "org.apache.commons.math3.geometry.euclidean.threed.Vector3DFormat.parse_128", _mut79796, _mut79797, _mut79798, _mut79799, _mut79800)) {
+            throw new MathParseException(source, parsePosition.getErrorIndex(), Vector3D.class);
         }
         return result;
     }
@@ -151,5 +148,4 @@ public class Vector3DFormat extends VectorFormat<Euclidean3D> {
         }
         return new Vector3D(coordinates[0], coordinates[1], coordinates[2]);
     }
-
 }

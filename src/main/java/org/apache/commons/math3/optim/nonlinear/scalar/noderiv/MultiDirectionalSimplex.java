@@ -17,9 +17,10 @@
 package org.apache.commons.math3.optim.nonlinear.scalar.noderiv;
 
 import java.util.Comparator;
-
 import org.apache.commons.math3.analysis.MultivariateFunction;
 import org.apache.commons.math3.optim.PointValuePair;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * This class implements the multi-directional direct search method.
@@ -27,13 +28,28 @@ import org.apache.commons.math3.optim.PointValuePair;
  * @since 3.0
  */
 public class MultiDirectionalSimplex extends AbstractSimplex {
-    /** Default value for {@link #khi}: {@value}. */
+
+    @Conditional
+    public static boolean _mut61550 = false, _mut61551 = false, _mut61552 = false, _mut61553 = false, _mut61554 = false, _mut61555 = false, _mut61556 = false, _mut61557 = false, _mut61558 = false, _mut61559 = false, _mut61560 = false, _mut61561 = false, _mut61562 = false, _mut61563 = false, _mut61564 = false, _mut61565 = false, _mut61566 = false, _mut61567 = false, _mut61568 = false, _mut61569 = false, _mut61570 = false, _mut61571 = false, _mut61572 = false, _mut61573 = false, _mut61574 = false, _mut61575 = false, _mut61576 = false, _mut61577 = false, _mut61578 = false, _mut61579 = false, _mut61580 = false, _mut61581 = false;
+
+    /**
+     * Default value for {@link #khi}: {@value}.
+     */
     private static final double DEFAULT_KHI = 2;
-    /** Default value for {@link #gamma}: {@value}. */
+
+    /**
+     * Default value for {@link #gamma}: {@value}.
+     */
     private static final double DEFAULT_GAMMA = 0.5;
-    /** Expansion coefficient. */
+
+    /**
+     * Expansion coefficient.
+     */
     private final double khi;
-    /** Contraction coefficient. */
+
+    /**
+     * Contraction coefficient.
+     */
     private final double gamma;
 
     /**
@@ -66,8 +82,7 @@ public class MultiDirectionalSimplex extends AbstractSimplex {
      * @param khi Expansion coefficient.
      * @param gamma Contraction coefficient.
      */
-    public MultiDirectionalSimplex(final int n,
-                                   final double khi, final double gamma) {
+    public MultiDirectionalSimplex(final int n, final double khi, final double gamma) {
         this(n, 1d, khi, gamma);
     }
 
@@ -81,11 +96,9 @@ public class MultiDirectionalSimplex extends AbstractSimplex {
      * @param khi Expansion coefficient.
      * @param gamma Contraction coefficient.
      */
-    public MultiDirectionalSimplex(final int n, double sideLength,
-                                   final double khi, final double gamma) {
+    public MultiDirectionalSimplex(final int n, double sideLength, final double khi, final double gamma) {
         super(n, sideLength);
-
-        this.khi   = khi;
+        this.khi = khi;
         this.gamma = gamma;
     }
 
@@ -109,11 +122,9 @@ public class MultiDirectionalSimplex extends AbstractSimplex {
      * @param khi Expansion coefficient.
      * @param gamma Contraction coefficient.
      */
-    public MultiDirectionalSimplex(final double[] steps,
-                                   final double khi, final double gamma) {
+    public MultiDirectionalSimplex(final double[] steps, final double khi, final double gamma) {
         super(steps);
-
-        this.khi   = khi;
+        this.khi = khi;
         this.gamma = gamma;
     }
 
@@ -140,41 +151,36 @@ public class MultiDirectionalSimplex extends AbstractSimplex {
      * @throws org.apache.commons.math3.exception.DimensionMismatchException
      * if there is a dimension mismatch in the reference simplex.
      */
-    public MultiDirectionalSimplex(final double[][] referenceSimplex,
-                                   final double khi, final double gamma) {
+    public MultiDirectionalSimplex(final double[][] referenceSimplex, final double khi, final double gamma) {
         super(referenceSimplex);
-
-        this.khi   = khi;
+        this.khi = khi;
         this.gamma = gamma;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void iterate(final MultivariateFunction evaluationFunction,
-                        final Comparator<PointValuePair> comparator) {
+    public void iterate(final MultivariateFunction evaluationFunction, final Comparator<PointValuePair> comparator) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.iterate_152");
         // Save the original simplex.
         final PointValuePair[] original = getPoints();
         final PointValuePair best = original[0];
-
         // Perform a reflection step.
-        final PointValuePair reflected = evaluateNewSimplex(evaluationFunction,
-                                                                original, 1, comparator);
-        if (comparator.compare(reflected, best) < 0) {
+        final PointValuePair reflected = evaluateNewSimplex(evaluationFunction, original, 1, comparator);
+        if (ROR_less(comparator.compare(reflected, best), 0, "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.iterate_152", _mut61550, _mut61551, _mut61552, _mut61553, _mut61554)) {
             // Compute the expanded simplex.
             final PointValuePair[] reflectedSimplex = getPoints();
-            final PointValuePair expanded = evaluateNewSimplex(evaluationFunction,
-                                                                   original, khi, comparator);
-            if (comparator.compare(reflected, expanded) <= 0) {
+            final PointValuePair expanded = evaluateNewSimplex(evaluationFunction, original, khi, comparator);
+            if (ROR_less_equals(comparator.compare(reflected, expanded), 0, "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.iterate_152", _mut61555, _mut61556, _mut61557, _mut61558, _mut61559)) {
                 // Keep the reflected simplex.
                 setPoints(reflectedSimplex);
             }
             // Keep the expanded simplex.
             return;
         }
-
         // Compute the contracted simplex.
         evaluateNewSimplex(evaluationFunction, original, gamma, comparator);
-
     }
 
     /**
@@ -189,27 +195,24 @@ public class MultiDirectionalSimplex extends AbstractSimplex {
      * @throws org.apache.commons.math3.exception.TooManyEvaluationsException
      * if the maximal number of evaluations is exceeded.
      */
-    private PointValuePair evaluateNewSimplex(final MultivariateFunction evaluationFunction,
-                                                  final PointValuePair[] original,
-                                                  final double coeff,
-                                                  final Comparator<PointValuePair> comparator) {
+    private PointValuePair evaluateNewSimplex(final MultivariateFunction evaluationFunction, final PointValuePair[] original, final double coeff, final Comparator<PointValuePair> comparator) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192");
         final double[] xSmallest = original[0].getPointRef();
-        // Perform a linear transformation on all the simplex points,
         // except the first one.
         setPoint(0, original[0]);
         final int dim = getDimension();
-        for (int i = 1; i < getSize(); i++) {
+        for (int i = 1; ROR_less(i, getSize(), "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192", _mut61577, _mut61578, _mut61579, _mut61580, _mut61581); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192");
             final double[] xOriginal = original[i].getPointRef();
             final double[] xTransformed = new double[dim];
-            for (int j = 0; j < dim; j++) {
-                xTransformed[j] = xSmallest[j] + coeff * (xSmallest[j] - xOriginal[j]);
+            for (int j = 0; ROR_less(j, dim, "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192", _mut61572, _mut61573, _mut61574, _mut61575, _mut61576); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192");
+                xTransformed[j] = AOR_plus(xSmallest[j], AOR_multiply(coeff, (AOR_minus(xSmallest[j], xOriginal[j], "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192", _mut61560, _mut61561, _mut61562, _mut61563)), "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192", _mut61564, _mut61565, _mut61566, _mut61567), "org.apache.commons.math3.optim.nonlinear.scalar.noderiv.MultiDirectionalSimplex.evaluateNewSimplex_192", _mut61568, _mut61569, _mut61570, _mut61571);
             }
             setPoint(i, new PointValuePair(xTransformed, Double.NaN, false));
         }
-
         // Evaluate the simplex.
         evaluate(evaluationFunction, comparator);
-
         return getPoint(0);
     }
 }

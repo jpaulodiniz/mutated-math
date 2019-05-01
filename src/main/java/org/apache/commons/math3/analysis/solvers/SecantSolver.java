@@ -14,12 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.analysis.solvers;
 
 import org.apache.commons.math3.util.FastMath;
 import org.apache.commons.math3.exception.NoBracketingException;
 import org.apache.commons.math3.exception.TooManyEvaluationsException;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Implements the <em>Secant</em> method for root-finding (approximating a
@@ -37,14 +38,20 @@ import org.apache.commons.math3.exception.TooManyEvaluationsException;
  * similar to the pre-3.0 releases, use the
  * {@link IllinoisSolver <em>Illinois</em>} algorithm or the
  * {@link PegasusSolver <em>Pegasus</em>} algorithm.</p>
- *
  */
 public class SecantSolver extends AbstractUnivariateSolver {
 
-    /** Default absolute accuracy. */
+    @Conditional
+    public static boolean _mut100894 = false, _mut100895 = false, _mut100896 = false, _mut100897 = false, _mut100898 = false, _mut100899 = false, _mut100900 = false, _mut100901 = false, _mut100902 = false, _mut100903 = false, _mut100904 = false, _mut100905 = false, _mut100906 = false, _mut100907 = false, _mut100908 = false, _mut100909 = false, _mut100910 = false, _mut100911 = false, _mut100912 = false, _mut100913 = false, _mut100914 = false, _mut100915 = false, _mut100916 = false, _mut100917 = false, _mut100918 = false, _mut100919 = false, _mut100920 = false, _mut100921 = false, _mut100922 = false, _mut100923 = false, _mut100924 = false, _mut100925 = false, _mut100926 = false, _mut100927 = false, _mut100928 = false, _mut100929 = false, _mut100930 = false, _mut100931 = false, _mut100932 = false, _mut100933 = false, _mut100934 = false, _mut100935 = false, _mut100936 = false, _mut100937 = false, _mut100938 = false, _mut100939 = false, _mut100940 = false, _mut100941 = false, _mut100942 = false, _mut100943 = false, _mut100944 = false, _mut100945 = false, _mut100946 = false;
+
+    /**
+     * Default absolute accuracy.
+     */
     protected static final double DEFAULT_ABSOLUTE_ACCURACY = 1e-6;
 
-    /** Construct a solver with default accuracy (1e-6). */
+    /**
+     * Construct a solver with default accuracy (1e-6).
+     */
     public SecantSolver() {
         super(DEFAULT_ABSOLUTE_ACCURACY);
     }
@@ -64,72 +71,57 @@ public class SecantSolver extends AbstractUnivariateSolver {
      * @param relativeAccuracy relative accuracy
      * @param absoluteAccuracy absolute accuracy
      */
-    public SecantSolver(final double relativeAccuracy,
-                        final double absoluteAccuracy) {
+    public SecantSolver(final double relativeAccuracy, final double absoluteAccuracy) {
         super(relativeAccuracy, absoluteAccuracy);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected final double doSolve()
-        throws TooManyEvaluationsException,
-               NoBracketingException {
+    protected final double doSolve() throws TooManyEvaluationsException, NoBracketingException {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73");
         // Get initial solution
         double x0 = getMin();
         double x1 = getMax();
         double f0 = computeObjectiveValue(x0);
         double f1 = computeObjectiveValue(x1);
-
-        // If one of the bounds is the exact root, return it. Since these are
-        // not under-approximations or over-approximations, we can return them
         // regardless of the allowed solutions.
-        if (f0 == 0.0) {
+        if (ROR_equals(f0, 0.0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100894, _mut100895, _mut100896, _mut100897, _mut100898)) {
             return x0;
         }
-        if (f1 == 0.0) {
+        if (ROR_equals(f1, 0.0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100899, _mut100900, _mut100901, _mut100902, _mut100903)) {
             return x1;
         }
-
         // Verify bracketing of initial solution.
         verifyBracketing(x0, x1);
-
         // Get accuracies.
         final double ftol = getFunctionValueAccuracy();
         final double atol = getAbsoluteAccuracy();
         final double rtol = getRelativeAccuracy();
-
         // Keep finding better approximations.
         while (true) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73");
             // Calculate the next approximation.
-            final double x = x1 - ((f1 * (x1 - x0)) / (f1 - f0));
+            final double x = AOR_minus(x1, (AOR_divide((AOR_multiply(f1, (AOR_minus(x1, x0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100904, _mut100905, _mut100906, _mut100907)), "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100908, _mut100909, _mut100910, _mut100911)), (AOR_minus(f1, f0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100912, _mut100913, _mut100914, _mut100915)), "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100916, _mut100917, _mut100918, _mut100919)), "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100920, _mut100921, _mut100922, _mut100923);
             final double fx = computeObjectiveValue(x);
-
-            // If the new approximation is the exact root, return it. Since
-            // this is not an under-approximation or an over-approximation,
             // we can return it regardless of the allowed solutions.
-            if (fx == 0.0) {
+            if (ROR_equals(fx, 0.0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100924, _mut100925, _mut100926, _mut100927, _mut100928)) {
                 return x;
             }
-
             // Update the bounds with the new approximation.
             x0 = x1;
             f0 = f1;
             x1 = x;
             f1 = fx;
-
-            // If the function value of the last approximation is too small,
-            // given the function value accuracy, then we can't get closer to
             // the root than we already are.
-            if (FastMath.abs(f1) <= ftol) {
+            if (ROR_less_equals(FastMath.abs(f1), ftol, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100929, _mut100930, _mut100931, _mut100932, _mut100933)) {
                 return x1;
             }
-
-            // If the current interval is within the given accuracies, we
             // are satisfied with the current approximation.
-            if (FastMath.abs(x1 - x0) < FastMath.max(rtol * FastMath.abs(x1), atol)) {
+            if (ROR_less(FastMath.abs(AOR_minus(x1, x0, "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100934, _mut100935, _mut100936, _mut100937)), FastMath.max(AOR_multiply(rtol, FastMath.abs(x1), "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100938, _mut100939, _mut100940, _mut100941), atol), "org.apache.commons.math3.analysis.solvers.SecantSolver.doSolve_73", _mut100942, _mut100943, _mut100944, _mut100945, _mut100946)) {
                 return x1;
             }
         }
     }
-
 }

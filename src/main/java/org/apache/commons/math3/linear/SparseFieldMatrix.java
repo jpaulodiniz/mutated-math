@@ -19,6 +19,8 @@ package org.apache.commons.math3.linear;
 import org.apache.commons.math3.Field;
 import org.apache.commons.math3.FieldElement;
 import org.apache.commons.math3.util.OpenIntToFieldHashMap;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
 /**
  * Sparse matrix implementation based on an open addressed map.
@@ -35,11 +37,22 @@ import org.apache.commons.math3.util.OpenIntToFieldHashMap;
  */
 public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldMatrix<T> {
 
-    /** Storage for (sparse) matrix elements. */
+    @Conditional
+    public static boolean _mut22688 = false, _mut22689 = false, _mut22690 = false, _mut22691 = false, _mut22692 = false, _mut22693 = false, _mut22694 = false, _mut22695 = false, _mut22696 = false, _mut22697 = false, _mut22698 = false, _mut22699 = false, _mut22700 = false, _mut22701 = false, _mut22702 = false, _mut22703 = false, _mut22704 = false, _mut22705 = false;
+
+    /**
+     * Storage for (sparse) matrix elements.
+     */
     private final OpenIntToFieldHashMap<T> entries;
-    /** Row dimension. */
+
+    /**
+     * Row dimension.
+     */
     private final int rows;
-    /** Column dimension. */
+
+    /**
+     * Column dimension.
+     */
     private final int columns;
 
     /**
@@ -50,7 +63,7 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
     public SparseFieldMatrix(final Field<T> field) {
         super(field);
         rows = 0;
-        columns= 0;
+        columns = 0;
         entries = new OpenIntToFieldHashMap<T>(field);
     }
 
@@ -64,8 +77,7 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
      * @throws org.apache.commons.math3.exception.NotStrictlyPositiveException
      * if row or column dimension is not positive.
      */
-    public SparseFieldMatrix(final Field<T> field,
-                             final int rowDimension, final int columnDimension) {
+    public SparseFieldMatrix(final Field<T> field, final int rowDimension, final int columnDimension) {
         super(field, rowDimension, columnDimension);
         this.rows = rowDimension;
         this.columns = columnDimension;
@@ -89,19 +101,24 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
      *
      * @param other Instance to copy.
      */
-    public SparseFieldMatrix(FieldMatrix<T> other){
+    public SparseFieldMatrix(FieldMatrix<T> other) {
         super(other.getField(), other.getRowDimension(), other.getColumnDimension());
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SparseFieldMatrix.SparseFieldMatrix_92");
         rows = other.getRowDimension();
         columns = other.getColumnDimension();
         entries = new OpenIntToFieldHashMap<T>(getField());
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+        for (int i = 0; ROR_less(i, rows, "org.apache.commons.math3.linear.SparseFieldMatrix.SparseFieldMatrix_92", _mut22693, _mut22694, _mut22695, _mut22696, _mut22697); i++) {
+            br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SparseFieldMatrix.SparseFieldMatrix_92");
+            for (int j = 0; ROR_less(j, columns, "org.apache.commons.math3.linear.SparseFieldMatrix.SparseFieldMatrix_92", _mut22688, _mut22689, _mut22690, _mut22691, _mut22692); j++) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SparseFieldMatrix.SparseFieldMatrix_92");
                 setEntry(i, j, other.getEntry(i, j));
             }
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void addToEntry(int row, int column, T increment) {
         checkRowIndex(row);
@@ -115,25 +132,33 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
         }
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public FieldMatrix<T> copy() {
         return new SparseFieldMatrix<T>(this);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public FieldMatrix<T> createMatrix(int rowDimension, int columnDimension) {
         return new SparseFieldMatrix<T>(getField(), rowDimension, columnDimension);
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnDimension() {
         return columns;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public T getEntry(int row, int column) {
         checkRowIndex(row);
@@ -141,13 +166,17 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
         return entries.get(computeKey(row, column));
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getRowDimension() {
         return rows;
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void multiplyEntry(int row, int column, T factor) {
         checkRowIndex(row);
@@ -159,10 +188,11 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
         } else {
             entries.put(key, value);
         }
-
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setEntry(int row, int column, T value) {
         checkRowIndex(row);
@@ -182,6 +212,7 @@ public class SparseFieldMatrix<T extends FieldElement<T>> extends AbstractFieldM
      * @return the key within the map to access the matrix element.
      */
     private int computeKey(int row, int column) {
-        return row * columns + column;
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.linear.SparseFieldMatrix.computeKey_184");
+        return AOR_plus(AOR_multiply(row, columns, "org.apache.commons.math3.linear.SparseFieldMatrix.computeKey_184", _mut22698, _mut22699, _mut22700, _mut22701), column, "org.apache.commons.math3.linear.SparseFieldMatrix.computeKey_184", _mut22702, _mut22703, _mut22704, _mut22705);
     }
 }

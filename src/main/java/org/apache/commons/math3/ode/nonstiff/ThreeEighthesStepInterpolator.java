@@ -14,133 +14,86 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.ode.sampling.StepInterpolator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements a step interpolator for the 3/8 fourth
- * order Runge-Kutta integrator.
- *
- * <p>This interpolator allows to compute dense output inside the last
- * step computed. The interpolation equation is consistent with the
- * integration scheme :
- * <ul>
- *   <li>Using reference point at step start:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub>)
- *                      + &theta; (h/8) [ (8 - 15 &theta; +  8 &theta;<sup>2</sup>) y'<sub>1</sub>
- *                                     +  3 * (15 &theta; - 12 &theta;<sup>2</sup>) y'<sub>2</sub>
- *                                     +        3 &theta;                           y'<sub>3</sub>
- *                                     +      (-3 &theta; +  4 &theta;<sup>2</sup>) y'<sub>4</sub>
- *                                    ]
- *   </li>
- *   <li>Using reference point at step end:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub> + h)
- *                      - (1 - &theta;) (h/8) [(1 - 7 &theta; + 8 &theta;<sup>2</sup>) y'<sub>1</sub>
- *                                         + 3 (1 +   &theta; - 4 &theta;<sup>2</sup>) y'<sub>2</sub>
- *                                         + 3 (1 +   &theta;)                         y'<sub>3</sub>
- *                                         +   (1 +   &theta; + 4 &theta;<sup>2</sup>) y'<sub>4</sub>
- *                                          ]
- *   </li>
- * </ul>
- * </p>
- *
- * where &theta; belongs to [0 ; 1] and where y'<sub>1</sub> to y'<sub>4</sub> are the four
- * evaluations of the derivatives already computed during the
- * step.</p>
- *
- * @see ThreeEighthesIntegrator
- * @since 1.2
- */
+class ThreeEighthesStepInterpolator extends RungeKuttaStepInterpolator {
 
-class ThreeEighthesStepInterpolator
-  extends RungeKuttaStepInterpolator {
+    @Conditional
+    public static boolean _mut19208 = false, _mut19209 = false, _mut19210 = false, _mut19211 = false, _mut19212 = false, _mut19213 = false, _mut19214 = false, _mut19215 = false, _mut19216 = false, _mut19217 = false, _mut19218 = false, _mut19219 = false, _mut19220 = false, _mut19221 = false, _mut19222 = false, _mut19223 = false, _mut19224 = false, _mut19225 = false, _mut19226 = false, _mut19227 = false, _mut19228 = false, _mut19229 = false, _mut19230 = false, _mut19231 = false, _mut19232 = false, _mut19233 = false, _mut19234 = false, _mut19235 = false, _mut19236 = false, _mut19237 = false, _mut19238 = false, _mut19239 = false, _mut19240 = false, _mut19241 = false, _mut19242 = false, _mut19243 = false, _mut19244 = false, _mut19245 = false, _mut19246 = false, _mut19247 = false, _mut19248 = false, _mut19249 = false, _mut19250 = false, _mut19251 = false, _mut19252 = false, _mut19253 = false, _mut19254 = false, _mut19255 = false, _mut19256 = false, _mut19257 = false, _mut19258 = false, _mut19259 = false, _mut19260 = false, _mut19261 = false, _mut19262 = false, _mut19263 = false, _mut19264 = false, _mut19265 = false, _mut19266 = false, _mut19267 = false, _mut19268 = false, _mut19269 = false, _mut19270 = false, _mut19271 = false, _mut19272 = false, _mut19273 = false, _mut19274 = false, _mut19275 = false, _mut19276 = false, _mut19277 = false, _mut19278 = false, _mut19279 = false, _mut19280 = false, _mut19281 = false, _mut19282 = false, _mut19283 = false, _mut19284 = false, _mut19285 = false, _mut19286 = false, _mut19287 = false, _mut19288 = false, _mut19289 = false, _mut19290 = false, _mut19291 = false, _mut19292 = false, _mut19293 = false, _mut19294 = false, _mut19295 = false, _mut19296 = false, _mut19297 = false, _mut19298 = false, _mut19299 = false, _mut19300 = false, _mut19301 = false, _mut19302 = false, _mut19303 = false, _mut19304 = false, _mut19305 = false, _mut19306 = false, _mut19307 = false, _mut19308 = false, _mut19309 = false, _mut19310 = false, _mut19311 = false, _mut19312 = false, _mut19313 = false, _mut19314 = false, _mut19315 = false, _mut19316 = false, _mut19317 = false, _mut19318 = false, _mut19319 = false, _mut19320 = false, _mut19321 = false, _mut19322 = false, _mut19323 = false, _mut19324 = false, _mut19325 = false, _mut19326 = false, _mut19327 = false, _mut19328 = false, _mut19329 = false, _mut19330 = false, _mut19331 = false, _mut19332 = false, _mut19333 = false, _mut19334 = false, _mut19335 = false, _mut19336 = false, _mut19337 = false, _mut19338 = false, _mut19339 = false, _mut19340 = false, _mut19341 = false, _mut19342 = false, _mut19343 = false, _mut19344 = false, _mut19345 = false, _mut19346 = false, _mut19347 = false, _mut19348 = false, _mut19349 = false, _mut19350 = false, _mut19351 = false, _mut19352 = false, _mut19353 = false, _mut19354 = false, _mut19355 = false, _mut19356 = false, _mut19357 = false, _mut19358 = false, _mut19359 = false, _mut19360 = false, _mut19361 = false, _mut19362 = false, _mut19363 = false, _mut19364 = false, _mut19365 = false, _mut19366 = false, _mut19367 = false, _mut19368 = false, _mut19369 = false, _mut19370 = false, _mut19371 = false, _mut19372 = false, _mut19373 = false, _mut19374 = false, _mut19375 = false, _mut19376 = false, _mut19377 = false, _mut19378 = false, _mut19379 = false, _mut19380 = false, _mut19381 = false, _mut19382 = false, _mut19383 = false, _mut19384 = false, _mut19385 = false, _mut19386 = false, _mut19387 = false, _mut19388 = false, _mut19389 = false, _mut19390 = false, _mut19391 = false, _mut19392 = false, _mut19393 = false, _mut19394 = false, _mut19395 = false, _mut19396 = false, _mut19397 = false, _mut19398 = false, _mut19399 = false, _mut19400 = false, _mut19401 = false, _mut19402 = false, _mut19403 = false, _mut19404 = false, _mut19405 = false, _mut19406 = false, _mut19407 = false, _mut19408 = false, _mut19409 = false, _mut19410 = false, _mut19411 = false, _mut19412 = false, _mut19413 = false, _mut19414 = false, _mut19415 = false, _mut19416 = false, _mut19417 = false, _mut19418 = false, _mut19419 = false, _mut19420 = false, _mut19421 = false, _mut19422 = false, _mut19423 = false, _mut19424 = false, _mut19425 = false, _mut19426 = false, _mut19427 = false, _mut19428 = false, _mut19429 = false, _mut19430 = false, _mut19431 = false, _mut19432 = false, _mut19433 = false, _mut19434 = false, _mut19435 = false, _mut19436 = false, _mut19437 = false, _mut19438 = false, _mut19439 = false, _mut19440 = false, _mut19441 = false, _mut19442 = false, _mut19443 = false, _mut19444 = false, _mut19445 = false, _mut19446 = false, _mut19447 = false, _mut19448 = false, _mut19449 = false, _mut19450 = false, _mut19451 = false, _mut19452 = false, _mut19453 = false, _mut19454 = false, _mut19455 = false, _mut19456 = false, _mut19457 = false, _mut19458 = false, _mut19459 = false, _mut19460 = false, _mut19461 = false, _mut19462 = false, _mut19463 = false, _mut19464 = false, _mut19465 = false, _mut19466 = false, _mut19467 = false, _mut19468 = false, _mut19469 = false, _mut19470 = false, _mut19471 = false, _mut19472 = false, _mut19473 = false, _mut19474 = false, _mut19475 = false, _mut19476 = false, _mut19477 = false, _mut19478 = false, _mut19479 = false, _mut19480 = false, _mut19481 = false, _mut19482 = false, _mut19483 = false, _mut19484 = false, _mut19485 = false, _mut19486 = false, _mut19487 = false, _mut19488 = false, _mut19489 = false, _mut19490 = false, _mut19491 = false, _mut19492 = false, _mut19493 = false, _mut19494 = false, _mut19495 = false, _mut19496 = false, _mut19497 = false, _mut19498 = false, _mut19499 = false, _mut19500 = false, _mut19501 = false, _mut19502 = false, _mut19503 = false, _mut19504 = false, _mut19505 = false, _mut19506 = false, _mut19507 = false, _mut19508 = false, _mut19509 = false, _mut19510 = false, _mut19511 = false, _mut19512 = false, _mut19513 = false, _mut19514 = false, _mut19515 = false, _mut19516 = false, _mut19517 = false, _mut19518 = false, _mut19519 = false, _mut19520 = false, _mut19521 = false, _mut19522 = false, _mut19523 = false, _mut19524 = false, _mut19525 = false, _mut19526 = false, _mut19527 = false, _mut19528 = false, _mut19529 = false, _mut19530 = false, _mut19531 = false;
 
-  /** Serializable version identifier */
-  private static final long serialVersionUID = 20111120L;
+    /**
+     * Serializable version identifier
+     */
+    private static final long serialVersionUID = 20111120L;
 
-  /** Simple constructor.
-   * This constructor builds an instance that is not usable yet, the
-   * {@link
-   * org.apache.commons.math3.ode.sampling.AbstractStepInterpolator#reinitialize}
-   * method should be called before using the instance in order to
-   * initialize the internal arrays. This constructor is used only
-   * in order to delay the initialization in some cases. The {@link
-   * RungeKuttaIntegrator} class uses the prototyping design pattern
-   * to create the step interpolators by cloning an uninitialized model
-   * and later initializing the copy.
-   */
-  // CHECKSTYLE: stop RedundantModifier
-  // the public modifier here is needed for serialization
-  public ThreeEighthesStepInterpolator() {
-  }
-  // CHECKSTYLE: resume RedundantModifier
+    // the public modifier here is needed for serialization
+    public ThreeEighthesStepInterpolator() {
+    }
 
-  /** Copy constructor.
-   * @param interpolator interpolator to copy from. The copy is a deep
-   * copy: its arrays are separated from the original arrays of the
-   * instance
-   */
-  ThreeEighthesStepInterpolator(final ThreeEighthesStepInterpolator interpolator) {
-    super(interpolator);
-  }
+    /**
+     * Copy constructor.
+     * @param interpolator interpolator to copy from. The copy is a deep
+     * copy: its arrays are separated from the original arrays of the
+     * instance
+     */
+    ThreeEighthesStepInterpolator(final ThreeEighthesStepInterpolator interpolator) {
+        super(interpolator);
+    }
 
-  /** {@inheritDoc} */
-  @Override
-  protected StepInterpolator doCopy() {
-    return new ThreeEighthesStepInterpolator(this);
-  }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected StepInterpolator doCopy() {
+        return new ThreeEighthesStepInterpolator(this);
+    }
 
-
-  /** {@inheritDoc} */
-  @Override
-  protected void computeInterpolatedStateAndDerivatives(final double theta,
-                                          final double oneMinusThetaH) {
-
-      final double coeffDot3  = 0.75 * theta;
-      final double coeffDot1  = coeffDot3 * (4 * theta - 5) + 1;
-      final double coeffDot2  = coeffDot3 * (5 - 6 * theta);
-      final double coeffDot4  = coeffDot3 * (2 * theta - 1);
-
-      if ((previousState != null) && (theta <= 0.5)) {
-          final double s          = theta * h / 8.0;
-          final double fourTheta2 = 4 * theta * theta;
-          final double coeff1     = s * (8 - 15 * theta + 2 * fourTheta2);
-          final double coeff2     = 3 * s * (5 * theta - fourTheta2);
-          final double coeff3     = 3 * s * theta;
-          final double coeff4     = s * (-3 * theta + fourTheta2);
-          for (int i = 0; i < interpolatedState.length; ++i) {
-              final double yDot1 = yDotK[0][i];
-              final double yDot2 = yDotK[1][i];
-              final double yDot3 = yDotK[2][i];
-              final double yDot4 = yDotK[3][i];
-              interpolatedState[i] =
-                      previousState[i] + coeff1 * yDot1 + coeff2 * yDot2 + coeff3 * yDot3 + coeff4 * yDot4;
-              interpolatedDerivatives[i] =
-                      coeffDot1 * yDot1 + coeffDot2 * yDot2 + coeffDot3 * yDot3 + coeffDot4 * yDot4;
-
-          }
-      } else {
-          final double s          = oneMinusThetaH / 8.0;
-          final double fourTheta2 = 4 * theta * theta;
-          final double coeff1     = s * (1 - 7 * theta + 2 * fourTheta2);
-          final double coeff2     = 3 * s * (1 + theta - fourTheta2);
-          final double coeff3     = 3 * s * (1 + theta);
-          final double coeff4     = s * (1 + theta + fourTheta2);
-          for (int i = 0; i < interpolatedState.length; ++i) {
-              final double yDot1 = yDotK[0][i];
-              final double yDot2 = yDotK[1][i];
-              final double yDot3 = yDotK[2][i];
-              final double yDot4 = yDotK[3][i];
-              interpolatedState[i] =
-                      currentState[i] - coeff1 * yDot1 - coeff2 * yDot2 - coeff3 * yDot3 - coeff4 * yDot4;
-              interpolatedDerivatives[i] =
-                      coeffDot1 * yDot1 + coeffDot2 * yDot2 + coeffDot3 * yDot3 + coeffDot4 * yDot4;
-
-          }
-      }
-
-  }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void computeInterpolatedStateAndDerivatives(final double theta, final double oneMinusThetaH) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97");
+        final double coeffDot3 = AOR_multiply(0.75, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19208, _mut19209, _mut19210, _mut19211);
+        final double coeffDot1 = AOR_plus(AOR_multiply(coeffDot3, (AOR_minus(AOR_multiply(4, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19212, _mut19213, _mut19214, _mut19215), 5, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19216, _mut19217, _mut19218, _mut19219)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19220, _mut19221, _mut19222, _mut19223), 1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19224, _mut19225, _mut19226, _mut19227);
+        final double coeffDot2 = AOR_multiply(coeffDot3, (AOR_minus(5, AOR_multiply(6, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19228, _mut19229, _mut19230, _mut19231), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19232, _mut19233, _mut19234, _mut19235)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19236, _mut19237, _mut19238, _mut19239);
+        final double coeffDot4 = AOR_multiply(coeffDot3, (AOR_minus(AOR_multiply(2, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19240, _mut19241, _mut19242, _mut19243), 1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19244, _mut19245, _mut19246, _mut19247)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19248, _mut19249, _mut19250, _mut19251);
+        if ((_mut19257 ? ((previousState != null) || (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19252, _mut19253, _mut19254, _mut19255, _mut19256))) : ((previousState != null) && (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19252, _mut19253, _mut19254, _mut19255, _mut19256))))) {
+            final double s = AOR_divide(AOR_multiply(theta, h, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19395, _mut19396, _mut19397, _mut19398), 8.0, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19399, _mut19400, _mut19401, _mut19402);
+            final double fourTheta2 = AOR_multiply(AOR_multiply(4, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19403, _mut19404, _mut19405, _mut19406), theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19407, _mut19408, _mut19409, _mut19410);
+            final double coeff1 = AOR_multiply(s, (AOR_plus(AOR_minus(8, AOR_multiply(15, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19411, _mut19412, _mut19413, _mut19414), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19415, _mut19416, _mut19417, _mut19418), AOR_multiply(2, fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19419, _mut19420, _mut19421, _mut19422), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19423, _mut19424, _mut19425, _mut19426)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19427, _mut19428, _mut19429, _mut19430);
+            final double coeff2 = AOR_multiply(AOR_multiply(3, s, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19431, _mut19432, _mut19433, _mut19434), (AOR_minus(AOR_multiply(5, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19435, _mut19436, _mut19437, _mut19438), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19439, _mut19440, _mut19441, _mut19442)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19443, _mut19444, _mut19445, _mut19446);
+            final double coeff3 = AOR_multiply(AOR_multiply(3, s, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19447, _mut19448, _mut19449, _mut19450), theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19451, _mut19452, _mut19453, _mut19454);
+            final double coeff4 = AOR_multiply(s, (AOR_plus(AOR_multiply(-3, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19455, _mut19456, _mut19457, _mut19458), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19459, _mut19460, _mut19461, _mut19462)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19463, _mut19464, _mut19465, _mut19466);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19527, _mut19528, _mut19529, _mut19530, _mut19531); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97");
+                final double yDot1 = yDotK[0][i];
+                final double yDot2 = yDotK[1][i];
+                final double yDot3 = yDotK[2][i];
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_plus(AOR_plus(AOR_plus(AOR_plus(previousState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19467, _mut19468, _mut19469, _mut19470), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19471, _mut19472, _mut19473, _mut19474), AOR_multiply(coeff2, yDot2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19475, _mut19476, _mut19477, _mut19478), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19479, _mut19480, _mut19481, _mut19482), AOR_multiply(coeff3, yDot3, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19483, _mut19484, _mut19485, _mut19486), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19487, _mut19488, _mut19489, _mut19490), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19491, _mut19492, _mut19493, _mut19494), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19495, _mut19496, _mut19497, _mut19498);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19499, _mut19500, _mut19501, _mut19502), AOR_multiply(coeffDot2, yDot2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19503, _mut19504, _mut19505, _mut19506), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19507, _mut19508, _mut19509, _mut19510), AOR_multiply(coeffDot3, yDot3, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19511, _mut19512, _mut19513, _mut19514), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19515, _mut19516, _mut19517, _mut19518), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19519, _mut19520, _mut19521, _mut19522), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19523, _mut19524, _mut19525, _mut19526);
+            }
+        } else {
+            final double s = AOR_divide(oneMinusThetaH, 8.0, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19258, _mut19259, _mut19260, _mut19261);
+            final double fourTheta2 = AOR_multiply(AOR_multiply(4, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19262, _mut19263, _mut19264, _mut19265), theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19266, _mut19267, _mut19268, _mut19269);
+            final double coeff1 = AOR_multiply(s, (AOR_plus(AOR_minus(1, AOR_multiply(7, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19270, _mut19271, _mut19272, _mut19273), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19274, _mut19275, _mut19276, _mut19277), AOR_multiply(2, fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19278, _mut19279, _mut19280, _mut19281), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19282, _mut19283, _mut19284, _mut19285)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19286, _mut19287, _mut19288, _mut19289);
+            final double coeff2 = AOR_multiply(AOR_multiply(3, s, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19290, _mut19291, _mut19292, _mut19293), (AOR_minus(AOR_plus(1, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19294, _mut19295, _mut19296, _mut19297), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19298, _mut19299, _mut19300, _mut19301)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19302, _mut19303, _mut19304, _mut19305);
+            final double coeff3 = AOR_multiply(AOR_multiply(3, s, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19306, _mut19307, _mut19308, _mut19309), (AOR_plus(1, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19310, _mut19311, _mut19312, _mut19313)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19314, _mut19315, _mut19316, _mut19317);
+            final double coeff4 = AOR_multiply(s, (AOR_plus(AOR_plus(1, theta, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19318, _mut19319, _mut19320, _mut19321), fourTheta2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19322, _mut19323, _mut19324, _mut19325)), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19326, _mut19327, _mut19328, _mut19329);
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19390, _mut19391, _mut19392, _mut19393, _mut19394); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97");
+                final double yDot1 = yDotK[0][i];
+                final double yDot2 = yDotK[1][i];
+                final double yDot3 = yDotK[2][i];
+                final double yDot4 = yDotK[3][i];
+                interpolatedState[i] = AOR_minus(AOR_minus(AOR_minus(AOR_minus(currentState[i], AOR_multiply(coeff1, yDot1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19330, _mut19331, _mut19332, _mut19333), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19334, _mut19335, _mut19336, _mut19337), AOR_multiply(coeff2, yDot2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19338, _mut19339, _mut19340, _mut19341), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19342, _mut19343, _mut19344, _mut19345), AOR_multiply(coeff3, yDot3, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19346, _mut19347, _mut19348, _mut19349), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19350, _mut19351, _mut19352, _mut19353), AOR_multiply(coeff4, yDot4, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19354, _mut19355, _mut19356, _mut19357), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19358, _mut19359, _mut19360, _mut19361);
+                interpolatedDerivatives[i] = AOR_plus(AOR_plus(AOR_plus(AOR_multiply(coeffDot1, yDot1, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19362, _mut19363, _mut19364, _mut19365), AOR_multiply(coeffDot2, yDot2, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19366, _mut19367, _mut19368, _mut19369), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19370, _mut19371, _mut19372, _mut19373), AOR_multiply(coeffDot3, yDot3, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19374, _mut19375, _mut19376, _mut19377), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19378, _mut19379, _mut19380, _mut19381), AOR_multiply(coeffDot4, yDot4, "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19382, _mut19383, _mut19384, _mut19385), "org.apache.commons.math3.ode.nonstiff.ThreeEighthesStepInterpolator.computeInterpolatedStateAndDerivatives_97", _mut19386, _mut19387, _mut19388, _mut19389);
+            }
+        }
+    }
 }

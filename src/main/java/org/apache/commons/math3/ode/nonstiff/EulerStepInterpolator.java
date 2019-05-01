@@ -14,89 +14,62 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.apache.commons.math3.ode.nonstiff;
 
 import org.apache.commons.math3.ode.sampling.StepInterpolator;
+import gov.nasa.jpf.annotation.Conditional;
+import static br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.*;
 
-/**
- * This class implements a linear interpolator for step.
- *
- * <p>This interpolator computes dense output inside the last
- * step computed. The interpolation equation is consistent with the
- * integration scheme :
- * <ul>
- *   <li>Using reference point at step start:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub>) + &theta; h y'
- *   </li>
- *   <li>Using reference point at step end:<br>
- *     y(t<sub>n</sub> + &theta; h) = y (t<sub>n</sub> + h) - (1-&theta;) h y'
- *   </li>
- * </ul>
- * </p>
- *
- * where &theta; belongs to [0 ; 1] and where y' is the evaluation of
- * the derivatives already computed during the step.</p>
- *
- * @see EulerIntegrator
- * @since 1.2
- */
+class EulerStepInterpolator extends RungeKuttaStepInterpolator {
 
-class EulerStepInterpolator
-  extends RungeKuttaStepInterpolator {
+    @Conditional
+    public static boolean _mut13454 = false, _mut13455 = false, _mut13456 = false, _mut13457 = false, _mut13458 = false, _mut13459 = false, _mut13460 = false, _mut13461 = false, _mut13462 = false, _mut13463 = false, _mut13464 = false, _mut13465 = false, _mut13466 = false, _mut13467 = false, _mut13468 = false, _mut13469 = false, _mut13470 = false, _mut13471 = false, _mut13472 = false, _mut13473 = false, _mut13474 = false, _mut13475 = false, _mut13476 = false, _mut13477 = false, _mut13478 = false, _mut13479 = false, _mut13480 = false, _mut13481 = false, _mut13482 = false, _mut13483 = false, _mut13484 = false, _mut13485 = false, _mut13486 = false, _mut13487 = false, _mut13488 = false, _mut13489 = false;
 
-  /** Serializable version identifier. */
-  private static final long serialVersionUID = 20111120L;
+    /**
+     * Serializable version identifier.
+     */
+    private static final long serialVersionUID = 20111120L;
 
-  /** Simple constructor.
-   * This constructor builds an instance that is not usable yet, the
-   * {@link
-   * org.apache.commons.math3.ode.sampling.AbstractStepInterpolator#reinitialize}
-   * method should be called before using the instance in order to
-   * initialize the internal arrays. This constructor is used only
-   * in order to delay the initialization in some cases. The {@link
-   * RungeKuttaIntegrator} class uses the prototyping design pattern
-   * to create the step interpolators by cloning an uninitialized model
-   * and later initializing the copy.
-   */
-  // CHECKSTYLE: stop RedundantModifier
-  // the public modifier here is needed for serialization
-  public EulerStepInterpolator() {
-  }
-  // CHECKSTYLE: resume RedundantModifier
+    // the public modifier here is needed for serialization
+    public EulerStepInterpolator() {
+    }
 
-  /** Copy constructor.
-   * @param interpolator interpolator to copy from. The copy is a deep
-   * copy: its arrays are separated from the original arrays of the
-   * instance
-   */
-  EulerStepInterpolator(final EulerStepInterpolator interpolator) {
-    super(interpolator);
-  }
+    /**
+     * Copy constructor.
+     * @param interpolator interpolator to copy from. The copy is a deep
+     * copy: its arrays are separated from the original arrays of the
+     * instance
+     */
+    EulerStepInterpolator(final EulerStepInterpolator interpolator) {
+        super(interpolator);
+    }
 
-  /** {@inheritDoc} */
-  @Override
-  protected StepInterpolator doCopy() {
-    return new EulerStepInterpolator(this);
-  }
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected StepInterpolator doCopy() {
+        return new EulerStepInterpolator(this);
+    }
 
-
-  /** {@inheritDoc} */
-  @Override
-  protected void computeInterpolatedStateAndDerivatives(final double theta,
-                                          final double oneMinusThetaH) {
-      if ((previousState != null) && (theta <= 0.5)) {
-          for (int i = 0; i < interpolatedState.length; ++i) {
-              interpolatedState[i] = previousState[i] + theta * h * yDotK[0][i];
-          }
-          System.arraycopy(yDotK[0], 0, interpolatedDerivatives, 0, interpolatedDerivatives.length);
-      } else {
-          for (int i = 0; i < interpolatedState.length; ++i) {
-              interpolatedState[i] = currentState[i] - oneMinusThetaH * yDotK[0][i];
-          }
-          System.arraycopy(yDotK[0], 0, interpolatedDerivatives, 0, interpolatedDerivatives.length);
-      }
-
-  }
-
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void computeInterpolatedStateAndDerivatives(final double theta, final double oneMinusThetaH) {
+        br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85");
+        if ((_mut13459 ? ((previousState != null) || (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13454, _mut13455, _mut13456, _mut13457, _mut13458))) : ((previousState != null) && (ROR_less_equals(theta, 0.5, "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13454, _mut13455, _mut13456, _mut13457, _mut13458))))) {
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13485, _mut13486, _mut13487, _mut13488, _mut13489); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85");
+                interpolatedState[i] = AOR_plus(previousState[i], AOR_multiply(AOR_multiply(theta, h, "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13473, _mut13474, _mut13475, _mut13476), yDotK[0][i], "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13477, _mut13478, _mut13479, _mut13480), "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13481, _mut13482, _mut13483, _mut13484);
+            }
+            System.arraycopy(yDotK[0], 0, interpolatedDerivatives, 0, interpolatedDerivatives.length);
+        } else {
+            for (int i = 0; ROR_less(i, interpolatedState.length, "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13468, _mut13469, _mut13470, _mut13471, _mut13472); ++i) {
+                br.ufmg.labsoft.mutvariants.schematalib.SchemataLibMethods.listener.listen("org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85");
+                interpolatedState[i] = AOR_minus(currentState[i], AOR_multiply(oneMinusThetaH, yDotK[0][i], "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13460, _mut13461, _mut13462, _mut13463), "org.apache.commons.math3.ode.nonstiff.EulerStepInterpolator.computeInterpolatedStateAndDerivatives_85", _mut13464, _mut13465, _mut13466, _mut13467);
+            }
+            System.arraycopy(yDotK[0], 0, interpolatedDerivatives, 0, interpolatedDerivatives.length);
+        }
+    }
 }
